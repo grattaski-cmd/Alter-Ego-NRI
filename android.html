@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андроид — Справочник по Альтер-Эго</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: #16120d;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 { color: var(--accent); margin: 0; }
+        nav {
+            background: #16120d;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+        }
+        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Андроид (Android)</h1>
+        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Раса • Справочник по Альтер-Эго</p>
+    </header>
+
+    <nav>
+        <a href="index.html">← Назад к справочнику</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+            <h2 class="section-title">Описание</h2>
+            <p>Искусственные существа, созданные во время чумы для помощи и обслуживания людей. Они выглядят почти как люди, но их тела — совершенные машины. Часть из них обрели настоящее сознание и теперь ищут своё место в мире, где их часто воспринимают как инструмент или угрозу.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Особенности расы</h2>
+            
+            <div class="ability">
+                <strong>Увеличение характеристик.</strong><br>
+                +2 к Интеллекту или Ловкости, +1 к Телосложению.
+            </div>
+            
+            <div class="ability">
+                <strong>Размер.</strong> Средний.<br>
+                <strong>Скорость.</strong> 30 футов.<br>
+                <strong>Тёмное зрение.</strong> 60 футов.
+            </div>
+            
+            <div class="ability">
+                <strong>Искусственная природа.</strong><br>
+                Вы не нуждаетесь в еде, питье и сне (вместо этого «перезаряжаетесь» 4–6 часов). Вы имеете преимущество на спасброски против ядов, болезней и эффектов, влияющих только на органические существа.
+            </div>
+            
+            <div class="ability">
+                <strong>Кибер-резистентность.</strong><br>
+                Сопротивление одному типу урона на выбор при создании (электрический, некротический и т.д.).
+            </div>
+            
+            <div class="ability">
+                <strong>Языки.</strong><br>
+                Общий + один дополнительный язык (включая машинные коды).
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Варианты происхождения</h2>
+            <p><strong>Выберите один вариант при создании персонажа:</strong></p>
+            
+            <div class="ability">
+                <strong>Освобождённый</strong><br>
+                Вы обрели свободу воли. Преимущество на спасброски против эффектов контроля и подчинения.
+            </div>
+            
+            <div class="ability">
+                <strong>Совершенная машина</strong><br>
+                Вы имеете преимущество на проверки, связанные с точностью и технологиями.
+            </div>
+            
+            <div class="ability">
+                <strong>Скрытый разум</strong><br>
+                Вы лучше скрываете своё искусственное происхождение. Преимущество на проверки Обмана и Убеждения.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Специализации</h2>
+            <p><strong>Выберите 2 специализации при создании персонажа:</strong></p>
+            
+            <ul style="columns: 2; gap: 2rem; padding-left: 1.2rem;">
+                <li>Атлетика</li>
+                <li>Акробатика</li>
+                <li>Скрытность</li>
+                <li>Ловкость рук</li>
+                <li>Проницательность</li>
+                <li>Анализ</li>
+                <li>Техника / Хакинг</li>
+                <li>Медицина</li>
+                <li>Восприятие</li>
+                <li>Выживание</li>
+                <li>История</li>
+                <li>Запугивание</li>
+                <li>Обман</li>
+                <li>Убеждение</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
