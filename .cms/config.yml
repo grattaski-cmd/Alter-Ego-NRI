@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: grattaski-cmd/alteregonri
+  repo: grattaski-cmd/Alter-Ego-NRI
   branch: main
 
 media_folder: "assets/images"
