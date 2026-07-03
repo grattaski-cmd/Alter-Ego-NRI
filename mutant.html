@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мутант — Справочник по Альтер-Эго</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: #16120d;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 { color: var(--accent); margin: 0; }
+        nav {
+            background: #16120d;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+        }
+        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мутант (Afflicted)</h1>
+        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Раса • Справочник по Альтер-Эго</p>
+    </header>
+
+    <nav>
+        <a href="index.html">← Назад к справочнику</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+            <h2 class="section-title">Описание</h2>
+            <p>Мутанты — это люди, чьи тела были сильно изменены магической чумой. Они сохранили разум, но их внешность стала гротескной и пугающей. Многие прячутся от общества или живут в изоляции, постоянно борясь с дальнейшим распадом своего тела и разума.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Особенности расы</h2>
+            
+            <div class="ability">
+                <strong>Увеличение характеристик.</strong><br>
+                +2 к Телосложению, +1 к Силе или Ловкости.
+            </div>
+            
+            <div class="ability">
+                <strong>Размер.</strong> Средний.<br>
+                <strong>Скорость.</strong> 30 футов.
+            </div>
+            
+            <div class="ability">
+                <strong>Гротескная форма.</strong><br>
+                Вы имеете преимущество на проверки Запугивания. Однако вы получаете помеху на проверки Убеждения и Обмана против существ, которые вас боятся или презирают.
+            </div>
+            
+            <div class="ability">
+                <strong>Устойчивость к распаду.</strong><br>
+                Вы имеете сопротивление некротическому урону и преимущество на спасброски против эффектов, вызывающих истощение или мутации.
+            </div>
+            
+            <div class="ability">
+                <strong>Риск дальнейшего распада.</strong><br>
+                При получении критического урона или провале спасброска от эффектов чумы вы получаете 1 уровень истощения.
+            </div>
+            
+            <div class="ability">
+                <strong>Языки.</strong><br>
+                Общий и один дополнительный язык на выбор.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Варианты происхождения</h2>
+            <p><strong>Выберите один вариант при создании персонажа:</strong></p>
+            
+            <div class="ability">
+                <strong>Скрытый мутант</strong><br>
+                Вы научились частично скрывать свою природу. Преимущество на проверки Обмана и Убеждения, когда пытаетесь выглядеть обычным человеком.
+            </div>
+            
+            <div class="ability">
+                <strong>Живучая плоть</strong><br>
+                Когда вы заканчиваете короткий отдых, вы восстанавливаете количество хитов, равное вашему уровню + бонусу Телосложения.
+            </div>
+            
+            <div class="ability">
+                <strong>Ярость распада</strong><br>
+                Один раз за короткий отдых, когда вы получаете урон, вы можете в ответ нанести дополнительный некротический урон 1к6 + ваш модификатор Телосложения следующей атаке.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Специализации</h2>
+            <p><strong>Выберите 2 специализации при создании персонажа:</strong></p>
+            
+            <ul style="columns: 2; gap: 2rem; padding-left: 1.2rem;">
+                <li>Атлетика</li>
+                <li>Акробатика</li>
+                <li>Скрытность</li>
+                <li>Ловкость рук</li>
+                <li>Прониц-ть</li>
+                <li>Анализ</li>
+                <li>Восприятие</li>
+                <li>Выживание</li>
+                <li>История</li>
+                <li>Религия</li>
+                <li>Запугивание</li>
+                <li>Обман</li>
+                <li>Убеждение</li>
+                <li>Медицина</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
