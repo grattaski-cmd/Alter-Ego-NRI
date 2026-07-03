@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: grattaski-cmd/alteregonri
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "races"
+    label: "Расы"
+    folder: "races"
+    create: true
+    extension: "html"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Описание", name: "body", widget: "markdown"}
+      - {label: "Особенности", name: "features", widget: "markdown"}
+      - {label: "Специализации", name: "specializations", widget: "markdown"}
+
+  - name: "classes"
+    label: "Классы"
+    folder: "classes"
+    create: true
+    extension: "html"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Описание", name: "body", widget: "markdown"}
+      - {label: "Таблица уровней", name: "level_table", widget: "markdown"}
+      - {label: "Особенности", name: "features", widget: "markdown"}
+
+  - name: "subclasses"
+    label: "Подклассы"
+    folder: "subclasses"
+    create: true
+    extension: "html"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Описание", name: "body", widget: "markdown"}
+      - {label: "Особенности", name: "features", widget: "markdown"}
+
+  - name: "pages"
+    label: "Страницы"
+    files:
+      - file: "index.html"
+        label: "Главная страница"
+        fields:
+          - {label: "Контент", name: "body", widget: "markdown"}
