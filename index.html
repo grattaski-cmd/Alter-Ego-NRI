@@ -7,38 +7,31 @@
     <style>
         :root {
             --bg: #0f0c08;
-            --card-bg: #1c1812;
+            --card: #1c1812;
             --accent: #c9a05f;
             --text: #d4c5a9;
             --border: #3a3024;
         }
-        
         body {
             margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        
         header {
             background: #16120d;
             padding: 2.5rem 1rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
-        
         h1 {
             color: var(--accent);
-            font-size: 2.4rem;
-            margin: 0 0 0.5rem 0;
-            letter-spacing: 1px;
+            font-size: 2.6rem;
+            margin: 0;
+            letter-spacing: 2px;
         }
-        
-        .subtitle {
-            color: #8a7a5f;
-            font-size: 1rem;
-        }
+        .subtitle { color: #8a7a5f; margin: 0.5rem 0 0; }
         
         nav {
             background: #16120d;
@@ -49,10 +42,9 @@
             top: 0;
             z-index: 100;
         }
-        
         nav a {
             color: var(--accent);
-            margin: 0 1.2rem;
+            margin: 0 1rem;
             text-decoration: none;
             font-weight: 500;
         }
@@ -62,124 +54,103 @@
             margin: 2rem auto;
             padding: 0 1rem;
         }
-        
-        .section {
-            margin-bottom: 3rem;
-        }
-        
         .section-title {
             color: var(--accent);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
         }
-        
         .card {
-            background: var(--card-bg);
+            background: var(--card);
             border: 1px solid var(--border);
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             border-radius: 6px;
         }
-        
         .card h3 {
             color: var(--accent);
             margin-top: 0;
-        }
-        
-        .ability {
-            background: #16120d;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border-left: 3px solid var(--accent);
         }
     </style>
 </head>
 <body>
     <header>
         <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        <p class="subtitle">Руководство по выживанию • Постапокалипсис • Слияние с Гештальтом</p>
+        <p class="subtitle">Руководство по выживанию в мире после чумы • Слияние с Гештальтом</p>
     </header>
 
     <nav>
-        <a href="#classes">Классы</a>
         <a href="#races">Расы</a>
+        <a href="#classes">Классы</a>
         <a href="#features">Черты</a>
-        <a href="#items">Предметы</a>
     </nav>
 
     <div class="container">
-
-        <!-- КЛАССЫ -->
-        <div id="classes" class="section">
-            <h2 class="section-title">Классы</h2>
-            
-            <div class="card">
-                <h3>A. Гештальт U <span style="font-size:0.9rem; color:#8a7a5f;">(Hybrid)</span></h3>
-                <p><strong>Хит дайс:</strong> 1d8 | Хиты на 1 уровне: 8 + модификатор Телосложения</p>
-                
-                <div class="ability">
-                    <strong>Боевая связь (2 ур.)</strong><br>
-                    Когда вы или ваш Гештальт атакуете, один раз за ход вы можете передать часть эффекта союзнику.
-                </div>
-                
-                <div class="ability">
-                    <strong>Эмоциональный резонанс (2 ур.)</strong><br>
-                    Создатели союзнических способностей получают бонус +1d4.
-                </div>
-                
-                <p style="color:#8a7a5f; font-size:0.9rem;">Полная таблица уровней и подклассы будут добавлены позже.</p>
-            </div>
-        </div>
 
         <!-- РАСЫ -->
         <div id="races" class="section">
             <h2 class="section-title">Расы</h2>
             
             <div class="card">
-                <h3>Киборг / Augmented Human</h3>
-                <p>Люди, усилившие себя кибернетикой и магией, чтобы выжить в мире чумы.</p>
-                <ul>
-                    <li>+2 к Интеллекту или Ловкости, +1 к Телосложению</li>
-                    <li>Скорость: 30 футов</li>
-                    <li>Тёмное зрение 60 футов</li>
-                    <li>Кибер-резистентность</li>
-                </ul>
+                <h3>1. Человек (Human)</h3>
+                <p>Обычные люди — выжившие в мире после распространения магической чумы. Некоторые остались почти нетронутыми, другие прошли через излечение или живут с контролируемой инфекцией. Они — основа общества, но часто чувствуют себя самыми уязвимыми среди «улучшенных».</p>
             </div>
-            
+
             <div class="card">
-                <h3>Человек (Human)</h3>
-                <p>Обычные люди, выжившие после чумы. Основа общества.</p>
-                <ul>
-                    <li>+1 к любой характеристике (или +2 к одной и +1 к другой)</li>
-                    <li>Скорость: 30 футов</li>
-                    <li>Выберите 2 специализации</li>
-                </ul>
+                <h3>2. Андроид (Android)</h3>
+                <p>Искусственные существа, созданные во время чумы для помощи и обслуживания людей. Они выглядят почти как люди, но их тела — совершенные машины. Часть из них обрели настоящее сознание и теперь ищут своё место в мире, где их часто воспринимают как инструмент или угрозу.</p>
             </div>
-            
+
             <div class="card">
-                <h3>Эхо / Remnant</h3>
-                <p>Те, кого Альтернативный Гештальт почти поглотил. Остаток личности...</p>
-                <ul>
-                    <li>+2 к Мудрости или Харизме, +1 к Интеллекту</li>
-                    <li>Тёмное зрение 60 футов + преимущество на проницательность</li>
-                </ul>
+                <h3>3. Репликант (Replicate)</h3>
+                <p>Механический слепок людей, чья травма материализовалась в могущественную сущность. Они меньше подвержены обычной чуме, но живут с постоянной угрозой, что их собственный Гештальт однажды поглотит их полностью. Их сила рождается из боли.</p>
+            </div>
+
+            <div class="card">
+                <h3>4. Мутант (Afflicted)</h3>
+                <p>Мутировавшие люди с видимыми изменениями от магической чумы. Они сохранили разум, но тела стали гротескными. Многие скрываются или живут в изоляции, борясь с дальнейшим распадом.</p>
+            </div>
+
+            <div class="card">
+                <h3>5. Эхо (Echo / Remnant)</h3>
+                <p>Те, кого Альтернативный Гештальт почти поглотил. Остаток личности сосуществует с фрагментом сущности. Они видят больше, чем другие, но постоянно балансируют на грани безумия.</p>
+            </div>
+
+            <div class="card">
+                <h3>6. Киборг / Аугментированный (Augmented Human)</h3>
+                <p>Люди, которые усилили себя кибернетикой и магией, чтобы выжить в мире чумы. Они сильнее и точнее, но их тело — смесь плоти и металла.</p>
             </div>
         </div>
 
-        <!-- ЧЕРТЫ -->
-        <div id="features" class="section">
-            <h2 class="section-title">Черты</h2>
+        <!-- КЛАССЫ -->
+        <div id="classes" class="section">
+            <h2 class="section-title">Классы</h2>
+            
             <div class="card">
-                <p>Здесь будут черты, связанные с травмами, Гештальтом и выживанием.</p>
-                <p style="color:#8a7a5f;">(Пока пусто — добавим по твоим заметкам)</p>
+                <h3>А. Гештальт U</h3>
+                <p>Гибридный класс. Основной путь слияния с Альтер-Эго.</p>
+            </div>
+            <div class="card">
+                <h3>А. Гештальт E</h3>
+                <p>Вариант класса (будет добавлено описание).</p>
+            </div>
+            <div class="card">
+                <h3>А. Гештальт R</h3>
+                <p>Вариант класса (будет добавлено описание).</p>
+            </div>
+            <div class="card">
+                <h3>А. Гештальт F</h3>
+                <p>Вариант класса (будет добавлено описание).</p>
+            </div>
+            <div class="card">
+                <h3>А. Гештальт M</h3>
+                <p>Вариант класса (будет добавлено описание).</p>
             </div>
         </div>
 
     </div>
 
-    <footer style="text-align:center; padding:2rem; color:#666; font-size:0.9rem;">
+    <footer style="text-align:center; padding:3rem; color:#555; font-size:0.9rem;">
         Справочник по Альтер-Эго • 2026
     </footer>
 </body>
