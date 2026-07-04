@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>А. Гештальт E — Справочник по Альтер-Эго</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: #16120d;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 { color: var(--accent); margin: 0; }
+        nav {
+            background: #16120d;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+        }
+        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+        .level-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .level-table td, .level-table th { border: 1px solid var(--border); padding: 8px; text-align: left; }
+        .level-table th { background: #2c1e14; color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>А. Гештальт E</h1>
+        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Класс • Эмоциональный Гештальт</p>
+    </header>
+
+    <nav>
+        <a href="index.html">← Назад к справочнику</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Основная информация -->
+        <div class="card">
+            <h2 class="section-title">Основная информация</h2>
+            <p><strong>Хит дайс:</strong> 1d8</p>
+            <p><strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения</p>
+            <p><strong>Хиты на следующих уровнях:</strong> 1d8 (или 5) + модификатор Телосложения за уровень</p>
+            
+            <p><strong>Владения:</strong></p>
+            <ul>
+                <li><strong>Броня:</strong> Лёгкая, средняя</li>
+                <li><strong>Оружие:</strong> Простое оружие, короткие клинки</li>
+                <li><strong>Инструменты:</strong> Один музыкальный инструмент или набор целителя</li>
+                <li><strong>Спасброски:</strong> Мудрость, Харизма</li>
+                <li><strong>Навыки:</strong> Выберите три из: Проницательность, Убеждение, Запугивание, Выступление, Обман, Восприятие</li>
+            </ul>
+            
+            <p><strong>Снаряжение (стартовое):</strong> Лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией — разбитое зеркало, письмо, окровавленный платок и т.д.).</p>
+        </div>
+
+        <!-- Таблица прогрессии -->
+        <div class="card">
+            <h2 class="section-title">Таблица прогрессии</h2>
+            <table class="level-table">
+                <tr><th>Уровень</th><th>Бонус мастерства</th><th>Особенности</th><th>Эмоциональный Резерв</th></tr>
+                <tr><td>1</td><td>+2</td><td>Проявление Эмоции, Эмоциональное Чутьё</td><td>2</td></tr>
+                <tr><td>2</td><td>+2</td><td>Стиль Эмоции</td><td>3</td></tr>
+                <tr><td>3</td><td>+2</td><td>Подкласс</td><td>4</td></tr>
+                <tr><td>4</td><td>+2</td><td>Увеличение характеристик</td><td>4</td></tr>
+                <tr><td>5</td><td>+3</td><td>Extra Attack / Улучшенное проявление</td><td>5</td></tr>
+                <tr><td>6</td><td>+3</td><td>Подкласс</td><td>6</td></tr>
+                <tr><td>7</td><td>+3</td><td>Эмоциональное Предсказание</td><td>6</td></tr>
+                <tr><td>8</td><td>+3</td><td>Увеличение характеристик</td><td>7</td></tr>
+                <tr><td>9</td><td>+4</td><td>—</td><td>7</td></tr>
+                <tr><td>10</td><td>+4</td><td>Улучшенный Резерв</td><td>8</td></tr>
+                <tr><td>11</td><td>+4</td><td>Надёжная Эмоция</td><td>8</td></tr>
+                <tr><td>12</td><td>+4</td><td>Увеличение характеристик</td><td>9</td></tr>
+                <tr><td>13</td><td>+5</td><td>—</td><td>9</td></tr>
+                <tr><td>14</td><td>+5</td><td>Подкласс</td><td>10</td></tr>
+                <tr><td>15</td><td>+5</td><td>Вечная Эмоция</td><td>10</td></tr>
+                <tr><td>16</td><td>+5</td><td>Увеличение характеристик</td><td>11</td></tr>
+                <tr><td>17</td><td>+6</td><td>—</td><td>12</td></tr>
+                <tr><td>18</td><td>+6</td><td>Подкласс</td><td>12</td></tr>
+                <tr><td>19</td><td>+6</td><td>Увеличение характеристик</td><td>13</td></tr>
+                <tr><td>20</td><td>+6</td><td>Апофеоз Эмоции</td><td>13</td></tr>
+            </table>
+        </div>
+
+        <!-- Основные особенности -->
+        <div class="card">
+            <h2 class="section-title">Основные особенности класса</h2>
+            
+            <div class="ability">
+                <strong>1 уровень — Проявление Эмоции</strong><br>
+                Вы можете бонусным действием проявить свою главную эмоцию. Существует два режима (переключение стоит 1 Эмоциональный Резерв):
+                <ul>
+                    <li><strong>Внутренний Режим</strong> — временные HP = 2d6 + уровень, +2 к урону, сопротивление одному типу урона.</li>
+                    <li><strong>Внешний Режим</strong> — отдельное проявление Гештальта (хиты = ваши / 2).</li>
+                </ul>
+            </div>
+
+            <div class="ability">
+                <strong>Эмоциональный Резерв</strong><br>
+                Основной ресурс. Максимум растёт с уровнем. Восстанавливается после длинного отдыха полностью, после короткого — половина.
+            </div>
+
+            <div class="ability">
+                <strong>Эмоциональное Чутьё</strong><br>
+                Преимущество на Проницательность, когда дело касается эмоций других существ.
+            </div>
+
+            <div class="ability">
+                <strong>2 уровень — Стиль Эмоции</strong><br>
+                Выберите основную эмоцию (Ярость, Печаль, Страх, Радость). Она определяет дополнительный урон, сопротивление и бонусы.
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
