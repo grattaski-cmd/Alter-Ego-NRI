@@ -234,17 +234,19 @@
         </div>
 
 <script>
-    function toggleSection(header) {
-        const section = document.getElementById('absorption-section');
-        if (section.style.display === 'none') {
-            section.style.display = 'block';
-            header.textContent = '▲ Поглощение (механика риска)';
-        } else {
-            section.style.display = 'none';
-            header.textContent = '▼ Поглощение (механика риска)';
+        function toggleSection(header) {
+            const section = document.getElementById('absorption-section');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                header.textContent = '▲ Поглощение (механика риска)';
+            } else {
+                section.style.display = 'none';
+                header.textContent = '▼ Поглощение (механика риска)';
+            }
         }
-    }
-</script>
+    </script>
+</body>
+</html>
 
     </div>
 </body>
