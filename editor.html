@@ -6,154 +6,226 @@
     <title>Редактор Альтер-Эго</title>
     <style>
         body { font-family: Arial, sans-serif; background: #0f0c08; color: #d4c5a9; padding: 20px; }
+        .tab { display: none; }
+        .tab.active { display: block; }
+        .nav { margin-bottom: 20px; }
+        .nav button { padding: 10px 20px; margin-right: 5px; background: #1c1812; color: #c9a05f; border: 1px solid #8b5a2b; cursor: pointer; }
+        .nav button.active { background: #c9a05f; color: #0f0c08; }
         input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #1c1812; color: #d4c5a9; border: 1px solid #8b5a2b; border-radius: 4px; }
         button { padding: 12px 20px; background: #c9a05f; color: #0f0c08; border: none; cursor: pointer; font-weight: bold; margin: 10px 5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 15px; }
+        .card { background: #1c1812; border: 1px solid #8b5a2b; border-radius: 6px; padding: 12px; cursor: pointer; }
+        .card:hover { border-color: #c9a05f; }
+        .card-header { font-weight: bold; color: #c9a05f; margin-bottom: 8px; }
+        .card-content { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3024; }
+        .card.open .card-content { display: block; }
         pre { background: #1c1812; padding: 15px; overflow: auto; white-space: pre-wrap; }
-        .section { margin: 20px 0; border: 1px solid #8b5a2b; padding: 15px; border-radius: 6px; }
-        .block { 
-            background: #1c1812; 
-            padding: 12px; 
-            margin: 12px 0; 
-            border-left: 4px solid #c9a05f; 
-            cursor: move;
-            position: relative;
-        }
-        .block:hover { border-left-color: #f0d090; }
-        .remove-btn { position: absolute; top: 8px; right: 8px; background: #8b3a3a; color: white; border: none; padding: 4px 8px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h1>Редактор Альтер-Эго</h1>
     
-    <div class="section">
-        <label>Шаблон:</label>
-        <select id="template">
-            <option value="race">Раса</option>
-            <option value="class">Класс</option>
-            <option value="subclass">Подкласс</option>
-        </select>
-        
-        <label>Название:</label>
-        <input type="text" id="title" placeholder="Название">
-        
-        <label>Акцентный цвет:</label>
-        <input type="color" id="accentColor" value="#c9a05f">
-        
-        <label>Шрифт:</label>
-        <select id="font">
-            <option value="'Segoe UI', sans-serif">Segoe UI</option>
-            <option value="Arial, sans-serif">Arial</option>
-            <option value="'Courier New', monospace">Courier New</option>
-        </select>
+    <div class="nav">
+        <button onclick="showTab('traits')">Черты</button>
+        <button onclick="showTab('races')">Расы</button>
+        <button onclick="showTab('classes')">Классы</button>
+        <button onclick="showTab('export')">Экспорт</button>
     </div>
 
-    <div class="section">
-        <h3>Блоки контента</h3>
-        <div id="blocks" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <button onclick="addBlock('description')">+ Описание</button>
-        <button onclick="addBlock('features')">+ Особенности</button>
-        <button onclick="addBlock('table')">+ Таблица</button>
+    <!-- Черты -->
+    <div id="traits" class="tab active">
+        <h2>Черты</h2>
+        <input type="text" id="traitName" placeholder="Название черты">
+        <textarea id="traitDesc" rows="3" placeholder="Описание"></textarea>
+        <button onclick="addTrait()">Добавить черту</button>
+        <div id="traitsGrid" class="grid"></div>
     </div>
 
-    <button onclick="generateFullCode()">Сгенерировать HTML</button>
-    
-    <h3>Готовый код:</h3>
-    <pre id="output"></pre>
-    <button onclick="copyCode()">Копировать</button>
+    <!-- Расы -->
+    <div id="races" class="tab">
+        <h2>Расы</h2>
+        <input type="text" id="raceName" placeholder="Название расы">
+        <textarea id="raceDesc" rows="4" placeholder="Описание расы"></textarea>
+        <button onclick="addRace()">Добавить расу</button>
+        <div id="racesGrid" class="grid"></div>
+    </div>
+
+    <!-- Классы -->
+    <div id="classes" class="tab">
+        <h2>Классы</h2>
+        <input type="text" id="className" placeholder="Название класса">
+        <textarea id="classDesc" rows="4" placeholder="Описание класса"></textarea>
+        <button onclick="addClass()">Добавить класс</button>
+        <div id="classesGrid" class="grid"></div>
+    </div>
+
+    <!-- Экспорт -->
+    <div id="export" class="tab">
+        <h2>Экспорт HTML</h2>
+        <button onclick="generateFullSite()">Сгенерировать полный сайт</button>
+        <pre id="exportOutput"></pre>
+        <button onclick="copyExport()">Копировать код</button>
+    </div>
 
     <script>
-        function allowDrop(ev) { ev.preventDefault(); }
+        let data = JSON.parse(localStorage.getItem('alterego_data')) || { traits: [], races: [], classes: [] };
 
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.dataset.id);
+        function saveData() {
+            localStorage.setItem('alterego_data', JSON.stringify(data));
         }
 
-        function drop(ev) {
-            ev.preventDefault();
-            const data = ev.dataTransfer.getData("text");
-            const dragged = document.querySelector(`[data-id="${data}"]`);
-            const target = ev.target.closest('.block');
-            if (target && dragged !== target) {
-                const parent = document.getElementById('blocks');
-                parent.insertBefore(dragged, target);
-            }
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            
+            if (tab === 'traits') renderTraits();
+            if (tab === 'races') renderRaces();
+            if (tab === 'classes') renderClasses();
         }
 
-        let blockCounter = 0;
-
-        function addBlock(type) {
-            const container = document.getElementById('blocks');
-            const id = ++blockCounter;
+        // === Черты ===
+        function addTrait() {
+            const name = document.getElementById('traitName').value.trim();
+            const desc = document.getElementById('traitDesc').value.trim();
+            if (!name || !desc) return alert('Заполни название и описание');
             
-            let html = '';
-            
-            if (type === 'description') {
-                html = `<div class="block" data-id="${id}" draggable="true" ondragstart="drag(event)">
-                    <strong>Описание</strong>
-                    <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
-                    <textarea placeholder="Описание..." style="width:100%; height:80px;"></textarea>
-                </div>`;
-            } else if (type === 'features') {
-                html = `<div class="block" data-id="${id}" draggable="true" ondragstart="drag(event)">
-                    <strong>Особенности</strong>
-                    <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
-                    <textarea placeholder="Каждый пункт с новой строки" style="width:100%; height:120px;"></textarea>
-                </div>`;
-            } else if (type === 'table') {
-                html = `<div class="block" data-id="${id}" draggable="true" ondragstart="drag(event)">
-                    <strong>Таблица</strong>
-                    <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
-                    <textarea placeholder="Вставить HTML таблицы сюда" style="width:100%; height:100px;"></textarea>
-                </div>`;
-            }
-            
-            container.innerHTML += html;
+            data.traits.push({ name, desc });
+            saveData();
+            renderTraits();
+            document.getElementById('traitName').value = '';
+            document.getElementById('traitDesc').value = '';
         }
 
-        function generateFullCode() {
-            const title = document.getElementById('title').value || 'Название';
-            const accent = document.getElementById('accentColor').value;
-            const font = document.getElementById('font').value;
-
-            let content = '';
-            const blockElements = document.querySelectorAll('#blocks .block');
-            
-            blockElements.forEach(block => {
-                const textarea = block.querySelector('textarea');
-                if (textarea) {
-                    const text = textarea.value.replace(/\n/g, '<br>');
-                    content += `<div style="margin:15px 0;">${text}</div>`;
-                }
+        function renderTraits() {
+            const container = document.getElementById('traitsGrid');
+            container.innerHTML = '';
+            data.traits.forEach((trait, i) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">${trait.name}</div>
+                    <div class="card-content">${trait.desc}</div>
+                `;
+                card.onclick = () => card.classList.toggle('open');
+                container.appendChild(card);
             });
+        }
 
-            const html = `<!DOCTYPE html>
+        // === Расы ===
+        function addRace() {
+            const name = document.getElementById('raceName').value.trim();
+            const desc = document.getElementById('raceDesc').value.trim();
+            if (!name || !desc) return alert('Заполни название и описание');
+            
+            data.races.push({ name, desc });
+            saveData();
+            renderRaces();
+            document.getElementById('raceName').value = '';
+            document.getElementById('raceDesc').value = '';
+        }
+
+        function renderRaces() {
+            const container = document.getElementById('racesGrid');
+            container.innerHTML = '';
+            data.races.forEach((race) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">${race.name}</div>
+                    <div class="card-content">${race.desc}</div>
+                `;
+                card.onclick = () => card.classList.toggle('open');
+                container.appendChild(card);
+            });
+        }
+
+        // === Классы ===
+        function addClass() {
+            const name = document.getElementById('className').value.trim();
+            const desc = document.getElementById('classDesc').value.trim();
+            if (!name || !desc) return alert('Заполни название и описание');
+            
+            data.classes.push({ name, desc });
+            saveData();
+            renderClasses();
+            document.getElementById('className').value = '';
+            document.getElementById('classDesc').value = '';
+        }
+
+        function renderClasses() {
+            const container = document.getElementById('classesGrid');
+            container.innerHTML = '';
+            data.classes.forEach((cls) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">${cls.name}</div>
+                    <div class="card-content">${cls.desc}</div>
+                `;
+                card.onclick = () => card.classList.toggle('open');
+                container.appendChild(card);
+            });
+        }
+
+        function generateFullSite() {
+            let html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title} — Справочник по Альтер-Эго</title>
+    <title>Альтер-Эго</title>
     <style>
-        :root { --bg: #0f0c08; --card: #1c1812; --accent: ${accent}; --text: #d4c5a9; --border: #3a3024; }
-        body { margin: 0; font-family: ${font}; background: var(--bg); color: var(--text); line-height: 1.7; }
-        .card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; margin: 1rem; border-radius: 6px; }
+        body { background: #0f0c08; color: #d4c5a9; font-family: Arial; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+        .card { background: #1c1812; border: 1px solid #8b5a2b; border-radius: 6px; padding: 12px; cursor: pointer; }
+        .card-header { font-weight: bold; color: #c9a05f; }
+        .card-content { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3024; }
+        .card.open .card-content { display: block; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>${title}</h1>
-        ${content}
-    </div>
+    <h1>Альтер-Эго</h1>
+    
+    <h2>Черты</h2>
+    <div class="grid">`;
+
+            data.traits.forEach(t => {
+                html += `<div class="card"><div class="card-header">\( {t.name}</div><div class="card-content"> \){t.desc}</div></div>`;
+            });
+
+            html += `</div><h2>Расы</h2><div class="grid">`;
+            data.races.forEach(r => {
+                html += `<div class="card"><div class="card-header">\( {r.name}</div><div class="card-content"> \){r.desc}</div></div>`;
+            });
+
+            html += `</div><h2>Классы</h2><div class="grid">`;
+            data.classes.forEach(c => {
+                html += `<div class="card"><div class="card-header">\( {c.name}</div><div class="card-content"> \){c.desc}</div></div>`;
+            });
+
+            html += `</div>
+    <script>
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => card.classList.toggle('open'));
+        });
+    <\/script>
 </body>
 </html>`;
-            
-            document.getElementById('output').textContent = html;
+
+            document.getElementById('exportOutput').textContent = html;
         }
 
-        function copyCode() {
-            const output = document.getElementById('output').textContent;
-            navigator.clipboard.writeText(output);
+        function copyExport() {
+            const text = document.getElementById('exportOutput').textContent;
+            navigator.clipboard.writeText(text);
             alert('Код скопирован!');
         }
+
+        // Загрузка при старте
+        window.onload = () => {
+            renderTraits();
+            renderRaces();
+            renderClasses();
+        };
     </script>
 </body>
 </html>
