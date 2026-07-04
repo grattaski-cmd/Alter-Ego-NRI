@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мощный редактор Альтер-Эго</title>
+    <title>Редактор Альтер-Эго</title>
     <style>
         body { font-family: Arial, sans-serif; background: #0f0c08; color: #d4c5a9; padding: 20px; }
         input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #1c1812; color: #d4c5a9; border: 1px solid #8b5a2b; border-radius: 4px; }
@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h1>Мощный редактор Альтер-Эго (с перетаскиванием)</h1>
+    <h1>Редактор Альтер-Эго (с перетаскиванием)</h1>
     
     <div class="section">
         <label>Шаблон:</label>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="section">
-        <h3>Блоки контента (перетаскивай!)</h3>
+        <h3>Блоки контента</h3>
         <div id="blocks" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         <button onclick="addBlock('description')">+ Описание</button>
         <button onclick="addBlock('features')">+ Особенности</button>
@@ -103,7 +103,7 @@
                 html = `<div class="block" data-id="${id}" draggable="true" ondragstart="drag(event)">
                     <strong>Таблица</strong>
                     <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
-                    <textarea placeholder="Вставь HTML таблицы сюда" style="width:100%; height:100px;"></textarea>
+                    <textarea placeholder="Вставить HTML таблицы сюда" style="width:100%; height:100px;"></textarea>
                 </div>`;
             }
             
