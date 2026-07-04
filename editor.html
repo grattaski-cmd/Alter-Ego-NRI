@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор Альтер-Эго</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f0c08; color: #d4c5a9; padding: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #1c1812; color: #d4c5a9; border: 1px solid #8b5a2b; }
+        button { padding: 12px 20px; background: #c9a05f; color: #0f0c08; border: none; cursor: pointer; font-weight: bold; }
+        pre { background: #1c1812; padding: 15px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Простой редактор Альтер-Эго</h1>
+    
+    <label>Название:</label>
+    <input type="text" id="title" placeholder="Например: Человек (Human)">
+    
+    <label>Описание:</label>
+    <textarea id="description" rows="4" placeholder="Описание расы/класса"></textarea>
+    
+    <label>Особенности:</label>
+    <textarea id="features" rows="8" placeholder="Список особенностей..."></textarea>
+    
+    <label>Специализации (через запятую):</label>
+    <input type="text" id="specializations" placeholder="Атлетика, Проницательность, Магия">
+    
+    <button onclick="generateCode()">Сгенерировать HTML-код</button>
+    
+    <h3>Готовый код:</h3>
+    <pre id="output"></pre>
+    <button onclick="copyCode()">Копировать в буфер</button>
+
+    <script>
+        function generateCode() {
+            const title = document.getElementById('title').value || 'Название';
+            const desc = document.getElementById('description').value || '';
+            const features = document.getElementById('features').value || '';
+            const specs = document.getElementById('specializations').value || '';
+            
+            const html = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} — Справочник по Альтер-Эго</title>
+    <style>
+        :root { --bg: #0f0c08; --card: #1c1812; --accent: #c9a05f; --text: #d4c5a9; --border: #3a3024; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+        .card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; margin: 1rem; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>${title}</h1>
+        <p>${desc}</p>
+        <h2>Особенности</h2>
+        <p>${features}</p>
+        \( {specs ? `<h2>Специализации</h2><p> \){specs}</p>` : ''}
+    </div>
+</body>
+</html>`;
+            
+            document.getElementById('output').textContent = html;
+        }
+
+        function copyCode() {
+            const output = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(output);
+            alert('Код скопирован!');
+        }
+    </script>
+</body>
+</html>
