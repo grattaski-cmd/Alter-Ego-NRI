@@ -119,6 +119,16 @@
             </table>
         </div>
 
+        <div class="card">
+            <h2 class="section-title" onclick="toggleSpells(this)" style="cursor:pointer;">▼ Заклинания и способности Гештальта U</h2>
+            <div id="spells-section" style="display:none;">
+                
+                <p>Здесь будет список доступных заклинаний и способностей по уровням.</p>
+            </div>
+        </div>
+
+        
+
                 <div class="card">
             <h2 class="section-title">Основные особенности класса</h2>
             
@@ -561,7 +571,18 @@
     </script>
 </body>
 </html>
-        
+        <script>
+    function toggleSpells(header) {
+        const section = document.getElementById('spells-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            header.textContent = '▲ Заклинания и способности Гештальта U';
+        } else {
+            section.style.display = 'none';
+            header.textContent = '▼ Заклинания и способности Гештальта U';
+        }
+    }
+        </script>
 
     </div>
 </body>
