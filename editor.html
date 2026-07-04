@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Редактор Альтер-Эго</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #0f0c08; color: #d4c5a9; padding: 20px; }
-        .tab { display: none; }
-        .tab.active { display: block; }
-        .nav { margin-bottom: 20px; }
-        .nav button { padding: 10px 20px; margin-right: 5px; background: #1c1812; color: #c9a05f; border: 1px solid #8b5a2b; cursor: pointer; }
+        body { font-family: Arial, sans-serif; background: #0f0c08; color: #d4c5a9; padding: 15px; margin: 0; }
+        .nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .nav button { padding: 10px 16px; background: #1c1812; color: #c9a05f; border: 1px solid #8b5a2b; cursor: pointer; flex: 1; min-width: 120px; }
         .nav button.active { background: #c9a05f; color: #0f0c08; }
-        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #1c1812; color: #d4c5a9; border: 1px solid #8b5a2b; border-radius: 4px; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #1c1812; color: #d4c5a9; border: 1px solid #8b5a2b; border-radius: 4px; box-sizing: border-box; }
         button { padding: 12px 20px; background: #c9a05f; color: #0f0c08; border: none; cursor: pointer; font-weight: bold; margin: 10px 5px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 15px; }
         .card { background: #1c1812; border: 1px solid #8b5a2b; border-radius: 6px; padding: 12px; cursor: pointer; }
         .card:hover { border-color: #c9a05f; }
         .card-header { font-weight: bold; color: #c9a05f; margin-bottom: 8px; }
         .card-content { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3024; }
         .card.open .card-content { display: block; }
-        pre { background: #1c1812; padding: 15px; overflow: auto; white-space: pre-wrap; }
+        pre { background: #1c1812; padding: 15px; overflow: auto; white-space: pre-wrap; font-size: 14px; }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <h1>Редактор Альтер-Эго</h1>
     
     <div class="nav">
-        <button onclick="showTab('traits')">Черты</button>
+        <button onclick="showTab('traits')" class="active">Черты</button>
         <button onclick="showTab('races')">Расы</button>
         <button onclick="showTab('classes')">Классы</button>
+        <button onclick="showTab('subclasses')">Подклассы</button>
         <button onclick="showTab('export')">Экспорт</button>
     </div>
 
@@ -36,8 +38,8 @@
     <div id="traits" class="tab active">
         <h2>Черты</h2>
         <input type="text" id="traitName" placeholder="Название черты">
-        <textarea id="traitDesc" rows="3" placeholder="Описание"></textarea>
-        <button onclick="addTrait()">Добавить черту</button>
+        <textarea id="traitDesc" rows="3" placeholder="Описание черты"></textarea>
+        <button onclick="addTrait()">Добавить</button>
         <div id="traitsGrid" class="grid"></div>
     </div>
 
@@ -45,8 +47,8 @@
     <div id="races" class="tab">
         <h2>Расы</h2>
         <input type="text" id="raceName" placeholder="Название расы">
-        <textarea id="raceDesc" rows="4" placeholder="Описание расы"></textarea>
-        <button onclick="addRace()">Добавить расу</button>
+        <textarea id="raceDesc" rows="4" placeholder="Описание"></textarea>
+        <button onclick="addRace()">Добавить</button>
         <div id="racesGrid" class="grid"></div>
     </div>
 
@@ -54,21 +56,30 @@
     <div id="classes" class="tab">
         <h2>Классы</h2>
         <input type="text" id="className" placeholder="Название класса">
-        <textarea id="classDesc" rows="4" placeholder="Описание класса"></textarea>
-        <button onclick="addClass()">Добавить класс</button>
+        <textarea id="classDesc" rows="4" placeholder="Описание"></textarea>
+        <button onclick="addClass()">Добавить</button>
         <div id="classesGrid" class="grid"></div>
+    </div>
+
+    <!-- Подклассы -->
+    <div id="subclasses" class="tab">
+        <h2>Подклассы</h2>
+        <input type="text" id="subclassName" placeholder="Название подкласса">
+        <textarea id="subclassDesc" rows="4" placeholder="Описание"></textarea>
+        <button onclick="addSubclass()">Добавить</button>
+        <div id="subclassesGrid" class="grid"></div>
     </div>
 
     <!-- Экспорт -->
     <div id="export" class="tab">
-        <h2>Экспорт HTML</h2>
-        <button onclick="generateFullSite()">Сгенерировать полный сайт</button>
+        <h2>Экспорт</h2>
+        <button onclick="generateFullSite()">Сгенерировать сайт</button>
         <pre id="exportOutput"></pre>
         <button onclick="copyExport()">Копировать код</button>
     </div>
 
     <script>
-        let data = JSON.parse(localStorage.getItem('alterego_data')) || { traits: [], races: [], classes: [] };
+        let data = JSON.parse(localStorage.getItem('alterego_data')) || { traits: [], races: [], classes: [], subclasses: [] };
 
         function saveData() {
             localStorage.setItem('alterego_data', JSON.stringify(data));
@@ -77,90 +88,41 @@
         function showTab(tab) {
             document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
             document.getElementById(tab).classList.add('active');
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.querySelector(`button[onclick="showTab('${tab}')"]`).classList.add('active');
             
             if (tab === 'traits') renderTraits();
             if (tab === 'races') renderRaces();
             if (tab === 'classes') renderClasses();
+            if (tab === 'subclasses') renderSubclasses();
         }
 
-        // === Черты ===
-        function addTrait() {
-            const name = document.getElementById('traitName').value.trim();
-            const desc = document.getElementById('traitDesc').value.trim();
+        function addItem(type) {
+            const name = document.getElementById(type + 'Name').value.trim();
+            const desc = document.getElementById(type + 'Desc').value.trim();
             if (!name || !desc) return alert('Заполни название и описание');
             
-            data.traits.push({ name, desc });
+            data[type + 's'].push({ name, desc });
             saveData();
-            renderTraits();
-            document.getElementById('traitName').value = '';
-            document.getElementById('traitDesc').value = '';
+            window['render' + type.charAt(0).toUpperCase() + type.slice(1) + 's']();
+            document.getElementById(type + 'Name').value = '';
+            document.getElementById(type + 'Desc').value = '';
         }
 
-        function renderTraits() {
-            const container = document.getElementById('traitsGrid');
+        function renderTraits() { renderGrid('traitsGrid', data.traits); }
+        function renderRaces() { renderGrid('racesGrid', data.races); }
+        function renderClasses() { renderGrid('classesGrid', data.classes); }
+        function renderSubclasses() { renderGrid('subclassesGrid', data.subclasses); }
+
+        function renderGrid(containerId, items) {
+            const container = document.getElementById(containerId);
             container.innerHTML = '';
-            data.traits.forEach((trait, i) => {
+            items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                    <div class="card-header">${trait.name}</div>
-                    <div class="card-content">${trait.desc}</div>
-                `;
-                card.onclick = () => card.classList.toggle('open');
-                container.appendChild(card);
-            });
-        }
-
-        // === Расы ===
-        function addRace() {
-            const name = document.getElementById('raceName').value.trim();
-            const desc = document.getElementById('raceDesc').value.trim();
-            if (!name || !desc) return alert('Заполни название и описание');
-            
-            data.races.push({ name, desc });
-            saveData();
-            renderRaces();
-            document.getElementById('raceName').value = '';
-            document.getElementById('raceDesc').value = '';
-        }
-
-        function renderRaces() {
-            const container = document.getElementById('racesGrid');
-            container.innerHTML = '';
-            data.races.forEach((race) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">${race.name}</div>
-                    <div class="card-content">${race.desc}</div>
-                `;
-                card.onclick = () => card.classList.toggle('open');
-                container.appendChild(card);
-            });
-        }
-
-        // === Классы ===
-        function addClass() {
-            const name = document.getElementById('className').value.trim();
-            const desc = document.getElementById('classDesc').value.trim();
-            if (!name || !desc) return alert('Заполни название и описание');
-            
-            data.classes.push({ name, desc });
-            saveData();
-            renderClasses();
-            document.getElementById('className').value = '';
-            document.getElementById('classDesc').value = '';
-        }
-
-        function renderClasses() {
-            const container = document.getElementById('classesGrid');
-            container.innerHTML = '';
-            data.classes.forEach((cls) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">${cls.name}</div>
-                    <div class="card-content">${cls.desc}</div>
+                    <div class="card-header">${item.name}</div>
+                    <div class="card-content">${item.desc}</div>
                 `;
                 card.onclick = () => card.classList.toggle('open');
                 container.appendChild(card);
@@ -185,23 +147,18 @@
 <body>
     <h1>Альтер-Эго</h1>
     
-    <h2>Черты</h2>
-    <div class="grid">`;
-
-            data.traits.forEach(t => {
-                html += `<div class="card"><div class="card-header">\( {t.name}</div><div class="card-content"> \){t.desc}</div></div>`;
-            });
-
+    <h2>Черты</h2><div class="grid">`;
+            data.traits.forEach(t => html += `<div class="card"><div class="card-header">\( {t.name}</div><div class="card-content"> \){t.desc}</div></div>`);
+            
             html += `</div><h2>Расы</h2><div class="grid">`;
-            data.races.forEach(r => {
-                html += `<div class="card"><div class="card-header">\( {r.name}</div><div class="card-content"> \){r.desc}</div></div>`;
-            });
-
+            data.races.forEach(r => html += `<div class="card"><div class="card-header">\( {r.name}</div><div class="card-content"> \){r.desc}</div></div>`);
+            
             html += `</div><h2>Классы</h2><div class="grid">`;
-            data.classes.forEach(c => {
-                html += `<div class="card"><div class="card-header">\( {c.name}</div><div class="card-content"> \){c.desc}</div></div>`;
-            });
-
+            data.classes.forEach(c => html += `<div class="card"><div class="card-header">\( {c.name}</div><div class="card-content"> \){c.desc}</div></div>`);
+            
+            html += `</div><h2>Подклассы</h2><div class="grid">`;
+            data.subclasses.forEach(s => html += `<div class="card"><div class="card-header">\( {s.name}</div><div class="card-content"> \){s.desc}</div></div>`);
+            
             html += `</div>
     <script>
         document.querySelectorAll('.card').forEach(card => {
@@ -210,7 +167,7 @@
     <\/script>
 </body>
 </html>`;
-
+            
             document.getElementById('exportOutput').textContent = html;
         }
 
@@ -220,11 +177,11 @@
             alert('Код скопирован!');
         }
 
-        // Загрузка при старте
         window.onload = () => {
             renderTraits();
             renderRaces();
             renderClasses();
+            renderSubclasses();
         };
     </script>
 </body>
