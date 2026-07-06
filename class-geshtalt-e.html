@@ -75,25 +75,21 @@
     display: block;
 }
 
-.subclasses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
-}
 .subclass-card {
-    padding: 20px 10px;
+    padding: 18px 10px;
     text-align: center;
     font-weight: bold;
-    font-size: 1.1em;
     color: white;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
 }
-.subclass-card:hover {
-    transform: scale(1.08);
+.subclass-detail {
+    background: #16120d;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+    border-left: 4px solid var(--accent);
 }
     </style>
 </head>
@@ -293,8 +289,12 @@
             <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-            <div class="subclasses-grid">
-                <div class="subclass-card" style="background:#c94d2e;" onclick="alert('EW')"</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin-top: 15px;" id="subclassGrid">
+                <!-- EW -->
+                <div class="subclass-card" style="background:#c94d2e;" onclick="toggleSubclass(this, 'ew-detail')">EW</div>
+                <div id="ew-detail" class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+                    <div class="ability">
+                        <strong>EW</strong>
                     <p>Ваш Гештальт рождён из чистой, неконтролируемой ярости.</p>
                     <div class="ability">
                         <strong>4 уровень — Ярость Берсерка</strong><br>
@@ -320,6 +320,12 @@
         
         </div>
 
+<script>
+    function toggleSubclass(card, detailId) {
+        const detail = document.getElementById(detailId);
+        detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
     </div>
 </body>
 </html>
