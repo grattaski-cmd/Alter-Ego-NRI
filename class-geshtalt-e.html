@@ -75,25 +75,25 @@
     display: block;
 }
 
-..subclass-btn {
-    padding: 20px 10px;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    border-radius: 8px;
+.subclass-card {
+    background: #1c1812;
+    border: 1px solid #8b5a2b;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 12px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
 }
-.subclass-btn:hover {
-    transform: scale(1.1);
+.subclass-header {
+    color: #c9a05f;
+    font-weight: bold;
+    font-size: 1.2em;
 }
-.subclass-detail {
-    background: #16120d;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 15px 0;
-    border-left: 5px solid var(--accent);
+.subclass-content {
+    display: none;
+    margin-top: 12px;
+}
+.subclass-card.open .subclass-content {
+    display: block;
 }
     </style>
 </head>
@@ -290,33 +290,32 @@
 <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 12px; margin: 20px 0;" id="subclassButtons">
-                <!-- EW -->
-                <div class="subclass-btn" style="background:#c94d2e;" onclick="toggleDetail('ew-detail')">EW</div>
-                <div id="ew-detail" class="subclass-detail" style="display:none; grid-column: 1 / -1;">
-                    <h3>EW</h3>
-                    <p>Ваш Гештальт рождён из чистой, неконтролируемой ярости.</p>
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EW</div>
+                <div class="subclass-content">
+                    <p><strong>Ярость Берсерка</strong></p>
                     <div class="ability">
                         <strong>4 уровень — Ярость Берсерка</strong><br>
-                        +4 к урону (растёт до +8 на 11 уровне), сопротивление физическому урону, временные HP = 1d10 + уровень.
+                        +4 к урону (до +8 на 11 уровне), сопротивление физическому урону, временные HP = 1d10 + уровень.
                     </div>
                     <div class="ability">
                         <strong>7 уровень — Неукротимая Ярость</strong><br>
-                        «Вспышка Гнева» (2 Эссенции): +3d8 огненного урона. Реакцией входить в Ярость при критическом уроне.
+                        «Вспышка Гнева» (2 Эссенции): +3d8 огненного урона.
                     </div>
                     <div class="ability">
                         <strong>11 уровень — Кровавое Безумие</strong><br>
-                        Дополнительная атака в Ярости. «Кровь за Кровь» — ответная атака с преимуществом +4d10 огненного урона.
+                        Дополнительная атака. «Кровь за Кровь» — ответная атака +4d10 огненного.
                     </div>
                     <div class="ability">
                         <strong>15 уровень — Разрушитель</strong><br>
-                        «Ярость Разрушителя» (1/длинный отдых): иммунитет к испугу, +3 КД, сопротивление всем видам урона.
+                        «Ярость Разрушителя»: иммунитет к испугу, +3 КД, сопротивление всем видам урона.
                     </div>
                     <div class="ability">
                         <strong>19 уровень — Апофеоз Гнева</strong><br>
-                        Максимум Резерва +4. «Неукротимый Шторм»: иммунитет к урону, +6d10 огненного урона, дополнительное действие атаки.
+                        Максимум Резерва +4. «Неукротимый Шторм»: иммунитет к урону, +6d10 огненного.
                     </div>
                 </div>
+      
         
         </div>
 
