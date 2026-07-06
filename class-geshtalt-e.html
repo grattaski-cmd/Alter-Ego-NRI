@@ -74,6 +74,27 @@
 .trait-card.open .trait-content {
     display: block;
 }
+
+.subclasses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+.subclass-card {
+    padding: 20px 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.subclass-card:hover {
+    transform: scale(1.08);
+}
     </style>
 </head>
 <body>
@@ -269,11 +290,12 @@
 <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-            <!-- EW -->
-            <div class="trait-card" onclick="this.classList.toggle('open')">
-                <div class="trait-header">EW</div>
-                <div class="trait-content">
-                    <p><strong>А. Гештальт EW</strong> — «Ярость Берсерка». Ваш Гештальт рождён из чистой, неконтролируемой ярости.</p>
+            <div class="card">
+            <h2 class="section-title">Подклассы</h2>
+            
+            <div class="subclasses-grid">
+                <div class="subclass-card" style="background:#c94d2e;" onclick="alert('EW')"</div>
+                    <p>Ваш Гештальт рождён из чистой, неконтролируемой ярости.</p>
                     <div class="ability">
                         <strong>4 уровень — Ярость Берсерка</strong><br>
                         +4 к урону (растёт до +8 на 11 уровне), сопротивление физическому урону, временные HP = 1d10 + уровень.
