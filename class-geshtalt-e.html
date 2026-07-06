@@ -75,21 +75,25 @@
     display: block;
 }
 
-.subclass-card {
-    padding: 18px 10px;
+..subclass-btn {
+    padding: 20px 10px;
     text-align: center;
     font-weight: bold;
     color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+.subclass-btn:hover {
+    transform: scale(1.1);
 }
 .subclass-detail {
     background: #16120d;
-    padding: 15px;
-    border-radius: 6px;
-    margin: 10px 0;
-    border-left: 4px solid var(--accent);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 5px solid var(--accent);
 }
     </style>
 </head>
@@ -286,15 +290,11 @@
 <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-            <div class="card">
-            <h2 class="section-title">Подклассы</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin-top: 15px;" id="subclassGrid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 12px; margin: 20px 0;" id="subclassButtons">
                 <!-- EW -->
-                <div class="subclass-card" style="background:#c94d2e;" onclick="toggleSubclass(this, 'ew-detail')">EW</div>
+                <div class="subclass-btn" style="background:#c94d2e;" onclick="toggleDetail('ew-detail')">EW</div>
                 <div id="ew-detail" class="subclass-detail" style="display:none; grid-column: 1 / -1;">
-                    <div class="ability">
-                        <strong>EW</strong>
+                    <h3>EW</h3>
                     <p>Ваш Гештальт рождён из чистой, неконтролируемой ярости.</p>
                     <div class="ability">
                         <strong>4 уровень — Ярость Берсерка</strong><br>
