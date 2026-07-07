@@ -254,13 +254,18 @@
 </body>
 </html>
 
-<div class="card">
+  <div class="card">
             <h2 class="section-title">Подклассы</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; margin-top: 15px;">
-                <!-- EW -->
-                <div class="subclass-btn" style="background:#c94d2e;" onclick="toggleDetail(this)">EW</div>
-                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+            <div class="tabs">
+                <div class="tab-button active" onclick="openTab(event, 'UR')">UR</div>
+                <div class="tab-button" onclick="openTab(event, 'UP')">UP</div>
+                <div class="tab-button" onclick="openTab(event, 'UF')">UF</div>
+                <div class="tab-button" onclick="openTab(event, 'US')">US</div>
+                <div class="tab-button" onclick="openTab(event, 'UC')">UC</div>
+                <div class="tab-button" onclick="openTab(event, 'UG')">UG</div>
+            </div>
+
+                        <div id="UR" class="tab-content">
 .       <h3>EW</h3>
                     <p><strong>Ярость Берсерка</strong></p>
                     <div class="ability">
