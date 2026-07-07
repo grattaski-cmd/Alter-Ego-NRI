@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>А. Гештальт Е — Справочник по Альтер-Эго</title>
+    <title>А. Гештальт E — Справочник по Альтер-Эго</title>
     <style>
         :root {
             --bg: #0f0c08;
@@ -45,12 +45,38 @@
             margin-bottom: 1.5rem;
             border-radius: 6px;
         }
-        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
-        .level-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        .level-table td, .level-table th { border: 1px solid var(--border); padding: 8px; text-align: center; }
-        .level-table th { background: #2c1e14; color: var(--accent); }
-        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
+        .section-title { 
+            color: var(--accent); 
+            border-bottom: 1px solid var(--border); 
+            padding-bottom: 0.5rem; 
+            cursor: pointer;
+        }
+        .ability { 
+            background: #16120d; 
+            padding: 1rem; 
+            margin: 1rem 0; 
+            border-left: 3px solid var(--accent); 
+        }
+        .level-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 1rem 0; 
+        }
+        .level-table td, .level-table th { 
+            border: 1px solid var(--border); 
+            padding: 8px; 
+            text-align: center; 
+        }
+        .level-table th { 
+            background: #2c1e14; 
+            color: var(--accent); 
+        }
+        .tabs { 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+            margin-bottom: 1rem; 
+        }
         .tab-button {
             padding: 10px 16px;
             background: #2c1e14;
@@ -59,14 +85,41 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .tab-button.active { background: var(--accent); color: #0f0c08; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-button.active { 
+            background: var(--accent); 
+            color: #0f0c08; 
+        }
+        .tab-content { 
+            display: none; 
+        }
+        .tab-content.active { 
+            display: block; 
+        }
 
+        /* Раскрывашка для подклассов */
+        .subclass-card {
+            background: #16120d;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .subclass-header {
+            padding: 12px 16px;
+            background: #2c1e14;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .subclass-content {
+            padding: 0 16px 16px;
+            display: none;
+        }
+        .subclass-card.open .subclass-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <header>
         <h1>А. Гештальт E</h1>
         <p style="color:#8a7a5f; margin:0.5rem 0 0;">Класс • Эмоциональный Гештальт</p>
     </header>
@@ -263,10 +316,11 @@
                 <div class="tab-button" onclick="openTab(event, 'ES')">ES</div>
                 <div class="tab-button" onclick="openTab(event, 'EF')">EF</div>
                 <div class="tab-button" onclick="openTab(event, 'EG')">EG</div>
-<div class="tab-button" onclick="openTab(event, 'EL')">EL</div>
-<div class="tab-button" onclick="openTab(event, 'EA')">EA</div>
+                <div class="tab-button" onclick="openTab(event, 'EL')">EL</div>
+                <div class="tab-button" onclick="openTab(event, 'EA')">EA</div>
+            </div>
 
-                        <div id="EW" class="tab-content">
+                        <div id="EW" class="tab-content active">
 <p><strong>EW — Подкласс</strong></p>
                     <p>Ваш Гештальт рождён из пламени, которое невозможно погасить.в вашей душе взорвался вулкан и лава растекается по морям, создавая безжизненные острова.</p>
                     <div class="ability">
@@ -302,7 +356,6 @@
             </div>
       
 <div id="ER" class="tab-content">
-                <div class="subclass-content">
                     <p><strong>ER — Подкласс</strong></p>
                     <p>Ваш Гештальт рождён из обиды — глубокого чувства несправедливости, предательства или унижения.</p>
                     
@@ -336,9 +389,10 @@
                     </div>
 
 
-<div class="subclass-card" onclick="this.classList.toggle('open')">
-                <div class="subclass-header">ES</div>
-                <div class="subclass-content">
+<div id="ES" class="tab-content">
+                <div class="subclass-card" onclick="this.classList.toggle('open')">
+                    <div class="subclass-header">ES</div>
+                    <div class="subclass-content">
                     <p>Ваш Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли.</p>
                     
                     <div class="ability">
@@ -373,27 +427,23 @@
                     </div>
 
     <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tabbuttons;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
+        function toggleSection(header) {
+            const section = document.getElementById('absorption-section');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                header.textContent = '▲ Поглощение (механика риска)';
+            } else {
+                section.style.display = 'none';
+                header.textContent = '▼ Поглощение (механика риска)';
             }
-            tabbuttons = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tabbuttons.length; i++) {
-                tabbuttons[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
         }
-    </script>
 
-    </div>
-
-<script>
-        function toggleDetail(btn) {
-            const detail = btn.nextElementSibling;
-            detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+        function openTab(evt, tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
     </script>
 </body>
