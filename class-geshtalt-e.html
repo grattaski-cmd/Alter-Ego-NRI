@@ -263,14 +263,11 @@
                 <div class="tab-button" onclick="openTab(event, 'ES')">ES</div>
                 <div class="tab-button" onclick="openTab(event, 'EF')">EF</div>
                 <div class="tab-button" onclick="openTab(event, 'EG')">EG</div>
-            </div>
 <div class="tab-button" onclick="openTab(event, 'EL')">EL</div>
-            </div>
 <div class="tab-button" onclick="openTab(event, 'EA')">EA</div>
-            </div>
 
                         <div id="EW" class="tab-content">
-.       <h3>EW</h3>
+    <h3>EW</h3>
                     <p><strong>Ярость Берсерка</strong></p>
                     <div class="ability">
                     <strong>4 уровень — Ярость Берсерка</strong><br>
@@ -343,12 +340,23 @@
         
         </div>
 
-<script>
-    function toggleSubclass(card, detailId) {
-        const detail = document.getElementById(detailId);
-        detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
-    }
-</script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
     </div>
 </body>
 </html>
