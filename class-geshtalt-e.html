@@ -290,9 +290,11 @@
 <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-            <div class="subclass-card" onclick="this.classList.toggle('open')">
-                <div class="subclass-header">EW</div>
-                <div class="subclass-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; margin-top: 15px;">
+                <!-- EW -->
+                <div class="subclass-btn" style="background:#c94d2e;" onclick="toggleDetail(this)">EW</div>
+                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+.       <h3>EW</h3>
                     <p><strong>Ярость Берсерка</strong></p>
                     <div class="ability">
                     <strong>4 уровень — Ярость Берсерка</strong><br>
@@ -327,8 +329,9 @@
             </div>
       
 <!-- ER -->
-            <div class="subclass-card" onclick="this.classList.toggle('open')">
-                <div class="subclass-header">ER</div>
+            <div class="subclass-btn" style="background:#3b8c9e;" onclick="toggleDetail(this)">ER</div>
+                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+                    <h3>ER</h3>
                 <div class="subclass-content">
                     <p><strong>ER — Подкласс</strong></p>
                     <p>Ваш Гештальт рождён из обиды — глубокого чувства несправедливости, предательства или унижения.</p>
