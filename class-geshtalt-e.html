@@ -399,8 +399,6 @@
                     • Один раз за минуту вы можете совершить дополнительное действие атаки.<br><br>
                     <strong>Пассивно:</strong> Пока вы в Ярости, вы не можете быть убиты мгновенно. При 0 хитов вы переходите в бессознательное состояние, но автоматически стабилизируетесь.
                 </div>
-            </div>
-        </div>
 
                         <div <div id="ER" class="tab-content">
                             <h3>ER — Подкласс</h3>
@@ -442,8 +440,7 @@
                           • Враги в радиусе 30 футов имеют помеху на все спасброски.<br><br>
                     <strong>Пассивно:</strong> Пока вы в бою, вы получаете сопротивление ко всем видам урона, кроме физических.
                 </div>
-            </div>
-        </div>
+
 
                         <div id="ES" class="tab-content">
                             <h3>ES — Подкласс</h3>
@@ -487,62 +484,50 @@
                         • Один раз за время действия вы можете исцелить всех союзников на количество хитов = ваш уровень × 4.<br><br>
                   <strong>Пассивно:</strong> Пока в радиусе есть хотя бы один союзник, вы получаете сопротивление ко всем видам урона.
                 </div>
-            </div>
-        </div>
-
-
 
         
-  <script>
-    function toggleSection(el) {
-        const content = el.nextElementSibling;
-        if (content) {
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';
-            if (content.style.display === 'block') {
-                el.textContent = el.textContent.replace('▼', '▶');
-            } else {
-                el.textContent = el.textContent.replace('▶', '▼');
+   <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
             }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
-    }
     </script>
-    </div>
-
+</body>
+</html>
         <script>
-        // Функция для блока Заклинаний
-        function toggleSpells(el) {
-            const section = document.getElementById('spells-section');
-            if (section) {
-                section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
-                
-                // Меняем стрелку
-                if (section.style.display === 'block') {
-                    el.textContent = el.textContent.replace('▼', '▶');
-                } else {
-                    el.textContent = el.textContent.replace('▶', '▼');
-                }
-            }
+    function toggleSpells(header) {
+        const section = document.getElementById('spells-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            header.textContent = '▲ Заклинания и способности Гештальта U';
+        } else {
+            section.style.display = 'none';
+            header.textContent = '▼ Заклинания и способности Гештальта U';
         }
-</script> 
-
-    <script>
-    function openTab(evt, tabName) {
-    // Скрываем все tab-content
-    let tabcontents = document.getElementsByClassName("tab-content");
-    for (let i = 0; i < tabcontents.length; i++) {
-        tabcontents[i].classList.remove("active");
     }
-
-    // Убираем active у всех кнопок
-    let tabbuttons = document.getElementsByClassName("tab-button");
-    for (let i = 0; i < tabbuttons.length; i++) {
-        tabbuttons[i].classList.remove("active");
-    }
-
-    // Показываем нужный таб и активируем кнопку
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
-}
         </script>
+
+    </div>
+<script>
+    function toggleSection(header) {
+        const section = document.getElementById('absorption-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            header.textContent = '▲ Поглощение (механика риска)';
+        } else {
+            section.style.display = 'none';
+            header.textContent = '▼ Поглощение (механика риска)';
+        }
+    }
+</script>
 </body>
 </html>
