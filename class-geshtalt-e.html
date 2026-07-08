@@ -364,18 +364,7 @@
 
 
         
-
-         <script>
-        function toggleSpells(el) {
-            const section = document.getElementById('spells-section');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            el.textContent = el.textContent.startsWith('▼') ? '▶ ' + el.textContent.slice(1) : '▼ ' + el.textContent.slice(1);
-        }
-        function toggleSection(el) {
-            const section = el.nextElementSibling;
-            if (section) section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        }
-             <script>
+  <script>
     function toggleSection(el) {
         const content = el.nextElementSibling;
         if (content) {
@@ -390,5 +379,16 @@
     </script>
     </div>
 
+         <script>
+        function toggleSpells(el) {
+            const section = document.getElementById('spells-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            el.textContent = el.textContent.startsWith('▼') ? '▶ ' + el.textContent.slice(1) : '▼ ' + el.textContent.slice(1);
+        }
+        function toggleSection(el) {
+            const section = el.nextElementSibling;
+            if (section) section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+           
 </body>
 </html>
