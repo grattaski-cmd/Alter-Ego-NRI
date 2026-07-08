@@ -50,18 +50,28 @@
         .level-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
         .level-table td, .level-table th { border: 1px solid var(--border); padding: 8px; text-align: center; }
         .level-table th { background: #2c1e14; color: var(--accent); }
-        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tab-button {
-            padding: 10px 16px;
-            background: #2c1e14;
-            border: 1px solid var(--border);
-            color: var(--accent);
+
+        /* Подклассы */
+        .subclass-card {
+            background: #1c1812;
+            border: 1px solid #8b5a2b;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
             cursor: pointer;
-            border-radius: 4px;
         }
-        .tab-button.active { background: var(--accent); color: #0f0c08; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .subclass-header {
+            color: #c9a05f;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .subclass-content {
+            display: none;
+            margin-top: 12px;
+        }
+        .subclass-card.open .subclass-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -76,13 +86,15 @@
 
     <div class="container">
 
+        <!-- Основная информация и таблицы -->
         <div class="card">
             <h2 class="section-title">Основная информация</h2>
             <p><strong>Хит дайс:</strong> 1d8</p>
             <p><strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения</p>
             <p><strong>Хиты на следующих уровнях:</strong> 1d8 (или 5) + модификатор Телосложения за уровень</p>
-            
-            <p><strong>Владения:</strong></p>
+        </div>
+
+        <p><strong>Владения:</strong></p>
             <ul>
                 <li><strong>Броня:</strong> Лёгкая, средняя</li>
                 <li><strong>Оружие:</strong> Простое оружие, короткие клинки</li>
@@ -90,11 +102,10 @@
                 <li><strong>Спасброски:</strong> Мудрость, Харизма</li>
                 <li><strong>Навыки:</strong> Проницательность + два на выбор из: Запугивание, Убеждение, Выступление, Обман, Восприятие</li>
             </ul>
-            
-            <p><strong>Снаряжение (стартовое):</strong> Лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией).</p>
+
+        <p><strong>Снаряжение (стартовое):</strong> Лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией).</p>
         </div>
 
-       
         <div class="card">
             <h2 class="section-title">Таблица прогрессии</h2>
             <table class="level-table">
@@ -122,16 +133,14 @@
             </table>
         </div>
 
-
-<div class="card">
+    <div class="card">
             <h2 class="section-title" onclick="toggleSpells(this)" style="cursor:pointer;">▼ Заклинания и способности Гештальта E</h2>
             <div id="spells-section" style="display:none;">
                 
                 <p>Здесь будет список доступных заклинаний и способностей по уровням.</p>
             </div>
         </div>
-
-        <div class="card">
+   <div class="card">
             <h2 class="section-title" onclick="toggleSection(this)" style="cursor:pointer;">▼ Поглощение (механика риска)</h2>
             <div id="absorption-section" style="display:none;">
                 
@@ -246,23 +255,18 @@
             </div>
         </div>
 
-  <div class="card">
+        <!-- Подклассы -->
+        <div class="card">
             <h2 class="section-title">Подклассы</h2>
-            <div class="tabs">
-                <div class="tab-button active" onclick="openTab(event, 'EW')">EW</div>
-                <div class="tab-button" onclick="openTab(event, 'ER')">ER</div>
-                <div class="tab-button" onclick="openTab(event, 'ES')">ES</div>
-                <div class="tab-button" onclick="openTab(event, 'EF')">EF</div>
-                <div class="tab-button" onclick="openTab(event, 'EG')">EG</div>
-                <div class="tab-button" onclick="openTab(event, 'EL')">EL</div>
-                <div class="tab-button" onclick="openTab(event, 'EA')">EA</div>
-            </div>
-
-                         <div id="EW" class="tab-content">
+            
+            <!-- EW -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EW</div>
+                <div class="subclass-content">
                     <h3>EW — Подкласс</h3>
                     <p>Ваш Гештальт рождён из пламени, которое невозможно погасить.в вашей душе взорвался вулкан и лава растекается по морям, создавая безжизненные острова.</p>
-                   
-                        <div class="ability">
+                    
+                      <div class="ability">
                     <strong>4 уровень — Ярость Берсерка</strong><br>
                     Когда вы входите в Внутренний режим, вы получаете +4 к урону всеми атаками (растёт до +8 на 11 уровне) и сопротивление к колющему, дробящему и режущему урону.<br><br>
                     Пока в Ярости, вы получаете временные HP = 1d10 + ваш уровень.<br>
@@ -292,8 +296,11 @@
                     <strong>«Неукротимый Шторм»</strong> (1/длинный отдых, 1 минута): Иммунитет ко всем видам урона на 1 минуту (один раз). Дополнительный урон 6d10 огненного. Один раз за минуту — дополнительное действие атаки.<br><br>
                     <strong>Пассивка:</strong> Пока вы в Ярости, вы не можете быть убиты мгновенно (при 0 HP переходите в бессознательное состояние, но стабилизируетесь автоматически).
                 </div>
-      
-                             <div id="ER" class="tab-content">
+
+            <!-- ER -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">ER</div>
+                <div class="subclass-content">
                     <h3>ER — Подкласс</h3>
                     <p>Ваш Гештальт рождён из обиды — глубокого чувства несправедливости, предательства или унижения.</p>
                     
@@ -326,9 +333,8 @@
                         Пассивно: сопротивление ко всем видам урона, кроме физических.
                     </div>
 
-
-                              <div id="ES" class="tab-content">
-                           <h3>ES — Подкласс</h3>
+            <!-- ES -->
+             <h3>ES — Подкласс</h3>
                            <p>Ваш Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли.</p>
                     
                     <div class="ability">
@@ -361,8 +367,10 @@
                         <strong>«Вечная Грусть»</strong> (1/длинный отдых, 1 минута): Союзники получают иммунитет к психическому/некротическому урону, +3 КД, преимущество на спасброски. Исцеление всех на уровень × 4 хитов.<br><br>
                         <strong>Пассивка:</strong> Пока есть хотя бы один союзник, вы получаете сопротивление ко всем видам урона.
                     </div>
-                            
-  <script>
+
+    </div>
+
+    <script>
         function openTab(evt, tabName) {
             var i, tabcontent, tabbuttons;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -377,8 +385,8 @@
             evt.currentTarget.classList.add("active");
         }
     </script>
-                                  
-        <script>
+    </div>
+    <script>
     function toggleSpells(header) {
         const section = document.getElementById('spells-section');
         if (section.style.display === 'none') {
@@ -391,8 +399,7 @@
     }
         </script>
     </div>
-                                 
- <script>
+<script>
     function toggleSection(header) {
         const section = document.getElementById('absorption-section');
         if (section.style.display === 'none') {
@@ -403,8 +410,8 @@
             header.textContent = '▼ Поглощение (механика риска)';
         }
     }
-</script>   
-                                 
+        </script>   
+   </div>                              
 <script>
     function toggleDetail(btn) {
         const detail = btn.nextElementSibling;
