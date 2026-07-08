@@ -496,20 +496,6 @@
                 }
             }
         }
-
-        // Универсальная функция для остальных блоков (подклассы, поглощение и т.д.)
-        function toggleSection(el) {
-            const content = el.nextElementSibling;
-            if (content) {
-                content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
-                
-                if (content.style.display === 'block') {
-                    el.textContent = el.textContent.replace('▼', '▶');
-                } else {
-                    el.textContent = el.textContent.replace('▶', '▼');
-                }
-            }
-        }
     </script>
                             
         <script>unction openTab(evt, tabName) {
@@ -530,6 +516,6 @@
     evt.currentTarget.classList.add("active");
 }
         </script>
-
+    </div>
 </body>
 </html>
