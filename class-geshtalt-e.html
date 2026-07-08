@@ -486,7 +486,7 @@
                 </div>
 
         
-        <script>
+    <script>
         // Функция для блока Заклинаний
         function toggleSpells(el) {
             const section = document.getElementById('spells-section');
@@ -500,41 +500,34 @@
                     el.textContent = el.textContent.replace('▶', '▼');
                 }
             }
-    function toggleSpells(header) {
-        const section = document.getElementById('spells-section');
-        if (section.style.display === 'none') {
-            section.style.display = 'block';
-            header.textContent = '▲ Заклинания и способности Гештальта E';
-        } else {
-            section.style.display = 'none';
-            header.textContent = '▼ Заклинания и способности Гештальта E';
         }
-</script> 
 
-    <script>
-    function openTab(evt, tabName) {
+        // Универсальная функция для остальных блоков (подклассы, поглощение и т.д.)
+        function toggleSection(el) {
+            const content = el.nextElementSibling;
+            if (content) {
+                content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+                
+                if (content.style.display === 'block') {
+                    el.textContent = el.textContent.replace('▼', '▶');
+                } else {
+                    el.textContent = el.textContent.replace('▶', '▼');
+                }
+            }
+        }
+    </script>
+                            
+        <script>unction openTab(evt, tabName) {
     // Скрываем все tab-content
     let tabcontents = document.getElementsByClassName("tab-content");
     for (let i = 0; i < tabcontents.length; i++) {
         tabcontents[i].classList.remove("active");
     }
-        </script>
 
     // Убираем active у всех кнопок
     let tabbuttons = document.getElementsByClassName("tab-button");
     for (let i = 0; i < tabbuttons.length; i++) {
         tabbuttons[i].classList.remove("active");
-    </div>
-<script>
-    function toggleSection(header) {
-        const section = document.getElementById('absorption-section');
-        if (section.style.display === 'none') {
-            section.style.display = 'block';
-            header.textContent = '▲ Поглощение (механика риска)';
-        } else {
-            section.style.display = 'none';
-            header.textContent = '▼ Поглощение (механика риска)';
-        }
     }
 
     // Показываем нужный таб и активируем кнопку
@@ -542,5 +535,6 @@
     evt.currentTarget.classList.add("active");
 }
         </script>
+
 </body>
 </html>
