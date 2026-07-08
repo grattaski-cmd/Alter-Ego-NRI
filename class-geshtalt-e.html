@@ -305,17 +305,20 @@
     </div>
 </div>
 
-                <div class="card">
-            <h2 class="section-title">Подклассы Гештальта E</h2>
-            
+                  <div class="card">
+            <h2 class="section-title">Подклассы</h2>
             <div class="tabs">
-                <button class="tab-button active" onclick="openTab(event, 'EW')">EW</button>
-                <button class="tab-button" onclick="openTab(event, 'ER')">ER</button>
-                <button class="tab-button" onclick="openTab(event, 'ES')">ES</button>
+                <div class="tab-button active" onclick="openTab(event, 'EW')">EW</div>
+                <div class="tab-button" onclick="openTab(event, 'ER')">ER</div>
+                <div class="tab-button" onclick="openTab(event, 'ES')">ES</div>
+                <div class="tab-button" onclick="openTab(event, 'US')">US</div>
+                <div class="tab-button" onclick="openTab(event, 'UC')">UC</div>
+                <div class="tab-button" onclick="openTab(event, 'UG')">UG</div>
             </div>
 
-                    <div id="EW" class="tab-content active">
+                <div id="EW" class="tab-content active">
                 <div class="ability">
+                <h3>EW — Подкласс</h3>
                 <p><strong>Описание:</strong> Ваш Гештальт рождён из чистой, неконтролируемой ярости — гнева на мир, предательство, боль или несправедливость. Он проявляется как огненная тень, разъярённый воин или вопль ярости.</p>
                 <p>Вы — живой ураган. Подкласс фокусируется на огромном уроне, выживании в ближнем бою и высоком риске потери контроля.</p>
                 
@@ -452,6 +455,20 @@
 
 
 
+        <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            </script>
         
   <script>
     function toggleSection(el) {
