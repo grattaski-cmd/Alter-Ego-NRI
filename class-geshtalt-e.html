@@ -71,6 +71,42 @@
             background: #2c1e14; 
             color: var(--accent); 
         }
+
+        .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 16px;
+    background: #2c1e14;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.tab-button:hover {
+    background: #3a2a1f;
+}
+
+.tab-button.active {
+    background: var(--accent);
+    color: #0f0c08;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -487,5 +523,24 @@
             }
         }
 </script> 
+
+    function openTab(evt, tabName) {
+    // Скрываем все tab-content
+    let tabcontents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].classList.remove("active");
+    }
+
+    // Убираем active у всех кнопок
+    let tabbuttons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabbuttons.length; i++) {
+        tabbuttons[i].classList.remove("active");
+    }
+
+    // Показываем нужный таб и активируем кнопку
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+        
 </body>
 </html>
