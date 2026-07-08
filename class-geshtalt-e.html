@@ -95,8 +95,6 @@
         .tab-content.active { 
             display: block; 
         }
-
-        /* Раскрывашка для подклассов */
         .subclass-card {
             background: #16120d;
             border: 1px solid var(--border);
@@ -130,7 +128,6 @@
 
     <div class="container">
 
-        <!-- Основная информация -->
         <div class="card">
             <h2 class="section-title">Основная информация</h2>
             <p><strong>Хит дайс:</strong> 1d8</p>
@@ -149,7 +146,7 @@
             <p><strong>Снаряжение (стартовое):</strong> Лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией).</p>
         </div>
 
-        <!-- Таблица прогрессии -->
+       
         <div class="card">
             <h2 class="section-title">Таблица прогрессии</h2>
             <table class="level-table">
@@ -179,6 +176,14 @@
 
 
 <div class="card">
+            <h2 class="section-title" onclick="toggleSpells(this)" style="cursor:pointer;">▼ Заклинания и способности Гештальта U</h2>
+            <div id="spells-section" style="display:none;">
+                
+                <p>Здесь будет список доступных заклинаний и способностей по уровням.</p>
+            </div>
+        </div>
+
+        <div class="card">
             <h2 class="section-title" onclick="toggleSection(this)" style="cursor:pointer;">▼ Поглощение (механика риска)</h2>
             <div id="absorption-section" style="display:none;">
                 
@@ -321,7 +326,7 @@
             </div>
 
                         <div id="EW" class="tab-content active">
-<p><strong>EW — Подкласс</strong></p>
+                    <h3>EW — Подкласс</h3>
                     <p>Ваш Гештальт рождён из пламени, которое невозможно погасить.в вашей душе взорвался вулкан и лава растекается по морям, создавая безжизненные острова.</p>
                     <div class="ability">
                     <strong>4 уровень — Ярость Берсерка</strong><br>
@@ -355,8 +360,8 @@
                 </div>
             </div>
       
-<div id="ER" class="tab-content">
-                    <p><strong>ER — Подкласс</strong></p>
+                             <div id="ER" class="tab-content">
+                    <h3>ER — Подкласс</h3>
                     <p>Ваш Гештальт рождён из обиды — глубокого чувства несправедливости, предательства или унижения.</p>
                     
                     <div class="ability">
@@ -389,9 +394,9 @@
                     </div>
 
 
-.                 <div id="ES" class="tab-content">
-.                 <p><strong>ER — Подкласс</strong></p>
-                  <p>Ваш Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли.</p> <div class="subclass-content">
+.                         <div id="ES" class="tab-content">
+.                 <h3>ES — Подкласс</h3>
+                  <p>Ваш Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли.</p>
                     
                     <div class="ability">
                         <strong>4 уровень — Слёзы Исцеления</strong><br>
@@ -424,25 +429,52 @@
                         <strong>Пассивка:</strong> Пока есть хотя бы один союзник, вы получаете сопротивление ко всем видам урона.
                     </div>
 
-    <script>
-        function toggleSection(header) {
-            const section = document.getElementById('absorption-section');
-            if (section.style.display === 'none') {
-                section.style.display = 'block';
-                header.textContent = '▲ Поглощение (механика риска)';
-            } else {
-                section.style.display = 'none';
-                header.textContent = '▼ Поглощение (механика риска)';
-            }
-        }
-
+  <script>
         function openTab(evt, tabName) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
     </script>
 </body>
 </html>
+        <script>
+    function toggleSpells(header) {
+        const section = document.getElementById('spells-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            header.textContent = '▲ Заклинания и способности Гештальта U';
+        } else {
+            section.style.display = 'none';
+            header.textContent = '▼ Заклинания и способности Гештальта U';
+        }
+    }
+        </script>
+
+    </div>
+<script>
+    function toggleSection(header) {
+        const section = document.getElementById('absorption-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            header.textContent = '▲ Поглощение (механика риска)';
+        } else {
+            section.style.display = 'none';
+            header.textContent = '▼ Поглощение (механика риска)';
+        }
+    }
+</script>
+</body>
+</html>
+
+    </div>
+</body>
+    </html>
