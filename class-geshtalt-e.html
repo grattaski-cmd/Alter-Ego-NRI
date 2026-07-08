@@ -487,6 +487,15 @@
 
         
    <script>
+    function toggleSection(el) {
+        const content = el.nextElementSibling;
+        if (content) {
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            if (content.style.display === 'block') {
+                el.textContent = el.textContent.replace('▼', '▶');
+            } else {
+                el.textContent = el.textContent.replace('▶', '▼');
+   <script>
         function openTab(evt, tabName) {
             var i, tabcontent, tabbuttons;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -500,10 +509,26 @@
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
+    }
     </script>
+    </div>
+
 </body>
 </html>
         <script>
+        // Функция для блока Заклинаний
+        function toggleSpells(el) {
+            const section = document.getElementById('spells-section');
+            if (section) {
+                section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+                
+                // Меняем стрелку
+                if (section.style.display === 'block') {
+                    el.textContent = el.textContent.replace('▼', '▶');
+                } else {
+                    el.textContent = el.textContent.replace('▶', '▼');
+                }
+            }
     function toggleSpells(header) {
         const section = document.getElementById('spells-section');
         if (section.style.display === 'none') {
@@ -513,9 +538,21 @@
             section.style.display = 'none';
             header.textContent = '▼ Заклинания и способности Гештальта U';
         }
+</script> 
+
+    <script>
+    function openTab(evt, tabName) {
+    // Скрываем все tab-content
+    let tabcontents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].classList.remove("active");
     }
         </script>
 
+    // Убираем active у всех кнопок
+    let tabbuttons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabbuttons.length; i++) {
+        tabbuttons[i].classList.remove("active");
     </div>
 <script>
     function toggleSection(header) {
@@ -528,6 +565,12 @@
             header.textContent = '▼ Поглощение (механика риска)';
         }
     }
+
+    // Показываем нужный таб и активируем кнопку
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+        </script>
 </script>
 </body>
 </html>
