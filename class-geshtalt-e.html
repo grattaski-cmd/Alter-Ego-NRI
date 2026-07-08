@@ -45,38 +45,12 @@
             margin-bottom: 1.5rem;
             border-radius: 6px;
         }
-        .section-title { 
-            color: var(--accent); 
-            border-bottom: 1px solid var(--border); 
-            padding-bottom: 0.5rem; 
-            cursor: pointer;
-        }
-        .ability { 
-            background: #16120d; 
-            padding: 1rem; 
-            margin: 1rem 0; 
-            border-left: 3px solid var(--accent); 
-        }
-        .level-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin: 1rem 0; 
-        }
-        .level-table td, .level-table th { 
-            border: 1px solid var(--border); 
-            padding: 8px; 
-            text-align: center; 
-        }
-        .level-table th { 
-            background: #2c1e14; 
-            color: var(--accent); 
-        }
-        .tabs { 
-            display: flex; 
-            gap: 10px; 
-            flex-wrap: wrap; 
-            margin-bottom: 1rem; 
-        }
+        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+        .level-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .level-table td, .level-table th { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        .level-table th { background: #2c1e14; color: var(--accent); }
+        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
         .tab-button {
             padding: 10px 16px;
             background: #2c1e14;
@@ -85,41 +59,15 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .tab-button.active { 
-            background: var(--accent); 
-            color: #0f0c08; 
-        }
-        .tab-content { 
-            display: none; 
-        }
-        .tab-content.active { 
-            display: block; 
-        }
-        .subclass-card {
-            background: #16120d;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin: 10px 0;
-            cursor: pointer;
-        }
-        .subclass-header {
-            padding: 12px 16px;
-            background: #2c1e14;
-            color: var(--accent);
-            font-weight: bold;
-        }
-        .subclass-content {
-            padding: 0 16px 16px;
-            display: none;
-        }
-        .subclass-card.open .subclass-content {
-            display: block;
-        }
+        .tab-button.active { background: var(--accent); color: #0f0c08; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body>
+    <header>
         <h1>А. Гештальт E</h1>
-        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Класс • Эмоциональный Гештальт</p>
+        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Класс • Эмоции • Гибрид</p>
     </header>
 
     <nav>
@@ -176,7 +124,7 @@
 
 
 <div class="card">
-            <h2 class="section-title" onclick="toggleSpells(this)" style="cursor:pointer;">▼ Заклинания и способности Гештальта U</h2>
+            <h2 class="section-title" onclick="toggleSpells(this)" style="cursor:pointer;">▼ Заклинания и способности Гештальта E</h2>
             <div id="spells-section" style="display:none;">
                 
                 <p>Здесь будет список доступных заклинаний и способностей по уровням.</p>
@@ -298,21 +246,6 @@
             </div>
         </div>
 
-<script>
-        function toggleSection(header) {
-            const section = document.getElementById('absorption-section');
-            if (section.style.display === 'none') {
-                section.style.display = 'block';
-                header.textContent = '▲ Поглощение (механика риска)';
-            } else {
-                section.style.display = 'none';
-                header.textContent = '▼ Поглощение (механика риска)';
-            }
-        }
-    </script>
-</body>
-</html>
-
   <div class="card">
             <h2 class="section-title">Подклассы</h2>
             <div class="tabs">
@@ -325,7 +258,7 @@
                 <div class="tab-button" onclick="openTab(event, 'EA')">EA</div>
             </div>
 
-                        <div id="EW" class="tab-content active">
+                        <div id="EW" class="tab-content">
                     <h3>EW — Подкласс</h3>
                     <p>Ваш Гештальт рождён из пламени, которое невозможно погасить.в вашей душе взорвался вулкан и лава растекается по морям, создавая безжизненные острова.</p>
                     <div class="ability">
@@ -394,8 +327,8 @@
                     </div>
 
 
-.                         <div id="ES" class="tab-content">
-.                 <h3>ES — Подкласс</h3>
+                           <div id="ES" class="tab-content">
+                  <h3>ES — Подкласс</h3>
                   <p>Ваш Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли.</p>
                     
                     <div class="ability">
@@ -403,25 +336,21 @@
                         Когда вы проявляете Гештальт, все союзники в радиусе 30 футов восстанавливают хиты = 2d6 + ваш уровень.<br><br>
                         <strong>«Слёзы Исцеления»</strong> (1 Эссенция, бонусное действие): Один союзник в 60 футах восстанавливает хиты = 3d8 + ваш уровень.
                     </div>
-
                     <div class="ability">
                         <strong>7 уровень — Меланхоличная Аура</strong><br>
                         <strong>«Меланхоличная Аура»</strong> (2 Эссенции, 1 действие): Аура 30 футов на 1 минуту.<br>
                         Союзники: сопротивление психическому и некротическому урону, +2 к спасброскам Мудрости.<br>
                         Враги: 2d6 психического урона в начале хода.
                     </div>
-
                     <div class="ability">
                         <strong>11 уровень — Кокон</strong><br>
                         Радиус эффектов — 60 футов.<br>
                         Реакцией давать союзнику сопротивление к урону (1/ход). Вы получаете сопротивление к психическому урону.
                     </div>
-
                     <div class="ability">
                         <strong>15 уровень — Плач по Ушедшим</strong><br>
                         <strong>«Плач по Ушедшим»</strong> (1/длинный отдых): Союзники восстанавливают 5d10 + уровень хитов. Один упавший союзник воскрешается с 4d10 + уровень хитов.
                     </div>
-
                     <div class="ability">
                         <strong>19 уровень — Апофеоз Печали (Вечная Грусть)</strong><br>
                         Максимум Резерва +4.<br><br>
@@ -451,10 +380,10 @@
         const section = document.getElementById('spells-section');
         if (section.style.display === 'none') {
             section.style.display = 'block';
-            header.textContent = '▲ Заклинания и способности Гештальта U';
+            header.textContent = '▲ Заклинания и способности Гештальта E';
         } else {
             section.style.display = 'none';
-            header.textContent = '▼ Заклинания и способности Гештальта U';
+            header.textContent = '▼ Заклинания и способности Гештальта E';
         }
     }
         </script>
@@ -474,7 +403,6 @@
 </script>
 </body>
 </html>
-
     </div>
 </body>
     </html>
