@@ -165,7 +165,8 @@
             </table>
         </div>
 
-               <div class="card">
+<!-- Заклинания -->
+        <div class="card">
             <h2 class="section-title" onclick="toggleSpells(this)">▼ Заклинания и способности Гештальта E</h2>
             <div id="spells-section" style="display: none;">
                 <p>Здесь будет полный список доступных заклинаний и способностей по уровням.</p>
@@ -341,11 +342,13 @@
     </div>
 </div>
 
-<div class="tabs">
+<div class="card">
+            <h2 class="section-title">Подклассы</h2>
+            
+            <div class="tabs">
                 <button class="tab-button active" onclick="openTab(event, 'EW')">EW</button>
                 <button class="tab-button" onclick="openTab(event, 'ER')">ER</button>
                 <button class="tab-button" onclick="openTab(event, 'ES')">ES</button>
-            </div>
 
                         <div id="EW" class="tab-content active">
                             <h3>EW — Подкласс</h3>
@@ -481,41 +484,35 @@
                 </div>
 
         
-    <script>
-        // Функция для блока Заклинаний
+<script>
         function toggleSpells(el) {
             const section = document.getElementById('spells-section');
             if (section) {
                 section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
-                
-                // Меняем стрелку
-                if (section.style.display === 'block') {
-                    el.textContent = el.textContent.replace('▼', '▶');
-                } else {
-                    el.textContent = el.textContent.replace('▶', '▼');
-                }
+                el.textContent = el.textContent.startsWith('▼') ? el.textContent.replace('▼', '▶') : el.textContent.replace('▶', '▼');
             }
         }
+
+        function toggleSection(el) {
+            const content = el.nextElementSibling;
+            if (content) {
+                content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+                el.textContent = el.textContent.startsWith('▼') ? el.textContent.replace('▼', '▶') : el.textContent.replace('▶', '▼');
+            }
+        }
+
+        function openTab(evt, tabName) {
+            let tabcontents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
+            }
+            let tabbuttons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
     </script>
-                            
-        <script>unction openTab(evt, tabName) {
-    // Скрываем все tab-content
-    let tabcontents = document.getElementsByClassName("tab-content");
-    for (let i = 0; i < tabcontents.length; i++) {
-        tabcontents[i].classList.remove("active");
-    }
-
-    // Убираем active у всех кнопок
-    let tabbuttons = document.getElementsByClassName("tab-button");
-    for (let i = 0; i < tabbuttons.length; i++) {
-        tabbuttons[i].classList.remove("active");
-    }
-
-    // Показываем нужный таб и активируем кнопку
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
-}
-        </script>
-    </div>
 </body>
 </html>
