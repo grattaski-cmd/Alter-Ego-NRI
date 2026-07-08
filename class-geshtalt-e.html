@@ -71,31 +71,6 @@
             background: #2c1e14; 
             color: var(--accent); 
         }
-        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tab-button {
-            padding: 10px 16px;
-            background: #2c1e14;
-            border: 1px solid var(--border);
-            color: var(--accent);
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .tab-button.active { 
-            background: var(--accent); 
-            color: #0f0c08; 
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        
-        /* Для подклассов/стилей */
-        .subclass-card {
-            background: #1c1812;
-            border: 1px solid #8b5a2b;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 12px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -154,44 +129,90 @@
             </table>
         </div>
 
-        <!-- Остальные секции (Заклинания, Поглощение, Основные особенности) — полностью в стиле U -->
-
         <div class="card">
             <h2 class="section-title" onclick="toggleSpells(this)">▼ Заклинания и способности Гештальта E</h2>
             <div id="spells-section" style="display:none;">
-                <p>Здесь будет список доступных заклинаний и способностей по уровням (эмоционально окрашенные).</p>
+                <p>Здесь будет полный список эмоционально-окрашенных заклинаний и способностей (можно дополнить позже).</p>
             </div>
         </div>
 
         <div class="card">
             <h2 class="section-title" onclick="toggleSection(this)">▼ Поглощение (механика риска)</h2>
             <div id="absorption-section" style="display:none;">
-                <p><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
-                <!-- Полное описание Поглощения как в референсе, с адаптацией под E -->
+                <p><strong>Поглощение</strong> — когда эмоция Гештальта начинает доминировать над носителем.</p>
+                
                 <div class="ability">
                     <strong>Как накапливается Поглощение:</strong>
                     <ul>
-                        <li>Каждый раз, когда вы тратите 3+ Резерва за один бой — +1 уровень.</li>
-                        <li>Критический урон или провал спасброска, связанного с эмоциями.</li>
-                        <li>Сильные эмоциональные события — по решению DM.</li>
+                        <li>Трата 3+ Резерва за бой — +1 уровень.</li>
+                        <li>Критический урон или провал спасброска по эмоциям.</li>
+                        <li>Сильные эмоциональные события (по решению DM).</li>
                     </ul>
                 </div>
-                <!-- Уровни Поглощения и восстановление — копия стиля U -->
+
+                <div class="ability">
+                    <strong>Уровни Поглощения (макс. 5)</strong>
+                    <table class="level-table">
+                        <tr><th>Уровень</th><th>Эффект</th></tr>
+                        <tr><td>1</td><td>Преимущество на проверки по теме эмоции, помеха на социальные вне темы.</td></tr>
+                        <tr><td>2</td><td>+1 к урону/КД, помеха на спасброски Мудрости.</td></tr>
+                        <tr><td>3</td><td>Потеря контроля на 1 раунд.</td></tr>
+                        <tr><td>4</td><td>Помеха на всё, что не связано с главной эмоцией.</td></tr>
+                        <tr><td>5</td><td>Полная потеря контроля (DM берёт управление).</td></tr>
+                    </table>
+                </div>
+
+                <div class="ability">
+                    <strong>Восстановление</strong><br>
+                    • Длинный отдых — сброс всех уровней.<br>
+                    • Короткий отдых + медитация — -1 уровень.<br>
+                    • Специальные предметы/способности помогают снимать уровни.
+                </div>
+
+                <div class="ability">
+                    <strong>Особенности Гештальта E</strong><br>
+                    • Поглощение усиливается при сильном проявлении главной эмоции.<br>
+                    • На 3+ уровнях эмоция диктует поведение.<br>
+                    • На 5 уровне — «Эмоциональный Шторм» (мощный, но неконтролируемый режим).
+                </div>
             </div>
         </div>
 
         <div class="card">
             <h2 class="section-title">Основные особенности класса</h2>
+            
             <div class="ability">
                 <strong>1 уровень — Проявление Эмоции</strong><br>
-                Бонусным действием проявляете своего Гештальта в двух режимах...
+                Бонусным действием призываете/проявляете Гештальт в двух режимах (переключение — 1 Резерв):<br><br>
+                <strong>Внутренний (Берсерк эмоции)</strong> — временные хиты 2d6 + уровень, бонус к урону, сопротивление типу урона.<br>
+                <strong>Внешний (Проекция)</strong> — отдельное существо с хитами = ваши/2.
             </div>
-            <!-- Продолжение с Интуицией, Техниками и т.д. -->
+
+            <div class="ability">
+                <strong>Эмоциональный Резерв</strong><br>
+                Основной ресурс. Восстанавливается после короткого/длинного отдыха.
+            </div>
+
+            <div class="ability">
+                <strong>Интуиция</strong><br>
+                Преимущество на проверки Проницательности по эмоциям других.
+            </div>
+
+            <div class="ability">
+                <strong>2 уровень — Техники Эмоции</strong><br>
+                Доступ к базовым техникам вашей главной эмоции.
+            </div>
         </div>
 
         <div class="card">
             <h2 class="section-title">Стили Эмоций (Архетипы)</h2>
-            <!-- Таблица стилей Ярость, Печаль и т.д. -->
+            <table class="level-table">
+                <tr><th>Эмоция</th><th>Доп. урон</th><th>Сопротивление</th><th>Особенность</th></tr>
+                <tr><td>Ярость</td><td>Огонь/Режущий</td><td>Огонь</td><td>Бонус к урону после получения урона</td></tr>
+                <tr><td>Печаль</td><td>Холод/Некротический</td><td>Холод</td><td>Восстановление HP при убийстве</td></tr>
+                <tr><td>Страх</td><td>Психический</td><td>Психический</td><td>Бонус к КД и спасброскам от страха</td></tr>
+                <tr><td>Радость</td><td>Свет/Электричество</td><td>Свет</td><td>Временные хиты союзникам</td></tr>
+            </table>
         </div>
 
     </div>
@@ -200,13 +221,11 @@
         function toggleSpells(el) {
             const section = document.getElementById('spells-section');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            el.textContent = el.textContent.startsWith('▼') ? el.textContent.replace('▼', '▶') : el.textContent.replace('▶', '▼');
+            el.textContent = el.textContent.startsWith('▼') ? '▶ ' + el.textContent.slice(1) : '▼ ' + el.textContent.slice(1);
         }
         function toggleSection(el) {
             const section = el.nextElementSibling;
-            if (section) {
-                section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            }
+            if (section) section.style.display = section.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>
