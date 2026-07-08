@@ -129,10 +129,10 @@
             </table>
         </div>
 
-        <div class="card">
+               <div class="card">
             <h2 class="section-title" onclick="toggleSpells(this)">▼ Заклинания и способности Гештальта E</h2>
-            <div id="spells-section" style="display:none;">
-                <p>Здесь будет полный список заклинаний и способностей.</p>
+            <div id="spells-section" style="display: none;">
+                <p>Здесь будет полный список доступных заклинаний и способностей по уровням.</p>
             </div>
         </div>
 
@@ -467,15 +467,21 @@
     </script>
     </div>
 
-         <script>
-             function toggleSpells(el) {
-        const section = document.getElementById('spells-section');
-        if (section) {
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            el.textContent = el.textContent.startsWith('▼') ? '▶ ' + el.textContent.slice(1) : '▼ ' + el.textContent.slice(1);
+        <script>
+        // Функция для блока Заклинаний
+        function toggleSpells(el) {
+            const section = document.getElementById('spells-section');
+            if (section) {
+                section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+                
+                // Меняем стрелку
+                if (section.style.display === 'block') {
+                    el.textContent = el.textContent.replace('▼', '▶');
+                } else {
+                    el.textContent = el.textContent.replace('▶', '▼');
+                }
+            }
         }
-    }
-</script>
-           
+</script> 
 </body>
 </html>
