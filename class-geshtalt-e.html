@@ -306,9 +306,16 @@
 </div>
 
                 <div class="card">
-            <h2 class="section-title" onclick="toggleSection(this)">▼ Подкласс: Гештальт EW</h2>
-            <div class="subclass-content" style="display:none;">
-                
+            <h2 class="section-title">Подклассы Гештальта E</h2>
+            
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'EW')">EW</button>
+                <button class="tab-button" onclick="openTab(event, 'ER')">ER</button>
+                <button class="tab-button" onclick="openTab(event, 'ES')">ES</button>
+            </div>
+
+                    <div id="EW" class="tab-content active">
+                <div class="ability">
                 <p><strong>Описание:</strong> Ваш Гештальт рождён из чистой, неконтролируемой ярости — гнева на мир, предательство, боль или несправедливость. Он проявляется как огненная тень, разъярённый воин или вопль ярости.</p>
                 <p>Вы — живой ураган. Подкласс фокусируется на огромном уроне, выживании в ближнем бою и высоком риске потери контроля.</p>
                 
@@ -357,10 +364,7 @@
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title" onclick="toggleSection(this)">▼ Подкласс: Гештальт ER</h2>
-            <div class="subclass-content" style="display:none;">
-                
+                <div <div id="ER" class="tab-content">
                 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, не проходящей обиды — чувства несправедливости, предательства или унижения. Он проявляется как токсичная тень, ядовитый шёпот или чёрная аура страдания.</p>
                 <p>Подкласс фокусируется на отравлении врагов, накоплении урона со временем и психологическом давлении.</p>
                 
@@ -402,10 +406,7 @@
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title" onclick="toggleSection(this)">▼ Подкласс: Гештальт ES</h2>
-            <div class="subclass-content" style="display:none;">
-                
+                     <div id="ES" class="tab-content">
                 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли. Он проявляется как серая аура, плачущая тень или тихий шёпот воспоминаний.</p>
                 <p>Подкласс фокусируется на мощной поддержке союзников, исцелении и защитных аурах.</p>
                 
