@@ -486,35 +486,6 @@
                 </div>
 
         
-   <script>
-    function toggleSection(el) {
-        const content = el.nextElementSibling;
-        if (content) {
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';
-            if (content.style.display === 'block') {
-                el.textContent = el.textContent.replace('▼', '▶');
-            } else {
-                el.textContent = el.textContent.replace('▶', '▼');
-   <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tabbuttons;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            tabbuttons = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tabbuttons.length; i++) {
-                tabbuttons[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-    }
-    </script>
-    </div>
-
-</body>
-</html>
         <script>
         // Функция для блока Заклинаний
         function toggleSpells(el) {
@@ -571,6 +542,5 @@
     evt.currentTarget.classList.add("active");
 }
         </script>
-</script>
 </body>
 </html>
