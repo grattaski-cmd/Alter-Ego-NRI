@@ -172,6 +172,19 @@
               <div class="card">
     <h2 class="section-title" onclick="toggleSection(this)">▼ Поглощение (механика риска)</h2>
     <div id="absorption-section" style="display:none;">
+
+        <script>
+        function toggleSpells(el) {
+            const section = document.getElementById('spells-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            el.textContent = el.textContent.startsWith('▼') ? '▶ ' + el.textContent.slice(1) : '▼ ' + el.textContent.slice(1);
+        }
+        function toggleSection(el) {
+            const section = el.nextElementSibling;
+            if (section) section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    </div>
         
         <p><strong>Поглощение</strong> — опасный процесс, при котором Гештальт (внутренняя эмоция) постепенно берёт верх над носителем, подавляя его волю.</p>
         
@@ -317,7 +330,7 @@
         • На 6 и 14 уровнях стиль получает улучшения (по выбору подкласса).
     </div>
 </div>
+                
 
-    </div>
 </body>
 </html>
