@@ -107,16 +107,7 @@
 .tab-content.active {
     display: block;
 }
-        .subclass-content {
-    display: none;
-    margin-top: 12px;
-    padding: 10px;
-    line-height: 1.6;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-        .subclass-card {
+.subclass-card {
     background: #1c1812;
     border: 1px solid #8b5a2b;
     border-radius: 6px;
@@ -125,6 +116,23 @@
     cursor: pointer;
     max-width: 100%;
     box-sizing: border-box;
+}
+
+.subclass-header {
+    color: #c9a05f;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.subclass-content {
+    display: none;
+    margin-top: 12px;
+    padding: 10px;
+    line-height: 1.6;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
     </style>
 </head>
@@ -370,8 +378,9 @@
                 <button class="tab-button" onclick="openTab(event, 'ES')">ES</button>
                 <button class="tab-button" onclick="openTab(event, 'EF')">EF</button>
 
-                        <div id="EW" class="tab-content active">
-                            <h3>EW — Подкласс</h3>
+                        <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EW - Подкласс</div>
+                <div class="subclass-content">
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, не проходящей обиды — чувства несправедливости, предательства или унижения. Он проявляется как токсичная тень, ядовитый шёпот или чёрная аура страдания.</p>
                 <p>Подкласс фокусируется на отравлении врагов, накоплении урона со временем и психологическом давлении.</p>
                 
@@ -413,8 +422,9 @@
             </div>
         </div>
 
-                        <div id="ER" class="tab-content">
-                        <h3>ER — Подкласс</h3>
+                        <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">ER — Подкласс</div>
+                <div class="subclass-content">
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, не проходящей обиды — чувства несправедливости, предательства или унижения. Он проявляется как токсичная тень, ядовитый шёпот или чёрная аура страдания.</p>
                 <p>Подкласс фокусируется на отравлении врагов, накоплении урона со временем и психологическом давлении.</p>
                 
@@ -457,8 +467,9 @@
         </div>
     
 
-                        <div id="ES" class="tab-content">
-                        <h3>ES — Подкласс</h3>
+                        <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">ES - Подкласс</div>
+                <div class="subclass-content">
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли. Он проявляется как серая аура, плачущая тень или тихий шёпот воспоминаний.</p>
                 <p>Подкласс фокусируется на мощной поддержке союзников, исцелении и защитных аурах.</p>
                 
@@ -502,8 +513,9 @@
             </div>
         </div>
 
-                        <div id="EF" class="tab-content">
-                        <h3>EF — Подкласс</h3>
+                        <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EF - Подкласс</div>
+                <div class="subclass-content">
                     <p><strong>EF — Подкласс</strong></p>
                     <p>Ваш Альтернативный Гештальт рождён из глубокого, парализующего страха — ужаса, тревоги, фобий и паники. Вы — воплощение ужаса, внешнего и внутреннего.</p>
                     
