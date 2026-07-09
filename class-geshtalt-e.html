@@ -138,6 +138,22 @@
 .subclass-card.open .subclass-content {
     display: block;
 }
+        .subclass-btn {
+    padding: 20px 10px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.subclass-detail {
+    background: #16120d;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 5px solid #c9a05f;
+}
     </style>
 </head>
 <body>
@@ -580,6 +596,10 @@
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
-    </script>
+    function toggleDetail(btn) {
+        const detail = btn.nextElementSibling;
+        detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
 </body>
 </html>
