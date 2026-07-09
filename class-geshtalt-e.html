@@ -114,45 +114,18 @@
     padding: 15px;
     margin-bottom: 12px;
     cursor: pointer;
-    max-width: 100%;
-    box-sizing: border-box;
 }
-
 .subclass-header {
     color: #c9a05f;
     font-weight: bold;
     font-size: 1.2em;
-    margin-bottom: 10px;
 }
-
 .subclass-content {
     display: none;
     margin-top: 12px;
-    padding: 10px;
-    line-height: 1.6;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
 }
-
 .subclass-card.open .subclass-content {
     display: block;
-}
-        .subclass-btn {
-    padding: 20px 10px;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-.subclass-detail {
-    background: #16120d;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 15px 0;
-    border-left: 5px solid #c9a05f;
 }
     </style>
 </head>
@@ -392,10 +365,10 @@
 <div class="card">
             <h2 class="section-title">Подклассы</h2>
             
-           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 12px; margin-top: 15px;">
-
-                        <div class="subclass-btn" style="background:#c94d2e;" onclick="toggleDetail(this)">EW</div>
-                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+            <!-- EW -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EW</div>
+                <div class="subclass-content">
                     <h3>EW — Подкласс</h3>
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, не проходящей обиды — чувства несправедливости, предательства или унижения. Он проявляется как токсичная тень, ядовитый шёпот или чёрная аура страдания.</p>
                 <p>Подкласс фокусируется на отравлении врагов, накоплении урона со временем и психологическом давлении.</p>
@@ -438,8 +411,10 @@
             </div>
         </div>
 
-                        <div class="subclass-btn" style="background:#3b8c9e;" onclick="toggleDetail(this)">ER</div>
-                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+                        <!-- ER -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">ER</div>
+                <div class="subclass-content">
                     <h3>ER — Подкласс</h3>
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, не проходящей обиды — чувства несправедливости, предательства или унижения. Он проявляется как токсичная тень, ядовитый шёпот или чёрная аура страдания.</p>
                 <p>Подкласс фокусируется на отравлении врагов, накоплении урона со временем и психологическом давлении.</p>
@@ -483,8 +458,10 @@
         </div>
     
 
-                        <div class="subclass-btn" style="background:#9e6b3b;" onclick="toggleDetail(this)">ES</div>
-                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+                       <!-- ES -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">ES</div>
+                <div class="subclass-content">
                     <h3>ES — Подкласс</h3>
 <p><strong>Описание:</strong> Ваш Альтернативный Гештальт рождён из глубокой, неутихающей печали — утраты, одиночества, меланхолии и тихой боли. Он проявляется как серая аура, плачущая тень или тихий шёпот воспоминаний.</p>
                 <p>Подкласс фокусируется на мощной поддержке союзников, исцелении и защитных аурах.</p>
@@ -529,8 +506,10 @@
             </div>
         </div>
 
-                        <div class="subclass-btn" style="background:#9e6b3b;" onclick="toggleDetail(this)">EF</div>
-                <div class="subclass-detail" style="display:none; grid-column: 1 / -1;">
+                        <!-- EF -->
+            <div class="subclass-card" onclick="this.classList.toggle('open')">
+                <div class="subclass-header">EF</div>
+                <div class="subclass-content">
                     <h3>EF — Подкласс</h3>
                     <p><strong>EF — Подкласс</strong></p>
                     <p>Ваш Альтернативный Гештальт рождён из глубокого, парализующего страха — ужаса, тревоги, фобий и паники. Вы — воплощение ужаса, внешнего и внутреннего.</p>
