@@ -1,1 +1,522 @@
- 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>А. Гештальт R — Справочник по Альтер-Эго</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+            --muted: #8a7a5f;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: #16120d;
+            padding: 2.2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        header h1 {
+            color: var(--accent);
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 0.02em;
+        }
+        header p {
+            color: var(--muted);
+            margin: 0.6rem 0 0;
+            font-size: 1rem;
+        }
+        nav {
+            background: #16120d;
+            padding: 0.9rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: var(--accent);
+            margin: 0 0.9rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        nav a:hover { text-decoration: underline; }
+        .container {
+            max-width: 980px;
+            margin: 2rem auto;
+            padding: 0 1rem 3rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1.6rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+        }
+        .section-title {
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .ability {
+            background: #16120d;
+            padding: 1.1rem 1.2rem;
+            margin: 1rem 0;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+        }
+        .ability strong { color: var(--accent); }
+        .level-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        .level-table th, .level-table td {
+            border: 1px solid var(--border);
+            padding: 0.55rem 0.7rem;
+            text-align: center;
+        }
+        .level-table th {
+            background: #2c1e14;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .level-table td:last-child { text-align: left; }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .tab-button {
+            padding: 0.55rem 1rem;
+            background: #2c1e14;
+            border: 1px solid var(--border);
+            color: var(--accent);
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.15s;
+        }
+        .tab-button:hover { background: #3a2a1c; }
+        .tab-button.active {
+            background: var(--accent);
+            color: #0f0c08;
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .collapsible-content { display: none; }
+        .collapsible-content.open { display: block; }
+        ul { padding-left: 1.3rem; }
+        li { margin-bottom: 0.35rem; }
+        .muted { color: var(--muted); font-size: 0.92rem; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .tab-button { padding: 0.45rem 0.7rem; font-size: 0.82rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>А. Гештальт R</h1>
+        <p>Класс • Нереализованный потенциал • Фрустрация</p>
+    </header>
+
+    <nav>
+        <a href="index.html">← К справочнику</a>
+        <a href="#base">Основы</a>
+        <a href="#styles">Стили</a>
+        <a href="#subclasses">Подклассы</a>
+        <a href="#frustration">Фрустрация</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- ОСНОВЫ -->
+        <div class="card" id="base">
+            <h2 class="section-title">▼ Основные характеристики</h2>
+            <div class="collapsible-content open">
+                <p><strong>Хит-дай:</strong> 1d10<br>
+                <strong>Хиты на 1 уровне:</strong> 10 + модификатор Телосложения<br>
+                <strong>Хиты на следующих уровнях:</strong> 1d10 (или 6) + модификатор Телосложения</p>
+
+                <p><strong>Владения</strong><br>
+                <strong>Броня:</strong> лёгкая, средняя, щиты<br>
+                <strong>Оружие:</strong> простое оружие, воинское оружие<br>
+                <strong>Спасброски:</strong> Сила, Харизма<br>
+                <strong>Навыки:</strong> выберите три из: Атлетика, Запугивание, Проницательность, Выживание, Восприятие</p>
+
+                <p><strong>Снаряжение:</strong> средняя броня, простое или воинское оружие, щит, фокус (символ нереализованного).</p>
+            </div>
+        </div>
+
+        <!-- ТАБЛИЦА ПРОГРЕССИИ -->
+        <div class="card">
+            <h2 class="section-title">▼ Таблица прогрессии</h2>
+            <div class="collapsible-content open">
+                <table class="level-table">
+                    <thead>
+                        <tr>
+                            <th>Ур.</th>
+                            <th>Бонус<br>мастерства</th>
+                            <th>Потенциал</th>
+                            <th>Особенности</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>+2</td><td>1</td><td>Проявление Нереализованности, Интуиция потенциала</td></tr>
+                        <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Нереализованности</td></tr>
+                        <tr><td>3</td><td>+2</td><td>3</td><td>—</td></tr>
+                        <tr><td>4</td><td>+2</td><td>4</td><td>Увеличение характеристик, <strong>Подкласс</strong></td></tr>
+                        <tr><td>5</td><td>+3</td><td>5</td><td>—</td></tr>
+                        <tr><td>6</td><td>+3</td><td>6</td><td>—</td></tr>
+                        <tr><td>7</td><td>+3</td><td>7</td><td>Взрыв Потенциала, <strong>Подкласс</strong></td></tr>
+                        <tr><td>8</td><td>+3</td><td>8</td><td>Увеличение характеристик</td></tr>
+                        <tr><td>9</td><td>+4</td><td>9</td><td>—</td></tr>
+                        <tr><td>10</td><td>+4</td><td>10</td><td>—</td></tr>
+                        <tr><td>11</td><td>+4</td><td>11</td><td>Надёжный Потенциал, <strong>Подкласс</strong></td></tr>
+                        <tr><td>12</td><td>+4</td><td>12</td><td>Увеличение характеристик</td></tr>
+                        <tr><td>13</td><td>+5</td><td>13</td><td>Взрыв как бонусное действие</td></tr>
+                        <tr><td>14</td><td>+5</td><td>14</td><td>—</td></tr>
+                        <tr><td>15</td><td>+5</td><td>15</td><td>Вечный Потенциал, <strong>Подкласс</strong></td></tr>
+                        <tr><td>16</td><td>+5</td><td>16</td><td>Увеличение характеристик</td></tr>
+                        <tr><td>17</td><td>+6</td><td>17</td><td>—</td></tr>
+                        <tr><td>18</td><td>+6</td><td>18</td><td>—</td></tr>
+                        <tr><td>19</td><td>+6</td><td>19</td><td><strong>Апофеоз подкласса</strong></td></tr>
+                        <tr><td>20</td><td>+6</td><td>23</td><td>Апофеоз Нереализованности</td></tr>
+                    </tbody>
+                </table>
+                <p class="muted">Максимум Потенциала = уровень (+3 на 20 уровне). После короткого отдыха +1 Потенциал.</p>
+            </div>
+        </div>
+
+        <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
+        <div class="card">
+            <h2 class="section-title">▼ Основные особенности класса</h2>
+            <div class="collapsible-content open">
+
+                <div class="ability">
+                    <strong>Потенциал</strong><br>
+                    Максимум = ваш уровень.<br>
+                    После короткого отдыха получаете +1 (не выше максимума).<br>
+                    После длинного отдыха — полное восстановление.<br>
+                    Если за один бой тратите 4+ Потенциала — получаете 1 уровень Фрустрации.
+                </div>
+
+                <div class="ability">
+                    <strong>1 уровень — Проявление Нереализованности</strong><br>
+                    Бонусным действием проявляете Гештальт на 1 минуту. Переключение режима стоит 1 Потенциал.<br><br>
+                    <strong>Внутренний режим:</strong> временные хиты 2d8 + уровень, +2 к КД, сопротивление одному типу урона.<br>
+                    <strong>Внешний режим:</strong> отдельное проявление (хиты = половина ваших), требует концентрации.
+                </div>
+
+                <div class="ability">
+                    <strong>Интуиция потенциала</strong><br>
+                    Преимущество на Проницательность, когда дело касается скрытых возможностей или нереализованного потенциала.
+                </div>
+
+                <div class="ability">
+                    <strong>7 уровень — Взрыв Потенциала</strong><br>
+                    Действие. Тратите 1–3 Потенциала:<br>
+                    • 1 — Волна (конус 30 футов, 3d10 психического, союзники получают временные хиты = уровень)<br>
+                    • 2 — Раскрытие Силы (доп. атака + преимущество на атаки до конца следующего хода)<br>
+                    • 3 — Полный Взрыв (радиус 20 футов, 5d10 психического + помеха на спасброски)<br>
+                    После использования — 1 уровень Фрустрации.<br>
+                    С 13 уровня можно использовать как бонусное действие.
+                </div>
+
+                <div class="ability">
+                    <strong>11 уровень — Надёжный Потенциал</strong><br>
+                    Эффекты, дающие Фрустрацию, уменьшаются на 1.<br>
+                    Длительность проявления +1 минута.<br>
+                    +1 к спасброскам Мудрости и Харизмы, пока Гештальт проявлен.<br>
+                    «Стабильный Потенциал» (1/короткий отдых): восстановить 2 Потенциала бонусным действием.
+                </div>
+
+                <div class="ability">
+                    <strong>15 уровень — Вечный Потенциал</strong><br>
+                    Гештальт всегда присутствует пассивно (+1 к КД).<br>
+                    Проявление полного режима стоит на 1 Потенциал меньше.<br>
+                    1/длинный отдых: восстановить 2 Потенциала бонусным действием.
+                </div>
+
+                <div class="ability">
+                    <strong>20 уровень — Апофеоз Нереализованности</strong><br>
+                    Максимум Потенциала +3. Риск Фрустрации исчезает.<br>
+                    «Полное Раскрытие» (1/длинный отдых, 1 минута): +4d10 психического ко всем атакам, иммунитет к испугу и очарованию для вас и союзников в 60 футах, один раз можно полностью предотвратить урон или состояние.<br>
+                    Пассивно: сопротивление психическому урону, пока Гештальт проявлен.
+                </div>
+            </div>
+        </div>
+
+        <!-- СТИЛИ -->
+        <div class="card" id="styles">
+            <h2 class="section-title">▼ Стили Нереализованности</h2>
+            <div class="collapsible-content">
+                <p>На 2 уровне вы выбираете один стиль.</p>
+                <table class="level-table">
+                    <tr>
+                        <th>Стиль</th>
+                        <th>Доп. урон</th>
+                        <th>Сопротивление</th>
+                        <th>Особенность</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Подавленный</strong></td>
+                        <td>Психический</td>
+                        <td>Психический</td>
+                        <td>+1 к КД во Внутреннем режиме. После короткого отдыха +1 Потенциал сверх обычного.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Латентный</strong></td>
+                        <td>Громовой</td>
+                        <td>Громовой</td>
+                        <td>Преимущество на Скрытность и Внимательность. 1/бой атака становится неожиданной.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Взрывной</strong></td>
+                        <td>Огонь / Электрический</td>
+                        <td>Огонь</td>
+                        <td>+2 к урону всех атак. При трате 2+ Потенциала за ход — дополнительный 1d10 урона.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Иллюзорный</strong></td>
+                        <td>Психический</td>
+                        <td>Психический</td>
+                        <td>Преимущество на Обман и Выступление. 1/бой — отвлекающая иллюзия (помеха на атаки).</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ПОДКЛАССЫ -->
+        <div class="card" id="subclasses">
+            <h2 class="section-title">▼ Подклассы</h2>
+            <div class="collapsible-content open">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openSubTab(event, 'RT')">RT — Цель</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'RD')">RD — Мечта</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'RS')">RS — Путь</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'RM')">RM — Упущенное</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'RV')">RV — Викарный</button>
+                </div>
+
+                <!-- RT -->
+                <div id="RT" class="tab-content active">
+                    <p class="muted">Одержимость одной конкретной Целью. Готов жертвовать всем, включая союзников.</p>
+                    <div class="ability">
+                        <strong>4 уровень — Клеймо Цели</strong><br>
+                        Назначаете одну Цель. Бонусы зависят от типа (существо / место / группа / абстрактная).<br>
+                        Конкретное существо: преимущество на атаки + 1d6 урона.<br>
+                        Давление Одержимости: игнорирование Цели в бою даёт помеху, затем Фрустрацию.
+                    </div>
+                    <div class="ability">
+                        <strong>7 уровень — Цена Крови</strong><br>
+                        Жертва Плоти (1 Потенциал): получаете урон = 2 × уровень, взамен преимущество и +2×уровень урона по Цели.<br>
+                        Жертва Чужих (2 Потенциала): перенаправляете урон на союзника повторно и наносите Цели половину.<br>
+                        Неотступность: перемещение к Цели без провоцированных атак.
+                    </div>
+                    <div class="ability">
+                        <strong>11 уровень — Корни Одержимости</strong><br>
+                        Урон по существу → 1d10, по группе → 1d6.<br>
+                        Цель совершает спасброски с помехой. Радиус давления 120 футов.
+                    </div>
+                    <div class="ability">
+                        <strong>15 уровень — Точка Невозврата</strong><br>
+                        1/длинный отдых: сопротивление всему, кроме урона от Цели, +3d10 по Цели, отражение урона в Цель. Игнорирование Цели сразу даёт Фрустрацию.
+                    </div>
+                    <div class="ability">
+                        <strong>19 уровень — Апофеоз Цели</strong><br>
+                        Максимум Потенциала +2.<br>
+                        Бонусы удваиваются, автоматический успех проверок преследования, можно заставить Цель атаковать только вас.<br>
+                        Катарасис при достижении Цели (восстановление Потенциала и снятие Фрустрации в зависимости от важности).
+                    </div>
+                </div>
+
+                <!-- RD -->
+                <div id="RD" class="tab-content">
+                    <p class="muted">Одержимость несбыточными мечтами. Два Лика: Грёзы и Кошмары.</p>
+                    <div class="ability">
+                        <strong>4 уровень — Два Лика Сна</strong><br>
+                        Переключение между Грёзами и Кошмарами (сначала за 1 Потенциал, с 11 — бесплатно).<br>
+                        Грёзы: поддержка союзников.<br>
+                        Кошмары: психический урон и контроль.
+                    </div>
+                    <div class="ability">
+                        <strong>7 уровень — Навязанный Сон</strong><br>
+                        2 Потенциала: очарование (Грёзы) или испуг + урон (Кошмары).
+                    </div>
+                    <div class="ability">
+                        <strong>11 уровень — Общий Сон</strong><br>
+                        До 3 существ. Грёзы — временные хиты и преимущество. Кошмары — урон и помеха.
+                    </div>
+                    <div class="ability">
+                        <strong>15 уровень — Воплощение Сна</strong><br>
+                        1/длинный отдых: мощное лечение и сопротивление (Грёзы) или урон + пропуск хода (Кошмары). Даёт 1 Фрустрацию.
+                    </div>
+                    <div class="ability">
+                        <strong>19 уровень — Апофеоз Несбыточного</strong><br>
+                        Максимум Потенциала +2. Оба Лика одновременно, увеличенный радиус, бесплатные способности.
+                    </div>
+                </div>
+
+                <!-- RS -->
+                <div id="RS" class="tab-content">
+                    <p class="muted">Путь постоянного самосовершенствования. Прогресс, дисциплина и Озарения.</p>
+                    <div class="ability">
+                        <strong>4 уровень — Первые Шаги</strong><br>
+                        Очки Прогресса (макс. 4). Бонусы за Прогресс. Можно тратить Фрустрацию на Прогресс.
+                    </div>
+                    <div class="ability">
+                        <strong>7 уровень — Первое Озарение</strong><br>
+                        Слабое Озарение (1/короткий отдых) с выбором эффекта. Преимущество против очарования и испуга.
+                    </div>
+                    <div class="ability">
+                        <strong>11 уровень — Накопление Пути</strong><br>
+                        Улучшенное Озарение с более сильными вариантами. Прогресс даёт бонусы чаще.
+                    </div>
+                    <div class="ability">
+                        <strong>15 уровень — Неполная Форма</strong><br>
+                        Мощное состояние почти-совершенства с изъяном (нельзя получать временные хиты + уязвимость к критам).
+                    </div>
+                    <div class="ability">
+                        <strong>19 уровень — Апофеоз Несовершенства</strong><br>
+                        Максимум Потенциала +2. Все эффекты Озарения одновременно, смягчённый изъян.
+                    </div>
+                </div>
+
+                <!-- RM -->
+                <div id="RM" class="tab-content">
+                    <p class="muted">Упущенные возможности, холод и попытки вернуть прошлое.</p>
+                    <div class="ability">
+                        <strong>4 уровень — Эхо Прошлого</strong><br>
+                        1–2 Упущенные Возможности. Холод Сожаления (зона замедления + урон). Второй Взгляд (переброс).
+                    </div>
+                    <div class="ability">
+                        <strong>7 уровень — Застывший Миг</strong><br>
+                        Контроль области: скорость 0 и запрет реакций. Отголосок — преимущество в рифмующихся ситуациях.
+                    </div>
+                    <div class="ability">
+                        <strong>11 уровень — Груз Несделанного</strong><br>
+                        До 3 Упущенных Возможностей. Можно временно закрывать их ради бонусов.
+                    </div>
+                    <div class="ability">
+                        <strong>15 уровень — Возврат Мгновения</strong><br>
+                        Большая холодная зона + перебросы для союзников.
+                    </div>
+                    <div class="ability">
+                        <strong>19 уровень — Апофеоз Упущенного</strong><br>
+                        Максимум Потенциала +2. Сильный контроль + возможность отменять эффекты. Сопротивление холоду и психике.
+                    </div>
+                </div>
+
+                <!-- RV -->
+                <div id="RV" class="tab-content">
+                    <p class="muted">Реализация потенциала через других. Миньоны на все случаи жизни. Основной Фокус + вторичные.</p>
+                    <div class="ability">
+                        <strong>4 уровень — Первые Агенты + Фокус</strong><br>
+                        Выбираете Основной Фокус: <strong>Кулак</strong>, <strong>Тень</strong> или <strong>Эхо</strong>.<br>
+                        Призыв слабых миньонов (КД 14, хиты 10 + 2×уровень, урон 1d8 + Харизма).<br>
+                        Особенности Фокуса сильнее на Основном. Вторичные Фокусы позже доступны в ослабленном виде.<br>
+                        Лимит: до 3 слабых миньонов. Смерть миньона → 1 Фрустрация.
+                    </div>
+                    <div class="ability">
+                        <strong>7 уровень — Жертва Хозяина</strong><br>
+                        Сильные миньоны (КД 16, хиты 15 + 3×уровень).<br>
+                        Жертва Хозяина: вы берёте штраф (−2 КД / помеха на спасброски / Фрустрация), миньоны получают +2 к атакам и +1d6 урона.
+                    </div>
+                    <div class="ability">
+                        <strong>11 уровень — Сеть</strong><br>
+                        До 4 слабых или 2 сильных. Видите и слышите через миньонов. Приказ (бонусное действие).
+                    </div>
+                    <div class="ability">
+                        <strong>15 уровень — Верные Руки</strong><br>
+                        1/длинный отдых: сразу два сильных миньона. Реакция на замену павшего.
+                    </div>
+                    <div class="ability">
+                        <strong>19 уровень — Апофеоз Викарного</strong><br>
+                        Максимум Потенциала +2.<br>
+                        На 1 час: до 6 слабых / 3 сильных, усиленные миньоны, двойной Приказ, смерть миньонов не даёт Фрустрацию.<br>
+                        Пассивно: сопротивление психике и +1 КД, пока есть хотя бы один миньон.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ФРУСТРАЦИЯ -->
+        <div class="card" id="frustration">
+            <h2 class="section-title">▼ Фрустрация (механика риска)</h2>
+            <div class="collapsible-content">
+                <p><strong>Фрустрация</strong> — аналог Поглощения. Накапливается при чрезмерном использовании Потенциала и сильных эмоциональных срывах, связанных с нереализованностью.</p>
+
+                <div class="ability">
+                    <strong>Уровни Фрустрации (максимум 5)</strong>
+                    <table class="level-table">
+                        <tr><th>Уровень</th><th>Эффект</th></tr>
+                        <tr><td>1</td><td>Преимущество на атаки/проверки, связанные со стилем, но помеха на социальные проверки.</td></tr>
+                        <tr><td>2</td><td>+1 к урону, но помеха на спасброски Мудрости.</td></tr>
+                        <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
+                        <tr><td>4</td><td>Помеха на все проверки и спасброски, не связанные со стилем.</td></tr>
+                        <tr><td>5</td><td>Полная потеря контроля (ведущий временно управляет персонажем).</td></tr>
+                    </table>
+                </div>
+
+                <div class="ability">
+                    <strong>Восстановление</strong><br>
+                    • Длинный отдых — полный сброс.<br>
+                    • Короткий отдых — можно снять 1 уровень.<br>
+                    • Некоторые способности подклассов позволяют работать с Фрустрацией напрямую.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.section-title').forEach(title => {
+            title.addEventListener('click', () => {
+                const content = title.nextElementSibling;
+                if (content && content.classList.contains('collapsible-content')) {
+                    content.classList.toggle('open');
+                    if (content.classList.contains('open')) {
+                        title.textContent = title.textContent.replace('▶', '▼');
+                    } else {
+                        title.textContent = title.textContent.replace('▼', '▶');
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.collapsible-content').forEach((el, index) => {
+            if (index < 3) el.classList.add('open');
+        });
+
+        function openSubTab(evt, tabId) {
+            const parent = evt.currentTarget.closest('.card');
+            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html> 
