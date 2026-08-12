@@ -11,28 +11,33 @@
             --accent: #c9a05f;
             --text: #d4c5a9;
             --border: #3a3024;
+            --muted: #8a7a5f;
         }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
         }
         header {
             background: #16120d;
-            padding: 2.5rem 1rem;
+            padding: 3rem 1rem 2.5rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
-        h1 {
+        header h1 {
             color: var(--accent);
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             margin: 0;
-            letter-spacing: 2px;
+            letter-spacing: 0.06em;
         }
-        .subtitle { color: #8a7a5f; margin: 0.5rem 0 0; }
-        
+        .subtitle {
+            color: var(--muted);
+            margin: 0.7rem 0 0;
+            font-size: 1.05rem;
+        }
         nav {
             background: #16120d;
             padding: 1rem;
@@ -41,38 +46,89 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.3rem 1.4rem;
         }
         nav a {
             color: var(--accent);
-            margin: 0 1.2rem;
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.95rem;
         }
-        
+        nav a:hover { text-decoration: underline; }
         .container {
             max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 2.5rem auto;
+            padding: 0 1.2rem 3rem;
         }
         .section {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
         .section-title {
             color: var(--accent);
             border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            padding-bottom: 0.55rem;
+            margin-bottom: 1.6rem;
+            font-size: 1.55rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.3rem;
         }
         .card {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            margin-bottom: 1.8rem;
-            border-radius: 6px;
+            padding: 1.5rem 1.6rem;
+            border-radius: 8px;
+            transition: border-color 0.2s, transform 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
         .card h3 {
             color: var(--accent);
-            margin-top: 0;
+            margin: 0 0 0.6rem;
+            font-size: 1.2rem;
+        }
+        .card p {
+            margin: 0 0 1.1rem;
+            flex-grow: 1;
+            color: var(--text);
+            font-size: 0.97rem;
+        }
+        .card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: auto;
+        }
+        .card a:hover { text-decoration: underline; }
+        .card .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.7rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: #555;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            nav { gap: 0.5rem 1rem; }
         }
     </style>
 </head>
@@ -86,7 +142,7 @@
         <a href="#races">Расы</a>
         <a href="#classes">Классы Гештальта</a>
         <a href="traits.html">Черты</a>
-        <a href="traits.html">ЛОР</a>
+        <a href="traits.html">Лор</a>
         <a href="Backstories.html">Предыстории</a>
         <a href="alternative.html">Альтернативный Гештальт</a>
     </nav>
@@ -96,93 +152,80 @@
         <!-- РАСЫ -->
         <div id="races" class="section">
             <h2 class="section-title">Расы</h2>
-            
-            <div class="card">
-                <h3>1. Человек (Human)</h3>
-                <p>Обычные люди — выжившие после магической чумы. Основа общества, но часто чувствуют себя уязвимыми среди «улучшенных».</p>
-                <a href="human.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. Человек</h3>
+                    <p>Обычные люди — выжившие после магической чумы. Основа общества, но часто чувствуют себя уязвимыми среди «улучшенных».</p>
+                    <a href="human.html">Подробнее →</a>
+                </div>
+                <div class="card">
+                    <h3>2. Андроид</h3>
+                    <p>Искусственные существа, созданные во время чумы. Ищут своё место в мире людей и машин.</p>
+                    <a href="android.html">Подробнее →</a>
+                </div>
+                <div class="card">
+                    <h3>3. Репликант</h3>
+                    <p>Механический слепок людей. Сила рождается из травмы и боли. Постоянно балансируют на грани поглощения.</p>
+                    <a href="replicant.html">Подробнее →</a>
+                </div>
+                <div class="card">
+                    <h3>4. Мутант</h3>
+                    <p>Мутировавшие люди с гротескными изменениями тела. Борются с дальнейшим распадом и отторжением.</p>
+                    <a href="mutant.html">Подробнее →</a>
+                </div>
+                <div class="card">
+                    <h3>5. Эхо</h3>
+                    <p>Те, кого Гештальт почти поглотил. Балансируют на грани безумия и силы.</p>
+                    <a href="echo.html">Подробнее →</a>
+                </div>
+                <div class="card">
+                    <h3>6. Киборг / Аугментированный</h3>
+                    <p>Люди, усилившие себя кибернетикой и магией. Между человеком и машиной.</p>
+                    <a href="cyborg.html">Подробнее →</a>
+                </div>
             </div>
-
-            <div class="card">
-                <h3>2. Андроид (Android)</h3>
-                <p>Искусственные существа, созданные во время чумы. Ищут своё место в мире.</p>
-                <a href="android.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-            </div>
-
-            <div class="card">
-                <h3>3. Репликант (Replicate)</h3>
-                <p>Механический слепок людей, сила которых рождается из травмы и боли. Постоянно балансируют на грани поглощения.</p>
-                <a href="replicant.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-            </div>
-
-            <div class="card">
-               <h3>4. Мутант (Afflicted)</h3>
-               <p>Мутировавшие люди с гротескными изменениями тела. Борются с дальнейшим распадом.</p>
-               <a href="mutant.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-.          </div>
-
-            <div class="card">
-                <h3>5. Эхо (Echo / Remnant)</h3>
-                <p>Те, кого Гештальт почти поглотил. Балансируют на грани безумия.</p>
-                <a href="echo.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-.          </div>
-
-            <div class="card">
-                <h3>6. Киборг / Аугментированный (Augmented Human)</h3>
-                <p>Люди, усилившие себя кибернетикой и магией.</p>
-                <a href="cyborg.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-.          </div>
         </div>
 
         <!-- КЛАССЫ ГЕШТАЛЬТА -->
         <div id="classes" class="section">
             <h2 class="section-title">Классы Гештальта</h2>
-            
-            <div class="card">
-                <h3>А. Гештальт U</h3>
-                <p>Альтернативный гештальт U, сосредоточенный на командной работе</p>
-                <a href="class-geshtalt-u.html" style="color:#c9a05f; text-decoration:underline;">Подробнее →</a>
-.          </div>
-            </div>
-
-            <div class="card">
-               <h3>А. Гештальт E</h3>
-    <p>Эмоциональный Гештальт. Сила чистых чувств.</p>
-    <a href="class-geshtalt-e.html" style="color:var(--accent); font-weight:bold;">Перейти к классу →</a>
-</div>
-            </div>
-            <div class="card">
-                <h3>А. Гештальт R</h3>
-                <p>Вариант класса.</p>
-            </div>
-            <div class="card">
-                <h3>А. Гештальт F</h3>
-                <p>Вариант класса.</p>
-            </div>
-            <div class="card">
-                <h3>А. Гештальт M</h3>
-                <p>Вариант класса.</p>
-            </div>
-        </div>
-
-<div class="card">
-               <h3>А. Гештальт R</h3>
-    <a href="class-geshtalt-r.html" style="color:var(--accent); font-weight:bold;">Перейти к классу →</a>
-</div>
-            
-            <div class="card">
-                <h3>А. Гештальт F</h3>
-                <p>Вариант класса.</p>
-            </div>
-            <div class="card">
-                <h3>А. Гештальт M</h3>
-                <p>Вариант класса.</p>
+            <div class="grid">
+                <div class="card">
+                    <span class="tag">Связь • Поддержка</span>
+                    <h3>А. Гештальт U</h3>
+                    <p>Альтернативный Гештальт, сосредоточенный на командной работе, защите союзников и эссенции связи.</p>
+                    <a href="class-geshtalt-u.html">Перейти к классу →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">Эмоции • Сила чувств</span>
+                    <h3>А. Гештальт E</h3>
+                    <p>Эмоциональный Гештальт. Сила чистых чувств: ярость, печаль, страх, радость и другие.</p>
+                    <a href="class-geshtalt-e.html">Перейти к классу →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">Нереализованность • Фрустрация</span>
+                    <h3>А. Гештальт R</h3>
+                    <p>Гештальт нереализованного потенциала. Фрустрация, цели, мечты, саморазвитие и жизнь через других.</p>
+                    <a href="class-geshtalt-r.html">Перейти к классу →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">Травма • Воспоминание</span>
+                    <h3>А. Гештальт F</h3>
+                    <p>Гештальт, рождённый из травмы. Воспоминания, ПТСР, пустота, насилие, стыд, вина и зацикленность.</p>
+                    <a href="class-geshtalt-f.html">Перейти к классу →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">В разработке</span>
+                    <h3>А. Гештальт M</h3>
+                    <p>Вариант класса. Пока в разработке.</p>
+                    <a href="#" style="opacity: 0.5; pointer-events: none;">Скоро →</a>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <footer style="text-align:center; padding:3rem; color:#555; font-size:0.9rem;">
+    <footer>
         Справочник по Альтер-Эго • 2026
     </footer>
 </body>
