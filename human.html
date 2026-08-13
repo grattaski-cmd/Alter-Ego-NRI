@@ -11,52 +11,176 @@
             --accent: #c9a05f;
             --text: #d4c5a9;
             --border: #3a3024;
+            --muted: #8a7a5f;
+            --darker: #16120d;
         }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
         }
         header {
-            background: #16120d;
-            padding: 2rem 1rem;
+            background: var(--darker);
+            padding: 2.4rem 1.2rem 2rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
-        h1 { color: var(--accent); margin: 0; }
+        header h1 {
+            color: var(--accent);
+            margin: 0;
+            font-size: 2.1rem;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+        header .subtitle {
+            color: var(--muted);
+            margin: 0.55rem 0 0;
+            font-size: 1rem;
+        }
         nav {
-            background: #16120d;
-            padding: 1rem;
+            background: var(--darker);
+            padding: 0.85rem 1rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
+        nav a {
+            color: var(--accent);
+            margin: 0 0.9rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        nav a:hover { text-decoration: underline; }
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2.2rem 1.2rem 4rem;
         }
         .card {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 6px;
+            padding: 1.5rem 1.6rem;
+            margin-bottom: 1.4rem;
+            border-radius: 8px;
         }
-        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+        .section-title {
+            color: var(--accent);
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.45rem;
+            margin: 0 0 1.1rem;
+            letter-spacing: 0.02em;
+        }
+        .ability {
+            background: var(--darker);
+            padding: 1.05rem 1.2rem;
+            margin: 0.9rem 0;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+        }
+        .ability strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 1.02rem;
+        }
+        .origin-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 700px) {
+            .origin-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        .origin-card {
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 1.15rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .origin-card h3 {
+            color: var(--accent);
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+        }
+        .origin-card p {
+            margin: 0;
+            font-size: 0.93rem;
+            flex-grow: 1;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem 1.5rem;
+            margin: 0.6rem 0 0;
+            font-size: 0.95rem;
+        }
+        @media (min-width: 560px) {
+            .skills-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        .skills-grid span {
+            padding: 0.2rem 0;
+        }
+        .muted {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: #2c1e14;
+            color: var(--accent);
+            padding: 0.12rem 0.45rem;
+            border-radius: 3px;
+            font-size: 0.78rem;
+            margin-left: 0.35rem;
+            letter-spacing: 0.02em;
+        }
+        ul {
+            padding-left: 1.25rem;
+            margin: 0.4rem 0;
+        }
+        li { margin-bottom: 0.3rem; }
+        .back-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 1.8rem 1rem;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Человек (Human)</h1>
-        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Раса • Справочник по Альтер-Эго</p>
+        <h1>ЧЕЛОВЕК</h1>
+        <p class="subtitle">Раса • Адаптивность • Выживание</p>
     </header>
 
     <nav>
         <a href="index.html">← Назад к справочнику</a>
+        <a href="#traits">Особенности</a>
+        <a href="#origins">Происхождения</a>
+        <a href="#skills">Специализации</a>
     </nav>
 
     <div class="container">
@@ -64,76 +188,106 @@
         <div class="card">
             <h2 class="section-title">Описание</h2>
             <p>Обычные люди — выжившие в мире после распространения магической чумы. Некоторые остались почти нетронутыми, другие прошли через излечение или живут с контролируемой инфекцией. Они — основа общества, но часто чувствуют себя самыми уязвимыми среди «улучшенных».</p>
+            <p class="muted" style="margin-top: 0.8rem;">Главная сила человека — способность приспосабливаться. Там, где другие полагаются на врождённые дары, человек учится, меняется и находит выход.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="traits">
             <h2 class="section-title">Особенности расы</h2>
-            
+
             <div class="ability">
-                <strong>Увеличение характеристик.</strong><br>
-                +2 к любой одной характеристике и +1 к другой
+                <strong>Увеличение характеристик</strong>
+                +2 к одной характеристике и +1 к другой.
             </div>
-            
+
             <div class="ability">
-                <strong>Размер.</strong> Средний.<br>
-                <strong>Скорость.</strong> 30 футов.
+                <strong>Размер</strong>
+                Средний.
             </div>
-            
+
             <div class="ability">
-                <strong>Языки.</strong><br>
-                Общий и один дополнительный язык по вашему выбору.
+                <strong>Скорость</strong>
+                30 футов.
             </div>
-            
+
             <div class="ability">
-                <strong>Человеческая стойкость.</strong><br>
-                Вы получаете владение одним навыком на выбор или преимущество на один спасбросок на выбор.
+                <strong>Языки</strong>
+                Общий и один дополнительный язык на ваш выбор.
+            </div>
+
+            <div class="ability">
+                <strong>Специализации</strong>
+                Выберите два навыка. Вы получаете владение ими.
+                <span class="tag">см. список ниже</span>
+            </div>
+
+            <div class="ability">
+                <strong>Быстрая адаптация</strong>
+                После продолжительного отдыха вы можете выбрать одно из следующего. Вы получаете этот бонус до следующего продолжительного отдыха:
+                <ul>
+                    <li>владение одним навыком</li>
+                    <li>владение одним инструментом</li>
+                    <li>один дополнительный язык</li>
+                    <li>преимущество на спасброски одной характеристики</li>
+                </ul>
+                Одновременно может быть активно только одно такое усиление.
+            </div>
+
+            <div class="ability">
+                <strong>Урок на ошибках</strong>
+                Когда вы проваливаете проверку характеристики или спасбросок, вы можете отметить этот тип проверки/спасброска. До конца следующего продолжительного отдыха вы получаете преимущество на следующую такую же проверку или спасбросок (срабатывает один раз). Одновременно может быть только одна активная отметка.
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="origins">
             <h2 class="section-title">Варианты происхождения</h2>
-            <p><strong>Выберите один вариант при создании персонажа:</strong></p>
-            
-            <div class="ability">
-                <strong>Излеченный</strong><br>
-                Вы обладаете преимуществом на спасброски против болезней, ядов и эффектов магической чумы/мутации.
-            </div>
-            
-            <div class="ability">
-                <strong>Устойчивый носитель</strong><br>
-                Вы обладаете сопротивлением одному типу урона (некротический или яд — выбирается при создании). Кроме того, когда вы заканчиваете короткий отдых, вы восстанавливаете количество хитов, равное вашему уровню (минимум 1).
-            </div>
-            
-            <div class="ability">
-                <strong>Обычный</strong><br>
-                Вы получаете один дополнительный навык или одну черту на выбор.
+            <p class="muted" style="margin-bottom: 1.1rem;">Выберите один вариант при создании персонажа.</p>
+
+            <div class="origin-grid">
+                <div class="origin-card">
+                    <h3>Универсал</h3>
+                    <p>Вы получаете одну черту на выбор.</p>
+                </div>
+                <div class="origin-card">
+                    <h3>Излеченный</h3>
+                    <p>Вы обладаете преимуществом на спасброски против болезней, ядов и эффектов магической чумы/мутации.</p>
+                </div>
+                <div class="origin-card">
+                    <h3>Устойчивый носитель</h3>
+                    <p>Вы обладаете сопротивлением одному типу урона (некротический или яд — выбирается при создании). Когда вы заканчиваете короткий отдых, вы можете восстановить хиты, равные вашему уровню (минимум 1). Количество использований равно модификатору Телосложения (минимум 1) за продолжительный отдых.</p>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title">Специализации</h2>
-            <p><strong>Выберите 2 специализации при создании персонажа:</strong></p>
-            
-            <ul style="columns: 2; gap: 2rem; padding-left: 1.2rem;">
-                <li>Атлетика</li>
-                <li>Акробатика</li>
-                <li>Скрытность</li>
-                <li>Ловкость рук</li>
-                <li>Проницательность</li>
-                <li>Анализ</li>
-                <li>Магия</li>
-                <li>Природа</li>
-                <li>Выживание</li>
-                <li>История</li>
-                <li>Религия</li>
-                <li>Медицина</li>
-                <li>Запугивание</li>
-                <li>Обман</li>
-                <li>Убеждение</li>
-                <li>Восприятие</li>
-            </ul>
+        <div class="card" id="skills">
+            <h2 class="section-title">Список специализаций</h2>
+            <p class="muted" style="margin-bottom: 0.8rem;">Выберите любые два навыка из списка:</p>
+            <div class="skills-grid">
+                <span>Атлетика</span>
+                <span>Акробатика</span>
+                <span>Ловкость рук</span>
+                <span>Скрытность</span>
+                <span>Анализ</span>
+                <span>История</span>
+                <span>Магия</span>
+                <span>Природа</span>
+                <span>Религия</span>
+                <span>Восприятие</span>
+                <span>Выживание</span>
+                <span>Медицина</span>
+                <span>Проницательность</span>
+                <span>Уход за животными</span>
+                <span>Обман</span>
+                <span>Запугивание</span>
+                <span>Выступление</span>
+                <span>Убеждение</span>
+            </div>
         </div>
 
+        <a href="index.html" class="back-link">← Вернуться к списку рас</a>
     </div>
+
+    <footer>
+        Справочник по Альтер-Эго • Человек
+    </footer>
 </body>
 </html>
