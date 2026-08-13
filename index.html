@@ -12,6 +12,7 @@
             --text: #d4c5a9;
             --border: #3a3024;
             --muted: #8a7a5f;
+            --darker: #16120d;
         }
         * { box-sizing: border-box; }
         body {
@@ -21,26 +22,30 @@
             color: var(--text);
             line-height: 1.7;
         }
+
         header {
-            background: #16120d;
-            padding: 3rem 1rem 2.5rem;
+            background: var(--darker);
+            padding: 3.5rem 1.5rem 3rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
         header h1 {
             color: var(--accent);
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             margin: 0;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
+            font-weight: 600;
         }
-        .subtitle {
+        header .subtitle {
             color: var(--muted);
-            margin: 0.7rem 0 0;
+            margin: 0.8rem 0 0;
             font-size: 1.05rem;
+            letter-spacing: 0.03em;
         }
+
         nav {
-            background: #16120d;
-            padding: 1rem;
+            background: var(--darker);
+            padding: 0.9rem 1rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -49,7 +54,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.3rem 1.4rem;
+            gap: 0.4rem 1.6rem;
         }
         nav a {
             color: var(--accent);
@@ -58,77 +63,95 @@
             font-size: 0.95rem;
         }
         nav a:hover { text-decoration: underline; }
+
         .container {
             max-width: 1100px;
-            margin: 2.5rem auto;
-            padding: 0 1.2rem 3rem;
+            margin: 0 auto;
+            padding: 2.8rem 1.3rem 4rem;
         }
         .section {
-            margin-bottom: 3.5rem;
+            margin-bottom: 4rem;
         }
         .section-title {
             color: var(--accent);
+            font-size: 1.45rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0.55rem;
-            margin-bottom: 1.6rem;
-            font-size: 1.55rem;
+            margin: 0 0 1.6rem;
+            letter-spacing: 0.02em;
         }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.3rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
         }
+
         .card {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 1.5rem 1.6rem;
+            padding: 1.4rem 1.5rem;
             border-radius: 8px;
-            transition: border-color 0.2s, transform 0.15s;
             display: flex;
             flex-direction: column;
+            transition: border-color 0.2s, transform 0.15s;
         }
         .card:hover {
             border-color: var(--accent);
             transform: translateY(-2px);
         }
+        .card .tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.48rem;
+            border-radius: 3px;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
         .card h3 {
             color: var(--accent);
-            margin: 0 0 0.6rem;
-            font-size: 1.2rem;
+            margin: 0 0 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 600;
         }
         .card p {
             margin: 0 0 1.1rem;
             flex-grow: 1;
+            font-size: 0.93rem;
             color: var(--text);
-            font-size: 0.97rem;
         }
         .card a {
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             margin-top: auto;
         }
         .card a:hover { text-decoration: underline; }
-        .card .tag {
-            display: inline-block;
-            font-size: 0.78rem;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            margin-bottom: 0.7rem;
+
+        .card.class-card {
+            border-color: #4a3c2a;
         }
+        .card.class-card:hover {
+            border-color: var(--accent);
+        }
+
         footer {
             text-align: center;
-            padding: 2.5rem 1rem;
+            padding: 2.2rem 1rem;
             color: #555;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             border-top: 1px solid var(--border);
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            nav { gap: 0.5rem 1rem; }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.85rem; }
+            header { padding: 2.5rem 1rem 2rem; }
+            nav { gap: 0.5rem 1.1rem; }
+            .container { padding: 2rem 1rem 3rem; }
         }
     </style>
 </head>
@@ -140,88 +163,80 @@
 
     <nav>
         <a href="#races">Расы</a>
-        <a href="#classes">Классы Гештальта</a>
+        <a href="#classes">Альтернативный Гештальт</a>
         <a href="traits.html">Черты</a>
         <a href="traits.html">Лор</a>
         <a href="Backstories.html">Предыстории</a>
-        <a href="alternative.html">Альтернативный Гештальт</a>
+        <a href="alternative.html">Принцип отыгрыша</a>
     </nav>
 
     <div class="container">
 
-        <!-- РАСЫ -->
-        <div id="races" class="section">
+        <section id="races" class="section">
             <h2 class="section-title">Расы</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>1. Человек</h3>
-                    <p>Обычные люди — выжившие после магической чумы. Основа общества, но часто чувствуют себя уязвимыми среди «улучшенных».</p>
+                    <h3>Человек</h3>
                     <a href="human.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>2. Андроид</h3>
-                    <p>Искусственные существа, созданные во время чумы. Ищут своё место в мире людей и машин.</p>
+                    <h3>Андроид</h3>
                     <a href="android.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>3. Репликант</h3>
-                    <p>Механический слепок людей. Сила рождается из травмы и боли. Постоянно балансируют на грани поглощения.</p>
+                    <h3>Репликант</h3>
                     <a href="replicant.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>4. Мутант</h3>
-                    <p>Мутировавшие люди с гротескными изменениями тела. Борются с дальнейшим распадом и отторжением.</p>
+                    <h3>Мутант</h3>
                     <a href="mutant.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>5. Эхо</h3>
-                    <p>Те, кого Гештальт почти поглотил. Балансируют на грани безумия и силы.</p>
+                    <h3>Эхо</h3>
                     <a href="echo.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>6. Киборг / Аугментированный</h3>
-                    <p>Люди, усилившие себя кибернетикой и магией. Между человеком и машиной.</p>
+                    <h3>Киборг</h3>
                     <a href="cyborg.html">Подробнее →</a>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- КЛАССЫ ГЕШТАЛЬТА -->
-        <div id="classes" class="section">
-            <h2 class="section-title">Классы Гештальта</h2>
+        <section id="classes" class="section">
+            <h2 class="section-title">Альтернативный Гештальт</h2>
             <div class="grid">
-                <div class="card">
-                    <span class="tag">Связь • Поддержка</span>
+                <div class="card class-card">
+                    <span class="tag">Связь</span>
                     <h3>А. Гештальт U</h3>
-                    <p>Альтернативный Гештальт, сосредоточенный на командной работе, защите союзников и эссенции связи.</p>
+                    <p>Поддержка и защита через связь с другими.</p>
                     <a href="class-geshtalt-u.html">Перейти к классу →</a>
                 </div>
-                <div class="card">
-                    <span class="tag">Эмоции • Сила чувств</span>
+                <div class="card class-card">
+                    <span class="tag">Эмоции</span>
                     <h3>А. Гештальт E</h3>
-                    <p>Эмоциональный Гештальт. Сила чистых чувств: ярость, печаль, страх, радость и другие.</p>
+                    <p>Сила чистых чувств.</p>
                     <a href="class-geshtalt-e.html">Перейти к классу →</a>
                 </div>
-                <div class="card">
-                    <span class="tag">Нереализованность • Фрустрация</span>
+                <div class="card class-card">
+                    <span class="tag">Нереализованность</span>
                     <h3>А. Гештальт R</h3>
-                    <p>Гештальт нереализованного потенциала. Фрустрация, цели, мечты, саморазвитие и жизнь через других.</p>
+                    <p>Сила из нереализованного потенциала.</p>
                     <a href="class-geshtalt-r.html">Перейти к классу →</a>
                 </div>
-                <div class="card">
-                    <span class="tag">Травма • Воспоминание</span>
+                <div class="card class-card">
+                    <span class="tag">Травма</span>
                     <h3>А. Гештальт F</h3>
-                    <p>Гештальт, рождённый из травмы. Воспоминания, ПТСР, пустота, насилие, стыд, вина и зацикленность.</p>
+                    <p>Сила из прожитой травмы.</p>
                     <a href="class-geshtalt-f.html">Перейти к классу →</a>
                 </div>
-                <div class="card">
-                    <span class="tag">В разработке</span>
+                <div class="card class-card">
+                    <span class="tag">Раскол</span>
                     <h3>А. Гештальт M</h3>
-                    <p>Вариант класса. Пока в разработке.</p>
-                    <a href="#" style="opacity: 0.5; pointer-events: none;">Скоро →</a>
+                    <p>Конфликт с самим собой.</p>
+                    <a href="class-geshtalt-m.html">Перейти к классу →</a>
                 </div>
             </div>
-        </div>
+        </section>
 
     </div>
 
