@@ -523,3 +523,42 @@ footer {
     overflow-wrap: break-word;
     max-width: 100%;
 }
+
+/* ===== ОГРАНИЧЕНИЕ ШИРИНЫ ДЛЯ ТЕКСТА В КАРТОЧКАХ ===== */
+.card p,
+.card .value,
+.ability-item .value,
+.class-block p,
+.class-block .value {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* ===== ТАБЛИЦЫ НА ТЕЛЕФОНАХ ===== */
+@media (max-width: 700px) {
+    .table-wrapper table {
+        min-width: 400px !important;
+        font-size: 0.7rem !important;
+    }
+    .table-wrapper td {
+        word-break: break-word !important;
+    }
+    .class-block {
+        padding: 1rem 0.5rem !important;
+    }
+    .container {
+        padding: 1.2rem 0.5rem 2rem !important;
+    }
+}
+@media (max-width: 480px) {
+    .table-wrapper table {
+        min-width: 320px !important;
+        font-size: 0.6rem !important;
+    }
+    .table-wrapper td {
+        padding: 0.2rem 0.3rem !important;
+        font-size: 0.6rem !important;
+    }
+}
