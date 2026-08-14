@@ -517,3 +517,9 @@ footer {
     margin: 2.2rem 0 1rem;
     font-weight: 600;
 }
+
+.ability-item .value {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
