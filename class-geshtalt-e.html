@@ -133,7 +133,7 @@
             color: var(--text);
         }
 
-        /* ===== ТАБЛИЦЫ ===== */
+        /* ===== ОБЁРТКА ДЛЯ ТАБЛИЦ (ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА) ===== */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -180,6 +180,7 @@
             font-weight: 600;
         }
 
+        /* Таблица стилей эмоций — меньше минимальная ширина */
         .table-wrapper.style-table table {
             min-width: 480px;
         }
@@ -276,113 +277,49 @@
             text-decoration: underline;
         }
 
-        /* ===== НА ТЕЛЕФОНАХ ТАБЛИЦА → КАРТОЧКИ ===== */
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 700px) {
-            .table-wrapper {
-                overflow: visible;
-                border: none;
-                background: transparent;
-            }
-            .table-wrapper table {
-                min-width: unset;
-                display: block;
-            }
-            .table-wrapper thead {
-                display: none;
-            }
-            .table-wrapper tbody {
-                display: block;
-            }
-            .table-wrapper tr {
-                display: block;
-                background: var(--bg-card);
-                border: 1px solid var(--border);
-                border-radius: var(--radius);
-                padding: 0.8rem 1rem;
-                margin-bottom: 0.8rem;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            }
-            .table-wrapper tr:hover td {
-                background: transparent;
-            }
-            .table-wrapper td {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: baseline;
-                gap: 0.3rem 0.6rem;
-                padding: 0.3rem 0;
-                border-bottom: 1px solid var(--border);
-            }
-            .table-wrapper td:last-child {
-                border-bottom: none;
-            }
-            .table-wrapper td::before {
-                content: attr(data-label);
-                font-weight: 700;
-                color: var(--accent);
-                font-size: 0.7rem;
-                text-transform: uppercase;
-                letter-spacing: 0.04em;
-                min-width: 80px;
-                flex-shrink: 0;
-            }
-            .table-wrapper td .highlight {
-                color: var(--accent);
-                font-weight: 600;
-            }
-            .table-wrapper td:last-child {
-                text-align: left;
-            }
-            .table-wrapper td:last-child::before {
-                align-self: flex-start;
-            }
-            .table-wrapper.style-table table {
-                min-width: unset;
-            }
-
-            /* Стили для таблицы стилей эмоций */
-            .style-table td::before {
-                min-width: 60px;
-            }
-
-            .container {
-                padding-left: 0.5rem;
-                padding-right: 0.5rem;
-            }
             .class-block {
-                padding: 1rem 0.5rem;
+                padding: 1.2rem 1rem;
             }
             .section-icon {
                 width: 1.4rem;
                 height: 1.4rem;
+            }
+            .table-wrapper table {
+                min-width: 500px;
+                font-size: 0.8rem;
+            }
+            .table-wrapper.style-table table {
+                min-width: 400px;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.4rem 0.5rem;
             }
             .tab-button {
                 font-size: 0.78rem;
                 padding: 0.35rem 0.7rem;
             }
         }
-
         @media (max-width: 480px) {
-            .container {
-                padding-left: 0.3rem;
-                padding-right: 0.3rem;
+            .quote-block {
+                padding: 1rem 1.2rem;
             }
-            .class-block {
-                padding: 0.8rem 0.3rem;
+            .table-wrapper table {
+                min-width: 400px;
+                font-size: 0.7rem;
             }
-            .table-wrapper td {
-                font-size: 0.85rem;
+            .table-wrapper.style-table table {
+                min-width: 340px;
             }
-            .table-wrapper td::before {
-                min-width: 60px;
-                font-size: 0.65rem;
+            .level-table th,
+            .level-table td {
+                padding: 0.3rem 0.3rem;
             }
             .tab-button {
                 font-size: 0.7rem;
                 padding: 0.25rem 0.5rem;
-            }
-            .quote-block {
-                padding: 1rem 1.2rem;
             }
         }
     </style>
@@ -500,126 +437,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td data-label="Ур.">1</td>
-                                    <td data-label="Бонус мастерства">+2</td>
-                                    <td data-label="Резерв">2</td>
-                                    <td data-label="Особенности">Проявление Эмоции, Интуиция</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">2</td>
-                                    <td data-label="Бонус мастерства">+2</td>
-                                    <td data-label="Резерв">2</td>
-                                    <td data-label="Особенности">Стиль Эмоции, Техники Эмоции</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">3</td>
-                                    <td data-label="Бонус мастерства">+2</td>
-                                    <td data-label="Резерв">2</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">4</td>
-                                    <td data-label="Бонус мастерства">+2</td>
-                                    <td data-label="Резерв">2</td>
-                                    <td data-label="Особенности">Увеличение характеристик, <span class="highlight">Подкласс</span></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">5</td>
-                                    <td data-label="Бонус мастерства">+3</td>
-                                    <td data-label="Резерв">3</td>
-                                    <td data-label="Особенности">Дополнительная атака</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">6</td>
-                                    <td data-label="Бонус мастерства">+3</td>
-                                    <td data-label="Резерв">3</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">7</td>
-                                    <td data-label="Бонус мастерства">+3</td>
-                                    <td data-label="Резерв">3</td>
-                                    <td data-label="Особенности">Предсказание, <span class="highlight">Подкласс</span></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">8</td>
-                                    <td data-label="Бонус мастерства">+3</td>
-                                    <td data-label="Резерв">3</td>
-                                    <td data-label="Особенности">Увеличение характеристик</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">9</td>
-                                    <td data-label="Бонус мастерства">+4</td>
-                                    <td data-label="Резерв">4</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">10</td>
-                                    <td data-label="Бонус мастерства">+4</td>
-                                    <td data-label="Резерв">6</td>
-                                    <td data-label="Особенности">Улучшенный Резерв</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">11</td>
-                                    <td data-label="Бонус мастерства">+4</td>
-                                    <td data-label="Резерв">6</td>
-                                    <td data-label="Особенности">Надёжность, <span class="highlight">Подкласс</span></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">12</td>
-                                    <td data-label="Бонус мастерства">+4</td>
-                                    <td data-label="Резерв">6</td>
-                                    <td data-label="Особенности">Увеличение характеристик</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">13</td>
-                                    <td data-label="Бонус мастерства">+5</td>
-                                    <td data-label="Резерв">7</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">14</td>
-                                    <td data-label="Бонус мастерства">+5</td>
-                                    <td data-label="Резерв">7</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">15</td>
-                                    <td data-label="Бонус мастерства">+5</td>
-                                    <td data-label="Резерв">7</td>
-                                    <td data-label="Особенности">Вечность, <span class="highlight">Подкласс</span></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">16</td>
-                                    <td data-label="Бонус мастерства">+5</td>
-                                    <td data-label="Резерв">7</td>
-                                    <td data-label="Особенности">Увеличение характеристик</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">17</td>
-                                    <td data-label="Бонус мастерства">+6</td>
-                                    <td data-label="Резерв">8</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">18</td>
-                                    <td data-label="Бонус мастерства">+6</td>
-                                    <td data-label="Резерв">8</td>
-                                    <td data-label="Особенности">—</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">19</td>
-                                    <td data-label="Бонус мастерства">+6</td>
-                                    <td data-label="Резерв">10</td>
-                                    <td data-label="Особенности"><span class="highlight">Апофеоз подкласса</span></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Ур.">20</td>
-                                    <td data-label="Бонус мастерства">+6</td>
-                                    <td data-label="Резерв">10</td>
-                                    <td data-label="Особенности">Апофеоз Эмоции</td>
-                                </tr>
+                                <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Эмоции, Интуиция</td></tr>
+                                <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Эмоции, Техники Эмоции</td></tr>
+                                <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
+                                <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>5</td><td>+3</td><td>3</td><td>Дополнительная атака</td></tr>
+                                <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
+                                <tr><td>7</td><td>+3</td><td>3</td><td>Предсказание, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
+                                <tr><td>10</td><td>+4</td><td>6</td><td>Улучшенный Резерв</td></tr>
+                                <tr><td>11</td><td>+4</td><td>6</td><td>Надёжность, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>15</td><td>+5</td><td>7</td><td>Вечность, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>19</td><td>+6</td><td>10</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                                <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Эмоции</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -713,28 +550,28 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td data-label="Стиль"><strong>Ярость</strong></td>
-                                    <td data-label="Доп. урон">Огонь / Рубящий</td>
-                                    <td data-label="Сопротивление">Огонь</td>
-                                    <td data-label="Особенность стиля">Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
+                                    <td><strong>Ярость</strong></td>
+                                    <td>Огонь / Рубящий</td>
+                                    <td>Огонь</td>
+                                    <td>Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
                                 </tr>
                                 <tr>
-                                    <td data-label="Стиль"><strong>Печаль</strong></td>
-                                    <td data-label="Доп. урон">Холод / Некротический</td>
-                                    <td data-label="Сопротивление">Холод</td>
-                                    <td data-label="Особенность стиля">Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
+                                    <td><strong>Печаль</strong></td>
+                                    <td>Холод / Некротический</td>
+                                    <td>Холод</td>
+                                    <td>Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
                                 </tr>
                                 <tr>
-                                    <td data-label="Стиль"><strong>Страх</strong></td>
-                                    <td data-label="Доп. урон">Психический</td>
-                                    <td data-label="Сопротивление">Психический</td>
-                                    <td data-label="Особенность стиля">Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
+                                    <td><strong>Страх</strong></td>
+                                    <td>Психический</td>
+                                    <td>Психический</td>
+                                    <td>Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
                                 </tr>
                                 <tr>
-                                    <td data-label="Стиль"><strong>Радость</strong></td>
-                                    <td data-label="Доп. урон">Светлый / Электрический</td>
-                                    <td data-label="Сопротивление">Светлый</td>
-                                    <td data-label="Особенность стиля">Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
+                                    <td><strong>Радость</strong></td>
+                                    <td>Светлый / Электрический</td>
+                                    <td>Светлый</td>
+                                    <td>Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1026,26 +863,11 @@
                                             <tr><th>Уровень</th><th>Эффект</th></tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td data-label="Уровень">1</td>
-                                                <td data-label="Эффект">Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Уровень">2</td>
-                                                <td data-label="Эффект">+1 к урону и КД, но помеха на спасброски Мудрости.</td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Уровень">3</td>
-                                                <td data-label="Эффект">В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Уровень">4</td>
-                                                <td data-label="Эффект">Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Уровень">5</td>
-                                                <td data-label="Эффект">Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td>
-                                            </tr>
+                                            <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
+                                            <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
+                                            <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
+                                            <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
+                                            <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
