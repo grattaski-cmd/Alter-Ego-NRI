@@ -123,6 +123,9 @@
         .ability-item .value {
             color: var(--text);
             font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
         .ability-item ul {
             margin: 0.3rem 0 0 1.2rem;
@@ -180,7 +183,6 @@
             font-weight: 600;
         }
 
-        /* Таблица стилей эмоций — меньше минимальная ширина */
         .table-wrapper.style-table table {
             min-width: 480px;
         }
@@ -279,6 +281,17 @@
 
         /* ===== АДАПТИВ ===== */
         @media (max-width: 700px) {
+            .class-title {
+                font-size: 1.6rem !important;
+            }
+            .class-title span {
+                font-size: 1.6rem !important;
+            }
+            .class-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+
             .class-block {
                 padding: 1.2rem 1rem;
             }
@@ -301,8 +314,22 @@
                 font-size: 0.78rem;
                 padding: 0.35rem 0.7rem;
             }
+            .ability-item {
+                padding: 0.6rem 0.8rem;
+            }
         }
         @media (max-width: 480px) {
+            .class-title {
+                font-size: 1.3rem !important;
+            }
+            .class-title span {
+                font-size: 1.3rem !important;
+            }
+            .class-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+
             .quote-block {
                 padding: 1rem 1.2rem;
             }
@@ -320,6 +347,12 @@
             .tab-button {
                 font-size: 0.7rem;
                 padding: 0.25rem 0.5rem;
+            }
+            .ability-item {
+                padding: 0.5rem 0.6rem;
+            }
+            .ability-item .value {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -348,11 +381,11 @@
 
         <div class="container">
 
-            <!-- ЗАГОЛОВОК -->
+            <!-- ЗАГОЛОВОК (уменьшенный) -->
             <div style="margin-bottom: 1.5rem;">
-                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.2rem;">
                     <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <svg width="1.6rem" height="1.6rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm5.25 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75z"/>
                         </svg>
                         А. Гештальт E
@@ -832,66 +865,70 @@
                 </div>
             </div>
 
-            <!-- ПОГЛОЩЕНИЕ -->
-<div class="class-block" id="absorption">
-    <h2 class="section-title">
-        <span class="section-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
-        </span>
-        Поглощение (механика риска)
-    </h2>
-    <div class="collapsible-content open">
-        <p style="margin-bottom: 1rem;"><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
+            <!-- ПОГЛОЩЕНИЕ (переработанный блок) -->
+            <div class="class-block" id="absorption">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    </span>
+                    Поглощение (механика риска)
+                </h2>
+                <div class="collapsible-content open">
+                    <p style="margin-bottom: 1rem;"><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
 
-        <div class="ability-grid">
-            <div class="ability-item">
-                <strong>Как накапливается</strong>
-                <div class="value">
-                    <ul>
-                        <li>Трата 3+ Резерва за один бой — +1 уровень.</li>
-                        <li>Критический урон или провал важного спасброска, связанного с эмоциями.</li>
-                        <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="ability-item">
-                <strong>Уровни Поглощения (максимум 5)</strong>
-                <div class="value">
-                    <div class="table-wrapper">
-                        <table class="level-table" style="min-width:400px;">
-                            <thead>
-                                <tr><th>Уровень</th><th>Эффект</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
-                                <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
-                                <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
-                                <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
-                                <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
-                            </tbody>
-                        </table>
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Как накапливается</strong>
+                            <div class="value">
+                                <ul>
+                                    <li>Трата 3+ Резерва за один бой — +1 уровень.</li>
+                                    <li>Критический урон или провал важного спасброска, связанного с эмоциями.</li>
+                                    <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="ability-item">
+                            <strong>Уровни Поглощения (максимум 5)</strong>
+                            <div class="value">
+                                <div class="table-wrapper">
+                                    <table class="level-table" style="min-width:400px;">
+                                        <thead>
+                                            <tr><th>Уровень</th><th>Эффект</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
+                                            <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
+                                            <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
+                                            <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
+                                            <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ability-item">
+                            <strong>Восстановление</strong>
+                            <div class="value">
+                                • Длинный отдых — все уровни сбрасываются.<br>
+                                • Короткий отдых — можно снять 1 уровень (медитация, разговор, ритуал).<br>
+                                • Специальные способности и предметы могут снимать уровни.
+                            </div>
+                        </div>
+
+                        <div class="ability-item">
+                            <strong>Особенности Гештальта E</strong>
+                            <div class="value">
+                                • Поглощение усиливается при сильном проявлении вашей главной эмоции.<br>
+                                • На 3+ уровнях эмоция начинает диктовать поведение (Ярость — атакуете всё подряд, Печаль — апатия, Страх — бегство и т.д.).<br>
+                                • На 5 уровне возможен «Эмоциональный Шторм» — мощный, но неконтролируемый режим.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="ability-item">
-                <strong>Восстановление</strong>
-                <div class="value">
-                    • Длинный отдых — все уровни сбрасываются.<br>
-                    • Короткий отдых — можно снять 1 уровень (медитация, разговор, ритуал).<br>
-                    • Специальные способности и предметы могут снимать уровни.
-                </div>
-            </div>
-            <div class="ability-item">
-                <strong>Особенности Гештальта E</strong>
-                <div class="value">
-                    • Поглощение усиливается при сильном проявлении вашей главной эмоции.<br>
-                    • На 3+ уровнях эмоция начинает диктовать поведение (Ярость — атакуете всё подряд, Печаль — апатия, Страх — бегство и т.д.).<br>
-                    • На 5 уровне возможен «Эмоциональный Шторм» — мощный, но неконтролируемый режим.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
             <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
             <div class="class-block" id="tips">
                 <h2 class="section-title">
