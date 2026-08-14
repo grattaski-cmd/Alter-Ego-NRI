@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Последователь Гештальта — Предыстория</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+            --muted: #8a7a5f;
+            --darker: #16120d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: var(--darker);
+            padding: 2.4rem 1.2rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        header h1 {
+            color: var(--accent);
+            font-size: 1.7rem;
+            margin: 0;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        header .subtitle {
+            color: var(--muted);
+            margin: 0.45rem 0 0;
+            font-size: 0.95rem;
+        }
+        nav {
+            background: var(--darker);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            margin: 0 0.7rem;
+        }
+        nav a:hover { text-decoration: underline; }
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 2.2rem 1.2rem 4rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.4rem 1.5rem;
+            margin-bottom: 1.4rem;
+        }
+        .section-title {
+            color: var(--accent);
+            font-size: 1.15rem;
+            margin: 0 0 0.9rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.02em;
+        }
+        .path-title {
+            color: var(--accent);
+            font-size: 1.05rem;
+            margin: 1.3rem 0 0.7rem;
+            font-weight: 600;
+        }
+        .desc {
+            margin: 0 0 0.6rem;
+        }
+        .stat-line {
+            margin: 0.35rem 0;
+        }
+        .stat-line strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        ul {
+            margin: 0.4rem 0 0.6rem 1.2rem;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 0.35rem;
+        }
+        .list-block {
+            margin-top: 0.7rem;
+        }
+        .list-block h4 {
+            color: var(--accent);
+            font-size: 0.98rem;
+            margin: 0 0 0.45rem;
+            font-weight: 600;
+        }
+        footer {
+            text-align: center;
+            padding: 1.8rem 1rem;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .container { padding: 1.6rem 1rem 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ПОСЛЕДОВАТЕЛЬ ГЕШТАЛЬТА</h1>
+        <p class="subtitle">Предыстория</p>
+    </header>
+
+    <nav>
+        <a href="Backstories.html">← К списку предысторий</a>
+        <a href="index.html">На главную</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+            <h2 class="section-title">Описание</h2>
+            <p class="desc">Ты веришь, что Гештальт — это не просто травма и осевшее Масо. Это путь. Но путь ты понимаешь по-своему.</p>
+            <p class="desc">При создании персонажа выбери один из двух путей.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Владения (общие)</h2>
+            <p class="stat-line"><strong>Навыки:</strong> Проницательность, Религия</p>
+            <p class="stat-line"><strong>Инструменты:</strong> —</p>
+            <p class="stat-line"><strong>Языки:</strong> один на выбор</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Снаряжение (общее)</h2>
+            <ul>
+                <li>Простая поношенная одежда</li>
+                <li>Фляга</li>
+                <li>Небольшой личный символ или запись, связанная с твоим пониманием Гештальта</li>
+                <li>10 крышек</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Особенность: Чутьё Гештальта</h2>
+            <p>Ты тонко чувствуешь проявления Гештальта в других — и силу, и степень поглощённости, и то, насколько человек ещё сопротивляется своей боли. Мастер может давать тебе дополнительные намёки о внутреннем состоянии существ, несущих в себе Гештальт или глубокую травму от Масо.</p>
+        </div>
+
+        <!-- ПУТЬ ЦЕЛОСТНОСТИ -->
+        <div class="card">
+            <h2 class="section-title">Путь Целостности</h2>
+            <p class="desc">Ты веришь, что если сумеешь залечить собственные раны, Гештальт перестанет быть источником боли и станет фундаментом. Тогда из тебя получится не сломанный выживший, а человек, которого эта сила сделает по-настоящему великим.</p>
+
+            <div class="list-block">
+                <h4>Идеалы</h4>
+                <ul>
+                    <li><strong>Исцеление.</strong> Рана должна быть прожита и закрыта, а не носить её как знамя.</li>
+                    <li><strong>Величие.</strong> Гештальт способен поднять человека выше того, кем он был.</li>
+                    <li><strong>Ответственность.</strong> Сила, рождённая из боли, обязана служить чему-то большему.</li>
+                    <li><strong>Целостность.</strong> Настоящая сила — в том, чтобы снова стать целым.</li>
+                    <li><strong>Надежда.</strong> Даже самая глубокая рана может зарасти.</li>
+                    <li><strong>Преображение.</strong> Боль — это материал, а не приговор.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Связи</h4>
+                <ul>
+                    <li>Я почти сломался окончательно. То, что помогло мне удержаться, до сих пор со мной.</li>
+                    <li>Есть человек, которого я хочу «вытянуть» тем же путём, которым иду сам.</li>
+                    <li>Я веду записи о том, как меняется мой Гештальт, когда рана начинает затягиваться.</li>
+                    <li>Кто-то считает мой путь наивным. Я пока не доказал обратное.</li>
+                    <li>У меня есть место или ритуал, где я работаю со своей болью.</li>
+                    <li>Я боюсь, что однажды пойму: некоторые раны не заживают никогда.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Недостатки</h4>
+                <ul>
+                    <li>Я слишком сильно верю, что любую травму можно «правильно» прожить.</li>
+                    <li>Мне трудно принимать тех, кто сознательно отказывается лечиться.</li>
+                    <li>Иногда я давлю на людей своими идеалами сильнее, чем следует.</li>
+                    <li>Я могу игнорировать опасность, потому что верю в своё грядущее преображение.</li>
+                    <li>Сомнения в правильности пути вызывают у меня почти физическую тревогу.</li>
+                    <li>Я плохо переношу вид людей, которые полностью сдались своей боли.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ПУТЬ ПОГЛОЩЕНИЯ -->
+        <div class="card">
+            <h2 class="section-title">Путь Поглощения</h2>
+            <p class="desc">Ты веришь, что человечество в его нынешнем виде должно закончиться. Настоящее будущее — за теми, кого полностью поглотил собственный Гештальт или хлорирование. Только растворившись в этой силе до конца, можно стать чем-то большим, чем сломанный человек.</p>
+
+            <div class="list-block">
+                <h4>Идеалы</h4>
+                <ul>
+                    <li><strong>Преодоление человека.</strong> Старое человечество изжило себя.</li>
+                    <li><strong>Полнота.</strong> Частичный Гештальт — это половинчатость. Нужно идти до конца.</li>
+                    <li><strong>Необходимость.</strong> Боль и разрушение — цена перехода.</li>
+                    <li><strong>Новый вид.</strong> Те, кто растворился полностью, станут основой завтрашнего дня.</li>
+                    <li><strong>Отбрасывание жалости.</strong> Жалость к «ещё-человеку» только тормозит процесс.</li>
+                    <li><strong>Принятие конца.</strong> Смерть прежнего «я» — не трагедия, а условие.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Связи</h4>
+                <ul>
+                    <li>Я видел кого-то, кто ушёл в поглощение полностью. Это было прекрасно и ужасно.</li>
+                    <li>Есть место или состояние, в котором я чувствую, как Гештальт становится сильнее меня.</li>
+                    <li>Кто-то из близких пытался меня остановить. Я не слушал.</li>
+                    <li>У меня есть символ или фраза, которая напоминает, зачем я иду до конца.</li>
+                    <li>Я ищу других, кто понимает путь так же, как я.</li>
+                    <li>Иногда я уже не уверен, где заканчиваюсь я и начинается он.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Недостатки</h4>
+                <ul>
+                    <li>Я смотрю на обычных людей как на незавершённых.</li>
+                    <li>Мне сложно долго сохранять привязанность к тем, кто отказывается идти дальше.</li>
+                    <li>Я могу сознательно усиливать свою боль, чтобы ускорить процесс.</li>
+                    <li>Разговоры о «сохранении человечности» вызывают у меня презрение или усталость.</li>
+                    <li>В моменты слабости я начинаю бояться, что остановился на полпути.</li>
+                    <li>Я рискую потерять остатки себя раньше, чем достигну того, к чему стремлюсь.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Справочник по Альтер-Эго • Предыстории
+    </footer>
+</body>
+</html>
