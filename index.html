@@ -54,6 +54,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
             gap: 0.4rem 1.6rem;
         }
         nav a {
@@ -63,6 +64,55 @@
             font-size: 0.95rem;
         }
         nav a:hover { text-decoration: underline; }
+
+        /* Dropdown */
+        .nav-drop {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-drop-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+        .nav-drop-btn:hover { text-decoration: underline; }
+        .nav-drop-btn::after {
+            content: " ▾";
+            font-size: 0.75em;
+        }
+        .nav-drop-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.55rem);
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 200px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0;
+            text-align: left;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-drop.open .nav-drop-menu { display: block; }
+        .nav-drop-menu a {
+            display: block;
+            padding: 0.55rem 1rem;
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .nav-drop-menu a:hover {
+            background: #2a2218;
+            color: var(--accent);
+            text-decoration: none;
+        }
 
         .container {
             max-width: 1100px;
@@ -152,6 +202,7 @@
             header { padding: 2.5rem 1rem 2rem; }
             nav { gap: 0.5rem 1.1rem; }
             .container { padding: 2rem 1rem 3rem; }
+            .nav-drop-menu { left: 0; transform: none; }
         }
     </style>
 </head>
@@ -164,10 +215,15 @@
     <nav>
         <a href="#races">Расы</a>
         <a href="#classes">Альтернативный Гештальт</a>
-        <a href="traits.html">Черты</a>
-        <a href="traits.html">Лор</a>
-        <a href="Backstories.html">Предыстории</a>
-        <a href="alternative.html">Принцип отыгрыша</a>
+        <div class="nav-drop" id="navMore">
+            <button type="button" class="nav-drop-btn" aria-expanded="false" aria-controls="navMoreMenu">Справочник</button>
+            <div class="nav-drop-menu" id="navMoreMenu">
+                <a href="LOR.html">Лор</a>
+                <a href="traits.html">Черты</a>
+                <a href="Backstories.html">Предыстории</a>
+                <a href="alternative.html">Принцип отыгрыша</a>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
@@ -192,8 +248,8 @@
                     <a href="mutant.html">Подробнее →</a>
                 </div>
                 <div class="card">
-                    <h3>Эхо</h3>
-                    <a href="echo.html">Подробнее →</a>
+                    <h3>Ремнант</h3>
+                    <a href="remnant.html">Подробнее →</a>
                 </div>
                 <div class="card">
                     <h3>Киборг</h3>
@@ -243,5 +299,21 @@
     <footer>
         Справочник по Альтер-Эго • 2026
     </footer>
+
+    <script>
+        (function () {
+            const drop = document.getElementById('navMore');
+            const btn = drop.querySelector('.nav-drop-btn');
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const open = drop.classList.toggle('open');
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            document.addEventListener('click', function () {
+                drop.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        })();
+    </script>
 </body>
 </html>
