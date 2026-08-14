@@ -4,203 +4,698 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Охотник на мутантов — Предыстория</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-            --darker: #16120d;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: var(--darker);
-            padding: 2.4rem 1.2rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
+        .backstory-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
             color: var(--accent);
-            font-size: 1.85rem;
-            margin: 0;
-            letter-spacing: 0.05em;
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
+        }
+        .backstory-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
             font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
-        header .subtitle {
-            color: var(--muted);
-            margin: 0.45rem 0 0;
-            font-size: 0.95rem;
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
-        nav {
-            background: var(--darker);
-            padding: 0.75rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
-        nav a {
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .backstory-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
+        }
+        .backstory-block:hover {
+            border-color: var(--accent);
+        }
+
+        .feature-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 0.8rem;
+        }
+        .feature-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .feature-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .ideal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .ideal-card {
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            transition: border-color var(--transition);
+        }
+        .ideal-card:hover {
+            border-color: var(--accent);
+        }
+        .ideal-card strong {
+            color: var(--accent);
+            display: block;
+            font-size: 0.9rem;
+        }
+        .ideal-card p {
+            margin: 0.2rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.92rem;
-            margin: 0 0.7rem;
-        }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 2.2rem 1.2rem 4rem;
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.4rem 1.5rem;
-            margin-bottom: 1.4rem;
-        }
-        .section-title {
-            color: var(--accent);
-            font-size: 1.15rem;
-            margin: 0 0 0.9rem;
-            padding-bottom: 0.35rem;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: 0.02em;
-        }
-        .desc {
-            margin: 0 0 0.6rem;
-        }
-        .stat-line {
-            margin: 0.35rem 0;
-        }
-        .stat-line strong {
-            color: var(--accent);
             font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
         }
-        ul {
-            margin: 0.4rem 0 0.6rem 1.2rem;
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .rp-list {
+            list-style: none;
             padding: 0;
+            margin: 0.5rem 0;
         }
-        li {
-            margin-bottom: 0.35rem;
+        .rp-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
         }
-        .list-block {
-            margin-top: 0.7rem;
+        .rp-list li:last-child {
+            border-bottom: none;
         }
-        .list-block h4 {
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
             color: var(--accent);
-            font-size: 0.98rem;
-            margin: 0 0 0.45rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
-        footer {
-            text-align: center;
-            padding: 1.8rem 1rem;
-            color: #555;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border);
+
+        @media (max-width: 700px) {
+            .backstory-title {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+            .backstory-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .ideal-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .container { padding: 1.6rem 1rem 3rem; }
+        @media (max-width: 480px) {
+            .backstory-title {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ОХОТНИК НА МУТАНТОВ</h1>
-        <p class="subtitle">Предыстория</p>
-    </header>
 
-    <nav>
-        <a href="Backstories.html">← К списку предысторий</a>
-        <a href="index.html">На главную</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <div class="card">
-            <h2 class="section-title">Описание</h2>
-            <p class="desc">Ты зарабатываешь тем, что другие предпочитают не видеть. Знаешь повадки заражённых, умеешь читать их следы и понимаешь, когда особь ещё можно оставить, а когда нужно добивать. Для большинства ты — необходимая грязная работа. Для себя — человек, который просто делает то, что нужно.</p>
-        </div>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+        </header>
 
-        <div class="card">
-            <h2 class="section-title">Владения</h2>
-            <p class="stat-line"><strong>Навыки:</strong> Выживание, Восприятие</p>
-            <p class="stat-line"><strong>Инструменты:</strong> Набор травника</p>
-            <p class="stat-line"><strong>Языки:</strong> —</p>
-        </div>
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
 
-        <div class="card">
-            <h2 class="section-title">Снаряжение</h2>
-            <ul>
-                <li>Потрёпанная охотничья одежда (часто с защитными вставками)</li>
-                <li>Набор травника</li>
-                <li>Фляга</li>
-                <li>Несколько пустых контейнеров для образцов</li>
-                <li>12 крышек</li>
-            </ul>
-        </div>
+        <div class="container">
 
-        <div class="card">
-            <h2 class="section-title">Особенность: Знание добычи</h2>
-            <p>Ты хорошо разбираешься в мутантах и проявлениях чумы. Ты можешь по следам, поведению или останкам примерно определить тип заражения, степень опасности и возможные слабости. Мастер может давать тебе дополнительную информацию о мутантах и заражённых зонах, которую обычный человек не заметит.</p>
-        </div>
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15 12H9m0 0a3 3 0 0 1 0-6h6a3 3 0 0 1 0 6m0 0a3 3 0 0 0 0 6H9a3 3 0 0 0 0-6m0 0h6"/>
+                            <circle cx="12" cy="12" r="9"/>
+                        </svg>
+                        Охотник на мутантов
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Охота • Выживание</p>
+            </div>
 
-        <div class="card">
-            <h2 class="section-title">Рекомендуемые характеристики</h2>
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Я не убиваю их из ненависти. Я убиваю их, потому что они не оставляют выбора. И потому что кто-то должен это делать. Я видел их лица. Иногда они похожи на наши. Но это не значит, что мы одинаковые.»
+                <span class="author">— Старый охотник, безымянный сталкер пустошей</span>
+            </div>
 
-            <div class="list-block">
-                <h4>Идеалы</h4>
-                <ul>
-                    <li><strong>Чистота.</strong> Заражённое нужно убирать. Иначе оно расползётся.</li>
-                    <li><strong>Профессионализм.</strong> Эмоции мешают. Работа должна быть сделана качественно.</li>
-                    <li><strong>Знание.</strong> Чем лучше понимаешь врага — тем дольше живёшь.</li>
-                    <li><strong>Необходимость.</strong> Кто-то должен делать эту работу. Лучше я, чем кто-то неподготовленный.</li>
-                    <li><strong>Дистанция.</strong> Нельзя слишком сближаться с тем, на что охотишься.</li>
-                    <li><strong>Выживание.</strong> Я охотник, а не герой. Герои дохнут первыми.</li>
+            <!-- ОПИСАНИЕ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Описание
+                </h2>
+                <p>Ты зарабатываешь тем, что другие предпочитают не видеть. Знаешь повадки заражённых, умеешь читать их следы и понимаешь, когда особь ещё можно оставить, а когда нужно добивать. Для большинства ты — необходимая грязная работа. Для себя — человек, который просто делает то, что нужно.</p>
+                <p class="muted" style="margin-top: 0.8rem;">Ты не герой. Ты тот, кто идёт по следу, когда другие отворачиваются. И возвращается не всегда.</p>
+            </div>
+
+            <!-- ПОЧЕМУ СТАЛ ОХОТНИКОМ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                    </span>
+                    Почему ты стал охотником на мутантов?
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Месть</strong>
+                        <div class="value">Мутанты убили кого-то из твоих близких. Ты поклялся уничтожать их, чтобы никто больше не пострадал.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Долг</strong>
+                        <div class="value">Кто-то должен защищать поселения. Ты понял, что у тебя есть для этого навыки, и не смог отказаться.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Любопытство</strong>
+                        <div class="value">Ты хочешь понять, что такое чума и мутация. Ты изучаешь их, чтобы найти способ остановить заражение.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Плата</strong>
+                        <div class="value">Это работа. Она хорошо оплачивается, и ты умеешь её делать лучше других.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Привычка</strong>
+                        <div class="value">Ты не помнишь, когда начал. Это просто стало частью тебя — следить, выслеживать, уничтожать.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    </span>
+                    Владения и снаряжение
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Навыки</strong>
+                        <div class="value">Выживание, Восприятие</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Инструменты</strong>
+                        <div class="value">Набор травника</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Языки</strong>
+                        <div class="value">—</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Снаряжение</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li>Потрёпанная охотничья одежда (часто с защитными вставками)</li>
+                                <li>Набор травника</li>
+                                <li>Фляга</li>
+                                <li>Несколько пустых контейнеров для образцов</li>
+                                <li>12 крышек</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ОСОБЕННОСТЬ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                    </span>
+                    Особенность: Знание добычи
+                </h2>
+                <p>Ты хорошо разбираешься в мутантах и проявлениях чумы. Ты можешь по следам, поведению или останкам примерно определить тип заражения, степень опасности и возможные слабости. Мастер может давать тебе дополнительную информацию о мутантах и заражённых зонах, которую обычный человек не заметит.</p>
+                <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При встрече с мутантом или исследовании заражённой зоны ты можешь сделать проверку Мудрости (Выживание) или Интеллекта (Природа), чтобы узнать информацию о существе: его уязвимости, привычки, уровень опасности. Ведущий может дать тебе подсказки, которые другие персонажи не получат.</p>
+            </div>
+
+            <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Идеалы, связи, недостатки
+                </h2>
+
+                <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+                <div class="ideal-grid">
+                    <div class="ideal-card">
+                        <strong>Чистота</strong>
+                        <p>Заражённое нужно убирать. Иначе оно расползётся.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Профессионализм</strong>
+                        <p>Эмоции мешают. Работа должна быть сделана качественно.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Знание</strong>
+                        <p>Чем лучше понимаешь врага — тем дольше живёшь.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Необходимость</strong>
+                        <p>Кто-то должен делать эту работу. Лучше я, чем кто-то неподготовленный.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Дистанция</strong>
+                        <p>Нельзя слишком сближаться с тем, на что охотишься.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Выживание</strong>
+                        <p>Я охотник, а не герой. Герои дохнут первыми.</p>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Есть конкретный тип мутантов, с которым у меня личные счёты.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я когда-то не добил особь, и это стоило кому-то жизни. Я помню.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• У меня есть постоянный заказчик — поселение или человек, который регулярно платит за чистку.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я веду записи о встречах с заражёнными. Тетрадь уже толстая.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Один мутант когда-то выглядел почти как человек. Это до сих пор меня беспокоит.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Есть напарник (или бывший напарник), с которым мы слишком долго работали вместе.</div>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Я привык смотреть на заражённых как на добычу. Иногда это переносится и на обычных людей.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Мне сложно долго находиться в «чистых» безопасных местах — становится не по себе.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я слишком быстро решаю, что кого-то уже не спасти.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Запах, звуки и следы чумы вызывают у меня почти рефлекторную готовность к бою.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я плохо объясняю, почему делаю эту работу. Людям обычно не нравятся мои ответы.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Иногда я рискую больше, чем нужно, просто чтобы проверить теорию или добрать образец.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Заметки для ведущего
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Крючки для приключений</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li><strong>Новый вид:</strong> В окрестностях появляются мутанты, которых никто раньше не видел. Персонаж должен изучить их и найти способ борьбы.</li>
+                                <li><strong>Старый враг:</strong> Мутант, которого персонаж не добил годы назад, возвращается — и теперь он явно изменился.</li>
+                                <li><strong>Заражённый человек:</strong> Поселение просит персонажа не убивать, а поймать человека, который начинает мутировать. Но тот не хочет сдаваться.</li>
+                                <li><strong>Тайна происхождения:</strong> Персонаж находит следы того, что мутанты появляются не случайно. Кто-то создаёт их намеренно.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Вопросы для отыгрыша</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li>Как ты относишься к мутантам, которые сохраняют разум?</li>
+                                <li>Что ты чувствуешь, когда убиваешь существо, которое когда-то было человеком?</li>
+                                <li>Есть ли у тебя правило, которое ты никогда не нарушаешь во время охоты?</li>
+                                <li>Если бы ты мог остановить чуму раз и навсегда — чем бы ты пожертвовал?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+            <div class="backstory-block" id="tips">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Советы по отыгрышу
+                </h2>
+                <ul class="rp-list">
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                        <span><strong>Ты — профессионал:</strong> Ты знаешь, как читать следы, как подкрадываться, как добивать быстро и чисто. Твоя работа — это твоя гордость.</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                        <span><strong>Одиночество охотника:</strong> Ты часто работаешь один. Ты привык к тишине, к ожиданию, к тому, что никто не прикроет спину. Но иногда это тяжело.</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                        <span><strong>Уважение к добыче:</strong> Ты убиваешь не из ненависти. Ты уважаешь врага, потому что он опасен. И это делает тебя сильнее.</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                        <span><strong>Страх и решимость:</strong> Ты боишься — иначе ты был бы дураком. Но ты научился превращать страх в оружие. Как ты это делаешь?</span>
+                    </li>
                 </ul>
             </div>
 
-            <div class="list-block">
-                <h4>Связи</h4>
-                <ul>
-                    <li>Есть конкретный тип мутантов, с которым у меня личные счёты.</li>
-                    <li>Я когда-то не добил особь, и это стоило кому-то жизни. Я помню.</li>
-                    <li>У меня есть постоянный заказчик — поселение или человек, который регулярно платит за чистку.</li>
-                    <li>Я веду записи о встречах с заражёнными. Тетрадь уже толстая.</li>
-                    <li>Один мутант когда-то выглядел почти как человек. Это до сих пор меня беспокоит.</li>
-                    <li>Есть напарник (или бывший напарник), с которым мы слишком долго работали вместе.</li>
-                </ul>
-            </div>
+            <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
 
-            <div class="list-block">
-                <h4>Недостатки</h4>
-                <ul>
-                    <li>Я привык смотреть на заражённых как на добычу. Иногда это переносится и на обычных людей.</li>
-                    <li>Мне сложно долго находиться в «чистых» безопасных местах — становится не по себе.</li>
-                    <li>Я слишком быстро решаю, что кого-то уже не спасти.</li>
-                    <li>Запах, звуки и следы чумы вызывают у меня почти рефлекторную готовность к бою.</li>
-                    <li>Я плохо объясняю, почему делаю эту работу. Людям обычно не нравятся мои ответы.</li>
-                    <li>Иногда я рискую больше, чем нужно, просто чтобы проверить теорию или добрать образец.</li>
-                </ul>
+        </div>
+
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
         </div>
 
     </div>
 
-    <footer>
-        Справочник по Альтер-Эго • Предыстории
-    </footer>
+    <script>
+        (function() {
+            'use strict';
+
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
