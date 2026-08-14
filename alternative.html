@@ -3,352 +3,831 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гештальты. Возможные характеристики для отыгрыша</title>
+    <title>Гештальты — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-        }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: #16120d;
-            padding: 2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        h1 { color: var(--accent); margin: 0; }
-        nav {
-            background: #16120d;
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .card {
-            background: var(--card);
+        /* Дополнительные стили только для этой страницы */
+        .geshtalt-section {
+            margin-bottom: 3rem;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 6px;
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
         }
-        .section-title {
+        .geshtalt-section:hover {
+            border-color: var(--accent);
+        }
+
+        .geshtalt-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .geshtalt-header .letter {
+            font-size: 2.4rem;
+            font-weight: 800;
             color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
+            background: var(--accent-glow);
+            width: 56px;
+            height: 56px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
-        table {
+        .geshtalt-header .name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .geshtalt-header .sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-left: auto;
+        }
+
+        .geshtalt-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        .trait-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
+            font-size: 0.9rem;
         }
-        th, td {
-            border: 1px solid var(--border);
-            padding: 12px;
+        .trait-table th {
+            background: var(--bg-nav);
+            color: var(--accent);
+            font-weight: 600;
+            padding: 0.7rem 0.8rem;
             text-align: left;
-            vertical-align: top;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        th {
-            background: #2c1e14;
+        .trait-table td {
+            padding: 0.7rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            color: var(--text);
+        }
+        .trait-table tr:last-child td {
+            border-bottom: none;
+        }
+        .trait-table tr:hover td {
+            background: var(--accent-glow);
+        }
+        .trait-table .type-code {
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .trait-table .term {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .trait-table .example {
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+        /* Поиск по странице */
+        .page-search {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        .page-search input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .page-search input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        .page-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Навигация по гештальтам (якоря) */
+        .geshtalt-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.5rem;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .geshtalt-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color var(--transition);
+        }
+        .geshtalt-nav a:hover {
             color: var(--accent);
         }
-        tr:nth-child(even) {
-            background: #16120d;
+
+        .highlight {
+            background: var(--accent-glow);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        /* Адаптив для таблиц */
+        @media (max-width: 700px) {
+            .trait-table {
+                font-size: 0.8rem;
+            }
+            .trait-table th,
+            .trait-table td {
+                padding: 0.5rem 0.6rem;
+            }
+            .geshtalt-header .letter {
+                width: 44px;
+                height: 44px;
+                font-size: 1.8rem;
+            }
+            .geshtalt-header .name {
+                font-size: 1.3rem;
+            }
+            .geshtalt-header .sub {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .trait-table {
+                font-size: 0.7rem;
+            }
+            .trait-table th,
+            .trait-table td {
+                padding: 0.4rem 0.4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Гештальты</h1>
-        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Альтернативный Гештальт • Варианты</p>
-    </header>
 
-    <nav>
-        <a href="index.html">← Назад к справочнику</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-            <div class="card">
-            <h2 class="section-title">Характеристики для отыгрыша Гештальта U</h2>
-            <p>Гештальт U проявляется через связи, отношения и эмоциональную привязанность. Используйте эту таблицу, чтобы глубже отыгрывать своего Альтернативного Гештальта.</p>
-            
-            <table>
-                <tr>
-                    <th>Тип связи</th>
-                    <th>Негативная трансформация</th>
-                    <th>Психологический / клинический термин</th>
-                    <th>Краткое описание и пример</th>
-                </tr>
-                <tr>
-                    <td>UR</td>
-                    <td>Хронические паттерны поведения, перенесённые на другие отношения</td>
-                    <td>Трансгенерационная травма / паттерны привязанности</td>
-                    <td>Человек повторяет сценарии своих родителей (конфликты, холодность, гиперопека)</td>
-                </tr>
-                <tr>
-                    <td>UP</td>
-                    <td>Повторяющиеся токсичные или созависимые отношения</td>
-                    <td>Тревожная / избегающая привязанность + repetition compulsion</td>
-                    <td>Выбор партнёров, которые повторяют травму отвержения или контроля</td>
-                </tr>
-                <tr>
-                    <td>UF</td>
-                    <td>Трудности с доверием и близкой дружбой</td>
-                    <td>Избегающее поведение в дружбе / социальная тревога</td>
-                    <td>Постоянные разрывы дружбы или страх глубоких дружеских связей</td>
-                </tr>
-                <tr>
-                    <td>US</td>
-                    <td>Чувство отчуждения, непринадлежности</td>
-                    <td>Социальная изоляция / социальная тревога</td>
-                    <td>Избегание социальных ситуаций, ощущение «я чужой»</td>
-                </tr>
-                <tr>
-                    <td>UC</td>
-                    <td>Давление на детей или чувство вины как родителя</td>
-                    <td>Проекция + родительская вина / интегрированные паттерны</td>
-                    <td>Попытка реализовать свои несбывшиеся мечты через детей или страх «испортить» ребёнка</td>
-                </tr>
-                <tr>
-                    <td>UG</td>
-                    <td>Незавершённое горе или «привязанность к призраку»</td>
-                    <td>Осложнённое горе (complicated grief) / незавершённые отношения</td>
-                    <td>Мысленное продолжение диалога с умершим или бывшим, невозможность двигаться дальше</td>
-                </tr>
-            </table>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
+        </header>
+
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <h1 class="section-title">Гештальты: характеристики для отыгрыша</h1>
+            <p class="section-desc">
+                Каждый Альтернативный Гештальт — это не просто набор механик, а целая психологическая вселенная.
+                В этих таблицах собраны возможные проявления, внутренние конфликты и травмы, которые можно использовать для глубокого и правдоподобного отыгрыша.
+            </p>
+
+            <!-- Поиск по странице -->
+            <div class="page-search">
+                <input type="text" id="pageSearch" placeholder="Поиск по названию, типу, описанию...">
+            </div>
+
+            <!-- Навигация по гештальтам -->
+            <div class="geshtalt-nav" id="geshtaltNav">
+                <a href="#geshtalt-u">Гештальт U</a>
+                <a href="#geshtalt-r">Гештальт R</a>
+                <a href="#geshtalt-f">Гештальт F</a>
+                <a href="#geshtalt-m">Гештальт M</a>
+                <a href="#geshtalt-e">Гештальт E</a>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- ГЕШТАЛЬТ U -->
+            <!-- ============================================================ -->
+            <section id="geshtalt-u" class="geshtalt-section">
+                <div class="geshtalt-header">
+                    <div class="letter">U</div>
+                    <div class="name">Гештальт U</div>
+                    <span class="sub">Связь, привязанность, отношения</span>
+                </div>
+                <div class="geshtalt-desc">
+                    Гештальт U проявляется через <span class="highlight">связи</span> — с другими людьми, с прошлым, с памятью.
+                    Сила этого типа рождается из привязанности, но слабость — из страха потери и повторяющихся болезненных сценариев.
+                </div>
+
+                <table class="trait-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Негативная трансформация</th>
+                            <th>Клинический термин</th>
+                            <th>Как это выглядит в игре</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="type-code">UR</span></td>
+                            <td>Повторение родительских сценариев</td>
+                            <td class="term">Трансгенерационная травма</td>
+                            <td class="example">Персонаж бессознательно повторяет конфликты или модели поведения своих родителей.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">UP</span></td>
+                            <td>Токсичные или созависимые отношения</td>
+                            <td class="term">Тревожная привязанность</td>
+                            <td class="example">Выбирает партнёров, которые повторяют травму отвержения или контроля.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">UF</span></td>
+                            <td>Страх близкой дружбы</td>
+                            <td class="term">Социальная тревога</td>
+                            <td class="example">Постоянно разрывает дружбу или боится глубоких связей.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">US</span></td>
+                            <td>Чувство отчуждения, «я чужой»</td>
+                            <td class="term">Социальная изоляция</td>
+                            <td class="example">Избегает групп, не чувствует принадлежности ни к одной общине.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">UC</span></td>
+                            <td>Давление на детей или чувство вины</td>
+                            <td class="term">Родительская проекция</td>
+                            <td class="example">Пытается реализовать свои мечты через детей или боится их «испортить».</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">UG</span></td>
+                            <td>Привязанность к «призраку»</td>
+                            <td class="term">Осложнённое горе</td>
+                            <td class="example">Ведёт мысленные диалоги с умершим, не может двигаться дальше.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- ГЕШТАЛЬТ R -->
+            <!-- ============================================================ -->
+            <section id="geshtalt-r" class="geshtalt-section">
+                <div class="geshtalt-header">
+                    <div class="letter">R</div>
+                    <div class="name">Гештальт R</div>
+                    <span class="sub">Эмоции, внутренний конфликт</span>
+                </div>
+                <div class="geshtalt-desc">
+                    Гештальт R рождается из <span class="highlight">неразрешённых чувств</span> и глубоких внутренних конфликтов.
+                    Сила этого типа — в интенсивности переживаний, слабость — в застревании в эмоциональных тупиках.
+                </div>
+
+                <table class="trait-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Негативная трансформация</th>
+                            <th>Клинический термин</th>
+                            <th>Как это выглядит в игре</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="type-code">RT</span></td>
+                            <td>Отказ от целей, «всё равно не получится»</td>
+                            <td class="term">Выученная беспомощность</td>
+                            <td class="example">Перестаёт ставить цели, потому что верит в неудачу.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">RD</span></td>
+                            <td>Хроническое сожаление об упущенном</td>
+                            <td class="term">Экзистенциальная вина</td>
+                            <td class="example">Постоянно думает: «Я всегда мечтал, но...»</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">RS</span></td>
+                            <td>Застой, «я застрял»</td>
+                            <td class="term">Идентичностная стагнация</td>
+                            <td class="example">Потеря интереса к развитию, ощущение тупика.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">RM</span></td>
+                            <td>Самообвинение и «что если бы...»</td>
+                            <td class="term">Депрессивная руминация</td>
+                            <td class="example">Бесконечно прокручивает альтернативные сценарии жизни.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">RV</span></td>
+                            <td>Давление на близких через свои мечты</td>
+                            <td class="term">Викарная проекция</td>
+                            <td class="example">Пытается реализовать своё через детей или партнёра.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- ГЕШТАЛЬТ F -->
+            <!-- ============================================================ -->
+            <section id="geshtalt-f" class="geshtalt-section">
+                <div class="geshtalt-header">
+                    <div class="letter">F</div>
+                    <div class="name">Гештальт F</div>
+                    <span class="sub">Травма, потеря, предательство</span>
+                </div>
+                <div class="geshtalt-desc">
+                    Гештальт F — самый тёмный и глубокий. Он рождается из <span class="highlight">травмы, потери и боли</span>.
+                    Сила этого типа — в пережитом и осмысленном страдании. Слабость — в том, что травма может разрушить личность.
+                </div>
+
+                <table class="trait-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Негативная трансформация</th>
+                            <th>Клинический термин</th>
+                            <th>Как это выглядит в игре</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="type-code">FM</span></td>
+                            <td>Беспомощность и злость на мир</td>
+                            <td class="term">Экзистенциальная фрустрация</td>
+                            <td class="example">«Мир несправедлив, ничего нельзя изменить».</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FV</span></td>
+                            <td>Полноценная картина травмы</td>
+                            <td class="term">ПТСР</td>
+                            <td class="example">Флешбэки, ночные кошмары, избегание триггеров.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FA</span></td>
+                            <td>Осложнённое горе, которое не проходит</td>
+                            <td class="term">Расстройство длительного горя</td>
+                            <td class="example">Годами не может принять потерю, идеализирует умершего.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FS</span></td>
+                            <td>Хроническая гипербдительность</td>
+                            <td class="term">Комплексное ПТСР</td>
+                            <td class="example">Постоянное ощущение угрозы даже в безопасной среде.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FG</span></td>
+                            <td>Диссоциация и онемение</td>
+                            <td class="term">Диссоциативные симптомы</td>
+                            <td class="example">«Отключение» от реальности, ощущение нереальности.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FB</span></td>
+                            <td>Глубокий стыд, самоуничижение</td>
+                            <td class="term">Токсичный стыд</td>
+                            <td class="example">«Я плохой по своей сути», избегает внимания.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FI</span></td>
+                            <td>Хроническая вина и самообвинение</td>
+                            <td class="term">Вина выжившего</td>
+                            <td class="example">«Я должен был предотвратить» или «я не сделал достаточно».</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">FP</span></td>
+                            <td>Глубокое нарушение доверия</td>
+                            <td class="term">Травма предательства</td>
+                            <td class="example">Не может доверять никому после предательства.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- ГЕШТАЛЬТ M -->
+            <!-- ============================================================ -->
+            <section id="geshtalt-m" class="geshtalt-section">
+                <div class="geshtalt-header">
+                    <div class="letter">M</div>
+                    <div class="name">Гештальт M</div>
+                    <span class="sub">Внутренний конфликт, самосаботаж</span>
+                </div>
+                <div class="geshtalt-desc">
+                    Гештальт M — это <span class="highlight">война с самим собой</span>. Противоречия, расколотая идентичность,
+                    неразрешимые внутренние конфликты. Сила — в глубине и сложности. Слабость — в параличе воли.
+                </div>
+
+                <table class="trait-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Негативная трансформация</th>
+                            <th>Клинический термин</th>
+                            <th>Как это выглядит в игре</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="type-code">MG</span></td>
+                            <td>Паралич решений, «и хочу, и боюсь»</td>
+                            <td class="term">Невротический конфликт</td>
+                            <td class="example">Метается между желаниями и страхами, в итоге не делает ничего.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GS</span></td>
+                            <td>Проекция на других + внутреннее напряжение</td>
+                            <td class="term">Проекция тени</td>
+                            <td class="example">Видит в других то, что отвергает в себе.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GI</span></td>
+                            <td>Регрессия, детские реакции</td>
+                            <td class="term">Регрессия</td>
+                            <td class="example">Во взрослом возрасте реагирует обидой или страхом как ребёнок.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GA</span></td>
+                            <td>Жёсткий внутренний критик</td>
+                            <td class="term">Токсический перфекционизм</td>
+                            <td class="example">Постоянно обесценивает себя, боится ошибок.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GP</span></td>
+                            <td>Потеря аутентичности, «играние роли»</td>
+                            <td class="term">Идентичностный кризис</td>
+                            <td class="example">Не понимает, кто он без своих социальных масок.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GB</span></td>
+                            <td>Диссоциация от тела и реальности</td>
+                            <td class="term">Дереализация / деперсонализация</td>
+                            <td class="example">Ощущение «я не в своём теле», «всё как во сне».</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">GU</span></td>
+                            <td>Самосаботаж и низкая самооценка</td>
+                            <td class="term">Самосаботаж</td>
+                            <td class="example">Сам мешает себе развиваться и достигать целей.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- ГЕШТАЛЬТ E -->
+            <!-- ============================================================ -->
+            <section id="geshtalt-e" class="geshtalt-section">
+                <div class="geshtalt-header">
+                    <div class="letter">E</div>
+                    <div class="name">Гештальт E</div>
+                    <span class="sub">Эмоции, подавление, взрыв</span>
+                </div>
+                <div class="geshtalt-desc">
+                    Гештальт E — это <span class="highlight">эмоции в их крайних проявлениях</span>.
+                    Сила — в интенсивности переживаний. Слабость — в том, что эмоции захлёстывают и разрушают.
+                </div>
+
+                <table class="trait-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Негативная трансформация</th>
+                            <th>Клинический термин</th>
+                            <th>Как это выглядит в игре</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="type-code">EW</span></td>
+                            <td>Подавленный гнев → взрывы или аутоагрессия</td>
+                            <td class="term">Соматизация гнева</td>
+                            <td class="example">Хронические боли, гипертония или внезапные ярости.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">ER</span></td>
+                            <td>Хроническая обида → горечь</td>
+                            <td class="term">Ресентимент</td>
+                            <td class="example">Годами носит обиду, которая отравляет все отношения.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">ES</span></td>
+                            <td>Непрожитое горе → депрессия</td>
+                            <td class="term">Осложнённое горе / депрессия</td>
+                            <td class="example">Длительное подавленное настроение, потеря смысла.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">EF</span></td>
+                            <td>Хроническая тревога и избегание</td>
+                            <td class="term">ГТР / фобии</td>
+                            <td class="example">Постоянное ожидание плохого, избегание ситуаций.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">EG</span></td>
+                            <td>Хроническая вина и самоуничижение</td>
+                            <td class="term">Токсическая вина</td>
+                            <td class="example">«Я виноват во всём», даже в том, что не зависит от него.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">EL</span></td>
+                            <td>Привязанность к недоступному человеку</td>
+                            <td class="term">Лимберация</td>
+                            <td class="example">Навязчивые мысли о человеке, невозможность отпустить.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-code">EA</span></td>
+                            <td>Смешанные чувства без разрешения</td>
+                            <td class="term">Амбивалентность</td>
+                            <td class="example">Одновременно любовь и ненависть → внутренний конфликт.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
         </div>
 
-            <div class="card">
-            <h2 class="section-title">Характеристики для отыгрыша Гештальта R</h2>
-            <p>Гештальт R проявляется через глубокие эмоции, внутренние конфликты и неразрешённые чувства. Используйте таблицу, чтобы лучше отыгрывать своего Альтернативного Гештальта.</p>
-            
-            <table>
-                <tr>
-                    <th>Тип</th>
-                    <th>Негативная трансформация</th>
-                    <th>Психологический / клинический термин</th>
-                    <th>Краткое описание и пример</th>
-                </tr>
-                <tr>
-                    <td>RT</td>
-                    <td>Отказ от постановки и достижения целей</td>
-                    <td>Выученная беспомощность + прокрастинация</td>
-                    <td>«Всё равно не получится» → человек перестаёт ставить цели</td>
-                </tr>
-                <tr>
-                    <td>RD</td>
-                    <td>Хроническое сожаление и ощущение упущенной жизни</td>
-                    <td>Экзистенциальная вина + ангедония</td>
-                    <td>Постоянные мысли «я всегда мечтал, но...»</td>
-                </tr>
-                <tr>
-                    <td>RS</td>
-                    <td>Застой в личностном росте, ощущение «я застрял»</td>
-                    <td>Идентичностный застой / стагнация</td>
-                    <td>Прекращение попыток развиваться, потеря интереса к себе</td>
-                </tr>
-                <tr>
-                    <td>RM</td>
-                    <td>Сильное самообвинение и «что если бы...»</td>
-                    <td>Регрет (regret) + депрессивный руминация</td>
-                    <td>Постоянное прокручивание альтернативных сценариев жизни</td>
-                </tr>
-                <tr>
-                    <td>RV</td>
-                    <td>Давление на детей/партнёра/учеников + вина</td>
-                    <td>Проекция нереализованности + родительская/викарная вина</td>
-                    <td>Попытка реализовать свои мечты через близких людей</td>
-                </tr>
-            </table>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
+            </div>
         </div>
 
-      
-            <div class="card">
-            <h2 class="section-title">Характеристики для отыгрыша Гештальта F</h2>
-            <p>Гештальт F связан с травмой, потерей, предательством и глубокими эмоциональными ранами. Используйте таблицу для глубокого отыгрыша.</p>
-      <table>
-                <tr>
-                    <th>Тип</th>
-                    <th>Негативная трансформация</th>
-                    <th>Психологический / клинический термин</th>
-                    <th>Краткое описание и пример</th>
-                </tr>
-                <tr>
-                    <td>FM</td>
-                    <td>Чувство беспомощности и злости на мир</td>
-                    <td>Выученная беспомощность + экзистенциальная фрустрация</td>
-                    <td>«Мир несправедлив, ничего нельзя изменить»</td>
-                </tr>
-                <tr>
-                    <td>FV</td>
-                    <td>Полноценная клиническая картина травмы</td>
-                    <td>Посттравматическое стрессовое расстройство (ПТСР)</td>
-                    <td>Флешбэки, ночные кошмары, избегание, гипервозбуждение</td>
-                </tr>
-                <tr>
-                    <td>FA</td>
-                    <td>Осложнённое горе, которое не проходит годами</td>
-                    <td>Расстройство длительного горя</td>
-                    <td>Невозможность принять потерю, идеализация умершего</td>
-                </tr>
-                <tr>
-                    <td>FS</td>
-                    <td>Хроническая гипербдительность и проблемы с безопасностью</td>
-                    <td>ПТСР / комплексное ПТСР (C-PTSD)</td>
-                    <td>Постоянное ощущение угрозы, даже в безопасной среде</td>
-                </tr>
-                <tr>
-                    <td>FG</td>
-                    <td>Диссоциация и эмоциональное онемение</td>
-                    <td>Диссоциативные симптомы / острое стрессовое расстройство, ОСР → PTSD</td>
-                    <td>«Отключение» от реальности, ощущение нереальности происходящего</td>
-                </tr>
-                <tr>
-                    <td>FB</td>
-                    <td>Глубокий стыд, переходящий в самоуничижение</td>
-                    <td>Токсичный стыд</td>
-                    <td>Чувство «я плохой по своей сути», избегание внимания</td>
-                </tr>
-                <tr>
-                    <td>FI</td>
-                    <td>Хроническая вина и самообвинение</td>
-                    <td>Вина выжившего или «я должен был...»</td>
-                    <td>Постоянное самоедство за то, что «не предотвратил» или «не сделал»</td>
-                </tr>
-                <tr>
-                    <td>FP</td>
-                    <td>Глубокое нарушение доверия к людям</td>
-                    <td>Травма предательства + проблемы с доверием</td>
-                    <td>Трудности доверять кому-либо после предательства</td>
-                </tr>
-            </table>
-        </div>
-
-            <div class="card">
-            <h2 class="section-title">Характеристики для отыгрыша Гештальта M</h2>
-            <p>Гештальт M отражает внутренние конфликты, самокритику, неразрешённые части личности и самосаботаж. Используйте таблицу для глубокого и правдоподобного отыгрыша.</p>
-            
-            <table>
-                <tr>
-                    <th>Тип</th>
-                    <th>Негативная трансформация</th>
-                    <th>Психологический / клинический термин</th>
-                    <th>Краткое описание и пример</th>
-                </tr>
-                <tr>
-                    <td>MG</td>
-                    <td>Паралич решений и хроническая неудовлетворённость</td>
-                    <td>Амбивалентность / невротический конфликт</td>
-                    <td>«Хочу и того, и другого» → человек ничего не делает</td>
-                </tr>
-                <tr>
-                    <td>GS</td>
-                    <td>Проекция на других + внутреннее напряжение</td>
-                    <td>Проекция тени (shadow projection)</td>
-                    <td>Человек видит в других то, что отвергает в себе</td>
-                </tr>
-                <tr>
-                    <td>GI</td>
-                    <td>Регрессия или детские реакции во взрослой жизни</td>
-                    <td>Регрессия / детские части личности</td>
-                    <td>Взрослый человек реагирует страхом или обидой как ребёнок</td>
-                </tr>
-                <tr>
-                    <td>GA</td>
-                    <td>Жёсткий внутренний критик, перфекционизм</td>
-                    <td>Токсическая самокритика / перфекционизм</td>
-                    <td>Постоянное обесценивание себя, страх ошибок</td>
-                </tr>
-                <tr>
-                    <td>GP</td>
-                    <td>Потеря аутентичности, «играние роли»</td>
-                    <td>Идентичностный кризис / диффузия идентичности</td>
-                    <td>Человек не понимает, кто он без своих социальных ролей</td>
-                </tr>
-                <tr>
-                    <td>GB</td>
-                    <td>Диссоциация от тела и реальности</td>
-                    <td>Дереализация / деперсонализация</td>
-                    <td>Ощущение «я не в своём теле», «всё как во сне»</td>
-                </tr>
-                <tr>
-                    <td>GU</td>
-                    <td>Самосаботаж и ощущение «я мог бы, но не смог»</td>
-                    <td>Self-sabotage + низкая самооценка</td>
-                    <td>Человек сам мешает себе развиваться и достигать</td>
-                </tr>
-            </table>
-        </div>
-
-<div class="card">
-            <h2 class="section-title">Характеристики для отыгрыша Гештальта E</h2>
-            <p>Гештальт E проявляется через сильные, часто подавленные или искажённые эмоции. Используйте эту таблицу для глубокого отыгрыша характера.</p>
-            
-            <table>
-                <tr>
-                    <th>Тип</th>
-                    <th>Негативная трансформация</th>
-                    <th>Психологический / клинический термин</th>
-                    <th>Краткое описание и пример</th>
-                </tr>
-                <tr>
-                    <td>EW</td>
-                    <td>Подавленный гнев → взрывы или аутоагрессия</td>
-                    <td>Репрессированная агрессия / соматизация гнева</td>
-                    <td>Хронические боли, гипертония или внезапные вспышки ярости</td>
-                </tr>
-                <tr>
-                    <td>ER</td>
-                    <td>Хроническая обида, переходящая в горечь</td>
-                    <td>Resentment + депрессия</td>
-                    <td>Человек годами носит обиду, которая отравляет все отношения</td>
-                </tr>
-                <tr>
-                    <td>ES</td>
-                    <td>Непрожитое горе → затяжная депрессия</td>
-                    <td>Осложнённое горе / большая депрессия</td>
-                    <td>Длительное подавленное настроение, потеря интереса к жизни</td>
-                </tr>
-                <tr>
-                    <td>EF</td>
-                    <td>Хроническая тревога и избегание</td>
-                    <td>Генерализованное тревожное расстройство / фобии</td>
-                    <td>Постоянное ожидание плохого, избегание ситуаций</td>
-                </tr>
-                <tr>
-                    <td>EG</td>
-                    <td>Хроническая вина и самоуничижение</td>
-                    <td>Токсическая вина / survivor guilt</td>
-                    <td>Постоянное чувство «я виноват во всём»</td>
-                </tr>
-                <tr>
-                    <td>EL</td>
-                    <td>Привязанность к недоступному человеку</td>
-                    <td>Неразрешённая привязанность / limerence</td>
-                    <td>Навязчивые мысли о человеке, невозможность отпустить</td>
-                </tr>
-                <tr>
-                    <td>EA</td>
-                    <td>Смешанные чувства без разрешения</td>
-                    <td>Амбивалентность / эмоциональная нестабильность</td>
-                    <td>Одновременно люблю и ненавижу → внутренний конфликт и истощение</td>
-                </tr>
-            </table>
-        </div>
     </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1. ТЕМА
+            // ============================================================
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // ============================================================
+            // 2. ПРОГРЕСС-БАР
+            // ============================================================
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ============================================================
+            // 3. КНОПКА «НАВЕРХ»
+            // ============================================================
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ============================================================
+            // 4. ПОИСК ПО СТРАНИЦЕ (фильтрация секций и строк таблицы)
+            // ============================================================
+            const searchInput = document.getElementById('pageSearch');
+            const sections = document.querySelectorAll('.geshtalt-section');
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                let hasVisible = false;
+
+                sections.forEach(section => {
+                    const headerText = section.querySelector('.name')?.textContent?.toLowerCase() || '';
+                    const descText = section.querySelector('.geshtalt-desc')?.textContent?.toLowerCase() || '';
+                    const allRows = section.querySelectorAll('.trait-table tbody tr');
+                    let sectionMatch = query === '' ||
+                        headerText.includes(query) ||
+                        descText.includes(query);
+
+                    let anyRowMatch = false;
+
+                    allRows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        const match = rowText.includes(query);
+                        if (match) anyRowMatch = true;
+                        row.style.display = (query === '' || match) ? '' : 'none';
+                    });
+
+                    // Если нет совпадений в строках, но секция совпадает по заголовку/описанию — показываем все строки
+                    if (query !== '' && sectionMatch && !anyRowMatch) {
+                        allRows.forEach(row => row.style.display = '');
+                    }
+
+                    // Если секция не совпадает по заголовку/описанию и нет совпадений в строках — скрываем секцию
+                    const finalMatch = query === '' ||
+                        sectionMatch ||
+                        (query !== '' && section.querySelector('.trait-table tbody tr[style*="display: none"]') === null && section.querySelector('.trait-table tbody tr') !== null);
+
+                    // Проверяем, есть ли видимые строки
+                    const visibleRows = section.querySelectorAll('.trait-table tbody tr:not([style*="display: none"])');
+                    if (visibleRows.length > 0 || query === '') {
+                        section.style.display = '';
+                        hasVisible = true;
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                // Если ничего не найдено — показываем сообщение
+                let noResults = document.getElementById('noResults');
+                if (!hasVisible && query !== '') {
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'noResults';
+                        noResults.style.cssText = 'color: var(--text-muted); text-align: center; padding: 2rem;';
+                        noResults.textContent = 'Ничего не найдено 😔';
+                        document.querySelector('.container').appendChild(noResults);
+                    }
+                } else {
+                    if (noResults) noResults.remove();
+                }
+            });
+
+            // ============================================================
+            // 5. НАВИГАЦИЯ ПО ЯКОРЯМ (плавный скролл)
+            // ============================================================
+            document.querySelectorAll('.geshtalt-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // ============================================================
+            // 6. ФОН (песчинки) — копируем из script.js для автономности
+            // ============================================================
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            // ============================================================
+            // 7. МОДАЛКА (для единообразия)
+            // ============================================================
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
