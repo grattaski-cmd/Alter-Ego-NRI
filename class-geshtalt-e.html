@@ -4,101 +4,170 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>А. Гештальт E — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: #16120d;
-            padding: 2.2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ ГЕШТАЛЬТ E ===== */
+
+        .class-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
             color: var(--accent);
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 0.02em;
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
         }
-        header p {
-            color: var(--muted);
-            margin: 0.6rem 0 0;
-            font-size: 1rem;
+        .class-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
-        nav {
-            background: #16120d;
-            padding: 0.9rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
         }
-        nav a {
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
             color: var(--accent);
-            margin: 0 0.9rem;
-            text-decoration: none;
-            font-size: 0.95rem;
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
         }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 980px;
-            margin: 2rem auto;
-            padding: 0 1rem 3rem;
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 1.6rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .section-title {
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
             cursor: pointer;
             user-select: none;
         }
-        .ability {
-            background: #16120d;
-            padding: 1.1rem 1.2rem;
-            margin: 1rem 0;
-            border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
+
+        .class-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
         }
-        .ability strong { color: var(--accent); }
+        .class-block:hover {
+            border-color: var(--accent);
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 1rem;
+        }
+        .collapsible-content.open {
+            display: block;
+        }
+
+        .ability-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        .ability-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .ability-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .ability-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+        }
+        .ability-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+        }
+        .ability-item ul li {
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
         .level-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-        .level-table th, .level-table td {
-            border: 1px solid var(--border);
-            padding: 0.55rem 0.7rem;
-            text-align: center;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
         }
         .level-table th {
-            background: #2c1e14;
+            background: var(--bg-nav);
+            color: var(--accent);
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .level-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            text-align: center;
+            color: var(--text);
+        }
+        .level-table td:last-child {
+            text-align: left;
+        }
+        .level-table tr:hover td {
+            background: var(--accent-glow);
+        }
+        .level-table .highlight {
             color: var(--accent);
             font-weight: 600;
         }
-        .level-table td:last-child { text-align: left; }
+
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -106,527 +175,938 @@
             margin-bottom: 1.2rem;
         }
         .tab-button {
-            padding: 0.55rem 1rem;
-            background: #2c1e14;
+            padding: 0.5rem 1rem;
+            background: var(--bg-nav);
             border: 1px solid var(--border);
-            color: var(--accent);
+            color: var(--text-muted);
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: background 0.15s;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            font-family: inherit;
         }
-        .tab-button:hover { background: #3a2a1c; }
+        .tab-button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
         .tab-button.active {
             background: var(--accent);
-            color: #0f0c08;
+            color: #fff;
             border-color: var(--accent);
-            font-weight: 600;
         }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .collapsible-content { display: none; }
-        .collapsible-content.open { display: block; }
-        .section-title { cursor: pointer; user-select: none; }
-        ul { padding-left: 1.3rem; }
-        li { margin-bottom: 0.35rem; }
-        .muted { color: var(--muted); font-size: 0.92rem; }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .tab-button { padding: 0.45rem 0.7rem; font-size: 0.82rem; }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .tips-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+        .tips-list .tip-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 700px) {
+            .class-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .level-table {
+                font-size: 0.8rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.4rem 0.5rem;
+            }
+            .tab-button {
+                font-size: 0.78rem;
+                padding: 0.35rem 0.7rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
+            .level-table {
+                font-size: 0.7rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.3rem 0.3rem;
+            }
+            .tab-button {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>А. Гештальт E</h1>
-        <p>Класс • Эмоции • Сила чувств</p>
-    </header>
 
-    <nav>
-        <a href="index.html">← К справочнику</a>
-        <a href="#base">Основы</a>
-        <a href="#styles">Стили</a>
-        <a href="#subclasses">Подклассы</a>
-        <a href="#absorption">Поглощение</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <!-- ОСНОВЫ -->
-        <div class="card" id="base">
-            <h2 class="section-title">▼ Основные характеристики</h2>
-            <div class="collapsible-content">
-                <p><strong>Хит-дай:</strong> 1d8<br>
-                <strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения<br>
-                <strong>Хиты на следующих уровнях:</strong> 1d8 (или 5) + модификатор Телосложения</p>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
+        </header>
 
-                <p><strong>Владения</strong><br>
-                <strong>Броня:</strong> лёгкая, средняя<br>
-                <strong>Оружие:</strong> простое оружие, короткие клинки<br>
-                <strong>Инструменты:</strong> один музыкальный инструмент или набор целителя<br>
-                <strong>Спасброски:</strong> Мудрость, Харизма<br>
-                <strong>Навыки:</strong> Проницательность + два на выбор из: Запугивание, Убеждение, Выступление, Обман, Восприятие</p>
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
 
-                <p><strong>Снаряжение:</strong> лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией), набор путешественника.</p>
+        <div class="container">
+
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <!-- Иконка эмоций -->
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm5.25 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75z"/>
+                        </svg>
+                        А. Гештальт E
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Класс • Эмоции • Сила чувств</p>
             </div>
-        </div>
 
-        <!-- ТАБЛИЦА ПРОГРЕССИИ -->
-        <div class="card">
-            <h2 class="section-title">▼ Таблица прогрессии</h2>
-            <div class="collapsible-content">
-                <table class="level-table">
-                    <thead>
-                        <tr>
-                            <th>Ур.</th>
-                            <th>Бонус<br>мастерства</th>
-                            <th>Резерв</th>
-                            <th>Особенности</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Эмоции, Интуиция</td></tr>
-                        <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Эмоции, Техники Эмоции</td></tr>
-                        <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
-                        <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <strong>Подкласс</strong></td></tr>
-                        <tr><td>5</td><td>+3</td><td>3</td><td>Дополнительная атака</td></tr>
-                        <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
-                        <tr><td>7</td><td>+3</td><td>3</td><td>Предсказание, <strong>Подкласс</strong></td></tr>
-                        <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
-                        <tr><td>10</td><td>+4</td><td>6</td><td>Улучшенный Резерв</td></tr>
-                        <tr><td>11</td><td>+4</td><td>6</td><td>Надёжность, <strong>Подкласс</strong></td></tr>
-                        <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
-                        <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
-                        <tr><td>15</td><td>+5</td><td>7</td><td>Вечность, <strong>Подкласс</strong></td></tr>
-                        <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
-                        <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
-                        <tr><td>19</td><td>+6</td><td>10</td><td><strong>Апофеоз подкласса</strong></td></tr>
-                        <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Эмоции</td></tr>
-                    </tbody>
-                </table>
-                <p class="muted">Резерв растёт на уровнях 5, 9, 13, 17 (+1) и дополнительно +2 на 10 и 19 уровнях.</p>
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Я чувствую всё. Каждую обиду, каждый страх, каждую искру радости. Это не проклятие. Это — моя сила. Потому что тот, кто чувствует глубже всех, видит дальше всех.»
+                <span class="author">— Серафина, Гештальт E, странствующая целительница</span>
             </div>
-        </div>
 
-        <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
-        <div class="card">
-            <h2 class="section-title">▼ Основные особенности класса</h2>
-            <div class="collapsible-content">
-
-                <div class="ability">
-                    <strong>Эмоциональный Резерв</strong><br>
-                    Основной ресурс класса. На 1 уровне равен 2.<br>
-                    Полностью восстанавливается после длинного отдыха.<br>
-                    После короткого отдыха восстанавливается половина максимума (округление вверх, минимум 1).
-                </div>
-
-                <div class="ability">
-                    <strong>1 уровень — Проявление Эмоции</strong><br>
-                    Бонусным действием вы можете потратить <strong>1 Резерв</strong>, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Резерв.<br><br>
-                    <strong>Внутренний режим (Берсерк эмоции)</strong><br>
-                    • Временные хиты = 2d6 + ваш уровень<br>
-                    • Бонус к урону оружия ближнего боя = 2 + половина вашего уровня<br>
-                    • Сопротивление одному типу урона вашего стиля<br><br>
-                    <strong>Внешний режим (Проекция эмоции)</strong><br>
-                    Отдельное проявление (хиты = половина ваших максимальных хитов). Действует сразу после вашего хода.
-                </div>
-
-                <div class="ability">
-                    <strong>Интуиция</strong><br>
-                    Вы совершаете проверки Проницательности с преимуществом, когда дело касается эмоций других существ.
-                </div>
-
-                <div class="ability">
-                    <strong>5 уровень — Дополнительная атака</strong><br>
-                    Когда вы используете действие Атака, вы можете атаковать дважды вместо одного.
-                </div>
-
-                <div class="ability">
-                    <strong>7 уровень — Предсказание</strong><br>
-                    Один раз за длинный отдых вы получаете видение, связанное с вашей текущей эмоцией (страх — угроза, печаль — потеря, ярость — конфликт и т.д.).
-                </div>
-
-                <div class="ability">
-                    <strong>10 уровень — Улучшенный Резерв</strong><br>
-                    Максимум Резерва увеличивается на +2.<br>
-                    После короткого отдыха вы восстанавливаете половину максимального Резерва (округление вверх).
-                </div>
-
-                <div class="ability">
-                    <strong>11 уровень — Надёжность</strong><br>
-                    Риск получения уровней Поглощения снижается.<br>
-                    Длительность проявления Гештальта увеличивается на 1 минуту (итого 2 минуты).
-                </div>
-
-                <div class="ability">
-                    <strong>15 уровень — Вечность</strong><br>
-                    Гештальт всегда присутствует в пассивной форме. Вы получаете один постоянный бонус вашего стиля (см. описание стилей).
-                </div>
-
-                <div class="ability">
-                    <strong>20 уровень — Апофеоз Эмоции</strong><br>
-                    • Максимум Резерва +3<br>
-                    • Риск Поглощения полностью исчезает<br>
-                    • Сопротивление типам урона вашего стиля<br><br>
-                    <strong>«Эмоциональное Вознесение»</strong> (1/длинный отдых, 1 минута): вы считаетесь в обоих режимах одновременно, атаки наносят дополнительный 3d8 урона вашего стиля, Техники можно использовать без затраты Резерва.
-                </div>
-            </div>
-        </div>
-
-        <!-- СТИЛИ ЭМОЦИЙ -->
-        <div class="card" id="styles">
-            <h2 class="section-title">▼ Стили Эмоций</h2>
-            <div class="collapsible-content">
-                <p>На 2 уровне вы выбираете один Стиль Эмоции. Он определяет дополнительный урон, сопротивление и особенность.</p>
-
-                <table class="level-table">
-                    <tr>
-                        <th>Стиль</th>
-                        <th>Доп. урон</th>
-                        <th>Сопротивление</th>
-                        <th>Особенность стиля</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Ярость</strong></td>
-                        <td>Огонь / Рубящий</td>
-                        <td>Огонь</td>
-                        <td>Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Печаль</strong></td>
-                        <td>Холод / Некротический</td>
-                        <td>Холод</td>
-                        <td>Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Страх</strong></td>
-                        <td>Психический</td>
-                        <td>Психический</td>
-                        <td>Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Радость</strong></td>
-                        <td>Светлый / Электрический</td>
-                        <td>Светлый</td>
-                        <td>Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
-                    </tr>
-                </table>
-
-                <p class="muted"><strong>Вечность (15 уровень) — постоянные бонусы стилей:</strong><br>
-                • Ярость: +1d4 урона, если вы уже получили урон в этом ходу<br>
-                • Печаль: восстановление 1d4 хитов при убийстве<br>
-                • Страх: один раз за короткий отдых можете наложить испуг атакой без затраты<br>
-                • Радость: один раз за короткий отдых бонусным действием вы и один союзник в 30 футах получаете +10 футов к скорости на 1 минуту и игнорируете труднопроходимую местность</p>
-            </div>
-        </div>
-
-        <!-- ПОДКЛАССЫ -->
-        <div class="card" id="subclasses">
-            <h2 class="section-title">▼ Подклассы</h2>
-            <div class="collapsible-content">
-                <div class="tabs">
-                    <button class="tab-button active" onclick="openSubTab(event, 'EW')">EW — Ярость</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'ER')">ER — Обида</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'ES')">ES — Печаль</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'EF')">EF — Страх</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'EG')">EG — Вина</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'EL')">EL — Любовь</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'EA')">EA — Амбивалентность</button>
-                </div>
-
-                <!-- EW -->
-                <div id="EW" class="tab-content active">
-                    <p class="muted">Чистая неконтролируемая ярость. Высокий урон в ближнем бою и риск потери контроля.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Ярость Берсерка</strong><br>
-                        Во Внутреннем режиме: +2 к урону всех атак (на 11 уровне +4), сопротивление физическому урону, временные хиты 1d10 + уровень (растёт до 2d10 / 3d10 / 4d10).
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Неукротимая Ярость</strong><br>
-                        «Вспышка Гнева» (2 Резерва, бонусное действие): до конца хода атаки наносят +2d8 огня.<br>
-                        При получении критического удара можете реакцией войти во Внутренний режим бесплатно.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Кровавое Безумие</strong><br>
-                        Во Внутреннем режиме один раз за ход можете атаковать как бонусное действие.<br>
-                        «Кровь за Кровь» (2 Резерва, реакция): при получении урона атакуете с преимуществом + 3d10 огня.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Разрушитель</strong><br>
-                        «Ярость Разрушителя» (1/длинный отдых, 1 минута): иммунитет к испугу и очарованию, +2 КД, сопротивление физическому и огненному, атаки игнорируют сопротивление к огню и рубящему.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Неукротимый Шторм</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Неукротимый Шторм» (1/длинный отдых, 1 минута): +4d10 огня ко всем атакам, одно дополнительное действие Атака, сопротивление ко всем видам урона.<br>
-                        Пассивно: во Внутреннем режиме при 0 хитов автоматически стабилизируетесь.
-                    </div>
-                </div>
-
-                <!-- ER -->
-                <div id="ER" class="tab-content">
-                    <p class="muted">Глубокая обида, которая продолжает жечь. Яд и психический урон, длящиеся эффекты.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Инфекция</strong><br>
-                        Атаки наносят +1d6 яда.<br>
-                        «Колкое Слово» (1 Резерв, бонусное действие): 2d8 психического + помеха на следующую атаку/проверку (спасбросок Мудрости).
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Накопленное чувство</strong><br>
-                        Реакция (1 Резерв, 1/ход): когда враг ранит вас или союзника — 2d8 яда ему.<br>
-                        «Токсичная Рана» (2 Резерва): 3d10 яда + отравлен на 1 минуту + 1d10 яда в конце каждого хода.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Эхо Страдания</strong><br>
-                        Радиус 60 футов.<br>
-                        «Эхо Страдания» (2 Резерва): 4d10 (яд + психический) + помеха на проверки Харизмы и спасброски Мудрости на 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Горькая Месть</strong><br>
-                        «Горькая Месть» (1/длинный отдых): все враги в 30 футах — 5d10 яда + отравлен + 1d10 яда в конце хода.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Неутихающая Боль</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Неутихающая Боль» (1/длинный отдых, 1 минута): +4d10 (яд + психический) ко всем атакам, враги в 30 футах с помехой на спасброски.<br>
-                        Пассивно: сопротивление яду и психическому урону в бою.
-                    </div>
-                </div>
-
-                <!-- ES -->
-                <div id="ES" class="tab-content">
-                    <p class="muted">Глубокая печаль, которая лечит и защищает. Поддержка через принятие боли.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Слёзы Исцеления</strong><br>
-                        При проявлении Гештальта союзники в 30 футах получают временные хиты 1d6 + уровень.<br>
-                        «Слёзы Исцеления» (1 Резерв, бонусное действие): один союзник восстанавливает 3d8 + уровень хитов.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Меланхоличная Аура</strong><br>
-                        «Меланхоличная Аура» (2 Резерва, концентрация 1 минута): союзники — сопротивление психическому и некротическому +1 к спасброскам Мудрости. Враги в начале хода получают 2d6 психического (спасбросок Мудрости).
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Кокон</strong><br>
-                        Радиус 60 футов. Реакция (1/ход): дать союзнику сопротивление к урону.<br>
-                        Пока Гештальт проявлен — сопротивление психическому.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Плач по Ушедшим</strong><br>
-                        «Плач по Ушедшим» (1/длинный отдых): все союзники в 60 футах восстанавливают 4d10 + уровень. Один упавший может подняться с 3d10 + уровень.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Вечная Грусть</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Вечная Грусть» (1/длинный отдых, 1 минута): союзники получают сопротивление психическому и некротическому, +2 КД, преимущество на спасброски Мудрости и Харизмы. Один раз можно исцелить всех на уровень × 3.<br>
-                        Пассивно: сопротивление психическому и некротическому, пока рядом есть союзник.
-                    </div>
-                </div>
-
-                <!-- EF -->
-                <div id="EF" class="tab-content">
-                    <p class="muted">Парализующий страх. Контроль через ужас и психический урон.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Шепот Страха</strong><br>
-                        При проявлении враги в 30 футах атакуют вас с помехой.<br>
-                        «Шепот» (1 Резерв, бонусное действие): 2d8 психического + испуган на 1 минуту (повторный спасбросок).
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Парализующий Ужас</strong><br>
-                        «Парализующий Ужас» (2 Резерва): 3d10 психического + испуган на 1 минуту + скован до конца следующего хода.<br>
-                        +2 КД против испуганных врагов.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Аура Страха</strong><br>
-                        Радиус 60 футов.<br>
-                        «Аура Страха» (2 Резерва): враги в 30 футах — 4d10 психического + испуган.<br>
-                        Преимущество на Скрытность и Внимательность.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Прилив Ужаса</strong><br>
-                        «Прилив Ужаса» (1/длинный отдых): враги в 30 футах — 5d10 психического + потеря реакций. Союзники получают преимущество на атаки против испуганных.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Вечный Кошмар</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Вечный Кошмар» (1/длинный отдых, 1 минута): враги в 60 футах с помехой на атаки и спасброски. Вы — иммунитет к испугу и преимущество на атаки.<br>
-                        Пассивно: сопротивление психическому, пока есть испуганный враг рядом.
-                    </div>
-                </div>
-
-                <!-- EG -->
-                <div id="EG" class="tab-content">
-                    <p class="muted">Тяжёлая вина и самопожертвование. Защита других ценой собственной боли.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Груз Вины</strong><br>
-                        При проявлении один союзник получает +2 КД.<br>
-                        «Шёпот Вины» (1 Резерв, бонусное действие): 2d8 психического врагу, вы или союзник восстанавливаете половину.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Самопожертвование</strong><br>
-                        «Самопожертвование» (2 Резерва, реакция): принять половину урона вместо союзника. Союзник восстанавливает половину принятого.<br>
-                        Сопротивление физическому урону, пока Гештальт проявлен.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Долг Вины</strong><br>
-                        Радиус 60 футов.<br>
-                        «Вина» (2 Резерва): 3d10 психического. Цель 1 минуту получает половину урона, который сама наносит.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Искупление</strong><br>
-                        «Искупление» (1/длинный отдых): враги в 30 футах — 4d10 психического + потеря реакций. Один упавший союзник поднимается с 3d10 + уровень.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Долг</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Долг» (1/длинный отдых, 1 минута): один раз за ход можете принять весь урон вместо союзника. Враги в 30 футах с помехой на атаки и спасброски.<br>
-                        Пассивно: сопротивление психическому, пока рядом есть союзник.
-                    </div>
-                </div>
-
-                <!-- EL -->
-                <div id="EL" class="tab-content">
-                    <p class="muted">Глубокая привязанность и безусловная любовь. Усиление и защита через связь.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Объятия</strong><br>
-                        При проявлении союзники в 30 футах получают временные хиты 1d6 + уровень.<br>
-                        «Объятия» (1 Резерв, бонусное действие): 3d8 + уровень лечения + +2 КД на 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Связь сердец</strong><br>
-                        «Связь сердец» (2 Резерва): вы и союзник делите временные хиты и сопротивление одному типу на 1 минуту. В пределах 30 футов — преимущество на спасброски.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Кокон</strong><br>
-                        Радиус 60 футов.<br>
-                        «Кокон» (2 Резерва, реакция): сопротивление к урону + временные хиты = уровень союзнику.<br>
-                        Сопротивление психическому, пока Гештальт проявлен.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Безусловная Любовь</strong><br>
-                        «Безусловная Любовь» (1/длинный отдых): все союзники в 60 футах — 4d10 + уровень лечения + сопротивление физическому на 1 минуту. Один упавший поднимается с 3d10 + уровень.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Вечная Связь</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Вечная Связь» (1/длинный отдых, 1 минута): союзники — сопротивление психическому и некротическому, +2 КД, преимущество на спасброски Мудрости и Харизмы. Один раз исцеление всех на уровень × 3.<br>
-                        Пассивно: сопротивление физическому, пока рядом есть союзник.
-                    </div>
-                </div>
-
-                <!-- EA -->
-                <div id="EA" class="tab-content">
-                    <p class="muted">Внутреннее противоречие и постоянное колебание между противоположностями.</p>
-                    <div class="ability">
-                        <strong>4 уровень — Двойственность</strong><br>
-                        При проявлении выбираете аспект:<br>
-                        • Позитивный: +2 КД и преимущество на один спасбросок<br>
-                        • Негативный: +2 к урону, но помеха на один спасбросок<br>
-                        «Колебание» (1 Резерв, бонусное действие): переключить аспект.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Внутренний Конфликт</strong><br>
-                        «Внутренний Конфликт» (2 Резерва): 3d10 психического + помеха на следующую атаку.<br>
-                        Сопротивление психическому, пока Гештальт проявлен.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Баланс</strong><br>
-                        Радиус 60 футов.<br>
-                        «Баланс» (2 Резерва): союзник или вы получаете либо +2 КД и +2 урона, либо +3 КД и +1 урона на 1 минуту.<br>
-                        Один раз за ход можно переключить аспект бесплатно.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Шторм Противоречий</strong><br>
-                        «Шторм» (1/длинный отдых): враги в 30 футах — 5d10 психического + помеха на атаки. Союзники получают +1 КД и преимущество на один спасбросок.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Абсолют Противоречий</strong><br>
-                        Максимум Резерва +2.<br>
-                        «Абсолют Противоречий» (1/длинный отдых, 1 минута): оба аспекта одновременно (+2 КД и +2 урона). Один раз можете полностью предотвратить урон или состояние на себя или союзника.<br>
-                        Пассивно: сопротивление психическому, пока рядом есть союзник.
+            <!-- ОСНОВЫ -->
+            <div class="class-block" id="base">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Основные характеристики
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Хит-дай</strong>
+                            <span class="value">1d8</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на 1 уровне</strong>
+                            <span class="value">8 + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на следующих уровнях</strong>
+                            <span class="value">1d8 (или 5) + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Броня</strong>
+                            <span class="value">лёгкая, средняя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Оружие</strong>
+                            <span class="value">простое оружие, короткие клинки</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Инструменты</strong>
+                            <span class="value">один музыкальный инструмент или набор целителя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Спасброски</strong>
+                            <span class="value">Мудрость, Харизма</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Навыки</strong>
+                            <span class="value">Проницательность + два на выбор из: Запугивание, Убеждение, Выступление, Обман, Восприятие</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Снаряжение</strong>
+                            <span class="value">лёгкая броня, простое оружие, фокус (предмет, связанный с вашей главной эмоцией), набор путешественника.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ПОГЛОЩЕНИЕ -->
-        <div class="card" id="absorption">
-            <h2 class="section-title">▼ Поглощение (механика риска)</h2>
-            <div class="collapsible-content">
-                <p><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
+            <!-- ТАБЛИЦА ПРОГРЕССИИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3.75 3v16.5M3.75 3h16.5M3.75 3L21 20.25"/><path d="M6.75 6.75h10.5M6.75 9h7.5M6.75 11.25h4.5"/></svg>
+                    </span>
+                    Таблица прогрессии
+                </h2>
+                <div class="collapsible-content open">
+                    <table class="level-table">
+                        <thead>
+                            <tr>
+                                <th>Ур.</th>
+                                <th>Бонус<br>мастерства</th>
+                                <th>Резерв</th>
+                                <th>Особенности</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Эмоции, Интуиция</td></tr>
+                            <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Эмоции, Техники Эмоции</td></tr>
+                            <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
+                            <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>5</td><td>+3</td><td>3</td><td>Дополнительная атака</td></tr>
+                            <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
+                            <tr><td>7</td><td>+3</td><td>3</td><td>Предсказание, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
+                            <tr><td>10</td><td>+4</td><td>6</td><td>Улучшенный Резерв</td></tr>
+                            <tr><td>11</td><td>+4</td><td>6</td><td>Надёжность, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
+                            <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
+                            <tr><td>15</td><td>+5</td><td>7</td><td>Вечность, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
+                            <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
+                            <tr><td>19</td><td>+6</td><td>10</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                            <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Эмоции</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="muted">Резерв растёт на уровнях 5, 9, 13, 17 (+1) и дополнительно +2 на 10 и 19 уровнях.</p>
+                </div>
+            </div>
 
-                <div class="ability">
-                    <strong>Как накапливается</strong>
-                    <ul>
-                        <li>Трата 3+ Резерва за один бой — +1 уровень.</li>
-                        <li>Критический урон или провал важного спасброска, связанного с эмоциями.</li>
-                        <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
+            <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    </span>
+                    Основные особенности класса
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Эмоциональный Резерв</strong>
+                            <span class="value">Основной ресурс класса. На 1 уровне равен 2.<br>
+                            Полностью восстанавливается после длинного отдыха.<br>
+                            После короткого отдыха восстанавливается половина максимума (округление вверх, минимум 1).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>1 уровень — Проявление Эмоции</strong>
+                            <span class="value">Бонусным действием вы можете потратить <strong>1 Резерв</strong>, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Резерв.<br><br>
+                            <strong>Внутренний режим (Берсерк эмоции)</strong><br>
+                            • Временные хиты = 2d6 + ваш уровень<br>
+                            • Бонус к урону оружия ближнего боя = 2 + половина вашего уровня<br>
+                            • Сопротивление одному типу урона вашего стиля<br><br>
+                            <strong>Внешний режим (Проекция эмоции)</strong><br>
+                            Отдельное проявление (хиты = половина ваших максимальных хитов). Действует сразу после вашего хода.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Интуиция</strong>
+                            <span class="value">Вы совершаете проверки Проницательности с преимуществом, когда дело касается эмоций других существ.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>5 уровень — Дополнительная атака</strong>
+                            <span class="value">Когда вы используете действие Атака, вы можете атаковать дважды вместо одного.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Предсказание</strong>
+                            <span class="value">Один раз за длинный отдых вы получаете видение, связанное с вашей текущей эмоцией (страх — угроза, печаль — потеря, ярость — конфликт и т.д.).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>10 уровень — Улучшенный Резерв</strong>
+                            <span class="value">Максимум Резерва увеличивается на +2.<br>
+                            После короткого отдыха вы восстанавливаете половину максимального Резерва (округление вверх).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Надёжность</strong>
+                            <span class="value">Риск получения уровней Поглощения снижается.<br>
+                            Длительность проявления Гештальта увеличивается на 1 минуту (итого 2 минуты).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Вечность</strong>
+                            <span class="value">Гештальт всегда присутствует в пассивной форме. Вы получаете один постоянный бонус вашего стиля (см. описание стилей).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>20 уровень — Апофеоз Эмоции</strong>
+                            <span class="value">• Максимум Резерва +3<br>
+                            • Риск Поглощения полностью исчезает<br>
+                            • Сопротивление типам урона вашего стиля<br><br>
+                            <strong>«Эмоциональное Вознесение»</strong> (1/длинный отдых, 1 минута): вы считаетесь в обоих режимах одновременно, атаки наносят дополнительный 3d8 урона вашего стиля, Техники можно использовать без затраты Резерва.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СТИЛИ ЭМОЦИЙ -->
+            <div class="class-block" id="styles">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm5.25 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75z"/></svg>
+                    </span>
+                    Стили Эмоций
+                </h2>
+                <div class="collapsible-content open">
+                    <p class="muted" style="margin-bottom: 1rem;">На 2 уровне вы выбираете один Стиль Эмоции. Он определяет дополнительный урон, сопротивление и особенность.</p>
+
+                    <table class="level-table">
+                        <thead>
+                            <tr>
+                                <th>Стиль</th>
+                                <th>Доп. урон</th>
+                                <th>Сопротивление</th>
+                                <th>Особенность стиля</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ярость</strong></td>
+                                <td>Огонь / Рубящий</td>
+                                <td>Огонь</td>
+                                <td>Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Печаль</strong></td>
+                                <td>Холод / Некротический</td>
+                                <td>Холод</td>
+                                <td>Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Страх</strong></td>
+                                <td>Психический</td>
+                                <td>Психический</td>
+                                <td>Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Радость</strong></td>
+                                <td>Светлый / Электрический</td>
+                                <td>Светлый</td>
+                                <td>Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="muted"><strong>Вечность (15 уровень) — постоянные бонусы стилей:</strong><br>
+                    • Ярость: +1d4 урона, если вы уже получили урон в этом ходу<br>
+                    • Печаль: восстановление 1d4 хитов при убийстве<br>
+                    • Страх: один раз за короткий отдых можете наложить испуг атакой без затраты<br>
+                    • Радость: один раз за короткий отдых бонусным действием вы и один союзник в 30 футах получаете +10 футов к скорости на 1 минуту и игнорируете труднопроходимую местность</p>
+                </div>
+            </div>
+
+            <!-- ПОДКЛАССЫ -->
+            <div class="class-block" id="subclasses">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Подклассы
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="openSubTab(event, 'EW')">EW — Ярость</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'ER')">ER — Обида</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'ES')">ES — Печаль</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'EF')">EF — Страх</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'EG')">EG — Вина</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'EL')">EL — Любовь</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'EA')">EA — Амбивалентность</button>
+                    </div>
+
+                    <!-- EW -->
+                    <div id="EW" class="tab-content active">
+                        <p class="muted" style="margin-bottom: 1rem;">Чистая неконтролируемая ярость. Высокий урон в ближнем бою и риск потери контроля.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Ярость Берсерка</strong>
+                                <span class="value">Во Внутреннем режиме: +2 к урону всех атак (на 11 уровне +4), сопротивление физическому урону, временные хиты 1d10 + уровень (растёт до 2d10 / 3d10 / 4d10).</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Неукротимая Ярость</strong>
+                                <span class="value">«Вспышка Гнева» (2 Резерва, бонусное действие): до конца хода атаки наносят +2d8 огня.<br>
+                                При получении критического удара можете реакцией войти во Внутренний режим бесплатно.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Кровавое Безумие</strong>
+                                <span class="value">Во Внутреннем режиме один раз за ход можете атаковать как бонусное действие.<br>
+                                «Кровь за Кровь» (2 Резерва, реакция): при получении урона атакуете с преимуществом + 3d10 огня.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Разрушитель</strong>
+                                <span class="value">«Ярость Разрушителя» (1/длинный отдых, 1 минута): иммунитет к испугу и очарованию, +2 КД, сопротивление физическому и огненному, атаки игнорируют сопротивление к огню и рубящему.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Неукротимый Шторм</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Неукротимый Шторм» (1/длинный отдых, 1 минута): +4d10 огня ко всем атакам, одно дополнительное действие Атака, сопротивление ко всем видам урона.<br>
+                                Пассивно: во Внутреннем режиме при 0 хитов автоматически стабилизируетесь.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ER -->
+                    <div id="ER" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Глубокая обида, которая продолжает жечь. Яд и психический урон, длящиеся эффекты.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Инфекция</strong>
+                                <span class="value">Атаки наносят +1d6 яда.<br>
+                                «Колкое Слово» (1 Резерв, бонусное действие): 2d8 психического + помеха на следующую атаку/проверку (спасбросок Мудрости).</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Накопленное чувство</strong>
+                                <span class="value">Реакция (1 Резерв, 1/ход): когда враг ранит вас или союзника — 2d8 яда ему.<br>
+                                «Токсичная Рана» (2 Резерва): 3d10 яда + отравлен на 1 минуту + 1d10 яда в конце каждого хода.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Эхо Страдания</strong>
+                                <span class="value">Радиус 60 футов.<br>
+                                «Эхо Страдания» (2 Резерва): 4d10 (яд + психический) + помеха на проверки Харизмы и спасброски Мудрости на 1 минуту.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Горькая Месть</strong>
+                                <span class="value">«Горькая Месть» (1/длинный отдых): все враги в 30 футах — 5d10 яда + отравлен + 1d10 яда в конце хода.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Неутихающая Боль</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Неутихающая Боль» (1/длинный отдых, 1 минута): +4d10 (яд + психический) ко всем атакам, враги в 30 футах с помехой на спасброски.<br>
+                                Пассивно: сопротивление яду и психическому урону в бою.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ES -->
+                    <div id="ES" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Глубокая печаль, которая лечит и защищает. Поддержка через принятие боли.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Слёзы Исцеления</strong>
+                                <span class="value">При проявлении Гештальта союзники в 30 футах получают временные хиты 1d6 + уровень.<br>
+                                «Слёзы Исцеления» (1 Резерв, бонусное действие): один союзник восстанавливает 3d8 + уровень хитов.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Меланхоличная Аура</strong>
+                                <span class="value">«Меланхоличная Аура» (2 Резерва, концентрация 1 минута): союзники — сопротивление психическому и некротическому +1 к спасброскам Мудрости. Враги в начале хода получают 2d6 психического (спасбросок Мудрости).</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Кокон</strong>
+                                <span class="value">Радиус 60 футов. Реакция (1/ход): дать союзнику сопротивление к урону.<br>
+                                Пока Гештальт проявлен — сопротивление психическому.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Плач по Ушедшим</strong>
+                                <span class="value">«Плач по Ушедшим» (1/длинный отдых): все союзники в 60 футах восстанавливают 4d10 + уровень. Один упавший может подняться с 3d10 + уровень.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Вечная Грусть</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Вечная Грусть» (1/длинный отдых, 1 минута): союзники получают сопротивление психическому и некротическому, +2 КД, преимущество на спасброски Мудрости и Харизмы. Один раз можно исцелить всех на уровень × 3.<br>
+                                Пассивно: сопротивление психическому и некротическому, пока рядом есть союзник.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EF -->
+                    <div id="EF" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Парализующий страх. Контроль через ужас и психический урон.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Шепот Страха</strong>
+                                <span class="value">При проявлении враги в 30 футах атакуют вас с помехой.<br>
+                                «Шепот» (1 Резерв, бонусное действие): 2d8 психического + испуган на 1 минуту (повторный спасбросок).</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Парализующий Ужас</strong>
+                                <span class="value">«Парализующий Ужас» (2 Резерва): 3d10 психического + испуган на 1 минуту + скован до конца следующего хода.<br>
+                                +2 КД против испуганных врагов.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Аура Страха</strong>
+                                <span class="value">Радиус 60 футов.<br>
+                                «Аура Страха» (2 Резерва): враги в 30 футах — 4d10 психического + испуган.<br>
+                                Преимущество на Скрытность и Внимательность.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Прилив Ужаса</strong>
+                                <span class="value">«Прилив Ужаса» (1/длинный отдых): враги в 30 футах — 5d10 психического + потеря реакций. Союзники получают преимущество на атаки против испуганных.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Вечный Кошмар</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Вечный Кошмар» (1/длинный отдых, 1 минута): враги в 60 футах с помехой на атаки и спасброски. Вы — иммунитет к испугу и преимущество на атаки.<br>
+                                Пассивно: сопротивление психическому, пока есть испуганный враг рядом.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EG -->
+                    <div id="EG" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Тяжёлая вина и самопожертвование. Защита других ценой собственной боли.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Груз Вины</strong>
+                                <span class="value">При проявлении один союзник получает +2 КД.<br>
+                                «Шёпот Вины» (1 Резерв, бонусное действие): 2d8 психического врагу, вы или союзник восстанавливаете половину.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Самопожертвование</strong>
+                                <span class="value">«Самопожертвование» (2 Резерва, реакция): принять половину урона вместо союзника. Союзник восстанавливает половину принятого.<br>
+                                Сопротивление физическому урону, пока Гештальт проявлен.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Долг Вины</strong>
+                                <span class="value">Радиус 60 футов.<br>
+                                «Вина» (2 Резерва): 3d10 психического. Цель 1 минуту получает половину урона, который сама наносит.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Искупление</strong>
+                                <span class="value">«Искупление» (1/длинный отдых): враги в 30 футах — 4d10 психического + потеря реакций. Один упавший союзник поднимается с 3d10 + уровень.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Долг</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Долг» (1/длинный отдых, 1 минута): один раз за ход можете принять весь урон вместо союзника. Враги в 30 футах с помехой на атаки и спасброски.<br>
+                                Пассивно: сопротивление психическому, пока рядом есть союзник.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EL -->
+                    <div id="EL" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Глубокая привязанность и безусловная любовь. Усиление и защита через связь.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Объятия</strong>
+                                <span class="value">При проявлении союзники в 30 футах получают временные хиты 1d6 + уровень.<br>
+                                «Объятия» (1 Резерв, бонусное действие): 3d8 + уровень лечения + +2 КД на 1 минуту.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Связь сердец</strong>
+                                <span class="value">«Связь сердец» (2 Резерва): вы и союзник делите временные хиты и сопротивление одному типу на 1 минуту. В пределах 30 футов — преимущество на спасброски.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Кокон</strong>
+                                <span class="value">Радиус 60 футов.<br>
+                                «Кокон» (2 Резерва, реакция): сопротивление к урону + временные хиты = уровень союзнику.<br>
+                                Сопротивление психическому, пока Гештальт проявлен.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Безусловная Любовь</strong>
+                                <span class="value">«Безусловная Любовь» (1/длинный отдых): все союзники в 60 футах — 4d10 + уровень лечения + сопротивление физическому на 1 минуту. Один упавший поднимается с 3d10 + уровень.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Вечная Связь</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Вечная Связь» (1/длинный отдых, 1 минута): союзники — сопротивление психическому и некротическому, +2 КД, преимущество на спасброски Мудрости и Харизмы. Один раз исцеление всех на уровень × 3.<br>
+                                Пассивно: сопротивление физическому, пока рядом есть союзник.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EA -->
+                    <div id="EA" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Внутреннее противоречие и постоянное колебание между противоположностями.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Двойственность</strong>
+                                <span class="value">При проявлении выбираете аспект:<br>
+                                • Позитивный: +2 КД и преимущество на один спасбросок<br>
+                                • Негативный: +2 к урону, но помеха на один спасбросок<br>
+                                «Колебание» (1 Резерв, бонусное действие): переключить аспект.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Внутренний Конфликт</strong>
+                                <span class="value">«Внутренний Конфликт» (2 Резерва): 3d10 психического + помеха на следующую атаку.<br>
+                                Сопротивление психическому, пока Гештальт проявлен.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Баланс</strong>
+                                <span class="value">Радиус 60 футов.<br>
+                                «Баланс» (2 Резерва): союзник или вы получаете либо +2 КД и +2 урона, либо +3 КД и +1 урона на 1 минуту.<br>
+                                Один раз за ход можно переключить аспект бесплатно.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Шторм Противоречий</strong>
+                                <span class="value">«Шторм» (1/длинный отдых): враги в 30 футах — 5d10 психического + помеха на атаки. Союзники получают +1 КД и преимущество на один спасбросок.</span>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Абсолют Противоречий</strong>
+                                <span class="value">Максимум Резерва +2.<br>
+                                «Абсолют Противоречий» (1/длинный отдых, 1 минута): оба аспекта одновременно (+2 КД и +2 урона). Один раз можете полностью предотвратить урон или состояние на себя или союзника.<br>
+                                Пассивно: сопротивление психическому, пока рядом есть союзник.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПОГЛОЩЕНИЕ -->
+            <div class="class-block" id="absorption">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    </span>
+                    Поглощение (механика риска)
+                </h2>
+                <div class="collapsible-content open">
+                    <p style="margin-bottom: 1rem;"><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
+
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Как накапливается</strong>
+                            <span class="value">
+                                <ul>
+                                    <li>Трата 3+ Резерва за один бой — +1 уровень.</li>
+                                    <li>Критический урон или провал важного спасброска, связанного с эмоциями.</li>
+                                    <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
+                                </ul>
+                            </span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Уровни Поглощения (максимум 5)</strong>
+                            <span class="value">
+                                <table class="level-table" style="margin-top: 0.3rem;">
+                                    <thead>
+                                        <tr><th>Уровень</th><th>Эффект</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
+                                        <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
+                                        <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
+                                        <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
+                                        <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
+                                    </tbody>
+                                </table>
+                            </span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Восстановление</strong>
+                            <span class="value">• Длинный отдых — все уровни сбрасываются.<br>
+                            • Короткий отдых — можно снять 1 уровень (медитация, разговор, ритуал).<br>
+                            • Специальные способности и предметы могут снимать уровни.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Особенности Гештальта E</strong>
+                            <span class="value">• Поглощение усиливается при сильном проявлении вашей главной эмоции.<br>
+                            • На 3+ уровнях эмоция начинает диктовать поведение (Ярость — атакуете всё подряд, Печаль — апатия, Страх — бегство и т.д.).<br>
+                            • На 5 уровне возможен «Эмоциональный Шторм» — мощный, но неконтролируемый режим.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+            <div class="class-block" id="tips">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Советы по отыгрышу
+                </h2>
+                <div class="collapsible-content open">
+                    <ul class="tips-list">
+                        <li>
+                            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                            <span><strong>Интенсивность эмоций:</strong> Ты чувствуешь всё сильнее других. Гнев прожигает тебя изнутри, страх сковывает, радость окрыляет. Как ты справляешься с этим накалом? Или ты научился использовать его как топливо?</span>
+                        </li>
+                        <li>
+                            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm5.25 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75z"/></svg>
+                            <span><strong>Гештальт как часть тебя:</strong> Твой Гештальт не отделён от тебя — он и есть ты. Его проявление — это не превращение, а освобождение. Как ты относишься к этой своей части?</span>
+                        </li>
+                        <li>
+                            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                            <span><strong>Риск Поглощения:</strong> Ты знаешь, что чем сильнее ты проявляешься, тем ближе к грани. Где проходит черта, за которой ты уже не контролируешь себя? И что ты делаешь, чтобы не переступить её?</span>
+                        </li>
+                        <li>
+                            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg>
+                            <span><strong>Связи с другими:</strong> Твои эмоции заразительны. Ты можешь вдохновлять и пугать. Кто те люди, которые остаются рядом, несмотря на твою силу? И что ты готов сделать для них?</span>
+                        </li>
                     </ul>
                 </div>
+            </div>
 
-                <div class="ability">
-                    <strong>Уровни Поглощения (максимум 5)</strong>
-                    <table class="level-table">
-                        <tr><th>Уровень</th><th>Эффект</th></tr>
-                        <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
-                        <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
-                        <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
-                        <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
-                        <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
-                    </table>
-                </div>
+            <a href="index.html#section-classes" class="back-link">← Вернуться к списку классов</a>
 
-                <div class="ability">
-                    <strong>Восстановление</strong><br>
-                    • Длинный отдых — все уровни сбрасываются.<br>
-                    • Короткий отдых — можно снять 1 уровень (медитация, разговор, ритуал).<br>
-                    • Специальные способности и предметы могут снимать уровни.
-                </div>
+        </div>
 
-                <div class="ability">
-                    <strong>Особенности Гештальта E</strong><br>
-                    • Поглощение усиливается при сильном проявлении вашей главной эмоции.<br>
-                    • На 3+ уровнях эмоция начинает диктовать поведение (Ярость — атакуете всё подряд, Печаль — апатия, Страх — бегство и т.д.).<br>
-                    • На 5 уровне возможен «Эмоциональный Шторм» — мощный, но неконтролируемый режим.
-                </div>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Collapsible sections
-        document.querySelectorAll('.section-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const content = title.nextElementSibling;
-                if (content && content.classList.contains('collapsible-content')) {
-                    content.classList.toggle('open');
-                    if (content.classList.contains('open')) {
-                        title.textContent = title.textContent.replace('▶', '▼');
-                    } else {
-                        title.textContent = title.textContent.replace('▼', '▶');
-                    }
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1. ТЕМА
+            // ============================================================
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // ============================================================
+            // 2. ПРОГРЕСС-БАР
+            // ============================================================
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ============================================================
+            // 3. КНОПКА «НАВЕРХ»
+            // ============================================================
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
                 }
             });
-        });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        // Open first sections by default
-        document.querySelectorAll('.collapsible-content').forEach((el, index) => {
-            if (index < 3) {
-                el.classList.add('open');
+            // ============================================================
+            // 4. НАВИГАЦИЯ ПО ЯКОРЯМ
+            // ============================================================
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // ============================================================
+            // 5. COLLAPSIBLE СЕКЦИИ (сворачиваемые блоки)
+            // ============================================================
+            document.querySelectorAll('.section-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.closest('.class-block').querySelector('.collapsible-content');
+                    if (content) {
+                        content.classList.toggle('open');
+                        const icon = this.querySelector('.section-icon svg');
+                        // Меняем иконку на стрелку
+                    }
+                });
+            });
+
+            // ============================================================
+            // 6. ВКЛАДКИ ПОДКЛАССОВ
+            // ============================================================
+            window.openSubTab = function(evt, tabId) {
+                const parent = evt.currentTarget.closest('.class-block');
+                parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                evt.currentTarget.classList.add('active');
+            };
+
+            // ============================================================
+            // 7. ФОН (песчинки)
+            // ============================================================
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
             }
-        });
 
-        // Subclass tabs
-        function openSubTab(evt, tabId) {
-            const parent = evt.currentTarget.closest('.card');
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
+            // ============================================================
+            // 8. МОДАЛКА
+            // ============================================================
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
     </script>
+
 </body>
 </html>
