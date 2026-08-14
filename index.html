@@ -5,47 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Справочник по Альтер-Эго</title>
     <style>
+        /* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (тёмная и светлая темы) ===== */
         :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-            --darker: #16120d;
+            --bg: #0b0a0f;
+            --bg-card: #16121a;
+            --bg-nav: #110e14;
+            --text: #ded9e8;
+            --text-muted: #9a93aa;
+            --accent: #b48ad9;
+            --accent-glow: rgba(180, 138, 217, 0.25);
+            --border: #2d2538;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+            --radius: 18px;
+            --transition: 0.3s ease;
         }
-        * { box-sizing: border-box; }
-        body {
+        /* Светлая тема (класс .light на body) */
+        body.light {
+            --bg: #f5f2fa;
+            --bg-card: #ffffff;
+            --bg-nav: #eeeaf5;
+            --text: #1e1a26;
+            --text-muted: #5c546a;
+            --accent: #7c5cbf;
+            --accent-glow: rgba(124, 92, 191, 0.15);
+            --border: #d6cee6;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+        }
+
+        /* ===== СБРОС И БАЗА ===== */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+        body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
+            min-height: 100vh;
         }
 
+        /* ===== ШАПКА ===== */
         header {
-            background: var(--darker);
-            padding: 3.2rem 1.5rem 2.6rem;
+            background: var(--bg-nav);
+            padding: 3.6rem 1.5rem 2.8rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            position: relative;
         }
         header h1 {
             color: var(--accent);
-            font-size: 2.35rem;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             margin: 0;
-            letter-spacing: 0.07em;
-            font-weight: 600;
+            text-shadow: 0 0 40px var(--accent-glow);
         }
         header .subtitle {
-            color: var(--muted);
-            margin: 0.7rem 0 0;
-            font-size: 1.02rem;
-            letter-spacing: 0.03em;
+            color: var(--text-muted);
+            margin: 0.6rem 0 0;
+            font-size: 1.05rem;
+            letter-spacing: 0.06em;
         }
 
+        /* ===== НАВИГАЦИЯ ===== */
         nav {
-            background: var(--darker);
-            padding: 0.85rem 1rem;
+            background: var(--bg-nav);
+            padding: 0.7rem 1.5rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -55,15 +83,33 @@
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 0.5rem 1.5rem;
+            gap: 0.8rem 2rem;
+            backdrop-filter: blur(8px);
         }
         nav a {
-            color: var(--accent);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
+            position: relative;
+            padding-bottom: 2px;
         }
-        nav a:hover { text-decoration: underline; }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width var(--transition);
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
 
         .nav-drop {
             position: relative;
@@ -72,122 +118,165 @@
         .nav-drop-btn {
             background: none;
             border: none;
-            color: var(--accent);
+            color: var(--text-muted);
             font-weight: 500;
             font-size: 0.95rem;
             font-family: inherit;
             cursor: pointer;
             padding: 0;
+            position: relative;
+            padding-bottom: 2px;
+            transition: color var(--transition);
         }
-        .nav-drop-btn:hover { text-decoration: underline; }
+        .nav-drop-btn:hover {
+            color: var(--accent);
+        }
         .nav-drop-btn::after {
             content: " ▾";
-            font-size: 0.75em;
+            font-size: 0.7em;
         }
         .nav-drop-menu {
             display: none;
             position: absolute;
-            top: calc(100% + 0.55rem);
+            top: calc(100% + 0.7rem);
             left: 50%;
             transform: translateX(-50%);
-            min-width: 190px;
-            background: var(--card);
+            min-width: 200px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.4rem 0;
-            text-align: left;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            box-shadow: var(--shadow);
             z-index: 200;
+            backdrop-filter: blur(8px);
         }
         .nav-drop.open .nav-drop-menu { display: block; }
         .nav-drop-menu a {
             display: block;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.4rem;
             color: var(--text);
             font-weight: 500;
             white-space: nowrap;
+            border: none;
         }
+        .nav-drop-menu a::after { display: none; }
         .nav-drop-menu a:hover {
-            background: #2a2218;
+            background: var(--accent-glow);
             color: var(--accent);
-            text-decoration: none;
         }
 
+        /* ===== КОНТЕЙНЕР ===== */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2.6rem 1.3rem 4rem;
+            padding: 2.6rem 1.5rem 4rem;
         }
 
+        /* ===== СЕКЦИИ ===== */
         .section {
-            margin-bottom: 3.8rem;
+            margin-bottom: 4.2rem;
         }
         .section-title {
             color: var(--accent);
-            font-size: 1.4rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin: 0 0 0.7rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.6rem;
+            margin: 0 0 0.5rem;
             letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), transparent);
         }
         .section-desc {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin: 0 0 1.5rem;
-            max-width: 640px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin: 0 0 1.8rem;
+            max-width: 680px;
         }
 
         .subgroup-title {
-            color: var(--muted);
+            color: var(--text-muted);
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin: 1.8rem 0 0.9rem;
+            letter-spacing: 0.1em;
+            margin: 2.2rem 0 1rem;
+            font-weight: 600;
         }
         .subgroup-title:first-of-type {
             margin-top: 0.3rem;
         }
 
+        /* ===== СЕТКА КАРТОЧЕК ===== */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.1rem;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.5rem;
         }
 
+        /* ===== КАРТОЧКИ ===== */
         .card {
-            background: var(--card);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 1.25rem 1.35rem;
-            border-radius: 8px;
+            padding: 1.6rem 1.5rem;
+            border-radius: var(--radius);
             display: flex;
             flex-direction: column;
-            transition: border-color 0.2s, transform 0.15s;
+            transition: all var(--transition);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity var(--transition);
         }
         .card:hover {
             border-color: var(--accent);
-            transform: translateY(-2px);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
         }
+        .card:hover::before {
+            opacity: 1;
+        }
+
         .card .tag {
             display: inline-block;
             font-size: 0.7rem;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 0.1rem 0.45rem;
-            border-radius: 3px;
-            margin-bottom: 0.55rem;
-            letter-spacing: 0.03em;
+            color: var(--accent);
+            background: var(--accent-glow);
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
+            font-weight: 600;
+            align-self: flex-start;
         }
         .card h3 {
             color: var(--accent);
             margin: 0 0 0.4rem;
-            font-size: 1.12rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
         .card p {
-            margin: 0 0 1rem;
+            margin: 0 0 1.2rem;
             flex-grow: 1;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: var(--text);
         }
         .card a {
@@ -196,39 +285,80 @@
             font-weight: 600;
             font-size: 0.9rem;
             margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap var(--transition);
         }
-        .card a:hover { text-decoration: underline; }
+        .card a:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
 
         .card.class-card {
-            border-color: #4a3c2a;
+            border-color: #4a3a5a;
         }
         .card.class-card:hover {
             border-color: var(--accent);
         }
 
+        /* ===== КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 300;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.08) rotate(10deg);
+            border-color: var(--accent);
+        }
+
+        /* ===== ПОДВАЛ ===== */
         footer {
             text-align: center;
-            padding: 2rem 1rem;
-            color: #555;
+            padding: 2.5rem 1rem;
+            color: var(--text-muted);
             font-size: 0.86rem;
             border-top: 1px solid var(--border);
         }
 
-        @media (max-width: 640px) {
-            header h1 { font-size: 1.75rem; }
-            header { padding: 2.3rem 1rem 1.8rem; }
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 700px) {
+            header h1 { font-size: 2rem; }
+            header { padding: 2.5rem 1rem 2rem; }
             .container { padding: 1.8rem 1rem 3rem; }
-            nav { gap: 0.4rem 1.1rem; }
+            nav { gap: 0.5rem 1.2rem; }
             .nav-drop-menu { left: 0; transform: none; }
+            .grid { grid-template-columns: 1fr; }
+            .theme-toggle { width: 44px; height: 44px; font-size: 22px; bottom: 16px; right: 16px; }
+        }
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
+    <!-- ===== ШАПКА ===== -->
     <header>
         <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
         <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
     </header>
 
+    <!-- ===== НАВИГАЦИЯ ===== -->
     <nav>
         <a href="#races">Расы</a>
         <a href="#classes">Альтернативный Гештальт</a>
@@ -243,8 +373,10 @@
         </div>
     </nav>
 
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
     <div class="container">
 
+        <!-- РАСЫ -->
         <section id="races" class="section">
             <h2 class="section-title">Расы</h2>
             <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
@@ -316,6 +448,7 @@
             </div>
         </section>
 
+        <!-- ГЕШТАЛЬТ -->
         <section id="classes" class="section">
             <h2 class="section-title">Альтернативный Гештальт</h2>
             <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
@@ -356,11 +489,17 @@
 
     </div>
 
+    <!-- ===== ПОДВАЛ ===== -->
     <footer>
         Справочник по Альтер-Эго
     </footer>
 
+    <!-- ===== КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌙</button>
+
+    <!-- ===== СКРИПТЫ ===== -->
     <script>
+        // 1. Выпадающее меню
         const drop = document.getElementById('navMore');
         const btn = drop.querySelector('.nav-drop-btn');
         btn.addEventListener('click', () => {
@@ -372,6 +511,24 @@
                 drop.classList.remove('open');
                 btn.setAttribute('aria-expanded', 'false');
             }
+        });
+
+        // 2. Переключение темы (светлая / тёмная)
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Загружаем сохранённую тему
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light');
+            const isLight = body.classList.contains('light');
+            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
     </script>
 </body>
