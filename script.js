@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Справочник по Альтер-Эго</title>
+    <style>
+        /* ===== КАСТОМНЫЙ СКРОЛЛБАР ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+            transition: background var(--transition);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* ===== ПЕРЕМЕННЫЕ ===== */
+        :root {
+            --bg: #0b0a0f;
+            --bg-card: #16121a;
+            --bg-nav: #110e14;
+            --text: #ded9e8;
+            --text-muted: #9a93aa;
+            --accent: #b48ad9;
+            --accent-glow: rgba(180, 138, 217, 0.2);
+            --border: #2d2538;
+            --shadow: 0 8px 32px rgba(0,0,0,0.55);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(.4,0,.2,1);
+            /* Градиент для фона (темная тема) */
+            --bg-gradient: radial-gradient(circle at 20% 30%, #1a1320, #0b0a0f 80%);
+        }
+        body.light {
+            --bg: #f7f3ee;
+            --bg-card: #ffffff;
+            --bg-nav: #f0ebe5;
+            --text: #3d3530;
+            --text-muted: #7a6e66;
+            --accent: #b0886e;
+            --accent-glow: rgba(176,136,110,0.15);
+            --border: #ddd2c8;
+            --shadow: 0 8px 32px rgba(0,0,0,0.06);
+            --bg-gradient: radial-gradient(circle at 70% 40%, #f0ebe5, #f7f3ee 80%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            background-size: 200% 200%;
+            animation: gradientMove 12s ease-in-out infinite alternate;
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* ===== КАНВАС (песок поверх градиента) ===== */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ===== ВСЁ ОСТАЛЬНОЕ ПОВЕРХ ===== */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== ПРОГРЕСС-БАР ===== */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* ===== КНОПКА «НАВЕРХ» ===== */
+        #backToTop {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            z-index: 300;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(16px);
+        }
+        #backToTop.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #backToTop:hover {
+            transform: scale(1.08) translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            background: var(--bg-nav);
+            padding: 3.6rem 1.5rem 2.8rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(4px);
+        }
+        header h1 {
+            color: var(--accent);
+            font-size: clamp(2.2rem, 8vw, 3.6rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 40px var(--accent-glow), 0 0 80px var(--accent-glow);
+            transition: text-shadow var(--transition);
+        }
+        body.light header h1 {
+            text-shadow: 0 0 30px rgba(176,136,110,0.25), 0 0 60px rgba(176,136,110,0.1);
+        }
+        header .subtitle {
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        nav {
+            background: var(--bg-nav);
+            padding: 0.7rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem 2rem;
+            backdrop-filter: blur(8px);
+        }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            position: relative;
+            padding: 4px 0;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width var(--transition);
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== КОНТЕЙНЕР ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.6rem 1.5rem 4rem;
+        }
+
+        /* ===== ПОИСК ===== */
+        .search-wrap {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            font-size: clamp(0.9rem, 1vw, 1rem);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .search-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        .section {
+            margin-bottom: 4.2rem;
+        }
+        .section-title {
+            color: var(--accent);
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 700;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.6rem;
+            margin: 0 0 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), transparent);
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            margin: 0 0 1.8rem;
+            max-width: 680px;
+        }
+
+        /* ===== СЕТКА КАРТОЧЕК ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.6rem 1.5rem;
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, border-color var(--transition), box-shadow var(--transition);
+            cursor: pointer;
+        }
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card.hidden {
+            display: none;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+        .card h3 {
+            color: var(--accent);
+            margin: 0 0 0.4rem;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            font-weight: 700;
+        }
+        .card p {
+            margin: 0 0 1.2rem;
+            flex-grow: 1;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            color: var(--text);
+        }
+        .card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap var(--transition);
+        }
+        .card a:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        /* ===== RIPPLE ===== */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.4;
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ===== КНОПКА ТЕМЫ ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 300;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.08) rotate(10deg);
+            border-color: var(--accent);
+        }
+
+        /* ===== ПОДВАЛ с иконками ===== */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            border-top: 1px solid var(--border);
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            transition: color var(--transition), transform var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-socials a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .footer-socials svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        .footer-copy {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            color: var(--text);
+        }
+        .modal-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .modal-box p {
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .modal-box .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+        }
+
+        /* ===== АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== */
+        .theme-switching {
+            animation: themeFade 0.3s ease;
+        }
+        @keyframes themeFade {
+            0% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 700px) {
+            header { padding: 2.5rem 1rem 2rem; }
+            .container { padding: 1.8rem 1rem 3rem; }
+            nav { gap: 0.5rem 1.2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .theme-toggle { width: 44px; height: 44px; font-size: 22px; bottom: 16px; right: 16px; }
+            #backToTop { width: 40px; height: 40px; font-size: 18px; bottom: 80px; right: 16px; }
+            .search-input { max-width: 100%; }
+            .footer-socials { gap: 1.2rem; }
+            .footer-socials a { font-size: 0.8rem; }
+        }
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
+    <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА «НАВЕРХ» ===== -->
+    <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== КАНВАС ДЛЯ ФОНА ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <div class="content">
+
+        <!-- ШАПКА -->
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
+        </header>
+
+        <!-- НАВИГАЦИЯ -->
+        <nav>
+            <a href="#section-races">Расы</a>
+            <a href="#section-classes">Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <!-- ПОИСК -->
+            <div class="search-wrap">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
+            </div>
+
+            <!-- РАСЫ -->
+            <section id="section-races" class="section">
+                <h2 class="section-title">Расы</h2>
+                <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
+                <div class="grid" id="raceGrid">
+                    <div class="card" data-category="race">
+                        <span class="tag">Гибкость</span>
+                        <h3>Человек</h3>
+                        <p>Лучше всех приспосабливается к новым условиям. Основа общества, часто чувствует себя самым уязвимым среди изменённых.</p>
+                        <a href="human.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Стабильность</span>
+                        <h3>Андроид</h3>
+                        <p>Искусственное тело даёт высокую устойчивость и защиту от контроля. Многие до сих пор борются с остаточными протоколами.</p>
+                        <a href="android.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Вампиризм</span>
+                        <h3>Репликант</h3>
+                        <p>Сила и восстановление приходят через боль. Постоянно балансирует на грани поглощения Гештальтом.</p>
+                        <a href="replicant.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Танк</span>
+                        <h3>Мутант</h3>
+                        <p>Тело, искажённое чумой, даёт высокую живучесть. Гротескная внешность пугает и отталкивает.</p>
+                        <a href="mutant.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Информация</span>
+                        <h3>Ремнант</h3>
+                        <p>Обострённое восприятие и способность поддерживать других. Личность почти полностью поглощена Гештальтом.</p>
+                        <a href="echo.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Модули</span>
+                        <h3>Киборг</h3>
+                        <p>Человек, усиливший себя имплантами. Может перенастраивать своё тело под задачу.</p>
+                        <a href="cyborg.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Магия</span>
+                        <h3>Масо-кацу</h3>
+                        <p>Врождённая мана и сильная защита от заклинаний. Пришельцы из мира, принёсшего магию и хлорирование.</p>
+                        <a href="maso-katsu.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Универсал</span>
+                        <h3>Масо-дзин</h3>
+                        <p>Сочетает человеческую гибкость с частицей маны. Потомки Масо-кацу и людей.</p>
+                        <a href="maso-dzin.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Мобильность</span>
+                        <h3>Руро</h3>
+                        <p>Маленькие, быстрые и почти летающие. Сыпучие тела и крылатые пончо делают их неуловимыми.</p>
+                        <a href="ruro.html">Подробнее →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ГЕШТАЛЬТ -->
+            <section id="section-classes" class="section">
+                <h2 class="section-title">Альтернативный Гештальт</h2>
+                <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
+                <div class="grid" id="classGrid">
+                    <div class="card" data-category="class">
+                        <span class="tag">Защита</span>
+                        <h3>А. Гештальт U</h3>
+                        <p>Сила через связь с другими. Защищает и поддерживает союзников, рискуя раствориться в них.</p>
+                        <a href="class-geshtalt-u.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Эмоции</span>
+                        <h3>А. Гештальт E</h3>
+                        <p>Чистые чувства становятся оружием. Чем сильнее эмоция — тем мощнее проявление.</p>
+                        <a href="class-geshtalt-e.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Потенциал</span>
+                        <h3>А. Гештальт R</h3>
+                        <p>Сила из того, что так и не случилось. Нереализованные возможности и несбывшиеся мечты.</p>
+                        <a href="class-geshtalt-r.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Травма</span>
+                        <h3>А. Гештальт F</h3>
+                        <p>Прожитая боль становится источником силы. Каждый шрам — это ресурс.</p>
+                        <a href="class-geshtalt-f.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Раскол</span>
+                        <h3>А. Гештальт M</h3>
+                        <p>Конфликт с самим собой. Две стороны личности борются за контроль.</p>
+                        <a href="class-geshtalt-m.html">Перейти к классу →</a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ПОДВАЛ с иконками -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+        <!-- КНОПКА ТЕМЫ -->
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+
+        <!-- МОДАЛЬНОЕ ОКНО -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== СКРИПТЫ ===== -->
+    <script>
+        (function() {
+            // ============================================================
+            // 1. ТЕМА (с анимацией переключения)
+            // ============================================================
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') { body.classList.add('light'); toggle.textContent = '☀️'; }
+
+            toggle.addEventListener('click', () => {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                toggle.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // ============================================================
+            // 2. ПРОГРЕСС-БАР
+            // ============================================================
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ============================================================
+            // 3. КНОПКА «НАВЕРХ»
+            // ============================================================
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+            backBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ============================================================
+            // 4. ПОИСК
+            // ============================================================
+            const searchInput = document.getElementById('searchInput');
+            const allCards = document.querySelectorAll('.card');
+
+            function filterCards(query) {
+                const lower = query.toLowerCase().trim();
+                allCards.forEach(card => {
+                    const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+                    const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
+                    const tag = card.querySelector('.tag')?.textContent?.toLowerCase() || '';
+                    const match = lower === '' || title.includes(lower) || desc.includes(lower) || tag.includes(lower);
+                    card.classList.toggle('hidden', !match);
+                });
+                observeCards();
+            }
+            searchInput.addEventListener('input', (e) => filterCards(e.target.value));
+
+            // ============================================================
+            // 5. НАВИГАЦИЯ (якоря)
+            // ============================================================
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.getElementById(link.getAttribute('href').substring(1));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // ============================================================
+            // 6. АНИМАЦИЯ КАРТОЧЕК ПРИ СКРОЛЛЕ
+            // ============================================================
+            function observeCards() {
+                const cards = document.querySelectorAll('.card:not(.hidden)');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 60);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        card.classList.add('visible');
+                    } else {
+                        observer.observe(card);
+                    }
+                });
+            }
+            window.addEventListener('load', observeCards);
+            window.addEventListener('resize', observeCards);
+
+            // ============================================================
+            // 7. МОДАЛЬНОЕ ОКНО
+            // ============================================================
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalTag = document.getElementById('modalTag');
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') return;
+                    const title = card.querySelector('h3')?.textContent || 'Без названия';
+                    const desc = card.querySelector('p')?.textContent || 'Нет описания';
+                    const tag = card.querySelector('.tag')?.textContent || 'Без тега';
+                    modalTitle.textContent = title;
+                    modalDesc.textContent = desc;
+                    modalTag.textContent = tag;
+                    modal.classList.add('active');
+                });
+            });
+            modalClose.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('active'); });
+
+            // ============================================================
+            // 8. RIPPLE-ЭФФЕКТ НА КАРТОЧКАХ
+            // ============================================================
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const ripple = document.createElement('span');
+                    ripple.className = 'ripple';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.width = ripple.style.height = '20px';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // ============================================================
+            // 9. ИНТЕРАКТИВНЫЙ ФОН (песчинки + мышь)
+            // ============================================================
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const PARTICLE_COUNT = 80;
+            let mouseX = 0, mouseY = 0;
+
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 3 + 1.5;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.1;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    // Ветер слева направо
+                    this.x += 0.08;
+                    // Влияние мыши (частицы отталкиваются от курсора)
+                    const dx = this.x - mouseX;
+                    const dy = this.y - mouseY;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 120) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (120 - dist) / 120 * 0.6;
+                        this.x += Math.cos(angle) * force;
+                        this.y += Math.sin(angle) * force;
+                    }
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x > width + 20) this.x = -20;
+                    if (this.x < -20) this.x = width + 20;
+                    if (this.y > height + 20) this.y = -20;
+                    if (this.y < -20) this.y = height + 20;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+        })();
+    </script>
+</body>
+</html>
