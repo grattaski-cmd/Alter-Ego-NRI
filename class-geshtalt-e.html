@@ -133,12 +133,23 @@
             color: var(--text);
         }
 
-        .level-table {
+        /* ===== ОБЁРТКА ДЛЯ ТАБЛИЦ (ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА) ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0.5rem 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .table-wrapper table {
+            min-width: 600px;
             width: 100%;
+            margin: 0;
             border-collapse: collapse;
             font-size: 0.9rem;
-            margin: 0.5rem 0;
         }
+
         .level-table th {
             background: var(--bg-nav);
             color: var(--accent);
@@ -149,6 +160,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            white-space: nowrap;
         }
         .level-table td {
             padding: 0.5rem 0.8rem;
@@ -168,6 +180,11 @@
             font-weight: 600;
         }
 
+        /* Таблица стилей эмоций — меньше минимальная ширина */
+        .table-wrapper.style-table table {
+            min-width: 480px;
+        }
+
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -185,6 +202,7 @@
             font-weight: 600;
             transition: all var(--transition);
             font-family: inherit;
+            flex-shrink: 0;
         }
         .tab-button:hover {
             border-color: var(--accent);
@@ -268,8 +286,12 @@
                 width: 1.4rem;
                 height: 1.4rem;
             }
-            .level-table {
+            .table-wrapper table {
+                min-width: 500px;
                 font-size: 0.8rem;
+            }
+            .table-wrapper.style-table table {
+                min-width: 400px;
             }
             .level-table th,
             .level-table td {
@@ -284,8 +306,12 @@
             .quote-block {
                 padding: 1rem 1.2rem;
             }
-            .level-table {
+            .table-wrapper table {
+                min-width: 400px;
                 font-size: 0.7rem;
+            }
+            .table-wrapper.style-table table {
+                min-width: 340px;
             }
             .level-table th,
             .level-table td {
@@ -401,38 +427,40 @@
                     Таблица прогрессии
                 </h2>
                 <div class="collapsible-content open">
-                    <table class="level-table">
-                        <thead>
-                            <tr>
-                                <th>Ур.</th>
-                                <th>Бонус<br>мастерства</th>
-                                <th>Резерв</th>
-                                <th>Особенности</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Эмоции, Интуиция</td></tr>
-                            <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Эмоции, Техники Эмоции</td></tr>
-                            <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
-                            <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
-                            <tr><td>5</td><td>+3</td><td>3</td><td>Дополнительная атака</td></tr>
-                            <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
-                            <tr><td>7</td><td>+3</td><td>3</td><td>Предсказание, <span class="highlight">Подкласс</span></td></tr>
-                            <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
-                            <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
-                            <tr><td>10</td><td>+4</td><td>6</td><td>Улучшенный Резерв</td></tr>
-                            <tr><td>11</td><td>+4</td><td>6</td><td>Надёжность, <span class="highlight">Подкласс</span></td></tr>
-                            <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
-                            <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
-                            <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
-                            <tr><td>15</td><td>+5</td><td>7</td><td>Вечность, <span class="highlight">Подкласс</span></td></tr>
-                            <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
-                            <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
-                            <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
-                            <tr><td>19</td><td>+6</td><td>10</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
-                            <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Эмоции</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table class="level-table">
+                            <thead>
+                                <tr>
+                                    <th>Ур.</th>
+                                    <th>Бонус<br>мастерства</th>
+                                    <th>Резерв</th>
+                                    <th>Особенности</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Эмоции, Интуиция</td></tr>
+                                <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Эмоции, Техники Эмоции</td></tr>
+                                <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
+                                <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>5</td><td>+3</td><td>3</td><td>Дополнительная атака</td></tr>
+                                <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
+                                <tr><td>7</td><td>+3</td><td>3</td><td>Предсказание, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
+                                <tr><td>10</td><td>+4</td><td>6</td><td>Улучшенный Резерв</td></tr>
+                                <tr><td>11</td><td>+4</td><td>6</td><td>Надёжность, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>15</td><td>+5</td><td>7</td><td>Вечность, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>19</td><td>+6</td><td>10</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                                <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Эмоции</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p class="muted">Резерв растёт на уровнях 5, 9, 13, 17 (+1) и дополнительно +2 на 10 и 19 уровнях.</p>
                 </div>
             </div>
@@ -511,42 +539,44 @@
                 <div class="collapsible-content open">
                     <p class="muted" style="margin-bottom: 1rem;">На 2 уровне вы выбираете один Стиль Эмоции. Он определяет дополнительный урон, сопротивление и особенность.</p>
 
-                    <table class="level-table">
-                        <thead>
-                            <tr>
-                                <th>Стиль</th>
-                                <th>Доп. урон</th>
-                                <th>Сопротивление</th>
-                                <th>Особенность стиля</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Ярость</strong></td>
-                                <td>Огонь / Рубящий</td>
-                                <td>Огонь</td>
-                                <td>Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Печаль</strong></td>
-                                <td>Холод / Некротический</td>
-                                <td>Холод</td>
-                                <td>Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Страх</strong></td>
-                                <td>Психический</td>
-                                <td>Психический</td>
-                                <td>Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Радость</strong></td>
-                                <td>Светлый / Электрический</td>
-                                <td>Светлый</td>
-                                <td>Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper style-table">
+                        <table class="level-table">
+                            <thead>
+                                <tr>
+                                    <th>Стиль</th>
+                                    <th>Доп. урон</th>
+                                    <th>Сопротивление</th>
+                                    <th>Особенность стиля</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Ярость</strong></td>
+                                    <td>Огонь / Рубящий</td>
+                                    <td>Огонь</td>
+                                    <td>Когда вы получаете урон, следующая атака до конца следующего хода наносит +1d6 урона</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Печаль</strong></td>
+                                    <td>Холод / Некротический</td>
+                                    <td>Холод</td>
+                                    <td>Когда вы опускаете существо до 0 хитов, восстанавливаете 1d6 + уровень/2 хитов</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Страх</strong></td>
+                                    <td>Психический</td>
+                                    <td>Психический</td>
+                                    <td>Один раз за ход при попадании цель проходит спасбросок Мудрости или становится испуганной до конца вашего следующего хода</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Радость</strong></td>
+                                    <td>Светлый / Электрический</td>
+                                    <td>Светлый</td>
+                                    <td>Пока Гештальт проявлен: +1 к атакам и +10 футов к скорости</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <p class="muted"><strong>Вечность (15 уровень) — постоянные бонусы стилей:</strong><br>
                     • Ярость: +1d4 урона, если вы уже получили урон в этом ходу<br>
@@ -828,18 +858,20 @@
                         <div class="ability-item">
                             <strong>Уровни Поглощения (максимум 5)</strong>
                             <span class="value">
-                                <table class="level-table" style="margin-top: 0.3rem;">
-                                    <thead>
-                                        <tr><th>Уровень</th><th>Эффект</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
-                                        <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
-                                        <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
-                                        <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
-                                        <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-wrapper">
+                                    <table class="level-table" style="min-width:400px;">
+                                        <thead>
+                                            <tr><th>Уровень</th><th>Эффект</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей эмоцией, но помеха на социальные проверки.</td></tr>
+                                            <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
+                                            <tr><td>3</td><td>В начале хода спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
+                                            <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей эмоцией.</td></tr>
+                                            <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей эмоции). Возможен «Эмоциональный Шторм».</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </span>
                         </div>
                         <div class="ability-item">
@@ -987,15 +1019,13 @@
             });
 
             // ============================================================
-            // 5. COLLAPSIBLE СЕКЦИИ (сворачиваемые блоки)
+            // 5. COLLAPSIBLE СЕКЦИИ
             // ============================================================
             document.querySelectorAll('.section-title').forEach(title => {
                 title.addEventListener('click', function() {
                     const content = this.closest('.class-block').querySelector('.collapsible-content');
                     if (content) {
                         content.classList.toggle('open');
-                        const icon = this.querySelector('.section-icon svg');
-                        // Меняем иконку на стрелку
                     }
                 });
             });
