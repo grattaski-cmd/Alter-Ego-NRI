@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хранитель убежища — Предыстория</title>
+    <style>
+        :root {
+            --bg: #0f0c08;
+            --card: #1c1812;
+            --accent: #c9a05f;
+            --text: #d4c5a9;
+            --border: #3a3024;
+            --muted: #8a7a5f;
+            --darker: #16120d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: var(--darker);
+            padding: 2.4rem 1.2rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        header h1 {
+            color: var(--accent);
+            font-size: 1.85rem;
+            margin: 0;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        header .subtitle {
+            color: var(--muted);
+            margin: 0.45rem 0 0;
+            font-size: 0.95rem;
+        }
+        nav {
+            background: var(--darker);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            margin: 0 0.7rem;
+        }
+        nav a:hover { text-decoration: underline; }
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 2.2rem 1.2rem 4rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.4rem 1.5rem;
+            margin-bottom: 1.4rem;
+        }
+        .section-title {
+            color: var(--accent);
+            font-size: 1.15rem;
+            margin: 0 0 0.9rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.02em;
+        }
+        .desc {
+            margin: 0 0 0.6rem;
+        }
+        .stat-line {
+            margin: 0.35rem 0;
+        }
+        .stat-line strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        ul {
+            margin: 0.4rem 0 0.6rem 1.2rem;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 0.35rem;
+        }
+        .list-block {
+            margin-top: 0.7rem;
+        }
+        .list-block h4 {
+            color: var(--accent);
+            font-size: 0.98rem;
+            margin: 0 0 0.45rem;
+            font-weight: 600;
+        }
+        footer {
+            text-align: center;
+            padding: 1.8rem 1rem;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .container { padding: 1.6rem 1rem 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ХРАНИТЕЛЬ УБЕЖИЩА</h1>
+        <p class="subtitle">Предыстория</p>
+    </header>
+
+    <nav>
+        <a href="Backstories.html">← К списку предысторий</a>
+        <a href="index.html">На главную</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+            <h2 class="section-title">Описание</h2>
+            <p class="desc">Ты умеешь делать так, чтобы за стенами можно было жить. Знаешь, как очищать воду, как заставлять землю родить хоть что-то, как чинить фильтры и поддерживать порядок в замкнутом пространстве. Для многих ты — причина, почему убежище ещё не стало могилой.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Владения</h2>
+            <p class="stat-line"><strong>Навыки:</strong> Выживание, Природа</p>
+            <p class="stat-line"><strong>Инструменты:</strong> Набор травника</p>
+            <p class="stat-line"><strong>Языки:</strong> —</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Снаряжение</h2>
+            <ul>
+                <li>Рабочая одежда (прочная, в пятнах земли и масла)</li>
+                <li>Набор травника</li>
+                <li>Фляга с очищенной водой</li>
+                <li>Небольшой мешочек с семенами и сушёными травами</li>
+                <li>12 крышек</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Особенность: Везде свой</h2>
+            <p>Ты хорошо понимаешь, как устроены закрытые и полузакрытые поселения. Ты можешь быстро оценить состояние убежища (запасы, систему очистки, уязвимости) и предложить реальные способы улучшить или поддержать его. Кроме того, жители таких мест чаще доверяют тебе и охотнее делятся информацией о внутренних делах общины.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Рекомендуемые характеристики</h2>
+
+            <div class="list-block">
+                <h4>Идеалы</h4>
+                <ul>
+                    <li><strong>Ответственность.</strong> Если ты можешь поддержать жизнь за стенами — ты обязан это делать.</li>
+                    <li><strong>Порядок.</strong> Хаос снаружи не должен проникать внутрь. Структура спасает.</li>
+                    <li><strong>Земля.</strong> Даже мёртвая почва может что-то дать, если с ней правильно работать.</li>
+                    <li><strong>Сообщество.</strong> Один человек не выживает. Только группа.</li>
+                    <li><strong>Терпение.</strong> Всё растёт медленно. Спешка губит и урожай, и людей.</li>
+                    <li><strong>Скрытность.</strong> Чем меньше знают снаружи о том, что у вас есть — тем дольше вы продержитесь.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Связи</h4>
+                <ul>
+                    <li>Есть убежище, которое я когда-то помогал строить/поддерживать. Я до сих пор считаю его своим.</li>
+                    <li>Я вырастил человека (ребёнка/подростка) внутри стен. Он для меня почти семья.</li>
+                    <li>У меня остались семена редкого растения, которое больше почти нигде не растёт.</li>
+                    <li>Кто-то из старых жителей убежища предал общину. Я этого не забыл.</li>
+                    <li>Я обещал одному умирающему, что его участок земли не зарастёт и не будет брошен.</li>
+                    <li>Есть человек снаружи, которому я иногда оставляю еду у определённого места.</li>
+                </ul>
+            </div>
+
+            <div class="list-block">
+                <h4>Недостатки</h4>
+                <ul>
+                    <li>Мне тяжело находиться в полностью открытом пространстве слишком долго. Хочется стен.</li>
+                    <li>Я склонен контролировать запасы и людей сильнее, чем это нужно.</li>
+                    <li>Я с трудом доверяю тем, кто пришёл «с дороги». Слишком много раз это заканчивалось плохо.</li>
+                    <li>Иногда я ставлю нужды убежища выше жизней отдельных людей.</li>
+                    <li>Я плохо переношу бессмысленную трату ресурсов — даже если это чужие.</li>
+                    <li>Мне сложно просто уйти и бросить место, даже когда оставаться уже опасно.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Справочник по Альтер-Эго • Предыстории
+    </footer>
+</body>
+</html>
