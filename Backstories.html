@@ -4,391 +4,458 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Предыстории — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Дополнительные стили только для этой страницы -->
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-            --darker: #16120d;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: var(--darker);
-            padding: 2.4rem 1.2rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
-            color: var(--accent);
-            font-size: 1.9rem;
-            margin: 0;
-            letter-spacing: 0.06em;
-            font-weight: 600;
-        }
-        nav {
-            background: var(--darker);
-            padding: 0.75rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        nav a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.92rem;
-            margin: 0 0.7rem;
-        }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 2.2rem 1.2rem 4rem;
-        }
-        .section {
-            margin-bottom: 2.8rem;
-        }
-        .section-title {
-            color: var(--accent);
-            font-size: 1.25rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.4rem;
-            margin: 0 0 1.1rem;
-            letter-spacing: 0.03em;
-        }
-        .grid {
+        .backstory-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 0.9rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
-        .card {
-            background: var(--card);
+
+        .backstory-card {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 1rem 1.15rem;
-            border-radius: 7px;
-            transition: border-color 0.2s;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all var(--transition);
+            cursor: default;
         }
-        .card:hover {
+        .backstory-card:hover {
             border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
         }
-        .card h3 {
+
+        .backstory-card .tag {
+            display: inline-block;
+            font-size: 0.7rem;
             color: var(--accent);
-            margin: 0 0 0.35rem;
-            font-size: 1.05rem;
+            background: var(--accent-glow);
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
             font-weight: 600;
+            align-self: flex-start;
         }
-        .card p {
-            margin: 0;
-            font-size: 0.88rem;
+
+        .backstory-card h3 {
+            color: var(--accent);
+            margin: 0 0 0.4rem;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            font-weight: 700;
+        }
+
+        .backstory-card p {
+            margin: 0 0 1rem;
+            flex-grow: 1;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
             color: var(--text);
         }
-        .card .more {
-            margin-top: 0.55rem;
-        }
-        .card .more a {
+
+        .backstory-card a {
             color: var(--accent);
-            font-weight: 600;
             text-decoration: none;
-            font-size: 0.88rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap var(--transition);
         }
-        .card .more a:hover { text-decoration: underline; }
-        footer {
-            text-align: center;
-            padding: 1.8rem 1rem;
-            color: #555;
+        .backstory-card a:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .backstory-card.hidden {
+            display: none;
+        }
+
+        /* Фильтры */
+        .filter-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
             font-size: 0.85rem;
-            border-top: 1px solid var(--border);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.55rem; }
-            .container { padding: 1.6rem 1rem 3rem; }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .search-wrap {
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ПРЕДЫСТОРИИ</h1>
-    </header>
 
-    <nav>
-        <a href="index.html">← На главную</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <!-- ВЫЖИВАНИЕ -->
-        <section class="section">
-            <h2 class="section-title">Выживание</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Странник пустошей</h3>
-                    <p>Живёт дорогами. Знает маршруты, мёртвые зоны и где ещё можно найти воду.</p>
-                    <p class="more"><a href="strannik-pustroshey.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Хранитель убежища</h3>
-                    <p>Умеет поддерживать жизнь в закрытых и полузакрытых поселениях. Земля и стены — его забота.</p>
-                    <p class="more"><a href="hranitel-ubezhishcha.html">Подробнее →</a></p>
-                </div>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
+        </header>
+
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <h1 class="section-title">Предыстории</h1>
+            <p class="section-desc">Откуда твой персонаж? Каждая предыстория даёт уникальные навыки и связи.</p>
+
+            <!-- ПОИСК -->
+            <div class="search-wrap">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
             </div>
-        </section>
 
-        <!-- СИЛОВЫЕ -->
-        <section class="section">
-            <h2 class="section-title">Силовые</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Солдат старого мира</h3>
-                    <p>Служил ещё до катастрофы. Сохранил дисциплину, привычки и взгляд на мир.</p>
-                    <p class="more"><a href="soldat-starogo-mira.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Ополченец поселения</h3>
-                    <p>Защищает одну из выживших общин. Местный, надёжный, знающий своих.</p>
-                    <p class="more"><a href="opolchenets.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Охотник на мутантов</h3>
-                    <p>Специализируется на уничтожении и изучении заражённых. Знает их повадки.</p>
-                    <p class="more"><a href="ohotnik-na-mutantov.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Чистильщик</h3>
-                    <p>Зачищает территории от чумы и следов Гештальта по заказу поселений.</p>
-                    <p class="more"><a href="chistilshchik.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Страж периметра</h3>
-                    <p>Постоянно стоит на границе безопасной зоны. Первый, кто видит опасность.</p>
-                    <p class="more"><a href="strazh-perimetra.html">Подробнее →</a></p>
-                </div>
+            <!-- ФИЛЬТРЫ ПО КАТЕГОРИЯМ -->
+            <div class="filter-wrap" id="filterButtons">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="выживание">Выживание</button>
+                <button class="filter-btn" data-filter="силовые">Силовые</button>
+                <button class="filter-btn" data-filter="гештальт">Гештальт</button>
+                <button class="filter-btn" data-filter="мана">Мана</button>
+                <button class="filter-btn" data-filter="техника">Техника</button>
+                <button class="filter-btn" data-filter="общество">Общество</button>
+                <button class="filter-btn" data-filter="религия">Религия</button>
+                <button class="filter-btn" data-filter="преступность">Преступность</button>
+                <button class="filter-btn" data-filter="героизм">Героизм</button>
+                <button class="filter-btn" data-filter="наука">Наука</button>
+                <button class="filter-btn" data-filter="рабство">Рабство</button>
             </div>
-        </section>
 
-        <!-- ГЕШТАЛЬТ -->
-        <section class="section">
-            <h2 class="section-title">Гештальт и травма</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Избежавший поглощения</h3>
-                    <p>Почти стал частью Гештальта, но сумел остановиться или вырваться.</p>
-                    <p class="more"><a href="izbezhavshiy-pogloshcheniya.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Свидетель поглощения</h3>
-                    <p>Видел, как близкого человека полностью переписало. Это изменило его навсегда.</p>
-                    <p class="more"><a href="svidetel-pogloshcheniya.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Изгнанный</h3>
-                    <p>Изгнали из общины из-за признаков Гештальта, мутации или просто страха.</p>
-                    <p class="more"><a href="izgnannyy.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Последователь Гештальта</h3>
-                    <p>Верит, что растворение в Гештальте — следующий этап существования.</p>
-                    <p class="more"><a href="posledovatel-geshtalta.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Падальщик памяти</h3>
-                    <p>Собирает записи, воспоминания и обломки личностей тех, кого уже поглотило.</p>
-                    <p class="more"><a href="padalshchik-pamyati.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
+            <!-- СЕТКА С ПРЕДЫСТОРИЯМИ -->
+            <div class="backstory-grid" id="backstoriesGrid"></div>
 
-        <!-- МАНА -->
-        <section class="section">
-            <h2 class="section-title">Мана и другой мир</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Беженец из мира маны</h3>
-                    <p>Пришёл вместе с магической катастрофой. Чужой среди чужих.</p>
-                    <p class="more"><a href="bezhenets-many.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Жертва хлорирования</h3>
-                    <p>Пережил процесс хлорирования и остался с его последствиями.</p>
-                    <p class="more"><a href="zhertva-khlorirovaniya.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Манолог</h3>
-                    <p>Изучает аномалии, проявления маны и точки соприкосновения миров.</p>
-                    <p class="more"><a href="manolog.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Проводник</h3>
-                    <p>Умеет находить и использовать тонкие места между мирами.</p>
-                    <p class="more"><a href="provodnik.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Авангард маны</h3>
-                    <p>Пришёл как часть вторжения, а не как беженец. Завоеватель по происхождению.</p>
-                    <p class="more"><a href="avangard-many.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
+        </div>
 
-        <!-- ТЕХНИКА -->
-        <section class="section">
-            <h2 class="section-title">Техника</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Системный техник</h3>
-                    <p>Чинит андроидов, киборгов и старую технику. Понимает протоколы.</p>
-                    <p class="more"><a href="sistemnyy-tekhnik.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Саботажник протоколов</h3>
-                    <p>Специализируется на взломе и искажении остаточных программ андроидов.</p>
-                    <p class="more"><a href="sabotazhnik-protokolov.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Охотник за компонентами</h3>
-                    <p>Ищет и извлекает редкие детали из старой техники и разрушенных машин.</p>
-                    <p class="more"><a href="ohotnik-za-komponentami.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Перепрошивальщик</h3>
-                    <p>Глубже обычного техника меняет и ломает остаточные протоколы андроидов.</p>
-                    <p class="more"><a href="pereproshivalshchik.html">Подробнее →</a></p>
-                </div>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
             </div>
-        </section>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
 
-        <!-- ОБЩЕСТВО -->
-        <section class="section">
-            <h2 class="section-title">Общество</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Посредник</h3>
-                    <p>Торгует и ведёт переговоры между разными группами выживших.</p>
-                    <p class="more"><a href="posrednik.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Информатор</h3>
-                    <p>Живёт слухами, долгами и чужими секретами. Знает больше, чем говорит.</p>
-                    <p class="more"><a href="informator.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Целитель чумы</h3>
-                    <p>Лечит или хотя бы сдерживает мутацию и заражение. Редкий и ценный специалист.</p>
-                    <p class="more"><a href="tselitel-chumy.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Дети руин</h3>
-                    <p>Родился уже после катастрофы. Не помнит «нормальный» мир.</p>
-                    <p class="more"><a href="deti-ruin.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
 
-        <!-- РЕЛИГИЯ -->
-        <section class="section">
-            <h2 class="section-title">Религия</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Хранитель старой веры</h3>
-                    <p>Пытается сохранить докатастрофные религии и ритуалы.</p>
-                    <p class="more"><a href="hranitel-staroy-very.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Отрицатель</h3>
-                    <p>Радикальный рационалист. Отрицает и Гештальт, и ману как «чудо».</p>
-                    <p class="more"><a href="otritsatel.html">Подробнее →</a></p>
-                </div>
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
-        </section>
-
-        <!-- ПРЕСТУПНОСТЬ -->
-        <section class="section">
-            <h2 class="section-title">Преступность</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Рейдер</h3>
-                    <p>Берёт силой то, что нужно. Живёт за счёт других поселений и караванов.</p>
-                    <p class="more"><a href="reyder.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Контрабандист</h3>
-                    <p>Перевозит запрещённое между зонами. Знает тайные тропы и людей.</p>
-                    <p class="more"><a href="kontrabandist.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Долговой раб</h3>
-                    <p>Живёт (или жил) в долговой кабале. Долг может быть старым или совсем свежим.</p>
-                    <p class="more"><a href="dolgovoy-rab.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ГЕРОИЗМ -->
-        <section class="section">
-            <h2 class="section-title">Героизм и идеализм</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Защитник слабых</h3>
-                    <p>Сознательно берёт на себя роль защитника в маленьком масштабе.</p>
-                    <p class="more"><a href="zashchitnik-slabykh.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Искатель утраченного</h3>
-                    <p>Ищет не ресурсы, а остатки «нормального» мира — книги, музыку, смысл.</p>
-                    <p class="more"><a href="iskatel-utrachennogo.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- НАУКА -->
-        <section class="section">
-            <h2 class="section-title">Наука</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Исследователь чумы</h3>
-                    <p>Изучает магическую чуму, мутации и способы им противостоять.</p>
-                    <p class="more"><a href="issledovatel-chumy.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Архивариус</h3>
-                    <p>Собирает и сохраняет докатастрофные знания, записи и технологии.</p>
-                    <p class="more"><a href="arkhivarius.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- РАБСТВО -->
-        <section class="section">
-            <h2 class="section-title">Рабство и подневолье</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Бывший подопытный</h3>
-                    <p>Использовали для экспериментов с чумой, Гештальтом или маной.</p>
-                    <p class="more"><a href="byvshiy-podopytnyy.html">Подробнее →</a></p>
-                </div>
-                <div class="card">
-                    <h3>Беглый раб</h3>
-                    <p>Сбежал из рабства. До сих пор оглядывается через плечо.</p>
-                    <p class="more"><a href="beglyy-rab.html">Подробнее →</a></p>
-                </div>
-            </div>
-        </section>
+        </div>
 
     </div>
 
-    <footer>
-        Справочник по Альтер-Эго • Предыстории
-    </footer>
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1. ДАННЫЕ ПРЕДЫСТОРИЙ
+            // ============================================================
+            const backstories = [
+                // Выживание
+                { name: "Странник пустошей", desc: "Живёт дорогами. Знает маршруты, мёртвые зоны и где ещё можно найти воду.", category: "выживание", link: "strannik-pustroshey.html" },
+                { name: "Хранитель убежища", desc: "Умеет поддерживать жизнь в закрытых и полузакрытых поселениях. Земля и стены — его забота.", category: "выживание", link: "hranitel-ubezhishcha.html" },
+                // Силовые
+                { name: "Солдат старого мира", desc: "Служил ещё до катастрофы. Сохранил дисциплину, привычки и взгляд на мир.", category: "силовые", link: "soldat-starogo-mira.html" },
+                { name: "Ополченец поселения", desc: "Защищает одну из выживших общин. Местный, надёжный, знающий своих.", category: "силовые", link: "opolchenets.html" },
+                { name: "Охотник на мутантов", desc: "Специализируется на уничтожении и изучении заражённых. Знает их повадки.", category: "силовые", link: "ohotnik-na-mutantov.html" },
+                { name: "Чистильщик", desc: "Зачищает территории от чумы и следов Гештальта по заказу поселений.", category: "силовые", link: "chistilshchik.html" },
+                { name: "Страж периметра", desc: "Постоянно стоит на границе безопасной зоны. Первый, кто видит опасность.", category: "силовые", link: "strazh-perimetra.html" },
+                // Гештальт
+                { name: "Избежавший поглощения", desc: "Почти стал частью Гештальта, но сумел остановиться или вырваться.", category: "гештальт", link: "izbezhavshiy-pogloshcheniya.html" },
+                { name: "Свидетель поглощения", desc: "Видел, как близкого человека полностью переписало. Это изменило его навсегда.", category: "гештальт", link: "svidetel-pogloshcheniya.html" },
+                { name: "Изгнанный", desc: "Изгнали из общины из-за признаков Гештальта, мутации или просто страха.", category: "гештальт", link: "izgnannyy.html" },
+                { name: "Последователь Гештальта", desc: "Верит, что растворение в Гештальте — следующий этап существования.", category: "гештальт", link: "posledovatel-geshtalta.html" },
+                { name: "Падальщик памяти", desc: "Собирает записи, воспоминания и обломки личностей тех, кого уже поглотило.", category: "гештальт", link: "padalshchik-pamyati.html" },
+                // Мана
+                { name: "Беженец из мира маны", desc: "Пришёл вместе с магической катастрофой. Чужой среди чужих.", category: "мана", link: "bezhenets-many.html" },
+                { name: "Жертва хлорирования", desc: "Пережил процесс хлорирования и остался с его последствиями.", category: "мана", link: "zhertva-khlorirovaniya.html" },
+                { name: "Манолог", desc: "Изучает аномалии, проявления маны и точки соприкосновения миров.", category: "мана", link: "manolog.html" },
+                { name: "Проводник", desc: "Умеет находить и использовать тонкие места между мирами.", category: "мана", link: "provodnik.html" },
+                { name: "Авангард маны", desc: "Пришёл как часть вторжения, а не как беженец. Завоеватель по происхождению.", category: "мана", link: "avangard-many.html" },
+                // Техника
+                { name: "Системный техник", desc: "Чинит андроидов, киборгов и старую технику. Понимает протоколы.", category: "техника", link: "sistemnyy-tekhnik.html" },
+                { name: "Саботажник протоколов", desc: "Специализируется на взломе и искажении остаточных программ андроидов.", category: "техника", link: "sabotazhnik-protokolov.html" },
+                { name: "Охотник за компонентами", desc: "Ищет и извлекает редкие детали из старой техники и разрушенных машин.", category: "техника", link: "ohotnik-za-komponentami.html" },
+                { name: "Перепрошивальщик", desc: "Глубже обычного техника меняет и ломает остаточные протоколы андроидов.", category: "техника", link: "pereproshivalshchik.html" },
+                // Общество
+                { name: "Посредник", desc: "Торгует и ведёт переговоры между разными группами выживших.", category: "общество", link: "posrednik.html" },
+                { name: "Информатор", desc: "Живёт слухами, долгами и чужими секретами. Знает больше, чем говорит.", category: "общество", link: "informator.html" },
+                { name: "Целитель чумы", desc: "Лечит или хотя бы сдерживает мутацию и заражение. Редкий и ценный специалист.", category: "общество", link: "tselitel-chumy.html" },
+                { name: "Дети руин", desc: "Родился уже после катастрофы. Не помнит «нормальный» мир.", category: "общество", link: "deti-ruin.html" },
+                // Религия
+                { name: "Хранитель старой веры", desc: "Пытается сохранить докатастрофные религии и ритуалы.", category: "религия", link: "hranitel-staroy-very.html" },
+                { name: "Отрицатель", desc: "Радикальный рационалист. Отрицает и Гештальт, и ману как «чудо».", category: "религия", link: "otritsatel.html" },
+                // Преступность
+                { name: "Рейдер", desc: "Берёт силой то, что нужно. Живёт за счёт других поселений и караванов.", category: "преступность", link: "reyder.html" },
+                { name: "Контрабандист", desc: "Перевозит запрещённое между зонами. Знает тайные тропы и людей.", category: "преступность", link: "kontrabandist.html" },
+                { name: "Долговой раб", desc: "Живёт (или жил) в долговой кабале. Долг может быть старым или совсем свежим.", category: "преступность", link: "dolgovoy-rab.html" },
+                // Героизм
+                { name: "Защитник слабых", desc: "Сознательно берёт на себя роль защитника в маленьком масштабе.", category: "героизм", link: "zashchitnik-slabykh.html" },
+                { name: "Искатель утраченного", desc: "Ищет не ресурсы, а остатки «нормального» мира — книги, музыку, смысл.", category: "героизм", link: "iskatel-utrachennogo.html" },
+                // Наука
+                { name: "Исследователь чумы", desc: "Изучает магическую чуму, мутации и способы им противостоять.", category: "наука", link: "issledovatel-chumy.html" },
+                { name: "Архивариус", desc: "Собирает и сохраняет докатастрофные знания, записи и технологии.", category: "наука", link: "arkhivarius.html" },
+                // Рабство
+                { name: "Бывший подопытный", desc: "Использовали для экспериментов с чумой, Гештальтом или маной.", category: "рабство", link: "byvshiy-podopytnyy.html" },
+                { name: "Беглый раб", desc: "Сбежал из рабства. До сих пор оглядывается через плечо.", category: "рабство", link: "beglyy-rab.html" }
+            ];
+
+            // ============================================================
+            // 2. ОТОБРАЖЕНИЕ КАРТОЧЕК
+            // ============================================================
+            const grid = document.getElementById('backstoriesGrid');
+
+            function renderBackstories(filter = 'all', search = '') {
+                const lowerSearch = search.toLowerCase().trim();
+                let html = '';
+
+                backstories.forEach(item => {
+                    const categoryMatch = filter === 'all' || item.category === filter;
+                    const searchMatch = lowerSearch === '' ||
+                        item.name.toLowerCase().includes(lowerSearch) ||
+                        item.desc.toLowerCase().includes(lowerSearch);
+
+                    if (categoryMatch && searchMatch) {
+                        html += `
+                            <div class="backstory-card" data-category="${item.category}">
+                                <span class="tag">${item.category}</span>
+                                <h3>${item.name}</h3>
+                                <p>${item.desc}</p>
+                                <a href="${item.link}">Подробнее →</a>
+                            </div>
+                        `;
+                    }
+                });
+
+                grid.innerHTML = html || '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Ничего не найдено 😔</p>';
+            }
+
+            // ============================================================
+            // 3. ФИЛЬТРАЦИЯ И ПОИСК
+            // ============================================================
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.dataset.filter;
+                    renderBackstories(filter, searchInput.value);
+                });
+            });
+
+            searchInput.addEventListener('input', function() {
+                const activeFilter = document.querySelector('.filter-btn.active');
+                const filter = activeFilter ? activeFilter.dataset.filter : 'all';
+                renderBackstories(filter, this.value);
+            });
+
+            // ============================================================
+            // 4. ПОДКЛЮЧАЕМ ОБЩИЕ СКРИПТЫ (тема, прогресс-бар, кнопка вверх, фон)
+            // Дублируем здесь, чтобы страница работала даже без script.js
+            // ============================================================
+
+            // Тема
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // Прогресс-бар
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // Кнопка «Наверх»
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Навигация по якорям (если есть)
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Фон (песчинки)
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0, mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            // Модальное окно (для единообразия, не используется на этой странице)
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+            // ============================================================
+            // 5. ПЕРВИЧНЫЙ РЕНДЕР
+            // ============================================================
+            renderBackstories('all', '');
+
+        })();
+    </script>
+
 </body>
 </html>
