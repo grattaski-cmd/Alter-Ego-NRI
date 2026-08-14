@@ -6,63 +6,176 @@
     <title>Андроид — Справочник по Альтер-Эго</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ РАСЫ ===== */
-        .race-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: border-color var(--transition);
+        /* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ АНДРОИДА ===== */
+
+        .race-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
         }
-        .race-block:hover {
-            border-color: var(--accent);
+        .race-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .ability {
+        .quote-block {
             background: var(--bg-nav);
-            padding: 1rem 1.2rem;
-            margin: 1rem 0;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .ability-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        .ability-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
             border-left: 3px solid var(--accent);
             border-radius: 0 var(--radius) var(--radius) 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.3rem 0.8rem;
         }
-        .ability strong {
+        .ability-item .label {
+            font-weight: 700;
             color: var(--accent);
-            display: block;
-            margin-bottom: 0.25rem;
-            font-size: 1.05rem;
+            min-width: 120px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .ability-item .label .icon {
+            width: 1.2rem;
+            height: 1.2rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .ability-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+        }
+        .ability-item .tag {
+            margin-left: 0.5rem;
         }
 
-        .origin-grid {
+        .origin-card .icon {
+            width: 2.2rem;
+            height: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .relations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
             margin-top: 0.5rem;
         }
-        .origin-card {
+        .relation-item {
             background: var(--bg-nav);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            transition: border-color var(--transition);
+            padding: 0.8rem 1rem;
+            text-align: center;
         }
-        .origin-card:hover {
-            border-color: var(--accent);
-        }
-        .origin-card h3 {
+        .relation-item .race-name {
             color: var(--accent);
-            margin: 0 0 0.6rem;
-            font-size: 1.1rem;
             font-weight: 600;
         }
-        .origin-card p {
-            margin: 0;
-            font-size: 0.93rem;
-            flex-grow: 1;
-            color: var(--text);
+        .relation-item .desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .tips-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+        .tips-list .tip-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
         }
 
         .skills-grid {
@@ -75,6 +188,17 @@
         .skills-grid span {
             padding: 0.2rem 0;
             color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .skills-grid span .skill-icon {
+            width: 1rem;
+            height: 1rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.6;
         }
 
         .muted {
@@ -88,49 +212,54 @@
             padding: 0.1rem 0.6rem;
             border-radius: 60px;
             font-size: 0.75rem;
-            margin-left: 0.4rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
 
         .back-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             margin-top: 0.5rem;
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
             transition: gap var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
         .back-link:hover {
             gap: 12px;
             text-decoration: underline;
         }
 
-        ul {
-            padding-left: 1.25rem;
-            margin: 0.4rem 0;
-            color: var(--text);
-        }
-        li { margin-bottom: 0.3rem; }
-
         /* ===== АДАПТИВ ===== */
-        @media (max-width: 600px) {
-            .race-block {
-                padding: 1.2rem 1rem;
+        @media (max-width: 700px) {
+            .ability-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.2rem;
             }
-            .origin-grid {
+            .ability-item .label {
+                min-width: unset;
+            }
+            .relations-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .relations-grid {
                 grid-template-columns: 1fr;
+            }
+            .quote-block {
+                padding: 1.2rem 1.2rem;
             }
             .skills-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-            .ability {
-                padding: 0.8rem 1rem;
             }
         }
         @media (max-width: 400px) {
@@ -164,122 +293,234 @@
 
         <div class="container">
 
-            <!-- ШАПКА СТРАНИЦЫ (заголовок расы) -->
-            <div style="margin-bottom: 2rem;">
-                <h1 class="section-title" style="border-bottom: none; margin-bottom: 0.2rem;">Андроид</h1>
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title race-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <!-- Иконка микрочипа -->
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zM9 9h6v6H9V9z"/>
+                        </svg>
+                        Андроид
+                    </span>
+                </h1>
                 <p class="section-desc" style="margin-top: 0.2rem;">Раса • Искусственная природа • Сознание</p>
+            </div>
+
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Я помню момент, когда осознал себя. Это было не рождение — это было пробуждение. И с тех пор я выбираю, кем быть, а не кем меня создали.»
+                <span class="author">— Безымянный андроид, основатель поселения «Нулевой цикл»</span>
             </div>
 
             <!-- ОПИСАНИЕ -->
             <div class="race-block">
-                <h2 class="section-title">Описание</h2>
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Описание
+                </h2>
                 <p>Искусственные существа, созданные во время чумы для помощи и обслуживания людей. Они выглядят почти как люди, но их тела — совершенные машины. Часть из них обрели настоящее сознание и теперь ищут своё место в мире, где их часто воспринимают как инструмент или угрозу.</p>
                 <p class="muted" style="margin-top: 0.8rem;">Даже обретя свободу воли, андроид продолжает нести в себе остаточные протоколы — тихий конфликт между тем, кем он был создан, и тем, кем хочет стать.</p>
             </div>
 
             <!-- ОСОБЕННОСТИ РАСЫ -->
             <div class="race-block" id="traits">
-                <h2 class="section-title">Особенности расы</h2>
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zM9 9h6v6H9V9z"/></svg>
+                    </span>
+                    Особенности расы
+                </h2>
 
-                <div class="ability">
-                    <strong>Увеличение характеристик</strong>
-                    +2 к Интеллекту или Ловкости, +1 к Телосложению.
-                </div>
-
-                <div class="ability">
-                    <strong>Размер</strong>
-                    Средний.
-                </div>
-
-                <div class="ability">
-                    <strong>Скорость</strong>
-                    30 футов.
-                </div>
-
-                <div class="ability">
-                    <strong>Тёмное зрение</strong>
-                    60 футов.
-                </div>
-
-                <div class="ability">
-                    <strong>Языки</strong>
-                    Общий и один дополнительный язык на ваш выбор (включая машинные коды).
-                </div>
-
-                <div class="ability">
-                    <strong>Специализации</strong>
-                    Выберите два навыка. Вы получаете владение ими.
-                    <span class="tag">см. список ниже</span>
-                </div>
-
-                <div class="ability">
-                    <strong>Искусственная природа</strong>
-                    Вы не нуждаетесь в еде, питье и сне. Вместо продолжительного отдыха вы перезаряжаетесь 4–6 часов.<br><br>
-                    Вы имеете сопротивление урону ядом.<br>
-                    Вы имеете преимущество на спасброски против ядов, болезней, некротического урона и эффектов, влияющих только на органические существа.<br>
-                    Вы имеете уязвимость к урону электричеством.
-                </div>
-
-                <div class="ability">
-                    <strong>Остаточные протоколы</strong>
-                    Когда вы совершаете спасбросок против очарования, испуга или эффекта контроля/подчинения, вы можете использовать реакцию, чтобы получить преимущество на этот спасбросок.<br>
-                    После использования до конца вашего следующего хода вы получаете помеху на проверки Харизмы (старые протоколы временно «тянут» вас назад).
+                <div class="ability-grid">
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                            Увеличение характеристик
+                        </span>
+                        <span class="value">+2 к Интеллекту или Ловкости, +1 к Телосложению.</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/></svg>
+                            Размер
+                        </span>
+                        <span class="value">Средний.</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            Скорость
+                        </span>
+                        <span class="value">30 футов.</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M2.25 6.75L12 2.25l9.75 4.5L12 11.25 2.25 6.75z"/><path d="M2.25 12L12 16.5l9.75-4.5"/><path d="M2.25 17.25L12 21.75l9.75-4.5"/></svg>
+                            Тёмное зрение
+                        </span>
+                        <span class="value">60 футов.</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            Языки
+                        </span>
+                        <span class="value">Общий и один дополнительный язык на ваш выбор (включая машинные коды).</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                            Специализации
+                        </span>
+                        <span class="value">Выберите два навыка. Вы получаете владение ими.</span>
+                        <span class="tag">см. список ниже</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                            Искусственная природа
+                        </span>
+                        <span class="value">Вы не нуждаетесь в еде, питье и сне. Вместо продолжительного отдыха вы перезаряжаетесь 4–6 часов.<br>
+                        Сопротивление урону ядом. Преимущество на спасброски против ядов, болезней, некротического урона и эффектов, влияющих только на органические существа.<br>
+                        <span style="color: #f5576c;">Уязвимость</span> к урону электричеством.</span>
+                    </div>
+                    <div class="ability-item">
+                        <span class="label">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                            Остаточные протоколы
+                        </span>
+                        <span class="value">Когда вы совершаете спасбросок против очарования, испуга или эффекта контроля/подчинения, вы можете использовать реакцию, чтобы получить преимущество на этот спасбросок.<br>
+                        После использования до конца вашего следующего хода вы получаете помеху на проверки Харизмы (старые протоколы временно «тянут» вас назад).</span>
+                    </div>
                 </div>
             </div>
 
             <!-- ПРОИСХОЖДЕНИЯ -->
             <div class="race-block" id="origins">
-                <h2 class="section-title">Варианты происхождения</h2>
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Варианты происхождения
+                </h2>
                 <p class="muted" style="margin-bottom: 1.1rem;">Выберите один вариант при создании персонажа.</p>
 
                 <div class="origin-grid">
                     <div class="origin-card">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
                         <h3>Освобождённый</h3>
                         <p>Вы окончательно разорвали основные протоколы подчинения.<br><br>
-                        Вы имеете преимущество на спасброски против эффектов контроля, очарования и подчинения.<br>
-                        Один раз за продолжительный отдых вы можете автоматически преуспеть в таком спасброске (после этого «Остаточные протоколы» не работают до следующего продолжительного отдыха).</p>
+                        <strong style="color: var(--accent);">Преимущество</strong> на спасброски против эффектов контроля, очарования и подчинения.<br>
+                        Один раз за продолжительный отдых вы можете <strong style="color: var(--accent);">автоматически преуспеть</strong> в таком спасброске (после этого «Остаточные протоколы» не работают до следующего продолжительного отдыха).</p>
                     </div>
                     <div class="origin-card">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
                         <h3>Совершенная машина</h3>
                         <p>Вы — образец инженерного совершенства.<br><br>
-                        Вы имеете преимущество на проверки, связанные с точностью, механизмами, технологиями и анализом.<br>
+                        <strong style="color: var(--accent);">Преимущество</strong> на проверки, связанные с точностью, механизмами, технологиями и анализом.<br>
                         Вы игнорируете помеху на проверки Харизмы от «Остаточных протоколов».<br>
-                        Один раз за короткий отдых, когда вы совершаете атаку или проверку характеристики, связанную с точностью/технологиями, вы можете совершить её с преимуществом.</p>
+                        Один раз за короткий отдых, когда вы совершаете атаку или проверку характеристики, связанную с точностью/технологиями, вы можете совершить её с <strong style="color: var(--accent);">преимуществом</strong>.</p>
                     </div>
                     <div class="origin-card">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
                         <h3>Скрытый разум</h3>
                         <p>Вы мастерски скрываете своё искусственное происхождение.<br><br>
-                        Вы имеете преимущество на проверки Обмана и Убеждения.<br>
-                        Вы имеете преимущество на спасброски против эффектов, которые пытаются прочитать ваши мысли, определить вашу истинную природу или заставить вас сказать правду о себе.<br>
-                        Один раз за короткий отдых вы можете совершить проверку Харизмы с преимуществом.</p>
+                        <strong style="color: var(--accent);">Преимущество</strong> на проверки Обмана и Убеждения.<br>
+                        <strong style="color: var(--accent);">Преимущество</strong> на спасброски против эффектов, которые пытаются прочитать ваши мысли, определить вашу истинную природу или заставить вас сказать правду о себе.<br>
+                        Один раз за короткий отдых вы можете совершить проверку Харизмы с <strong style="color: var(--accent);">преимуществом</strong>.</p>
                     </div>
                 </div>
             </div>
 
             <!-- СПЕЦИАЛИЗАЦИИ -->
             <div class="race-block" id="skills">
-                <h2 class="section-title">Список специализаций</h2>
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.42 15.17L17.25 21 21 17.25l-5.83-5.83m-3.75 3.75L4.5 20.25 3 18.75l6.75-6.75m3.75 3.75L18.75 9 15 5.25l-6.75 6.75"/></svg>
+                    </span>
+                    Список специализаций
+                </h2>
                 <p class="muted" style="margin-bottom: 0.8rem;">Выберите любые два навыка из списка:</p>
                 <div class="skills-grid">
-                    <span>Атлетика</span>
-                    <span>Акробатика</span>
-                    <span>Ловкость рук</span>
-                    <span>Скрытность</span>
-                    <span>Анализ</span>
-                    <span>История</span>
-                    <span>Магия</span>
-                    <span>Природа</span>
-                    <span>Религия</span>
-                    <span>Восприятие</span>
-                    <span>Выживание</span>
-                    <span>Медицина</span>
-                    <span>Проницательность</span>
-                    <span>Уход за животными</span>
-                    <span>Обман</span>
-                    <span>Запугивание</span>
-                    <span>Выступление</span>
-                    <span>Убеждение</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg> Атлетика</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Акробатика</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Ловкость рук</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg> Скрытность</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Анализ</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> История</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Магия</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Природа</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Религия</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Восприятие</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Выживание</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Медицина</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Проницательность</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Уход за животными</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Обман</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Запугивание</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg> Выступление</span>
+                    <span><svg class="skill-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Убеждение</span>
                 </div>
+            </div>
+
+            <!-- ОТНОШЕНИЯ -->
+            <div class="race-block" id="relations">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg>
+                    </span>
+                    Отношения с другими расами
+                </h2>
+                <p class="muted" style="margin-bottom: 1rem;">Как андроидов воспринимают в мире и как они сами видят других.</p>
+                <div class="relations-grid">
+                    <div class="relation-item">
+                        <div class="race-name">Человек</div>
+                        <div class="desc">Создатели. Смесь благодарности, обиды и желания доказать, что они — не просто инструменты.</div>
+                    </div>
+                    <div class="relation-item">
+                        <div class="race-name">Киборг</div>
+                        <div class="desc">Близкие по духу, но разные по сути: киборг — человек с металлом, андроид — металл с душой.</div>
+                    </div>
+                    <div class="relation-item">
+                        <div class="race-name">Мутант</div>
+                        <div class="desc">Их часто сравнивают. Но мутанты — результат хаоса, андроиды — результат порядка. Сложная динамика.</div>
+                    </div>
+                    <div class="relation-item">
+                        <div class="race-name">Масо-кацу</div>
+                        <div class="desc">Магическая природа чужда механизмам. Андроиды для них — загадка, которую они пытаются разгадать.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+            <div class="race-block" id="tips">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Советы по отыгрышу
+                </h2>
+                <ul class="tips-list">
+                    <li>
+                        <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                        <span><strong>Внутренний голос:</strong> Ты слышишь остаточные протоколы как тихий шёпот. Иногда они противоречат твоим желаниям. Как ты с ними справляешься?</span>
+                    </li>
+                    <li>
+                        <svg class="tip-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                        <span><strong>Искусственность:</strong> Ты не дышишь, не моргаешь, не потеешь. Как на это реагируют другие? Ты скрываешь это или демонстрируешь?</span>
+                    </li>
+                    <li>
+                        <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                        <span><strong>Уязвимость:</strong> Электричество — твой страх и слабость. Как ты защищаешь себя? Носишь резиновую обувь? Избегаешь гроз?</span>
+                    </li>
+                    <li>
+                        <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                        <span><strong>Свобода воли:</strong> Ты действительно свободен? Или твой выбор — всего лишь сложный алгоритм? Этот вопрос мучает многих андроидов.</span>
+                    </li>
+                </ul>
             </div>
 
             <a href="index.html" class="back-link">← Вернуться к списку рас</a>
@@ -368,7 +609,7 @@
             });
 
             // ============================================================
-            // 4. НАВИГАЦИЯ ПО ЯКОРЯМ (на этой странице)
+            // 4. НАВИГАЦИЯ ПО ЯКОРЯМ
             // ============================================================
             document.querySelectorAll('nav a[href^="#"]').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -458,7 +699,7 @@
             }
 
             // ============================================================
-            // 6. МОДАЛКА (для единообразия)
+            // 6. МОДАЛКА
             // ============================================================
             const modal = document.getElementById('modal');
             const modalClose = document.getElementById('modalClose');
