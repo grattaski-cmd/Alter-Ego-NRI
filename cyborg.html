@@ -11,52 +11,176 @@
             --accent: #c9a05f;
             --text: #d4c5a9;
             --border: #3a3024;
+            --muted: #8a7a5f;
+            --darker: #16120d;
         }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
         }
         header {
-            background: #16120d;
-            padding: 2rem 1rem;
+            background: var(--darker);
+            padding: 2.4rem 1.2rem 2rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
-        h1 { color: var(--accent); margin: 0; }
+        header h1 {
+            color: var(--accent);
+            margin: 0;
+            font-size: 2.1rem;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+        header .subtitle {
+            color: var(--muted);
+            margin: 0.55rem 0 0;
+            font-size: 1rem;
+        }
         nav {
-            background: #16120d;
-            padding: 1rem;
+            background: var(--darker);
+            padding: 0.85rem 1rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; }
+        nav a {
+            color: var(--accent);
+            margin: 0 0.9rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        nav a:hover { text-decoration: underline; }
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2.2rem 1.2rem 4rem;
         }
         .card {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 6px;
+            padding: 1.5rem 1.6rem;
+            margin-bottom: 1.4rem;
+            border-radius: 8px;
         }
-        .section-title { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-        .ability { background: #16120d; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent); }
+        .section-title {
+            color: var(--accent);
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.45rem;
+            margin: 0 0 1.1rem;
+            letter-spacing: 0.02em;
+        }
+        .ability {
+            background: var(--darker);
+            padding: 1.05rem 1.2rem;
+            margin: 0.9rem 0;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+        }
+        .ability strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 1.02rem;
+        }
+        .origin-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 700px) {
+            .origin-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        .origin-card {
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 1.15rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .origin-card h3 {
+            color: var(--accent);
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+        }
+        .origin-card p {
+            margin: 0;
+            font-size: 0.93rem;
+            flex-grow: 1;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem 1.5rem;
+            margin: 0.6rem 0 0;
+            font-size: 0.95rem;
+        }
+        @media (min-width: 560px) {
+            .skills-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        .skills-grid span {
+            padding: 0.2rem 0;
+        }
+        .muted {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: #2c1e14;
+            color: var(--accent);
+            padding: 0.12rem 0.45rem;
+            border-radius: 3px;
+            font-size: 0.78rem;
+            margin-left: 0.35rem;
+            letter-spacing: 0.02em;
+        }
+        ul {
+            padding-left: 1.25rem;
+            margin: 0.4rem 0;
+        }
+        li { margin-bottom: 0.3rem; }
+        .back-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 1.8rem 1rem;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Киборг / Аугментированный (Augmented Human)</h1>
-        <p style="color:#8a7a5f; margin:0.5rem 0 0;">Раса • Справочник по Альтер-Эго</p>
+        <h1>КИБОРГ</h1>
+        <p class="subtitle">Раса • Аугментация • Модули</p>
     </header>
 
     <nav>
         <a href="index.html">← Назад к справочнику</a>
+        <a href="#traits">Особенности</a>
+        <a href="#origins">Происхождения</a>
+        <a href="#skills">Специализации</a>
     </nav>
 
     <div class="container">
@@ -64,83 +188,120 @@
         <div class="card">
             <h2 class="section-title">Описание</h2>
             <p>Люди, которые усилили себя кибернетикой и магией, чтобы выжить в мире чумы. Они сильнее, точнее и выносливее обычных людей, но их тело — это постоянная смесь плоти и металла, требующая ухода и обслуживания.</p>
+            <p class="muted" style="margin-top: 0.8rem;">Киборг — это не машина и не человек. Это человек, который решил пересобрать себя, чтобы не сломаться.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="traits">
             <h2 class="section-title">Особенности расы</h2>
-            
+
             <div class="ability">
-                <strong>Увеличение характеристик.</strong><br>
+                <strong>Увеличение характеристик</strong>
                 +2 к Интеллекту или Ловкости, +1 к Телосложению.
             </div>
-            
+
             <div class="ability">
-                <strong>Размер.</strong> Средний.<br>
-                <strong>Скорость.</strong> 30 футов.
+                <strong>Размер</strong>
+                Средний.
             </div>
-            
+
             <div class="ability">
-                <strong>Кибернетические улучшения.</strong><br>
+                <strong>Скорость</strong>
+                30 футов.
+            </div>
+
+            <div class="ability">
+                <strong>Языки</strong>
+                Общий и один дополнительный язык на ваш выбор (включая машинные коды).
+            </div>
+
+            <div class="ability">
+                <strong>Специализации</strong>
+                Выберите два навыка. Вы получаете владение ими.
+                <span class="tag">см. список ниже</span>
+            </div>
+
+            <div class="ability">
+                <strong>Кибернетические улучшения</strong>
                 Вы имеете тёмное зрение 60 футов и преимущество на проверки, связанные с техникой, хакингом или точными действиями.
             </div>
-            
+
             <div class="ability">
-                <strong>Модульная конструкция.</strong><br>
-                Один раз за длинный отдых вы можете перераспределить одно владение или получить временный бонус +1 к проверке, связанной с технологиями/точностью.
+                <strong>Кибер-резистентность</strong>
+                Вы имеете сопротивление одному типу урона на выбор при создании (электрический, некротический, яд и т.д.).<br>
+                Вы имеете уязвимость к урону электричеством.
             </div>
-            
+
             <div class="ability">
-                <strong>Кибер-резистентность.</strong><br>
-                Сопротивление одному типу урона на выбор при создании (электрический, некротический, яд и т.д.).
+                <strong>Модульные системы</strong>
+                У вас есть два модуля. Во время продолжительного отдыха вы можете перенастроить один или оба модуля, выбрав из следующего списка (каждый модуль даёт отдельный бонус):
+                <ul>
+                    <li>+1 к КД</li>
+                    <li>Сопротивление одному типу урона (заменяет базовое сопротивление)</li>
+                    <li>Преимущество на один навык</li>
+                    <li>Скорость увеличивается на 10 футов</li>
+                    <li>Тёмное зрение 120 футов</li>
+                    <li>Владение одним инструментом или дополнительным языком</li>
+                </ul>
+                Модули действуют до следующего продолжительного отдыха.
             </div>
-            
+
             <div class="ability">
-                <strong>Языки.</strong><br>
-                Общий + один дополнительный язык (включая машинные коды).
+                <strong>Требует обслуживания</strong>
+                Если во время продолжительного отдыха вы не потратите хотя бы 30 минут на обслуживание имплантов, до следующего продолжительного отдыха вы получаете помеху на проверки Ловкости и Интеллекта.
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="origins">
             <h2 class="section-title">Варианты происхождения</h2>
-            <p><strong>Выберите один вариант при создании персонажа:</strong></p>
-            
-            <div class="ability">
-                <strong>Боевой модуль</strong><br>
-                Вы получаете владение одним видом простого или воинского оружия (или огнестрельным). Один раз за короткий отдых можете получить преимущество на одну атаку оружием.
-            </div>
-            
-            <div class="ability">
-                <strong>Интегрированные системы</strong><br>
-                Вы имеете преимущество на спасброски против ядов, болезней и эффектов, влияющих на органику.
-            </div>
-            
-            <div class="ability">
-                <strong>Саморемонт</strong><br>
-                Когда вы заканчиваете короткий отдых, вы восстанавливаете количество хитов, равное вашему уровню + модификатору Телосложения.
+            <p class="muted" style="margin-bottom: 1.1rem;">Выберите один вариант при создании персонажа.</p>
+
+            <div class="origin-grid">
+                <div class="origin-card">
+                    <h3>Боевой модуль</h3>
+                    <p>Вы получаете владение одним видом простого или воинского оружия (или огнестрельным).<br>
+                    Один раз за короткий отдых вы можете получить преимущество на одну атаку этим оружием.</p>
+                </div>
+                <div class="origin-card">
+                    <h3>Интегрированные системы</h3>
+                    <p>Вы имеете преимущество на спасброски против ядов, болезней и эффектов, влияющих на органику.</p>
+                </div>
+                <div class="origin-card">
+                    <h3>Саморемонт</h3>
+                    <p>Когда вы заканчиваете короткий отдых, вы восстанавливаете количество хитов, равное вашему уровню + модификатору Телосложения.</p>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title">Специализации</h2>
-            <p><strong>Выберите 2 специализации при создании персонажа:</strong></p>
-            
-            <ul style="columns: 2; gap: 2rem; padding-left: 1.2rem;">
-                <li>Атлетика</li>
-                <li>Акробатика</li>
-                <li>Скрытность</li>
-                <li>Ловкость рук</li>
-                <li>Прониц-ть</li>
-                <li>Анализ</li>
-                <li>Медицина</li>
-                <li>Восприятие</li>
-                <li>Выживание</li>
-                <li>История</li>
-                <li>Запугивание</li>
-                <li>Обман</li>
-                <li>Убеждение</li>
-            </ul>
+        <div class="card" id="skills">
+            <h2 class="section-title">Список специализаций</h2>
+            <p class="muted" style="margin-bottom: 0.8rem;">Выберите любые два навыка из списка:</p>
+            <div class="skills-grid">
+                <span>Атлетика</span>
+                <span>Акробатика</span>
+                <span>Ловкость рук</span>
+                <span>Скрытность</span>
+                <span>Анализ</span>
+                <span>История</span>
+                <span>Магия</span>
+                <span>Природа</span>
+                <span>Религия</span>
+                <span>Восприятие</span>
+                <span>Выживание</span>
+                <span>Медицина</span>
+                <span>Проницательность</span>
+                <span>Уход за животными</span>
+                <span>Обман</span>
+                <span>Запугивание</span>
+                <span>Выступление</span>
+                <span>Убеждение</span>
+            </div>
         </div>
 
+        <a href="index.html" class="back-link">← Вернуться к списку рас</a>
     </div>
+
+    <footer>
+        Справочник по Альтер-Эго • Киборг
+    </footer>
 </body>
 </html>
