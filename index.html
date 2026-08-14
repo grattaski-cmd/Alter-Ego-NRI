@@ -42,6 +42,26 @@
             color: var(--text);
             line-height: 1.7;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== КАНВАС (фон) ===== */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ===== ВСЁ ОСТАЛЬНОЕ ПОВЕРХ ===== */
+        .content {
+            position: relative;
+            z-index: 1;
         }
 
         /* ===== ШАПКА ===== */
@@ -50,6 +70,7 @@
             padding: 3.6rem 1.5rem 2.8rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(4px);
         }
         header h1 {
             color: var(--accent);
@@ -65,7 +86,7 @@
             letter-spacing: 0.06em;
         }
 
-        /* ===== НАВИГАЦИЯ (только якоря) ===== */
+        /* ===== НАВИГАЦИЯ (все ссылки) ===== */
         nav {
             background: var(--bg-nav);
             padding: 0.7rem 1.5rem;
@@ -112,33 +133,31 @@
             padding: 2.6rem 1.5rem 4rem;
         }
 
-        /* ===== ФИЛЬТРЫ ===== */
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
+        /* ===== ПОИСК ===== */
+        .search-wrap {
             margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
         }
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.4rem 1.2rem;
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem 1.5rem;
             border-radius: 60px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
         }
-        .filter-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+        .search-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
         }
-        .filter-btn.active {
-            background: var(--accent);
+        .search-input:focus {
             border-color: var(--accent);
-            color: #fff;
+            box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
         /* ===== СЕКЦИИ ===== */
@@ -293,7 +312,7 @@
             border-top: 1px solid var(--border);
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО (доп. фишка) ===== */
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -360,6 +379,7 @@
             nav { gap: 0.5rem 1.2rem; }
             .grid { grid-template-columns: 1fr; }
             .theme-toggle { width: 44px; height: 44px; font-size: 22px; bottom: 16px; right: 16px; }
+            .search-input { max-width: 100%; }
         }
         @media (max-width: 480px) {
             header h1 { font-size: 1.6rem; }
@@ -367,232 +387,154 @@
     </style>
 </head>
 <body>
-    <!-- ===== ШАПКА ===== -->
-    <header>
-        <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
-    </header>
 
-    <!-- ===== НАВИГАЦИЯ (все разделы) ===== -->
-    <nav>
-        <a href="#section-races">Расы</a>
-        <a href="#section-classes">Гештальт</a>
-        <a href="#section-lore">Лор</a>
-        <a href="#section-traits">Черты</a>
-        <a href="#section-backstories">Предыстории</a>
-        <a href="#section-rp">Отыгрыш</a>
-    </nav>
+    <!-- ===== КАНВАС ДЛЯ ФОНА ===== -->
+    <canvas id="particlesCanvas"></canvas>
 
     <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
-    <div class="container">
+    <div class="content">
 
-        <!-- ФИЛЬТРЫ (теперь фильтруют все карточки) -->
-        <div class="filters" id="filterButtons">
-            <button class="filter-btn active" data-filter="all">Все</button>
-            <button class="filter-btn" data-filter="race">Расы</button>
-            <button class="filter-btn" data-filter="class">Гештальт</button>
-            <button class="filter-btn" data-filter="lore">Лор</button>
-            <button class="filter-btn" data-filter="trait">Черты</button>
-            <button class="filter-btn" data-filter="backstory">Предыстории</button>
-            <button class="filter-btn" data-filter="rp">Отыгрыш</button>
+        <!-- ШАПКА -->
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
+        </header>
+
+        <!-- НАВИГАЦИЯ (все разделы) -->
+        <nav>
+            <a href="#section-races">Расы</a>
+            <a href="#section-classes">Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <!-- ПОИСК -->
+            <div class="search-wrap">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
+            </div>
+
+            <!-- РАСЫ -->
+            <section id="section-races" class="section">
+                <h2 class="section-title">Расы</h2>
+                <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
+                <div class="grid" id="raceGrid">
+                    <div class="card" data-category="race">
+                        <span class="tag">Гибкость</span>
+                        <h3>Человек</h3>
+                        <p>Лучше всех приспосабливается к новым условиям. Основа общества, часто чувствует себя самым уязвимым среди изменённых.</p>
+                        <a href="human.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Стабильность</span>
+                        <h3>Андроид</h3>
+                        <p>Искусственное тело даёт высокую устойчивость и защиту от контроля. Многие до сих пор борются с остаточными протоколами.</p>
+                        <a href="android.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Вампиризм</span>
+                        <h3>Репликант</h3>
+                        <p>Сила и восстановление приходят через боль. Постоянно балансирует на грани поглощения Гештальтом.</p>
+                        <a href="replicant.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Танк</span>
+                        <h3>Мутант</h3>
+                        <p>Тело, искажённое чумой, даёт высокую живучесть. Гротескная внешность пугает и отталкивает.</p>
+                        <a href="mutant.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Информация</span>
+                        <h3>Ремнант</h3>
+                        <p>Обострённое восприятие и способность поддерживать других. Личность почти полностью поглощена Гештальтом.</p>
+                        <a href="echo.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Модули</span>
+                        <h3>Киборг</h3>
+                        <p>Человек, усиливший себя имплантами. Может перенастраивать своё тело под задачу.</p>
+                        <a href="cyborg.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Магия</span>
+                        <h3>Масо-кацу</h3>
+                        <p>Врождённая мана и сильная защита от заклинаний. Пришельцы из мира, принёсшего магию и хлорирование.</p>
+                        <a href="maso-katsu.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Универсал</span>
+                        <h3>Масо-дзин</h3>
+                        <p>Сочетает человеческую гибкость с частицей маны. Потомки Масо-кацу и людей.</p>
+                        <a href="maso-dzin.html">Подробнее →</a>
+                    </div>
+                    <div class="card" data-category="race">
+                        <span class="tag">Мобильность</span>
+                        <h3>Руро</h3>
+                        <p>Маленькие, быстрые и почти летающие. Сыпучие тела и крылатые пончо делают их неуловимыми.</p>
+                        <a href="ruro.html">Подробнее →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ГЕШТАЛЬТ -->
+            <section id="section-classes" class="section">
+                <h2 class="section-title">Альтернативный Гештальт</h2>
+                <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
+                <div class="grid" id="classGrid">
+                    <div class="card" data-category="class">
+                        <span class="tag">Защита</span>
+                        <h3>А. Гештальт U</h3>
+                        <p>Сила через связь с другими. Защищает и поддерживает союзников, рискуя раствориться в них.</p>
+                        <a href="class-geshtalt-u.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Эмоции</span>
+                        <h3>А. Гештальт E</h3>
+                        <p>Чистые чувства становятся оружием. Чем сильнее эмоция — тем мощнее проявление.</p>
+                        <a href="class-geshtalt-e.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Потенциал</span>
+                        <h3>А. Гештальт R</h3>
+                        <p>Сила из того, что так и не случилось. Нереализованные возможности и несбывшиеся мечты.</p>
+                        <a href="class-geshtalt-r.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Травма</span>
+                        <h3>А. Гештальт F</h3>
+                        <p>Прожитая боль становится источником силы. Каждый шрам — это ресурс.</p>
+                        <a href="class-geshtalt-f.html">Перейти к классу →</a>
+                    </div>
+                    <div class="card" data-category="class">
+                        <span class="tag">Раскол</span>
+                        <h3>А. Гештальт M</h3>
+                        <p>Конфликт с самим собой. Две стороны личности борются за контроль.</p>
+                        <a href="class-geshtalt-m.html">Перейти к классу →</a>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
-        <!-- ===== 1. РАСЫ ===== -->
-        <section id="section-races" class="section" data-section="race">
-            <h2 class="section-title">Расы</h2>
-            <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
-            <div class="grid" data-group="race">
-                <div class="card" data-category="race">
-                    <span class="tag">Гибкость</span>
-                    <h3>Человек</h3>
-                    <p>Лучше всех приспосабливается к новым условиям. Основа общества, часто чувствует себя самым уязвимым среди изменённых.</p>
-                    <a href="human.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Стабильность</span>
-                    <h3>Андроид</h3>
-                    <p>Искусственное тело даёт высокую устойчивость и защиту от контроля. Многие до сих пор борются с остаточными протоколами.</p>
-                    <a href="android.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Вампиризм</span>
-                    <h3>Репликант</h3>
-                    <p>Сила и восстановление приходят через боль. Постоянно балансирует на грани поглощения Гештальтом.</p>
-                    <a href="replicant.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Танк</span>
-                    <h3>Мутант</h3>
-                    <p>Тело, искажённое чумой, даёт высокую живучесть. Гротескная внешность пугает и отталкивает.</p>
-                    <a href="mutant.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Информация</span>
-                    <h3>Ремнант</h3>
-                    <p>Обострённое восприятие и способность поддерживать других. Личность почти полностью поглощена Гештальтом.</p>
-                    <a href="echo.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Модули</span>
-                    <h3>Киборг</h3>
-                    <p>Человек, усиливший себя имплантами. Может перенастраивать своё тело под задачу.</p>
-                    <a href="cyborg.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Магия</span>
-                    <h3>Масо-кацу</h3>
-                    <p>Врождённая мана и сильная защита от заклинаний. Пришельцы из мира, принёсшего магию и хлорирование.</p>
-                    <a href="maso-katsu.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Универсал</span>
-                    <h3>Масо-дзин</h3>
-                    <p>Сочетает человеческую гибкость с частицей маны. Потомки Масо-кацу и людей.</p>
-                    <a href="maso-dzin.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="race">
-                    <span class="tag">Мобильность</span>
-                    <h3>Руро</h3>
-                    <p>Маленькие, быстрые и почти летающие. Сыпучие тела и крылатые пончо делают их неуловимыми.</p>
-                    <a href="ruro.html">Подробнее →</a>
-                </div>
+        <!-- ПОДВАЛ -->
+        <footer>Справочник по Альтер-Эго</footer>
+
+        <!-- КНОПКА ТЕМЫ -->
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+
+        <!-- МОДАЛЬНОЕ ОКНО -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
-        </section>
-
-        <!-- ===== 2. ГЕШТАЛЬТ ===== -->
-        <section id="section-classes" class="section" data-section="class">
-            <h2 class="section-title">Альтернативный Гештальт</h2>
-            <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
-            <div class="grid" data-group="class">
-                <div class="card" data-category="class">
-                    <span class="tag">Защита</span>
-                    <h3>А. Гештальт U</h3>
-                    <p>Сила через связь с другими. Защищает и поддерживает союзников, рискуя раствориться в них.</p>
-                    <a href="class-geshtalt-u.html">Перейти к классу →</a>
-                </div>
-                <div class="card" data-category="class">
-                    <span class="tag">Эмоции</span>
-                    <h3>А. Гештальт E</h3>
-                    <p>Чистые чувства становятся оружием. Чем сильнее эмоция — тем мощнее проявление.</p>
-                    <a href="class-geshtalt-e.html">Перейти к классу →</a>
-                </div>
-                <div class="card" data-category="class">
-                    <span class="tag">Потенциал</span>
-                    <h3>А. Гештальт R</h3>
-                    <p>Сила из того, что так и не случилось. Нереализованные возможности и несбывшиеся мечты.</p>
-                    <a href="class-geshtalt-r.html">Перейти к классу →</a>
-                </div>
-                <div class="card" data-category="class">
-                    <span class="tag">Травма</span>
-                    <h3>А. Гештальт F</h3>
-                    <p>Прожитая боль становится источником силы. Каждый шрам — это ресурс.</p>
-                    <a href="class-geshtalt-f.html">Перейти к классу →</a>
-                </div>
-                <div class="card" data-category="class">
-                    <span class="tag">Раскол</span>
-                    <h3>А. Гештальт M</h3>
-                    <p>Конфликт с самим собой. Две стороны личности борются за контроль.</p>
-                    <a href="class-geshtalt-m.html">Перейти к классу →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== 3. ЛОР ===== -->
-        <section id="section-lore" class="section" data-section="lore">
-            <h2 class="section-title">Лор</h2>
-            <p class="section-desc">История мира, ключевые события и фракции.</p>
-            <div class="grid" data-group="lore">
-                <div class="card" data-category="lore">
-                    <span class="tag">История</span>
-                    <h3>Великий Раскол</h3>
-                    <p>Катаклизм, разделивший мир на изолированные зоны. Технологии смешались с магией.</p>
-                    <a href="lore-great-split.html">Читать →</a>
-                </div>
-                <div class="card" data-category="lore">
-                    <span class="tag">Фракции</span>
-                    <h3>Орден Теней</h3>
-                    <p>Тайное общество, контролирующее потоки Гештальта. Их цель — стабилизация реальности.</p>
-                    <a href="lore-order.html">Читать →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== 4. ЧЕРТЫ ===== -->
-        <section id="section-traits" class="section" data-section="trait">
-            <h2 class="section-title">Черты</h2>
-            <p class="section-desc">Особенности, усиливающие персонажа.</p>
-            <div class="grid" data-group="trait">
-                <div class="card" data-category="trait">
-                    <span class="tag">Физические</span>
-                    <h3>Железная кожа</h3>
-                    <p>Снижает физический урон на 20%. Требует высокого уровня Выносливости.</p>
-                    <a href="trait-iron-skin.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="trait">
-                    <span class="tag">Ментальные</span>
-                    <h3>Ясный разум</h3>
-                    <p>Устойчивость к ментальным атакам и контроль эмоций.</p>
-                    <a href="trait-clear-mind.html">Подробнее →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== 5. ПРЕДЫСТОРИИ ===== -->
-        <section id="section-backstories" class="section" data-section="backstory">
-            <h2 class="section-title">Предыстории</h2>
-            <p class="section-desc">Откуда пришёл твой герой.</p>
-            <div class="grid" data-group="backstory">
-                <div class="card" data-category="backstory">
-                    <span class="tag">Беглец</span>
-                    <h3>Изгнанник из клана</h3>
-                    <p>Ты был изгнан за нарушение традиций. Теперь ищешь новый дом.</p>
-                    <a href="backstory-exile.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="backstory">
-                    <span class="tag">Искатель</span>
-                    <h3>Охотник за артефактами</h3>
-                    <p>Ты ищешь древние реликвии, чтобы восстановить утраченные технологии.</p>
-                    <a href="backstory-hunter.html">Подробнее →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== 6. ОТЫГРЫШ ===== -->
-        <section id="section-rp" class="section" data-section="rp">
-            <h2 class="section-title">Отыгрыш</h2>
-            <p class="section-desc">Советы по игре за персонажа.</p>
-            <div class="grid" data-group="rp">
-                <div class="card" data-category="rp">
-                    <span class="tag">Роль</span>
-                    <h3>Лидер группы</h3>
-                    <p>Как принимать решения и мотивировать союзников в постапокалипсисе.</p>
-                    <a href="rp-leader.html">Подробнее →</a>
-                </div>
-                <div class="card" data-category="rp">
-                    <span class="tag">Эмоции</span>
-                    <h3>Внутренний конфликт</h3>
-                    <p>Как отыгрывать борьбу с Гештальтом внутри себя.</p>
-                    <a href="rp-conflict.html">Подробнее →</a>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- ===== ПОДВАЛ ===== -->
-    <footer>Справочник по Альтер-Эго</footer>
-
-    <!-- ===== КНОПКА ТЕМЫ ===== -->
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-
-    <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-box">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <h3 id="modalTitle">Заголовок</h3>
-            <p id="modalDesc">Описание</p>
-            <span class="tag" id="modalTag">Тег</span>
         </div>
+
     </div>
 
     <!-- ===== СКРИПТЫ ===== -->
@@ -610,53 +552,38 @@
                 localStorage.setItem('theme', isLight ? 'light' : 'dark');
             });
 
-            // 2. Фильтрация (работает для всех карточек)
-            const filterBtns = document.querySelectorAll('.filter-btn');
+            // 2. Поиск (фильтрация карточек)
+            const searchInput = document.getElementById('searchInput');
             const allCards = document.querySelectorAll('.card');
 
-            function applyFilter(filter) {
+            function filterCards(query) {
+                const lowerQuery = query.toLowerCase().trim();
                 allCards.forEach(card => {
-                    const category = card.dataset.category;
-                    if (filter === 'all' || category === filter) {
+                    const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+                    const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
+                    const tag = card.querySelector('.tag')?.textContent?.toLowerCase() || '';
+                    const match = title.includes(lowerQuery) || desc.includes(lowerQuery) || tag.includes(lowerQuery);
+                    if (lowerQuery === '' || match) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
-                // перезапускаем анимацию для видимых
+                // Перезапускаем анимацию для видимых
                 observeCards();
             }
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    applyFilter(btn.dataset.filter);
-                });
+            searchInput.addEventListener('input', (e) => {
+                filterCards(e.target.value);
             });
 
-            // 3. Навигация по якорям + фильтрация при клике
-            document.querySelectorAll('nav a').forEach(link => {
+            // 3. Навигация по якорям (для Рас и Гештальта)
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const targetId = link.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
                     if (targetSection) {
-                        // Определяем категорию по секции
-                        const section = targetSection.closest('.section');
-                        if (section) {
-                            const category = section.dataset.section;
-                            // Активируем соответствующий фильтр
-                            const filterBtn = document.querySelector(`.filter-btn[data-filter="${category}"]`);
-                            if (filterBtn) {
-                                filterBtns.forEach(b => b.classList.remove('active'));
-                                filterBtn.classList.add('active');
-                                applyFilter(category);
-                            } else {
-                                // если нет кнопки для этой секции (например, "все")
-                                applyFilter('all');
-                            }
-                        }
                         targetSection.scrollIntoView({ behavior: 'smooth' });
                     }
                 });
@@ -689,7 +616,7 @@
             window.addEventListener('load', observeCards);
             window.addEventListener('resize', observeCards);
 
-            // 5. Модальное окно (дополнительная фишка)
+            // 5. Модальное окно
             const modal = document.getElementById('modal');
             const modalClose = document.getElementById('modalClose');
             const modalTitle = document.getElementById('modalTitle');
@@ -698,7 +625,6 @@
 
             document.querySelectorAll('.card').forEach(card => {
                 card.addEventListener('click', (e) => {
-                    // Не открываем, если кликнули по ссылке внутри
                     if (e.target.tagName === 'A') return;
                     const title = card.querySelector('h3')?.textContent || 'Без названия';
                     const desc = card.querySelector('p')?.textContent || 'Нет описания';
@@ -717,6 +643,63 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') modal.classList.remove('active');
             });
+
+            // 6. Анимированный фон (песчаные частицы)
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const PARTICLE_COUNT = 80;
+
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 3 + 1.5;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.1;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    // Ветерок слева направо
+                    this.x += 0.08;
+                    if (this.x > width + 20) this.x = -20;
+                    if (this.y > height + 20) this.y = -20;
+                    if (this.y < -20) this.y = height + 20;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
         })();
     </script>
 </body>
