@@ -4,101 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>А. Гештальт M — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: #16120d;
-            padding: 2.2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ ГЕШТАЛЬТ M ===== */
+
+        .class-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
             color: var(--accent);
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 0.02em;
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
         }
-        header p {
-            color: var(--muted);
-            margin: 0.6rem 0 0;
-            font-size: 1rem;
+        .class-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
-        nav {
-            background: #16120d;
-            padding: 0.9rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
         }
-        nav a {
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
             color: var(--accent);
-            margin: 0 0.9rem;
-            text-decoration: none;
-            font-size: 0.95rem;
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
         }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 980px;
-            margin: 2rem auto;
-            padding: 0 1rem 3rem;
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 1.6rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .section-title {
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
             cursor: pointer;
             user-select: none;
         }
-        .ability {
-            background: #16120d;
-            padding: 1.1rem 1.2rem;
-            margin: 1rem 0;
-            border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
-        }
-        .ability strong { color: var(--accent); }
-        .level-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-        .level-table th, .level-table td {
+
+        .class-block {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 0.55rem 0.7rem;
-            text-align: center;
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
         }
+        .class-block:hover {
+            border-color: var(--accent);
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 1rem;
+        }
+        .collapsible-content.open {
+            display: block;
+        }
+
+        .ability-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        .ability-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .ability-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .ability-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+        .ability-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+        }
+        .ability-item ul li {
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
+        /* ===== ОБЁРТКА ДЛЯ ТАБЛИЦ (ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА) ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0.5rem 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .table-wrapper table {
+            min-width: 600px;
+            width: 100%;
+            margin: 0;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
         .level-table th {
-            background: #2c1e14;
+            background: var(--bg-nav);
+            color: var(--accent);
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .level-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            text-align: center;
+            color: var(--text);
+        }
+        .level-table td:last-child {
+            text-align: left;
+        }
+        .level-table tr:hover td {
+            background: var(--accent-glow);
+        }
+        .level-table .highlight {
             color: var(--accent);
             font-weight: 600;
         }
-        .level-table td:last-child { text-align: left; }
+
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -106,510 +190,1032 @@
             margin-bottom: 1.2rem;
         }
         .tab-button {
-            padding: 0.55rem 1rem;
-            background: #2c1e14;
+            padding: 0.5rem 1rem;
+            background: var(--bg-nav);
             border: 1px solid var(--border);
-            color: var(--accent);
+            color: var(--text-muted);
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: background 0.15s;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            font-family: inherit;
+            flex-shrink: 0;
         }
-        .tab-button:hover { background: #3a2a1c; }
+        .tab-button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
         .tab-button.active {
             background: var(--accent);
-            color: #0f0c08;
+            color: #fff;
             border-color: var(--accent);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .subgroup-title {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 2.2rem 0 1rem;
             font-weight: 600;
         }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .collapsible-content { display: none; }
-        .collapsible-content.open { display: block; }
-        ul { padding-left: 1.3rem; }
-        li { margin-bottom: 0.35rem; }
-        .muted { color: var(--muted); font-size: 0.92rem; }
-        table.scales {
+
+        /* Таблица Весов */
+        .scales-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0.8rem 0;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
+            min-width: 400px;
         }
-        table.scales th, table.scales td {
-            border: 1px solid var(--border);
-            padding: 0.45rem 0.6rem;
-            text-align: left;
-        }
-        table.scales th {
-            background: #2c1e14;
+        .scales-table th {
+            background: var(--bg-nav);
             color: var(--accent);
+            font-weight: 600;
+            padding: 0.4rem 0.6rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .tab-button { padding: 0.45rem 0.7rem; font-size: 0.82rem; }
+        .scales-table td {
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+        .scales-table tr:hover td {
+            background: var(--accent-glow);
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 700px) {
+            .class-title {
+                font-size: 1.6rem !important;
+            }
+            .class-title span {
+                font-size: 1.6rem !important;
+            }
+            .class-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+
+            .class-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .table-wrapper table {
+                min-width: 500px;
+                font-size: 0.8rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.4rem 0.5rem;
+            }
+            .tab-button {
+                font-size: 0.78rem;
+                padding: 0.35rem 0.7rem;
+            }
+            .ability-item {
+                padding: 0.6rem 0.8rem;
+            }
+            .scales-table {
+                font-size: 0.75rem;
+                min-width: 350px;
+            }
+            .scales-table th,
+            .scales-table td {
+                padding: 0.3rem 0.4rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .class-title {
+                font-size: 1.3rem !important;
+            }
+            .class-title span {
+                font-size: 1.3rem !important;
+            }
+            .class-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
+            .table-wrapper table {
+                min-width: 400px;
+                font-size: 0.7rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.3rem 0.3rem;
+            }
+            .tab-button {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
+            .ability-item {
+                padding: 0.5rem 0.6rem;
+            }
+            .ability-item .value {
+                font-size: 0.85rem;
+            }
+            .scales-table {
+                font-size: 0.65rem;
+                min-width: 300px;
+            }
+            .scales-table th,
+            .scales-table td {
+                padding: 0.2rem 0.3rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>А. Гештальт M</h1>
-        <p>Класс • Диссоциация • Конфликт с собой • Весы</p>
-    </header>
 
-    <nav>
-        <a href="index.html">← К справочнику</a>
-        <a href="#base">Основы</a>
-        <a href="#scales">Весы</a>
-        <a href="#subclasses">Подклассы</a>
-        <a href="#dissociation">Диссоциация</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <!-- ОСНОВЫ -->
-        <div class="card" id="base">
-            <h2 class="section-title">▼ Основные характеристики</h2>
-            <div class="collapsible-content open">
-                <p><strong>Хит-дай:</strong> 1d8<br>
-                <strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения<br>
-                <strong>Хиты на следующих уровнях:</strong> 1d8 (или 5) + модификатор Телосложения</p>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+            <!-- подзаголовок убран по просьбе -->
+        </header>
 
-                <p><strong>Владения</strong><br>
-                <strong>Броня:</strong> лёгкая, средняя<br>
-                <strong>Оружие:</strong> простое оружие, воинское оружие<br>
-                <strong>Спасброски:</strong> Мудрость, Харизма<br>
-                <strong>Навыки:</strong> выберите три из: Проницательность, Обман, Убеждение, Запугивание, Восприятие, История</p>
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
 
-                <p><strong>Снаряжение:</strong> средняя или лёгкая броня, оружие, фокус (предмет, символизирующий внутренний раскол).</p>
+        <div class="container">
+
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.2rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.6rem" height="1.6rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        А. Гештальт M
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Класс • Диссоциация • Конфликт с собой • Весы</p>
             </div>
-        </div>
 
-        <!-- ТАБЛИЦА ПРОГРЕССИИ -->
-        <div class="card">
-            <h2 class="section-title">▼ Таблица прогрессии</h2>
-            <div class="collapsible-content open">
-                <table class="level-table">
-                    <thead>
-                        <tr>
-                            <th>Ур.</th>
-                            <th>Бонус<br>мастерства</th>
-                            <th>Диссоциация</th>
-                            <th>Особенности</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td>+2</td><td>4</td><td>Проявление Раскола, Весы, Диссоциация</td></tr>
-                        <tr><td>2</td><td>+2</td><td>4</td><td>Осознание Раскола</td></tr>
-                        <tr><td>3</td><td>+2</td><td>4</td><td>—</td></tr>
-                        <tr><td>4</td><td>+2</td><td>4</td><td>Увеличение характеристик, <strong>Подкласс</strong></td></tr>
-                        <tr><td>5</td><td>+3</td><td>5</td><td>Дополнительная атака</td></tr>
-                        <tr><td>6</td><td>+3</td><td>5</td><td>—</td></tr>
-                        <tr><td>7</td><td>+3</td><td>5</td><td>Глубокий Перекос, <strong>Подкласс</strong></td></tr>
-                        <tr><td>8</td><td>+3</td><td>5</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>9</td><td>+4</td><td>6</td><td>—</td></tr>
-                        <tr><td>10</td><td>+4</td><td>6</td><td>—</td></tr>
-                        <tr><td>11</td><td>+4</td><td>6</td><td>Двойное Напряжение, <strong>Подкласс</strong></td></tr>
-                        <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
-                        <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
-                        <tr><td>15</td><td>+5</td><td>7</td><td>Контролируемый Раскол, <strong>Подкласс</strong></td></tr>
-                        <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
-                        <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
-                        <tr><td>19</td><td>+6</td><td>8</td><td><strong>Апофеоз подкласса</strong></td></tr>
-                        <tr><td>20</td><td>+6</td><td>11</td><td>Апофеоз Раскола</td></tr>
-                    </tbody>
-                </table>
-                <p class="muted">Максимум Диссоциации = бонус мастерства + 2. После короткого отдыха восстанавливается 1 Диссоциация.</p>
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Во мне живут двое. Один хочет бежать. Другой — остаться и сражаться. Я не знаю, кто из них настоящий. Но я знаю, что тот, кто выигрывает бой внутри, выигрывает и снаружи.»
+                <span class="author">— Странник, Гештальт M, безликий путник</span>
             </div>
-        </div>
 
-        <!-- ВЕСЫ -->
-        <div class="card" id="scales">
-            <h2 class="section-title">▼ Весы (−3 … +3) — центральная механика</h2>
-            <div class="collapsible-content open">
-                <p>Весы показывают, какая часть тебя сейчас доминирует. Диапазон от <strong>−3</strong> до <strong>+3</strong>.</p>
-
-                <div class="ability">
-                    <strong>Как двигаются Весы</strong><br>
-                    1. <strong>Основной способ</strong> — через способности. Почти каждая значимая способность подкласса при использовании сдвигает Весы на +1 или −1 (указано в описании).<br>
-                    2. <strong>Дополнительный способ</strong> — бонусным действием ты можешь добровольно сдвинуть Весы на 1 пункт в любую сторону.<br>
-                    3. Некоторые способности сдвигают сразу на 2 пункта или ставят Весы на конкретное значение.<br>
-                    4. Нельзя выйти за пределы −3 и +3.<br>
-                    5. После длинного отдыха Весы возвращаются на 0.
-                </div>
-
-                <p class="muted">Из-за того, что способности сами двигают Весы, игрок постоянно должен думать на ход вперёд: «Если я использую эту способность сейчас, в каком состоянии я окажусь на следующем ходу?»</p>
-            </div>
-        </div>
-
-        <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
-        <div class="card">
-            <h2 class="section-title">▼ Основные особенности класса</h2>
-            <div class="collapsible-content open">
-
-                <div class="ability">
-                    <strong>Диссоциация (основной ресурс)</strong><br>
-                    Максимум = бонус мастерства + 2.<br>
-                    Полностью восстанавливается после длинного отдыха.<br>
-                    После короткого отдыха восстанавливается 1 Диссоциация.<br><br>
-                    <strong>При максимальной Диссоциации:</strong><br>
-                    Одна из сторон (в зависимости от текущего положения Весов или выбора игрока) полностью перехватывает контроль на 1 минуту. Ты получаешь мощный выброс силы этой стороны и серьёзные штрафы. После окончания контроля Диссоциация сбрасывается до 0, и ты получаешь 1 уровень истощения (или аналог по решению ведущего).
-                </div>
-
-                <div class="ability">
-                    <strong>1 уровень — Проявление Раскола</strong><br>
-                    Бонусным действием потрать 1 Диссоциацию, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Диссоциацию.<br><br>
-                    <strong>Внутренний режим:</strong> одна из сторон берёт верх над тобой. Эффекты зависят от положения Весов (конкретные бонусы дают подклассы).<br>
-                    <strong>Внешний режим:</strong> конфликт проявляется снаружи в виде проекции. Проекция отражает текущий перекос Весов.
-                </div>
-
-                <div class="ability">
-                    <strong>2 уровень — Осознание Раскола</strong><br>
-                    Преимущество на проверки Проницательности, связанные с внутренними мотивами (своими и чужими).<br>
-                    Один раз за короткий отдых при добровольном смещении Весов бонусным действием можешь сдвинуть их сразу на 2 пункта.
-                </div>
-
-                <div class="ability">
-                    <strong>5 уровень — Дополнительная атака</strong><br>
-                    При действии Атака можешь атаковать дважды.
-                </div>
-
-                <div class="ability">
-                    <strong>7 уровень — Глубокий Перекос</strong><br>
-                    Когда Весы находятся на ±3, ты получаешь дополнительные эффекты (уточняются подклассами).<br>
-                    Стоимость проявления Гештальта снижается на 1 (минимум 0), если Весы не на 0.
-                </div>
-
-                <div class="ability">
-                    <strong>11 уровень — Двойное Напряжение</strong><br>
-                    Один раз за короткий отдых можешь бонусным действием поставить Весы сразу на +3 или −3. Получаешь 2 Диссоциации.<br>
-                    Пока Гештальт проявлен и Весы на крайнем значении, один раз за ход можешь смещать их на 1 пункт бесплатно.
-                </div>
-
-                <div class="ability">
-                    <strong>15 уровень — Контролируемый Раскол</strong><br>
-                    Ты можешь удерживать Весы на ±3 без автоматических штрафов начала хода (обычные смещения по-прежнему работают).<br>
-                    <strong>Выброс</strong> (1/длинный отдых): когда Диссоциация достигает максимума, вместо обычной потери контроля можешь совершить контролируемый Выброс — получить бонусы крайней стороны на 1 минуту без полного перехвата. После этого Весы возвращаются на 0, и ты получаешь 2 Диссоциации.
-                </div>
-
-                <div class="ability">
-                    <strong>20 уровень — Апофеоз Раскола</strong><br>
-                    Максимум Диссоциации +3.<br><br>
-                    <strong>Апофеоз Раскола</strong> (1/длинный отдых, 1 минута)<br>
-                    • Можешь свободно ставить Весы на любое значение от −3 до +3 бонусным действием<br>
-                    • Бонусы обеих крайних сторон частично доступны одновременно (ослабленные)<br>
-                    • Потеря контроля при максимуме Диссоциации больше не накладывает истощение<br>
-                    • Один раз за длительность можешь полностью подавить одну сторону на 1 раунд<br><br>
-                    <strong>Пассивно:</strong> Пока Весы не на 0 — сопротивление психическому урону.
-                </div>
-            </div>
-        </div>
-
-        <!-- ПОДКЛАССЫ -->
-        <div class="card" id="subclasses">
-            <h2 class="section-title">▼ Подклассы</h2>
-            <div class="collapsible-content open">
-                <div class="tabs">
-                    <button class="tab-button active" onclick="openSubTab(event, 'MC')">MC — Две Потребности</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MS')">MS — Тень</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MI')">MI — Ребёнок</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MA')">MA — Самокритика</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MP')">MP — Персона</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MB')">MB — Дереализация</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'MU')">MU — Нереализованность</button>
-                </div>
-
-                <!-- MC -->
-                <div id="MC" class="tab-content active">
-                    <div class="ability">
-                        <strong>4 уровень — Две Личности</strong><br>
-                        Ты определяешь, что означают Свобода и Крепость для персонажа.<br><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>+2 к урону, −2 к КД, скорость +10 футов. 1/ход дополнительная атака бонусным действием. Помеха на спасброски Телосложения.</td></tr>
-                            <tr><td>+2</td><td>+1d6 к урону, −1 к КД, скорость +5 футов. Преимущество на первую атаку после перемещения ≥10 футов.</td></tr>
-                            <tr><td>+1</td><td>+1d4 к урону. Отход бонусным действием.</td></tr>
-                            <tr><td>0</td><td>+1 к КД, сопротивление психическому. При уходе с 0 восстанавливаешь 1d4 хитов.</td></tr>
-                            <tr><td>−1</td><td>+1 к КД. 1/ход атакующий в ближнем бою получает 1d4 психического урона.</td></tr>
-                            <tr><td>−2</td><td>+2 к КД, −1 к урону, скорость −5 футов. Сопротивление одному типу физического урона.</td></tr>
-                            <tr><td>−3</td><td>+3 к КД, −2 к урону, скорость −10 футов. Сопротивление физическому. 1/ход реакцией +2 к КД. Помеха на проверки Ловкости.</td></tr>
-                        </table>
-                        <strong>Вспышка Свободы</strong> (1 Диссоциация, бонусное действие, требует ≥0): +1d6 урона до конца хода. Сдвигает Весы на +1.<br>
-                        <strong>Вспышка Крепости</strong> (1 Диссоциация, бонусное действие, требует ≤0): временные хиты = уровень. Сдвигает Весы на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>7 уровень — Углубление Раскола</strong><br>
-                        <strong>Рывок Наружу</strong> (1 Диссоциация, бонусное действие, ≥+1): перемещение на половину скорости без провоцированных атак + следующая атака с преимуществом. Сдвигает на +1.<br>
-                        <strong>Стена</strong> (1 Диссоциация, реакция, ≤−1): +3 к КД против одной атаки. Если попала — сопротивление урону. Сдвигает на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>11 уровень — Почти Разделение</strong><br>
-                        <strong>Отдать Свободе</strong> (2 Диссоциации, действие): Весы = +3 на 1 минуту, усиленные бонусы. После окончания сдвигаются на −1.<br>
-                        <strong>Отдать Крепости</strong> (2 Диссоциации, действие): Весы = −3 на 1 минуту, усиленные бонусы. После окончания сдвигаются на +1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>15 уровень — Двойной Импульс</strong><br>
-                        1/длинный отдых: резко переключаешь Весы на противоположный край. До конца следующего хода — половина бонусов обеих крайних сторон + 3d8 психического урона вокруг (10 футов). После этого Весы = 0, +2 Диссоциации.
-                    </div>
-
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Раскола</strong><br>
-                        Максимум Диссоциации +2.<br>
-                        1/длинный отдых на 1 минуту: каждая способность может сдвигать Весы дополнительно на 1 пункт; один раз можно получить полные бонусы обеих сторон до конца следующего хода. После окончания Весы = 0.<br>
-                        Пассивно: пока Весы не на 0 — сопротивление психическому урону.
-                    </div>
-                </div>
-
-                <!-- MS -->
-                <div id="MS" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Три Состояния Тени</strong><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>+3 к спасброскам Мудрости и Харизмы, сопротивление психическому. Каждый ход на +3 получаешь 1 Диссоциацию.</td></tr>
-                            <tr><td>+2</td><td>+2 к спасброскам Мудрости, +1d6 урона (излучение/психический).</td></tr>
-                            <tr><td>+1</td><td>+2 к КД. 1/короткий отдых: снять страх или 1 очко механики риска.</td></tr>
-                            <tr><td>0</td><td><strong>Принятие:</strong> +3 к КД, сопротивление психическому, 1/ход переброс спасброска Мудрости или Харизмы.</td></tr>
-                            <tr><td>−1</td><td>+1d6 к урону, скорость +5 футов.</td></tr>
-                            <tr><td>−2</td><td>+1d8 к урону, −1 к КД. Преимущество на атаки, пока есть Диссоциация.</td></tr>
-                            <tr><td>−3</td><td>+2d8 к урону, −2 к КД, скорость +15 футов. Дополнительная атака бонусным действием. Помеха на спасброски Мудрости.</td></tr>
-                        </table>
-                        <strong>Светлое Подавление</strong> (1 Диссоциация, бонусное действие, ≥0): +1d6 светлого/психического урона. Сдвигает на +1.<br>
-                        <strong>Шёпот Тени</strong> (1 Диссоциация, бонусное действие, ≤0): +1d6 урона и скорость +5 футов. Сдвигает на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>7 уровень — Давление и Ярость</strong><br>
-                        Пока ≥+1: 1/ход при уроне цель делает спасбросок Мудрости — помеха на атаки +1d6 психического. Сдвигает на +1.<br>
-                        Пока ≤−1: при попадании 1 Диссоциация → +2d6 урона и временные хиты на половину. Сдвигает на −1.<br>
-                        <strong>Интеграция</strong> (1 Диссоциация, бонусное действие, только на 0): временные хиты = 2×уровень + Харизма. Не сдвигает Весы.
-                    </div>
-
-                    <div class="ability">
-                        <strong>11 уровень — Грань</strong><br>
-                        <strong>Удержание Грани</strong> (2 Диссоциации): Весы = 0 на 1 минуту, бонусы удваиваются, сопротивление двум типам. Смещение стоит +1 Диссоциацию.<br>
-                        <strong>Срыв Подавления</strong> (реакция при 3+ Диссоциации и ≥+1): уходишь на −3 + дополнительный 2d8 урона. После — сдвиг на +1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>15 уровень — Глубокая Тень</strong><br>
-                        <strong>Полное Отрицание</strong> (1/длинный отдых): Весы = +3 на 1 минуту. После — сдвиг на −2.<br>
-                        <strong>Полное Слияние</strong> (1/длинный отдых): Весы = −3 на 1 минуту. После — сдвиг на +1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Тени</strong><br>
-                        Максимум Диссоциации +2.<br>
-                        1/длинный отдых на 1 минуту: на 0 бонусы удваиваются + дополнительное бонусное действие; один раз можно уйти на край и вернуться на 0 без цены.<br>
-                        Пассивно: на 0 — +2 к инициативе и преимущество на Проницательность.
-                    </div>
-                </div>
-
-                <!-- MI -->
-                <div id="MI" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Возрастные Полюса</strong><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>+3 к КД, сопротивление физическому, скорость −10 футов. Реакцией принять урон союзника в 10 футах.</td></tr>
-                            <tr><td>+2</td><td>+2 к КД, сопротивление одному типу физического урона.</td></tr>
-                            <tr><td>+1</td><td>+1 к КД.</td></tr>
-                            <tr><td>0</td><td><strong>Целостность:</strong> +2 к КД, +1 к атакам и урону, сопротивление психическому, 1/ход переброс спасброска.</td></tr>
-                            <tr><td>−1</td><td>Скорость +10 футов, Отход бонусным действием.</td></tr>
-                            <tr><td>−2</td><td>Скорость +15 футов, +1d6 электрического, помеха на атаки по тебе от тех, кого атаковал.</td></tr>
-                            <tr><td>−3</td><td>Скорость +20 футов, +1d8 электрического, преимущество на Ловкость. 1/ход помеха на атаку врага в 30 футах. Помеха на спасброски Телосложения.</td></tr>
-                        </table>
-                        <strong>Бремя</strong> (1 Диссоциация, ≥0): временные хиты = уровень. Сдвигает на +1.<br>
-                        <strong>Искра</strong> (1 Диссоциация, ≤0): скорость +10 футов, следующая атака с преимуществом. Сдвигает на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>7 уровень — Бремя и Искра</strong><br>
-                        <strong>Принять Бремя</strong> (1 Диссоциация, ≥+1): снять состояние с союзника и взять на себя + 1d6 хитов. Сдвигает на +1.<br>
-                        <strong>Детская Искра</strong> (≤−1): при попадании +1d8 электрического и лишение реакции. Сдвигает на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>11 уровень — Глубокая Ответственность / Регрессия</strong><br>
-                        <strong>Принять Всё</strong> (2 Диссоциации): Весы = +3 на 1 минуту (сильный танк). После — сдвиг на −1.<br>
-                        <strong>Детский Порыв</strong> (2 Диссоциации): Весы = −3 на 1 минуту (мобильность + электричество + иллюзия). После — сдвиг на +1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>15 уровень — Возвращение к Себе</strong><br>
-                        1/длинный отдых: Весы = 0 на 1 минуту, бонусы удваиваются, дополнительное бонусное действие. Смещение стоит 2 Диссоциации.
-                    </div>
-
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Возраста</strong><br>
-                        Максимум Диссоциации +2.<br>
-                        1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
-                        Пассивно: на 0 — преимущество на спасброски Мудрости и Харизмы.
-                    </div>
-                </div>
-
-                <!-- MA -->
-                <div id="MA" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Критика и Срыв</strong><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>+2 к атакам, +1d6 урона, скорость −10 футов. Криты наносят +1d6.</td></tr>
-                            <tr><td>+2</td><td>+1 к атакам, +1d4 урона, скорость −5 футов.</td></tr>
-                            <tr><td>+1</td><td>+1 к атакам.</td></tr>
-                            <tr><td>0</td><td>+2 к КД, сопротивление психическому. При смещении можно переместиться на 5 футов.</td></tr>
-                            <tr><td>−1</td><td>Скорость +10 футов. Атаки игнорируют укрытие наполовину.</td></tr>
-                            <tr><td>−2</td><td>Скорость +15 футов, +1d6 урона. 1/ход рикошет на второе существо в 10 футах (половина урона).</td></tr>
-                            <tr><td>−3</td><td>Скорость +20 футов, +1d8 урона. Атаки площадные (5 футов) или рикошетят на двух. Риск задеть союзников.</td></tr>
-                        </table>
-                        <strong>Вспышка Критики</strong> (1 Диссоциация): на плюсе — преимущество на атаку; на минусе — скорость +10 и усиление рикошета. Сдвигает соответственно.
-                    </div>
-
-                    <div class="ability">
-                        <strong>7–19 уровни</strong><br>
-                        Точный Удар (плюс), Хаотический Поток (минус), Дисциплина / Отпустить Контроль, Идеальный Удар / Полный Срыв, Апофеоз Самокритики с свободным выбором +3/0/−3 и усиленными эффектами.
-                    </div>
-                </div>
-
-                <!-- MP -->
-                <div id="MP" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Маска и Суть</strong><br>
-                        Плюс даёт КД и социальные преимущества (Обман, Убеждение, помеха на Проницательность против тебя).<br>
-                        Минус даёт урон, скорость и давление страхом.<br>
-                        <strong>−3 (Сорванная Маска):</strong> +2d6 урона, скорость +20, помеха врагам на атаки и спасброски страха в 15 футах. Длится максимум 2 раунда, каждый ход после первого требует 1 Диссоциацию, иначе сдвигается. После выхода нельзя вернуться на −3 до конца короткого отдыха.
-                    </div>
-
-                    <div class="ability">
-                        <strong>15 уровень — Обнажение Сути</strong><br>
-                        1/длинный отдых: принудительный вход на −3 с усиленными бонусами на 2 раунда.
-                    </div>
-
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Персоны</strong><br>
-                        Максимум Диссоциации +2. Возможность удерживать −3 дольше и усиливать его в рамках Апофеоза.
-                    </div>
-                </div>
-
-                <!-- MB -->
-                <div id="MB" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Связь и Разрыв</strong><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>+2 к атакам, +1 к КД, преимущество на концентрацию. Скорость −5.</td></tr>
-                            <tr><td>0</td><td>Сопротивление психическому, преимущество против очарования/испуга, 1/ход переброс спасброска Мудрости/Харизмы.</td></tr>
-                            <tr><td>−3</td><td>Скорость +20. В начале хода тело само перемещается до 15 футов и атакует (может задеть союзника → 1d4 психического тебе).</td></tr>
-                        </table>
-                        Способности сдвигают Весы. На глубоком минусе тело получает дополнительные атаки и перемещения автоматически.
-                    </div>
-
-                    <div class="ability">
-                        <strong>11+ уровни</strong><br>
-                        Полный Контроль (+3), Тело Без Хозяина (−3 с риском для союзников), Точка Наблюдения (0), Апофеоз Разрыва.
-                    </div>
-                </div>
-
-                <!-- MU -->
-                <div id="MU" class="tab-content">
-                    
-
-                    <div class="ability">
-                        <strong>4 уровень — Два Ответа</strong><br>
-                        <table class="scales">
-                            <tr><th>Весы</th><th>Эффект</th></tr>
-                            <tr><td>+3</td><td>Союзники в 10 футах: +1 к КД и 1d4 хитов в начале хода.</td></tr>
-                            <tr><td>+2</td><td>Союзники в 10 футах: +1 к атакам.</td></tr>
-                            <tr><td>+1</td><td>1/ход бонусным действием 1d4 временных хитов союзнику.</td></tr>
-                            <tr><td>0</td><td>+1 к КД, сопротивление психическому. 1/короткий отдых: снять 1 очко механики риска с себя или союзника.</td></tr>
-                            <tr><td>−1</td><td>+1d4 к урону. При попадании восстанавливаешь 1 хит.</td></tr>
-                            <tr><td>−2</td><td>+1d6 к урону. Цель получает −1 к атакам, ты восстанавливаешь 1d4 хитов.</td></tr>
-                            <tr><td>−3</td><td>+1d8 к урону. Цель получает помеху на следующую атаку, ты восстанавливаешь половину дополнительного урона.</td></tr>
-                        </table>
-                        <strong>Поддержка</strong> (1 Диссоциация, ≥0): лечение 1d6 + Харизма. Сдвигает на +1.<br>
-                        <strong>Отъём</strong> (1 Диссоциация, ≤0): +1d6 урона и вампиризм. Сдвигает на −1.
-                    </div>
-
-                    <div class="ability">
-                        <strong>7–19 уровни</strong><br>
-                        Благословение / Проклятие, Свет Нереализованного (+3 аура лечения и баффов), Горечь Нереализованного (−3 сильный вампиризм и дебаффы), Точка Надежды (0), Апофеоз Нереализованного.
+            <!-- ОСНОВЫ -->
+            <div class="class-block" id="base">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Основные характеристики
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Хит-дай</strong>
+                            <span class="value">1d8</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на 1 уровне</strong>
+                            <span class="value">8 + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на следующих уровнях</strong>
+                            <span class="value">1d8 (или 5) + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Броня</strong>
+                            <span class="value">лёгкая, средняя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Оружие</strong>
+                            <span class="value">простое оружие, воинское оружие</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Спасброски</strong>
+                            <span class="value">Мудрость, Харизма</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Навыки</strong>
+                            <span class="value">выберите три из: Проницательность, Обман, Убеждение, Запугивание, Восприятие, История</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Снаряжение</strong>
+                            <span class="value">средняя или лёгкая броня, оружие, фокус (предмет, символизирующий внутренний раскол).</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- ТАБЛИЦА ПРОГРЕССИИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3.75 3v16.5M3.75 3h16.5M3.75 3L21 20.25"/><path d="M6.75 6.75h10.5M6.75 9h7.5M6.75 11.25h4.5"/></svg>
+                    </span>
+                    Таблица прогрессии
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="table-wrapper">
+                        <table class="level-table">
+                            <thead>
+                                <tr>
+                                    <th>Ур.</th>
+                                    <th>Бонус<br>мастерства</th>
+                                    <th>Диссоциация</th>
+                                    <th>Особенности</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>+2</td><td>4</td><td>Проявление Раскола, Весы, Диссоциация</td></tr>
+                                <tr><td>2</td><td>+2</td><td>4</td><td>Осознание Раскола</td></tr>
+                                <tr><td>3</td><td>+2</td><td>4</td><td>—</td></tr>
+                                <tr><td>4</td><td>+2</td><td>4</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>5</td><td>+3</td><td>5</td><td>Дополнительная атака</td></tr>
+                                <tr><td>6</td><td>+3</td><td>5</td><td>—</td></tr>
+                                <tr><td>7</td><td>+3</td><td>5</td><td>Глубокий Перекос, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>8</td><td>+3</td><td>5</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>9</td><td>+4</td><td>6</td><td>—</td></tr>
+                                <tr><td>10</td><td>+4</td><td>6</td><td>—</td></tr>
+                                <tr><td>11</td><td>+4</td><td>6</td><td>Двойное Напряжение, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>12</td><td>+4</td><td>6</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>13</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>14</td><td>+5</td><td>7</td><td>—</td></tr>
+                                <tr><td>15</td><td>+5</td><td>7</td><td>Контролируемый Раскол, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>16</td><td>+5</td><td>7</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>17</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>18</td><td>+6</td><td>8</td><td>—</td></tr>
+                                <tr><td>19</td><td>+6</td><td>8</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                                <tr><td>20</td><td>+6</td><td>11</td><td>Апофеоз Раскола</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="muted">Максимум Диссоциации = бонус мастерства + 2. После короткого отдыха восстанавливается 1 Диссоциация.</p>
+                </div>
+            </div>
+
+            <!-- ВЕСЫ -->
+            <div class="class-block" id="scales">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Весы (−3 … +3) — центральная механика
+                </h2>
+                <div class="collapsible-content open">
+                    <p style="margin-bottom: 1rem;">Весы показывают, какая часть тебя сейчас доминирует. Диапазон от <strong>−3</strong> до <strong>+3</strong>.</p>
+
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Как двигаются Весы</strong>
+                            <div class="value">
+                                1. <strong>Основной способ</strong> — через способности. Почти каждая значимая способность подкласса при использовании сдвигает Весы на +1 или −1 (указано в описании).<br>
+                                2. <strong>Дополнительный способ</strong> — бонусным действием ты можешь добровольно сдвинуть Весы на 1 пункт в любую сторону.<br>
+                                3. Некоторые способности сдвигают сразу на 2 пункта или ставят Весы на конкретное значение.<br>
+                                4. Нельзя выйти за пределы −3 и +3.<br>
+                                5. После длинного отдыха Весы возвращаются на 0.
+                            </div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Важно</strong>
+                            <div class="value">Из-за того, что способности сами двигают Весы, игрок постоянно должен думать на ход вперёд: «Если я использую эту способность сейчас, в каком состоянии я окажусь на следующем ходу?»</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    </span>
+                    Основные особенности класса
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Диссоциация (основной ресурс)</strong>
+                            <div class="value">Максимум = бонус мастерства + 2.<br>
+                            Полностью восстанавливается после длинного отдыха.<br>
+                            После короткого отдыха восстанавливается 1 Диссоциация.<br><br>
+                            <strong>При максимальной Диссоциации:</strong><br>
+                            Одна из сторон (в зависимости от текущего положения Весов или выбора игрока) полностью перехватывает контроль на 1 минуту. Ты получаешь мощный выброс силы этой стороны и серьёзные штрафы. После окончания контроля Диссоциация сбрасывается до 0, и ты получаешь 1 уровень истощения (или аналог по решению ведущего).</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>1 уровень — Проявление Раскола</strong>
+                            <div class="value">Бонусным действием потрать 1 Диссоциацию, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Диссоциацию.<br><br>
+                            <strong>Внутренний режим:</strong> одна из сторон берёт верх над тобой. Эффекты зависят от положения Весов (конкретные бонусы дают подклассы).<br>
+                            <strong>Внешний режим:</strong> конфликт проявляется снаружи в виде проекции. Проекция отражает текущий перекос Весов.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>2 уровень — Осознание Раскола</strong>
+                            <div class="value">Преимущество на проверки Проницательности, связанные с внутренними мотивами (своими и чужими).<br>
+                            Один раз за короткий отдых при добровольном смещении Весов бонусным действием можешь сдвинуть их сразу на 2 пункта.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>5 уровень — Дополнительная атака</strong>
+                            <div class="value">При действии Атака можешь атаковать дважды.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Глубокий Перекос</strong>
+                            <div class="value">Когда Весы находятся на ±3, ты получаешь дополнительные эффекты (уточняются подклассами).<br>
+                            Стоимость проявления Гештальта снижается на 1 (минимум 0), если Весы не на 0.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Двойное Напряжение</strong>
+                            <div class="value">Один раз за короткий отдых можешь бонусным действием поставить Весы сразу на +3 или −3. Получаешь 2 Диссоциации.<br>
+                            Пока Гештальт проявлен и Весы на крайнем значении, один раз за ход можешь смещать их на 1 пункт бесплатно.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Контролируемый Раскол</strong>
+                            <div class="value">Ты можешь удерживать Весы на ±3 без автоматических штрафов начала хода (обычные смещения по-прежнему работают).<br>
+                            <strong>Выброс</strong> (1/длинный отдых): когда Диссоциация достигает максимума, вместо обычной потери контроля можешь совершить контролируемый Выброс — получить бонусы крайней стороны на 1 минуту без полного перехвата. После этого Весы возвращаются на 0, и ты получаешь 2 Диссоциации.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>20 уровень — Апофеоз Раскола</strong>
+                            <div class="value">Максимум Диссоциации +3.<br><br>
+                            <strong>Апофеоз Раскола</strong> (1/длинный отдых, 1 минута)<br>
+                            • Можешь свободно ставить Весы на любое значение от −3 до +3 бонусным действием<br>
+                            • Бонусы обеих крайних сторон частично доступны одновременно (ослабленные)<br>
+                            • Потеря контроля при максимуме Диссоциации больше не накладывает истощение<br>
+                            • Один раз за длительность можешь полностью подавить одну сторону на 1 раунд<br><br>
+                            <strong>Пассивно:</strong> Пока Весы не на 0 — сопротивление психическому урону.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПОДКЛАССЫ -->
+            <div class="class-block" id="subclasses">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Подклассы
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="openSubTab(event, 'MC')">MC — Две Потребности</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MS')">MS — Тень</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MI')">MI — Ребёнок</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MA')">MA — Самокритика</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MP')">MP — Персона</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MB')">MB — Дереализация</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'MU')">MU — Нереализованность</button>
+                    </div>
+
+                    <!-- MC -->
+                    <div id="MC" class="tab-content active">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Две Личности</strong>
+                                <div class="value">Ты определяешь, что означают Свобода и Крепость для персонажа.<br><br>
+                                <div class="table-wrapper">
+                                    <table class="scales-table">
+                                        <thead>
+                                            <tr><th>Весы</th><th>Эффект</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>+3</td><td>+2 к урону, −2 к КД, скорость +10 футов. 1/ход дополнительная атака бонусным действием. Помеха на спасброски Телосложения.</td></tr>
+                                            <tr><td>+2</td><td>+1d6 к урону, −1 к КД, скорость +5 футов. Преимущество на первую атаку после перемещения ≥10 футов.</td></tr>
+                                            <tr><td>+1</td><td>+1d4 к урону. Отход бонусным действием.</td></tr>
+                                            <tr><td>0</td><td>+1 к КД, сопротивление психическому. При уходе с 0 восстанавливаешь 1d4 хитов.</td></tr>
+                                            <tr><td>−1</td><td>+1 к КД. 1/ход атакующий в ближнем бою получает 1d4 психического урона.</td></tr>
+                                            <tr><td>−2</td><td>+2 к КД, −1 к урону, скорость −5 футов. Сопротивление одному типу физического урона.</td></tr>
+                                            <tr><td>−3</td><td>+3 к КД, −2 к урону, скорость −10 футов. Сопротивление физическому. 1/ход реакцией +2 к КД. Помеха на проверки Ловкости.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <strong>Вспышка Свободы</strong> (1 Диссоциация, бонусное действие, требует ≥0): +1d6 урона до конца хода. Сдвигает Весы на +1.<br>
+                                <strong>Вспышка Крепости</strong> (1 Диссоциация, бонусное действие, требует ≤0): временные хиты = уровень. Сдвигает Весы на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Углубление Раскола</strong>
+                                <div class="value"><strong>Рывок Наружу</strong> (1 Диссоциация, бонусное действие, ≥+1): перемещение на половину скорости без провоцированных атак + следующая атака с преимуществом. Сдвигает на +1.<br>
+                                <strong>Стена</strong> (1 Диссоциация, реакция, ≤−1): +3 к КД против одной атаки. Если попала — сопротивление урону. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Почти Разделение</strong>
+                                <div class="value"><strong>Отдать Свободе</strong> (2 Диссоциации, действие): Весы = +3 на 1 минуту, усиленные бонусы. После окончания сдвигаются на −1.<br>
+                                <strong>Отдать Крепости</strong> (2 Диссоциации, действие): Весы = −3 на 1 минуту, усиленные бонусы. После окончания сдвигаются на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Двойной Импульс</strong>
+                                <div class="value">1/длинный отдых: резко переключаешь Весы на противоположный край. До конца следующего хода — половина бонусов обеих крайних сторон + 3d8 психического урона вокруг (10 футов). После этого Весы = 0, +2 Диссоциации.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Раскола</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых на 1 минуту: каждая способность может сдвигать Весы дополнительно на 1 пункт; один раз можно получить полные бонусы обеих сторон до конца следующего хода. После окончания Весы = 0.<br>
+                                Пассивно: пока Весы не на 0 — сопротивление психическому урону.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MS -->
+                    <div id="MS" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Три Состояния Тени</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead>
+                                                <tr><th>Весы</th><th>Эффект</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>+3 к спасброскам Мудрости и Харизмы, сопротивление психическому. Каждый ход на +3 получаешь 1 Диссоциацию.</td></tr>
+                                                <tr><td>+2</td><td>+2 к спасброскам Мудрости, +1d6 урона (излучение/психический).</td></tr>
+                                                <tr><td>+1</td><td>+2 к КД. 1/короткий отдых: снять страх или 1 очко механики риска.</td></tr>
+                                                <tr><td>0</td><td><strong>Принятие:</strong> +3 к КД, сопротивление психическому, 1/ход переброс спасброска Мудрости или Харизмы.</td></tr>
+                                                <tr><td>−1</td><td>+1d6 к урону, скорость +5 футов.</td></tr>
+                                                <tr><td>−2</td><td>+1d8 к урону, −1 к КД. Преимущество на атаки, пока есть Диссоциация.</td></tr>
+                                                <tr><td>−3</td><td>+2d8 к урону, −2 к КД, скорость +15 футов. Дополнительная атака бонусным действием. Помеха на спасброски Мудрости.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Светлое Подавление</strong> (1 Диссоциация, бонусное действие, ≥0): +1d6 светлого/психического урона. Сдвигает на +1.<br>
+                                    <strong>Шёпот Тени</strong> (1 Диссоциация, бонусное действие, ≤0): +1d6 урона и скорость +5 футов. Сдвигает на −1.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Давление и Ярость</strong>
+                                <div class="value">Пока ≥+1: 1/ход при уроне цель делает спасбросок Мудрости — помеха на атаки +1d6 психического. Сдвигает на +1.<br>
+                                Пока ≤−1: при попадании 1 Диссоциация → +2d6 урона и временные хиты на половину. Сдвигает на −1.<br>
+                                <strong>Интеграция</strong> (1 Диссоциация, бонусное действие, только на 0): временные хиты = 2×уровень + Харизма. Не сдвигает Весы.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Грань</strong>
+                                <div class="value"><strong>Удержание Грани</strong> (2 Диссоциации): Весы = 0 на 1 минуту, бонусы удваиваются, сопротивление двум типам. Смещение стоит +1 Диссоциацию.<br>
+                                <strong>Срыв Подавления</strong> (реакция при 3+ Диссоциации и ≥+1): уходишь на −3 + дополнительный 2d8 урона. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Глубокая Тень</strong>
+                                <div class="value"><strong>Полное Отрицание</strong> (1/длинный отдых): Весы = +3 на 1 минуту. После — сдвиг на −2.<br>
+                                <strong>Полное Слияние</strong> (1/длинный отдых): Весы = −3 на 1 минуту. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Тени</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых на 1 минуту: на 0 бонусы удваиваются + дополнительное бонусное действие; один раз можно уйти на край и вернуться на 0 без цены.<br>
+                                Пассивно: на 0 — +2 к инициативе и преимущество на Проницательность.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MI -->
+                    <div id="MI" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Возрастные Полюса</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead><tr><th>Весы</th><th>Эффект</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>+3 к КД, сопротивление физическому, скорость −10 футов. Реакцией принять урон союзника в 10 футах.</td></tr>
+                                                <tr><td>+2</td><td>+2 к КД, сопротивление одному типу физического урона.</td></tr>
+                                                <tr><td>+1</td><td>+1 к КД.</td></tr>
+                                                <tr><td>0</td><td><strong>Целостность:</strong> +2 к КД, +1 к атакам и урону, сопротивление психическому, 1/ход переброс спасброска.</td></tr>
+                                                <tr><td>−1</td><td>Скорость +10 футов, Отход бонусным действием.</td></tr>
+                                                <tr><td>−2</td><td>Скорость +15 футов, +1d6 электрического, помеха на атаки по тебе от тех, кого атаковал.</td></tr>
+                                                <tr><td>−3</td><td>Скорость +20 футов, +1d8 электрического, преимущество на Ловкость. 1/ход помеха на атаку врага в 30 футах. Помеха на спасброски Телосложения.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Бремя</strong> (1 Диссоциация, ≥0): временные хиты = уровень. Сдвигает на +1.<br>
+                                    <strong>Искра</strong> (1 Диссоциация, ≤0): скорость +10 футов, следующая атака с преимуществом. Сдвигает на −1.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Бремя и Искра</strong>
+                                <div class="value"><strong>Принять Бремя</strong> (1 Диссоциация, ≥+1): снять состояние с союзника и взять на себя + 1d6 хитов. Сдвигает на +1.<br>
+                                <strong>Детская Искра</strong> (≤−1): при попадании +1d8 электрического и лишение реакции. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокая Ответственность / Регрессия</strong>
+                                <div class="value"><strong>Принять Всё</strong> (2 Диссоциации): Весы = +3 на 1 минуту (сильный танк). После — сдвиг на −1.<br>
+                                <strong>Детский Порыв</strong> (2 Диссоциации): Весы = −3 на 1 минуту (мобильность + электричество + иллюзия). После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Возвращение к Себе</strong>
+                                <div class="value">1/длинный отдых: Весы = 0 на 1 минуту, бонусы удваиваются, дополнительное бонусное действие. Смещение стоит 2 Диссоциации.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Возраста</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
+                                Пассивно: на 0 — преимущество на спасброски Мудрости и Харизмы.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MA -->
+                    <div id="MA" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Критика и Срыв</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead><tr><th>Весы</th><th>Эффект</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>+2 к атакам, +1d6 урона, скорость −10 футов. Криты наносят +1d6.</td></tr>
+                                                <tr><td>+2</td><td>+1 к атакам, +1d4 урона, скорость −5 футов.</td></tr>
+                                                <tr><td>+1</td><td>+1 к атакам.</td></tr>
+                                                <tr><td>0</td><td>+2 к КД, сопротивление психическому. При смещении можно переместиться на 5 футов.</td></tr>
+                                                <tr><td>−1</td><td>Скорость +10 футов. Атаки игнорируют укрытие наполовину.</td></tr>
+                                                <tr><td>−2</td><td>Скорость +15 футов, +1d6 урона. 1/ход рикошет на второе существо в 10 футах (половина урона).</td></tr>
+                                                <tr><td>−3</td><td>Скорость +20 футов, +1d8 урона. Атаки площадные (5 футов) или рикошетят на двух. Риск задеть союзников.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Вспышка Критики</strong> (1 Диссоциация): на плюсе — преимущество на атаку; на минусе — скорость +10 и усиление рикошета. Сдвигает соответственно.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Точный Удар / Хаотический Поток</strong>
+                                <div class="value"><strong>Точный Удар</strong> (≥+1): следующая атака наносит +1d8 урона. Сдвигает на +1.<br>
+                                <strong>Хаотический Поток</strong> (≤−1): следующая атака задевает всех врагов в 5 футах. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Дисциплина / Отпустить Контроль</strong>
+                                <div class="value"><strong>Дисциплина</strong> (2 Диссоциации): Весы = +3 на 1 минуту. После — сдвиг на −1.<br>
+                                <strong>Отпустить Контроль</strong> (2 Диссоциации): Весы = −3 на 1 минуту. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Идеальный Удар / Полный Срыв</strong>
+                                <div class="value">1/длинный отдых: Весы = 0 на 1 минуту, бонусы удваиваются, можно сделать одну атаку с преимуществом и дополнительным 2d8 урона.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Самокритики</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
+                                Пассивно: на 0 — преимущество на спасброски Мудрости.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MP -->
+                    <div id="MP" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Маска и Суть</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead><tr><th>Весы</th><th>Эффект</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>+2 к КД, +2 к Харизме, преимущество на Обман и Убеждение. Помеха на Проницательность против тебя.</td></tr>
+                                                <tr><td>+2</td><td>+1 к КД, +1 к Харизме.</td></tr>
+                                                <tr><td>+1</td><td>+1 к КД.</td></tr>
+                                                <tr><td>0</td><td>+1 к КД, сопротивление психическому. 1/ход переброс проверки Харизмы.</td></tr>
+                                                <tr><td>−1</td><td>+1d4 к урону.</td></tr>
+                                                <tr><td>−2</td><td>+1d6 к урону, скорость +10 футов.</td></tr>
+                                                <tr><td>−3</td><td>+2d6 к урону, скорость +20 футов. Враги в 15 футах совершают спасбросок Мудрости или становятся испуганными. Длится максимум 2 раунда, каждый ход после первого требует 1 Диссоциацию, иначе сдвигается. После выхода нельзя вернуться на −3 до конца короткого отдыха.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Надеть Маску</strong> (1 Диссоциация, ≥0): +1 к КД и Харизме на 1 минуту. Сдвигает на +1.<br>
+                                    <strong>Сорвать Маску</strong> (1 Диссоциация, ≤0): +1d6 урона и скорость +10 футов на 1 минуту. Сдвигает на −1.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Глубокая Маска / Тень Сути</strong>
+                                <div class="value"><strong>Глубокая Маска</strong> (≥+1): ты можешь создать иллюзию себя на 1 минуту. Сдвигает на +1.<br>
+                                <strong>Тень Сути</strong> (≤−1): враги в 10 футах получают помеху на атаки. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Полная Маска / Разрыв</strong>
+                                <div class="value"><strong>Полная Маска</strong> (2 Диссоциации): Весы = +3 на 1 минуту. После — сдвиг на −1.<br>
+                                <strong>Разрыв</strong> (2 Диссоциации): Весы = −3 на 1 минуту. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Обнажение Сути</strong>
+                                <div class="value">1/длинный отдых: принудительный вход на −3 с усиленными бонусами на 2 раунда.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Персоны</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
+                                Пассивно: на 0 — преимущество на проверки Харизмы.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MB -->
+                    <div id="MB" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Связь и Разрыв</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead><tr><th>Весы</th><th>Эффект</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>+2 к атакам, +1 к КД, преимущество на концентрацию. Скорость −5.</td></tr>
+                                                <tr><td>+2</td><td>+1 к атакам, +1 к КД.</td></tr>
+                                                <tr><td>+1</td><td>+1 к КД.</td></tr>
+                                                <tr><td>0</td><td>Сопротивление психическому, преимущество против очарования/испуга, 1/ход переброс спасброска Мудрости/Харизмы.</td></tr>
+                                                <tr><td>−1</td><td>Скорость +10 футов.</td></tr>
+                                                <tr><td>−2</td><td>Скорость +15 футов, +1d6 урона.</td></tr>
+                                                <tr><td>−3</td><td>Скорость +20. В начале хода тело само перемещается до 15 футов и атакует (может задеть союзника → 1d4 психического тебе).</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Усилить Связь</strong> (1 Диссоциация, ≥0): +1 к атакам на 1 минуту. Сдвигает на +1.<br>
+                                    <strong>Усилить Разрыв</strong> (1 Диссоциация, ≤0): +1d6 урона и скорость +10 футов на 1 минуту. Сдвигает на −1.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Глубокая Связь / Тело Без Хозяина</strong>
+                                <div class="value"><strong>Глубокая Связь</strong> (≥+1): ты можешь игнорировать один эффект контроля. Сдвигает на +1.<br>
+                                <strong>Тело Без Хозяина</strong> (≤−1): тело совершает дополнительную атаку в начале хода. Может задеть союзников. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Полный Контроль / Тело Без Хозяина</strong>
+                                <div class="value"><strong>Полный Контроль</strong> (2 Диссоциации): Весы = +3 на 1 минуту. После — сдвиг на −1.<br>
+                                <strong>Тело Без Хозяина</strong> (2 Диссоциации): Весы = −3 на 1 минуту. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Точка Наблюдения</strong>
+                                <div class="value">1/длинный отдых: Весы = 0 на 1 минуту, бонусы удваиваются, можно один раз полностью игнорировать эффект контроля.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Разрыва</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
+                                Пассивно: на 0 — преимущество на спасброски Мудрости и Харизмы.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MU -->
+                    <div id="MU" class="tab-content">
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Два Ответа</strong>
+                                <div class="value">
+                                    <div class="table-wrapper">
+                                        <table class="scales-table">
+                                            <thead><tr><th>Весы</th><th>Эффект</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>+3</td><td>Союзники в 10 футах: +1 к КД и 1d4 хитов в начале хода.</td></tr>
+                                                <tr><td>+2</td><td>Союзники в 10 футах: +1 к атакам.</td></tr>
+                                                <tr><td>+1</td><td>1/ход бонусным действием 1d4 временных хитов союзнику.</td></tr>
+                                                <tr><td>0</td><td>+1 к КД, сопротивление психическому. 1/короткий отдых: снять 1 очко механики риска с себя или союзника.</td></tr>
+                                                <tr><td>−1</td><td>+1d4 к урону. При попадании восстанавливаешь 1 хит.</td></tr>
+                                                <tr><td>−2</td><td>+1d6 к урону. Цель получает −1 к атакам, ты восстанавливаешь 1d4 хитов.</td></tr>
+                                                <tr><td>−3</td><td>+1d8 к урону. Цель получает помеху на следующую атаку, ты восстанавливаешь половину дополнительного урона.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <strong>Поддержка</strong> (1 Диссоциация, ≥0): лечение 1d6 + Харизма. Сдвигает на +1.<br>
+                                    <strong>Отъём</strong> (1 Диссоциация, ≤0): +1d6 урона и вампиризм. Сдвигает на −1.
+                                </div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Благословение / Проклятие</strong>
+                                <div class="value"><strong>Благословение</strong> (≥+1): союзники в 10 футах получают +1 к КД и спасброскам. Сдвигает на +1.<br>
+                                <strong>Проклятие</strong> (≤−1): враги в 10 футах получают помеху на атаки и спасброски. Сдвигает на −1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Свет Нереализованного / Горечь Нереализованного</strong>
+                                <div class="value"><strong>Свет Нереализованного</strong> (2 Диссоциации): Весы = +3 на 1 минуту. После — сдвиг на −1.<br>
+                                <strong>Горечь Нереализованного</strong> (2 Диссоциации): Весы = −3 на 1 минуту. После — сдвиг на +1.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Точка Надежды</strong>
+                                <div class="value">1/длинный отдых: Весы = 0 на 1 минуту, бонусы удваиваются, можно один раз восстановить 1 Диссоциацию.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Нереализованного</strong>
+                                <div class="value">Максимум Диссоциации +2.<br>
+                                1/длинный отдых: свободная установка на +3/0/−3 с усиленными эффектами каждого состояния.<br>
+                                Пассивно: на 0 — преимущество на спасброски Харизмы.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ДИССОЦИАЦИЯ (переработанный блок без таблицы) -->
+            <div class="class-block" id="dissociation">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    </span>
+                    Диссоциация (механика риска)
+                </h2>
+                <div class="collapsible-content open">
+                    <p style="margin-bottom: 1rem;"><strong>Диссоциация</strong> — ресурс и одновременно риск Гештальта M. Чем сильнее внутренний раскол, тем больше ресурса, но тем выше шанс потери контроля.</p>
+
+                    <div class="ability-grid">
+
+                        <div class="ability-item">
+                            <strong>Как накапливается</strong>
+                            <div class="value">
+                                <ul>
+                                    <li>Использование способностей, сдвигающих Весы на крайние значения</li>
+                                    <li>Усиленное смещение Весов</li>
+                                    <li>Некоторые особенности подклассов</li>
+                                    <li>Сильные внутренние конфликты (по решению ведущего)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="ability-item">
+                            <strong>При максимуме</strong>
+                            <div class="value">Одна из сторон полностью перехватывает контроль на 1 минуту. Мощный выброс + серьёзные штрафы. После окончания Диссоциация сбрасывается до 0 и накладывается 1 уровень истощения (или аналог).</div>
+                        </div>
+
+                        <div class="ability-item">
+                            <strong>Сброс</strong>
+                            <div class="value">• Длинный отдых — полный сброс<br>
+                            • Короткий отдых — 1 очко<br>
+                            • Некоторые способности подклассов позволяют снимать очки Диссоциации или очки механики риска других классов</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="index.html#section-classes" class="back-link">← Вернуться к списку классов</a>
+
         </div>
 
-        <!-- ДИССОЦИАЦИЯ -->
-        <div class="card" id="dissociation">
-            <h2 class="section-title">▼ Диссоциация (механика риска)</h2>
-            <div class="collapsible-content">
-                <p><strong>Диссоциация</strong> — ресурс и одновременно риск Гештальта M. Чем сильнее внутренний раскол, тем больше ресурса, но тем выше шанс потери контроля.</p>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
 
-                <div class="ability">
-                    <strong>Как накапливается</strong>
-                    <ul>
-                        <li>Использование способностей, сдвигающих Весы на крайние значения</li>
-                        <li>Усиленное смещение Весов</li>
-                        <li>Некоторые особенности подклассов</li>
-                        <li>Сильные внутренние конфликты (по решению ведущего)</li>
-                    </ul>
-                </div>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
 
-                <div class="ability">
-                    <strong>При максимуме</strong><br>
-                    Одна из сторон полностью перехватывает контроль на 1 минуту. Мощный выброс + серьёзные штрафы. После окончания Диссоциация сбрасывается до 0 и накладывается 1 уровень истощения (или аналог).
-                </div>
-
-                <div class="ability">
-                    <strong>Сброс</strong><br>
-                    • Длинный отдых — полный сброс<br>
-                    • Короткий отдых — 1 очко<br>
-                    • Некоторые способности подклассов позволяют снимать очки Диссоциации или очки механики риска других классов
-                </div>
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
         </div>
 
     </div>
 
     <script>
-        document.querySelectorAll('.section-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const content = title.nextElementSibling;
-                if (content && content.classList.contains('collapsible-content')) {
-                    content.classList.toggle('open');
-                    if (content.classList.contains('open')) {
-                        title.textContent = title.textContent.replace('▶', '▼');
-                    } else {
-                        title.textContent = title.textContent.replace('▼', '▶');
-                    }
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1. ТЕМА
+            // ============================================================
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // ============================================================
+            // 2. ПРОГРЕСС-БАР
+            // ============================================================
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ============================================================
+            // 3. КНОПКА «НАВЕРХ»
+            // ============================================================
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
                 }
             });
-        });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        document.querySelectorAll('.collapsible-content').forEach((el, index) => {
-            if (index < 4) el.classList.add('open');
-        });
+            // ============================================================
+            // 4. НАВИГАЦИЯ ПО ЯКОРЯМ
+            // ============================================================
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
 
-        function openSubTab(evt, tabId) {
-            const parent = evt.currentTarget.closest('.card');
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
+            // ============================================================
+            // 5. COLLAPSIBLE СЕКЦИИ
+            // ============================================================
+            document.querySelectorAll('.section-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.closest('.class-block').querySelector('.collapsible-content');
+                    if (content) {
+                        content.classList.toggle('open');
+                    }
+                });
+            });
+
+            // ============================================================
+            // 6. ВКЛАДКИ ПОДКЛАССОВ
+            // ============================================================
+            window.openSubTab = function(evt, tabId) {
+                const parent = evt.currentTarget.closest('.class-block');
+                parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                evt.currentTarget.classList.add('active');
+            };
+
+            // ============================================================
+            // 7. ФОН (песчинки)
+            // ============================================================
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            // ============================================================
+            // 8. МОДАЛКА
+            // ============================================================
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
     </script>
+
 </body>
 </html>
