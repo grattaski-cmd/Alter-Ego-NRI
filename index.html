@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Справочник по Альтер-Эго</title>
     <style>
-        /* ===== ПЕРЕМЕННЫЕ ТЕМ ===== */
+        /* ===== ПЕРЕМЕННЫЕ ===== */
         :root {
             --bg: #0b0a0f;
             --bg-card: #16121a;
@@ -15,12 +15,10 @@
             --accent: #b48ad9;
             --accent-glow: rgba(180, 138, 217, 0.2);
             --border: #2d2538;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+            --shadow: 0 8px 32px rgba(0,0,0,0.55);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(.4,0,.2,1);
         }
-
-        /* Светлая тема — пастельная, тёплая */
         body.light {
             --bg: #f7f3ee;
             --bg-card: #ffffff;
@@ -28,12 +26,10 @@
             --text: #3d3530;
             --text-muted: #7a6e66;
             --accent: #b0886e;
-            --accent-glow: rgba(176, 136, 110, 0.15);
+            --accent-glow: rgba(176,136,110,0.15);
             --border: #ddd2c8;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            --shadow: 0 8px 32px rgba(0,0,0,0.06);
         }
-
-        /* ===== СБРОС ===== */
         * {
             margin: 0;
             padding: 0;
@@ -69,10 +65,10 @@
             letter-spacing: 0.06em;
         }
 
-        /* ===== НОВАЯ НАВИГАЦИЯ (мега-меню) ===== */
+        /* ===== НАВИГАЦИЯ (только якоря) ===== */
         nav {
             background: var(--bg-nav);
-            padding: 0.6rem 1.5rem;
+            padding: 0.7rem 1.5rem;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
@@ -84,19 +80,15 @@
             gap: 0.8rem 2rem;
             backdrop-filter: blur(8px);
         }
-        nav a, .nav-drop-btn {
+        nav a {
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            padding: 4px 0;
             position: relative;
+            padding: 4px 0;
         }
-        nav a::after, .nav-drop-btn::after {
+        nav a::after {
             content: '';
             position: absolute;
             left: 0;
@@ -106,69 +98,11 @@
             background: var(--accent);
             transition: width var(--transition);
         }
-        nav a:hover, .nav-drop-btn:hover {
+        nav a:hover {
             color: var(--accent);
         }
-        nav a:hover::after, .nav-drop-btn:hover::after {
+        nav a:hover::after {
             width: 100%;
-        }
-
-        .nav-drop {
-            position: relative;
-        }
-        .nav-drop-btn {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .nav-drop-btn .arrow {
-            font-size: 0.65em;
-            transition: transform var(--transition);
-        }
-        .nav-drop.open .nav-drop-btn .arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Мега-меню */
-        .nav-drop-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 0.7rem);
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 240px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 0.6rem 0;
-            box-shadow: var(--shadow);
-            z-index: 200;
-            backdrop-filter: blur(12px);
-        }
-        .nav-drop.open .nav-drop-menu {
-            display: block;
-        }
-        .nav-drop-menu a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.5rem 1.4rem;
-            color: var(--text);
-            font-weight: 500;
-            white-space: nowrap;
-            border: none;
-        }
-        .nav-drop-menu a .icon {
-            font-size: 1.2rem;
-            width: 1.6rem;
-            text-align: center;
-        }
-        .nav-drop-menu a:hover {
-            background: var(--accent-glow);
-            color: var(--accent);
-        }
-        .nav-drop-menu a::after {
-            display: none;
         }
 
         /* ===== КОНТЕЙНЕР ===== */
@@ -176,6 +110,35 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2.6rem 1.5rem 4rem;
+        }
+
+        /* ===== ФИЛЬТРЫ ===== */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
         }
 
         /* ===== СЕКЦИИ ===== */
@@ -206,44 +169,6 @@
             max-width: 680px;
         }
 
-        .subgroup-title {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 2.2rem 0 1rem;
-            font-weight: 600;
-        }
-
-        /* ===== ФИЛЬТРЫ ===== */
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-        }
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.4rem 1.2rem;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-        }
-        .filter-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
-
         /* ===== СЕТКА КАРТОЧЕК ===== */
         .grid {
             display: grid;
@@ -251,7 +176,6 @@
             gap: 1.5rem;
         }
 
-        /* ===== КАРТОЧКИ ===== */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -265,6 +189,7 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease, transform 0.6s ease, border-color var(--transition), box-shadow var(--transition);
+            cursor: pointer;
         }
         .card.visible {
             opacity: 1;
@@ -273,7 +198,6 @@
         .card.hidden {
             display: none;
         }
-
         .card::before {
             content: '';
             position: absolute;
@@ -293,7 +217,6 @@
         .card:hover::before {
             opacity: 1;
         }
-
         .card .tag {
             display: inline-block;
             font-size: 0.7rem;
@@ -370,13 +293,71 @@
             border-top: 1px solid var(--border);
         }
 
+        /* ===== МОДАЛЬНОЕ ОКНО (доп. фишка) ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            color: var(--text);
+        }
+        .modal-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .modal-box p {
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .modal-box .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+        }
+
         /* ===== АДАПТИВ ===== */
         @media (max-width: 700px) {
             header h1 { font-size: 2rem; }
             header { padding: 2.5rem 1rem 2rem; }
             .container { padding: 1.8rem 1rem 3rem; }
             nav { gap: 0.5rem 1.2rem; }
-            .nav-drop-menu { left: 0; transform: none; min-width: 200px; }
             .grid { grid-template-columns: 1fr; }
             .theme-toggle { width: 44px; height: 44px; font-size: 22px; bottom: 16px; right: 16px; }
         }
@@ -392,41 +373,34 @@
         <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
     </header>
 
-    <!-- ===== НАВИГАЦИЯ ===== -->
+    <!-- ===== НАВИГАЦИЯ (все разделы) ===== -->
     <nav>
-        <a href="#races" data-filter="races">Расы</a>
-        <a href="#classes" data-filter="classes">Гештальт</a>
-        <div class="nav-drop" id="navMore">
-            <button type="button" class="nav-drop-btn" aria-expanded="false">
-                Справочник <span class="arrow">▾</span>
-            </button>
-            <div class="nav-drop-menu">
-                <a href="lore.html"><span class="icon">📖</span> Лор</a>
-                <a href="traits.html"><span class="icon">⚡</span> Черты</a>
-                <a href="Backstories.html"><span class="icon">📜</span> Предыстории</a>
-                <a href="alternative.html"><span class="icon">🎭</span> Отыгрыш</a>
-                <a href="#classes"><span class="icon">⚔️</span> Альтернативный Гештальт</a>
-                <a href="#races"><span class="icon">🧬</span> Расы</a>
-            </div>
-        </div>
+        <a href="#section-races">Расы</a>
+        <a href="#section-classes">Гештальт</a>
+        <a href="#section-lore">Лор</a>
+        <a href="#section-traits">Черты</a>
+        <a href="#section-backstories">Предыстории</a>
+        <a href="#section-rp">Отыгрыш</a>
     </nav>
 
     <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
     <div class="container">
 
-        <!-- ФИЛЬТРЫ -->
+        <!-- ФИЛЬТРЫ (теперь фильтруют все карточки) -->
         <div class="filters" id="filterButtons">
             <button class="filter-btn active" data-filter="all">Все</button>
             <button class="filter-btn" data-filter="race">Расы</button>
             <button class="filter-btn" data-filter="class">Гештальт</button>
+            <button class="filter-btn" data-filter="lore">Лор</button>
+            <button class="filter-btn" data-filter="trait">Черты</button>
+            <button class="filter-btn" data-filter="backstory">Предыстории</button>
+            <button class="filter-btn" data-filter="rp">Отыгрыш</button>
         </div>
 
-        <!-- РАСЫ -->
-        <section id="races" class="section" data-section="race">
+        <!-- ===== 1. РАСЫ ===== -->
+        <section id="section-races" class="section" data-section="race">
             <h2 class="section-title">Расы</h2>
             <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
-
-            <div class="subgroup-title">Обычные</div>
             <div class="grid" data-group="race">
                 <div class="card" data-category="race">
                     <span class="tag">Гибкость</span>
@@ -434,10 +408,6 @@
                     <p>Лучше всех приспосабливается к новым условиям. Основа общества, часто чувствует себя самым уязвимым среди изменённых.</p>
                     <a href="human.html">Подробнее →</a>
                 </div>
-            </div>
-
-            <div class="subgroup-title">Изменённые</div>
-            <div class="grid" data-group="race">
                 <div class="card" data-category="race">
                     <span class="tag">Стабильность</span>
                     <h3>Андроид</h3>
@@ -468,10 +438,6 @@
                     <p>Человек, усиливший себя имплантами. Может перенастраивать своё тело под задачу.</p>
                     <a href="cyborg.html">Подробнее →</a>
                 </div>
-            </div>
-
-            <div class="subgroup-title">Магические</div>
-            <div class="grid" data-group="race">
                 <div class="card" data-category="race">
                     <span class="tag">Магия</span>
                     <h3>Масо-кацу</h3>
@@ -493,41 +459,120 @@
             </div>
         </section>
 
-        <!-- ГЕШТАЛЬТ -->
-        <section id="classes" class="section" data-section="class">
+        <!-- ===== 2. ГЕШТАЛЬТ ===== -->
+        <section id="section-classes" class="section" data-section="class">
             <h2 class="section-title">Альтернативный Гештальт</h2>
             <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
-
             <div class="grid" data-group="class">
-                <div class="card class-card" data-category="class">
+                <div class="card" data-category="class">
                     <span class="tag">Защита</span>
                     <h3>А. Гештальт U</h3>
                     <p>Сила через связь с другими. Защищает и поддерживает союзников, рискуя раствориться в них.</p>
                     <a href="class-geshtalt-u.html">Перейти к классу →</a>
                 </div>
-                <div class="card class-card" data-category="class">
+                <div class="card" data-category="class">
                     <span class="tag">Эмоции</span>
                     <h3>А. Гештальт E</h3>
                     <p>Чистые чувства становятся оружием. Чем сильнее эмоция — тем мощнее проявление.</p>
                     <a href="class-geshtalt-e.html">Перейти к классу →</a>
                 </div>
-                <div class="card class-card" data-category="class">
+                <div class="card" data-category="class">
                     <span class="tag">Потенциал</span>
                     <h3>А. Гештальт R</h3>
                     <p>Сила из того, что так и не случилось. Нереализованные возможности и несбывшиеся мечты.</p>
                     <a href="class-geshtalt-r.html">Перейти к классу →</a>
                 </div>
-                <div class="card class-card" data-category="class">
+                <div class="card" data-category="class">
                     <span class="tag">Травма</span>
                     <h3>А. Гештальт F</h3>
                     <p>Прожитая боль становится источником силы. Каждый шрам — это ресурс.</p>
                     <a href="class-geshtalt-f.html">Перейти к классу →</a>
                 </div>
-                <div class="card class-card" data-category="class">
+                <div class="card" data-category="class">
                     <span class="tag">Раскол</span>
                     <h3>А. Гештальт M</h3>
                     <p>Конфликт с самим собой. Две стороны личности борются за контроль.</p>
                     <a href="class-geshtalt-m.html">Перейти к классу →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 3. ЛОР ===== -->
+        <section id="section-lore" class="section" data-section="lore">
+            <h2 class="section-title">Лор</h2>
+            <p class="section-desc">История мира, ключевые события и фракции.</p>
+            <div class="grid" data-group="lore">
+                <div class="card" data-category="lore">
+                    <span class="tag">История</span>
+                    <h3>Великий Раскол</h3>
+                    <p>Катаклизм, разделивший мир на изолированные зоны. Технологии смешались с магией.</p>
+                    <a href="lore-great-split.html">Читать →</a>
+                </div>
+                <div class="card" data-category="lore">
+                    <span class="tag">Фракции</span>
+                    <h3>Орден Теней</h3>
+                    <p>Тайное общество, контролирующее потоки Гештальта. Их цель — стабилизация реальности.</p>
+                    <a href="lore-order.html">Читать →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 4. ЧЕРТЫ ===== -->
+        <section id="section-traits" class="section" data-section="trait">
+            <h2 class="section-title">Черты</h2>
+            <p class="section-desc">Особенности, усиливающие персонажа.</p>
+            <div class="grid" data-group="trait">
+                <div class="card" data-category="trait">
+                    <span class="tag">Физические</span>
+                    <h3>Железная кожа</h3>
+                    <p>Снижает физический урон на 20%. Требует высокого уровня Выносливости.</p>
+                    <a href="trait-iron-skin.html">Подробнее →</a>
+                </div>
+                <div class="card" data-category="trait">
+                    <span class="tag">Ментальные</span>
+                    <h3>Ясный разум</h3>
+                    <p>Устойчивость к ментальным атакам и контроль эмоций.</p>
+                    <a href="trait-clear-mind.html">Подробнее →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 5. ПРЕДЫСТОРИИ ===== -->
+        <section id="section-backstories" class="section" data-section="backstory">
+            <h2 class="section-title">Предыстории</h2>
+            <p class="section-desc">Откуда пришёл твой герой.</p>
+            <div class="grid" data-group="backstory">
+                <div class="card" data-category="backstory">
+                    <span class="tag">Беглец</span>
+                    <h3>Изгнанник из клана</h3>
+                    <p>Ты был изгнан за нарушение традиций. Теперь ищешь новый дом.</p>
+                    <a href="backstory-exile.html">Подробнее →</a>
+                </div>
+                <div class="card" data-category="backstory">
+                    <span class="tag">Искатель</span>
+                    <h3>Охотник за артефактами</h3>
+                    <p>Ты ищешь древние реликвии, чтобы восстановить утраченные технологии.</p>
+                    <a href="backstory-hunter.html">Подробнее →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 6. ОТЫГРЫШ ===== -->
+        <section id="section-rp" class="section" data-section="rp">
+            <h2 class="section-title">Отыгрыш</h2>
+            <p class="section-desc">Советы по игре за персонажа.</p>
+            <div class="grid" data-group="rp">
+                <div class="card" data-category="rp">
+                    <span class="tag">Роль</span>
+                    <h3>Лидер группы</h3>
+                    <p>Как принимать решения и мотивировать союзников в постапокалипсисе.</p>
+                    <a href="rp-leader.html">Подробнее →</a>
+                </div>
+                <div class="card" data-category="rp">
+                    <span class="tag">Эмоции</span>
+                    <h3>Внутренний конфликт</h3>
+                    <p>Как отыгрывать борьбу с Гештальтом внутри себя.</p>
+                    <a href="rp-conflict.html">Подробнее →</a>
                 </div>
             </div>
         </section>
@@ -538,119 +583,141 @@
     <footer>Справочник по Альтер-Эго</footer>
 
     <!-- ===== КНОПКА ТЕМЫ ===== -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌙</button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 id="modalTitle">Заголовок</h3>
+            <p id="modalDesc">Описание</p>
+            <span class="tag" id="modalTag">Тег</span>
+        </div>
+    </div>
 
     <!-- ===== СКРИПТЫ ===== -->
     <script>
-        // 1. Выпадающее меню
         (function() {
-            const drop = document.getElementById('navMore');
-            const btn = drop.querySelector('.nav-drop-btn');
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const open = drop.classList.toggle('open');
-                btn.setAttribute('aria-expanded', open);
-            });
-            document.addEventListener('click', () => {
-                drop.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-            });
-        })();
-
-        // 2. Переключение темы
-        (function() {
+            // 1. Тема
             const toggle = document.getElementById('themeToggle');
             const body = document.body;
             const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
+            if (saved === 'light') { body.classList.add('light'); toggle.textContent = '☀️'; }
             toggle.addEventListener('click', () => {
                 body.classList.toggle('light');
                 const isLight = body.classList.contains('light');
                 toggle.textContent = isLight ? '☀️' : '🌙';
                 localStorage.setItem('theme', isLight ? 'light' : 'dark');
             });
-        })();
 
-        // 3. Фильтрация карточек
-        (function() {
+            // 2. Фильтрация (работает для всех карточек)
             const filterBtns = document.querySelectorAll('.filter-btn');
             const allCards = document.querySelectorAll('.card');
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Обновляем активную кнопку
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.dataset.filter;
-
-                    allCards.forEach(card => {
-                        if (filter === 'all') {
-                            card.classList.remove('hidden');
-                        } else {
-                            const category = card.dataset.category;
-                            if (category === filter) {
-                                card.classList.remove('hidden');
-                            } else {
-                                card.classList.add('hidden');
-                            }
-                        }
-                    });
-
-                    // После фильтрации перезапускаем анимацию для видимых карточек
-                    observeCards();
-                });
-            });
-
-            // Также фильтруем по кликам на ссылки в навигации
-            document.querySelectorAll('nav a[data-filter]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const filter = link.dataset.filter;
-                    const targetBtn = document.querySelector(`.filter-btn[data-filter="${filter}"]`);
-                    if (targetBtn) targetBtn.click();
-                    // Прокрутка к секции
-                    const section = document.querySelector(link.getAttribute('href'));
-                    if (section) section.scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-        })();
-
-        // 4. Анимация при скролле (Intersection Observer)
-        function observeCards() {
-            const cards = document.querySelectorAll('.card:not(.hidden)');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        // Добавляем небольшую задержку для каждого элемента
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, index * 60);
-                        observer.unobserve(entry.target);
+            function applyFilter(filter) {
+                allCards.forEach(card => {
+                    const category = card.dataset.category;
+                    if (filter === 'all' || category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
                     }
                 });
-            }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -30px 0px'
+                // перезапускаем анимацию для видимых
+                observeCards();
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyFilter(btn.dataset.filter);
+                });
             });
 
-            cards.forEach(card => {
-                // Если карточка уже видна, добавляем класс сразу
-                const rect = card.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    card.classList.add('visible');
-                } else {
-                    observer.observe(card);
-                }
+            // 3. Навигация по якорям + фильтрация при клике
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        // Определяем категорию по секции
+                        const section = targetSection.closest('.section');
+                        if (section) {
+                            const category = section.dataset.section;
+                            // Активируем соответствующий фильтр
+                            const filterBtn = document.querySelector(`.filter-btn[data-filter="${category}"]`);
+                            if (filterBtn) {
+                                filterBtns.forEach(b => b.classList.remove('active'));
+                                filterBtn.classList.add('active');
+                                applyFilter(category);
+                            } else {
+                                // если нет кнопки для этой секции (например, "все")
+                                applyFilter('all');
+                            }
+                        }
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
             });
-        }
 
-        // Запускаем при загрузке и при изменении размера окна
-        window.addEventListener('load', observeCards);
-        window.addEventListener('resize', observeCards);
+            // 4. Анимация при скролле (Intersection Observer)
+            function observeCards() {
+                const cards = document.querySelectorAll('.card:not(.hidden)');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 60);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        card.classList.add('visible');
+                    } else {
+                        observer.observe(card);
+                    }
+                });
+            }
+
+            window.addEventListener('load', observeCards);
+            window.addEventListener('resize', observeCards);
+
+            // 5. Модальное окно (дополнительная фишка)
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalTag = document.getElementById('modalTag');
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Не открываем, если кликнули по ссылке внутри
+                    if (e.target.tagName === 'A') return;
+                    const title = card.querySelector('h3')?.textContent || 'Без названия';
+                    const desc = card.querySelector('p')?.textContent || 'Нет описания';
+                    const tag = card.querySelector('.tag')?.textContent || 'Без тега';
+                    modalTitle.textContent = title;
+                    modalDesc.textContent = desc;
+                    modalTag.textContent = tag;
+                    modal.classList.add('active');
+                });
+            });
+
+            modalClose.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') modal.classList.remove('active');
+            });
+        })();
     </script>
 </body>
 </html>
