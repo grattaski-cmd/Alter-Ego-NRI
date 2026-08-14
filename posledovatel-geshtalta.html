@@ -4,253 +4,795 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Последователь Гештальта — Предыстория</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-            --darker: #16120d;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: var(--darker);
-            padding: 2.4rem 1.2rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
+        .backstory-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
             color: var(--accent);
-            font-size: 1.7rem;
-            margin: 0;
-            letter-spacing: 0.05em;
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
+        }
+        .backstory-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
             font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
-        header .subtitle {
-            color: var(--muted);
-            margin: 0.45rem 0 0;
-            font-size: 0.95rem;
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
-        nav {
-            background: var(--darker);
-            padding: 0.75rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
-        nav a {
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .backstory-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
+        }
+        .backstory-block:hover {
+            border-color: var(--accent);
+        }
+
+        .feature-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 0.8rem;
+        }
+        .feature-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .feature-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .ideal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .ideal-card {
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            transition: border-color var(--transition);
+        }
+        .ideal-card:hover {
+            border-color: var(--accent);
+        }
+        .ideal-card strong {
+            color: var(--accent);
+            display: block;
+            font-size: 0.9rem;
+        }
+        .ideal-card p {
+            margin: 0.2rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.92rem;
-            margin: 0 0.7rem;
-        }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 2.2rem 1.2rem 4rem;
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.4rem 1.5rem;
-            margin-bottom: 1.4rem;
-        }
-        .section-title {
-            color: var(--accent);
-            font-size: 1.15rem;
-            margin: 0 0 0.9rem;
-            padding-bottom: 0.35rem;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: 0.02em;
-        }
-        .path-title {
-            color: var(--accent);
-            font-size: 1.05rem;
-            margin: 1.3rem 0 0.7rem;
             font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
         }
-        .desc {
-            margin: 0 0 0.6rem;
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
         }
-        .stat-line {
-            margin: 0.35rem 0;
-        }
-        .stat-line strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        ul {
-            margin: 0.4rem 0 0.6rem 1.2rem;
+
+        .rp-list {
+            list-style: none;
             padding: 0;
+            margin: 0.5rem 0;
         }
-        li {
-            margin-bottom: 0.35rem;
+        .rp-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
         }
-        .list-block {
-            margin-top: 0.7rem;
+        .rp-list li:last-child {
+            border-bottom: none;
         }
-        .list-block h4 {
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
             color: var(--accent);
-            font-size: 0.98rem;
-            margin: 0 0 0.45rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
-        footer {
-            text-align: center;
-            padding: 1.8rem 1rem;
-            color: #555;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border);
+
+        .path-subtitle {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin: 1.2rem 0 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.4rem; }
-            .container { padding: 1.6rem 1rem 3rem; }
+        .path-subtitle .icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        @media (max-width: 700px) {
+            .backstory-title {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+            .backstory-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .ideal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .backstory-title {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ПОСЛЕДОВАТЕЛЬ ГЕШТАЛЬТА</h1>
-        <p class="subtitle">Предыстория</p>
-    </header>
 
-    <nav>
-        <a href="Backstories.html">← К списку предысторий</a>
-        <a href="index.html">На главную</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <div class="card">
-            <h2 class="section-title">Описание</h2>
-            <p class="desc">Ты веришь, что Гештальт — это не просто травма и осевшее Масо. Это путь. Но путь ты понимаешь по-своему.</p>
-            <p class="desc">При создании персонажа выбери один из двух путей.</p>
-        </div>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+        </header>
 
-        <div class="card">
-            <h2 class="section-title">Владения (общие)</h2>
-            <p class="stat-line"><strong>Навыки:</strong> Проницательность, Религия</p>
-            <p class="stat-line"><strong>Инструменты:</strong> —</p>
-            <p class="stat-line"><strong>Языки:</strong> один на выбор</p>
-        </div>
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
 
-        <div class="card">
-            <h2 class="section-title">Снаряжение (общее)</h2>
-            <ul>
-                <li>Простая поношенная одежда</li>
-                <li>Фляга</li>
-                <li>Небольшой личный символ или запись, связанная с твоим пониманием Гештальта</li>
-                <li>10 крышек</li>
-            </ul>
-        </div>
+        <div class="container">
 
-        <div class="card">
-            <h2 class="section-title">Особенность: Чутьё Гештальта</h2>
-            <p>Ты тонко чувствуешь проявления Гештальта в других — и силу, и степень поглощённости, и то, насколько человек ещё сопротивляется своей боли. Мастер может давать тебе дополнительные намёки о внутреннем состоянии существ, несущих в себе Гештальт или глубокую травму от Масо.</p>
-        </div>
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        Последователь Гештальта
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Вера • Преображение</p>
+            </div>
 
-        <!-- ПУТЬ ЦЕЛОСТНОСТИ -->
-        <div class="card">
-            <h2 class="section-title">Путь Целостности</h2>
-            <p class="desc">Ты веришь, что если сумеешь залечить собственные раны, Гештальт перестанет быть источником боли и станет фундаментом. Тогда из тебя получится не сломанный выживший, а человек, которого эта сила сделает по-настоящему великим.</p>
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Многие видят в Гештальте проклятие. Я вижу в нём приглашение. Приглашение перестать быть тем, кем ты был, и стать тем, кем ты должен стать. Вопрос только в том, готов ли ты заплатить эту цену.»
+                <span class="author">— Безымянный последователь, странствующий проповедник</span>
+            </div>
 
-            <div class="list-block">
-                <h4>Идеалы</h4>
-                <ul>
-                    <li><strong>Исцеление.</strong> Рана должна быть прожита и закрыта, а не носить её как знамя.</li>
-                    <li><strong>Величие.</strong> Гештальт способен поднять человека выше того, кем он был.</li>
-                    <li><strong>Ответственность.</strong> Сила, рождённая из боли, обязана служить чему-то большему.</li>
-                    <li><strong>Целостность.</strong> Настоящая сила — в том, чтобы снова стать целым.</li>
-                    <li><strong>Надежда.</strong> Даже самая глубокая рана может зарасти.</li>
-                    <li><strong>Преображение.</strong> Боль — это материал, а не приговор.</li>
+            <!-- ОПИСАНИЕ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Описание
+                </h2>
+                <p>Ты веришь, что Гештальт — это не просто травма и осевшее Масо. Это путь. Но путь ты понимаешь по-своему.</p>
+                <p class="muted" style="margin-top: 0.8rem;">При создании персонажа выбери один из двух путей: Путь Целостности или Путь Поглощения.</p>
+            </div>
+
+            <!-- ПОЧЕМУ ТЫ СТАЛ ПОСЛЕДОВАТЕЛЕМ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                    </span>
+                    Почему ты стал последователем Гештальта?
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Личный опыт</strong>
+                        <div class="value">Ты пережил столкновение с Гештальтом и выжил. Ты понял, что это не просто случайность — это знак.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Поиск смысла</strong>
+                        <div class="value">Ты искал ответ на вопрос, почему мир рухнул. Гештальт дал тебе ответ — или, по крайней мере, направление.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Встреча с наставником</strong>
+                        <div class="value">Кто-то показал тебе путь. Ты пошёл за ним, потому что он видел то, чего не видели другие.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Отчаяние</strong>
+                        <div class="value">Ты потерял всё. Гештальт стал для тебя единственным, что осталось, и ты решил принять его до конца.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Видение</strong>
+                        <div class="value">Тебе явился сон или образ, который изменил твоё восприятие. Ты понял, что Гештальт — это не конец, а начало.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    </span>
+                    Владения и снаряжение
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Навыки</strong>
+                        <div class="value">Проницательность, Религия</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Инструменты</strong>
+                        <div class="value">—</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Языки</strong>
+                        <div class="value">один на выбор</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Снаряжение</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li>Простая поношенная одежда</li>
+                                <li>Фляга</li>
+                                <li>Небольшой личный символ или запись, связанная с твоим пониманием Гештальта</li>
+                                <li>10 крышек</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ОСОБЕННОСТЬ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                    </span>
+                    Особенность: Чутьё Гештальта
+                </h2>
+                <p>Ты тонко чувствуешь проявления Гештальта в других — и силу, и степень поглощённости, и то, насколько человек ещё сопротивляется своей боли. Мастер может давать тебе дополнительные намёки о внутреннем состоянии существ, несущих в себе Гештальт или глубокую травму от Масо.</p>
+                <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При встрече с существом, несущим Гештальт или сильную травму, ты можешь сделать проверку Мудрости (Проницательность), чтобы определить его состояние. Ведущий может дать тебе информацию о том, насколько сильно Гештальт влияет на существо и как оно к этому относится.</p>
+            </div>
+
+            <!-- ПУТЬ ЦЕЛОСТНОСТИ -->
+            <div class="backstory-block">
+                <div class="path-subtitle">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                    Путь Целостности
+                </div>
+                <p class="muted" style="margin-bottom: 1rem;">Ты веришь, что если сумеешь залечить собственные раны, Гештальт перестанет быть источником боли и станет фундаментом. Тогда из тебя получится не сломанный выживший, а человек, которого эта сила сделает по-настоящему великим.</p>
+
+                <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+                <div class="ideal-grid">
+                    <div class="ideal-card">
+                        <strong>Исцеление</strong>
+                        <p>Рана должна быть прожита и закрыта, а не носить её как знамя.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Величие</strong>
+                        <p>Гештальт способен поднять человека выше того, кем он был.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Ответственность</strong>
+                        <p>Сила, рождённая из боли, обязана служить чему-то большему.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Целостность</strong>
+                        <p>Настоящая сила — в том, чтобы снова стать целым.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Надежда</strong>
+                        <p>Даже самая глубокая рана может зарасти.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Преображение</strong>
+                        <p>Боль — это материал, а не приговор.</p>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Я почти сломался окончательно. То, что помогло мне удержаться, до сих пор со мной.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Есть человек, которого я хочу «вытянуть» тем же путём, которым иду сам.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я веду записи о том, как меняется мой Гештальт, когда рана начинает затягиваться.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Кто-то считает мой путь наивным. Я пока не доказал обратное.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• У меня есть место или ритуал, где я работаю со своей болью.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я боюсь, что однажды пойму: некоторые раны не заживают никогда.</div>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Я слишком сильно верю, что любую травму можно «правильно» прожить.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Мне трудно принимать тех, кто сознательно отказывается лечиться.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Иногда я давлю на людей своими идеалами сильнее, чем следует.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я могу игнорировать опасность, потому что верю в своё грядущее преображение.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Сомнения в правильности пути вызывают у меня почти физическую тревогу.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я плохо переношу вид людей, которые полностью сдались своей боли.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПУТЬ ПОГЛОЩЕНИЯ -->
+            <div class="backstory-block">
+                <div class="path-subtitle">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    Путь Поглощения
+                </div>
+                <p class="muted" style="margin-bottom: 1rem;">Ты веришь, что человечество в его нынешнем виде должно закончиться. Настоящее будущее — за теми, кого полностью поглотил собственный Гештальт или хлорирование. Только растворившись в этой силе до конца, можно стать чем-то большим, чем сломанный человек.</p>
+
+                <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+                <div class="ideal-grid">
+                    <div class="ideal-card">
+                        <strong>Преодоление человека</strong>
+                        <p>Старое человечество изжило себя.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Полнота</strong>
+                        <p>Частичный Гештальт — это половинчатость. Нужно идти до конца.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Необходимость</strong>
+                        <p>Боль и разрушение — цена перехода.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Новый вид</strong>
+                        <p>Те, кто растворился полностью, станут основой завтрашнего дня.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Отбрасывание жалости</strong>
+                        <p>Жалость к «ещё-человеку» только тормозит процесс.</p>
+                    </div>
+                    <div class="ideal-card">
+                        <strong>Принятие конца</strong>
+                        <p>Смерть прежнего «я» — не трагедия, а условие.</p>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Я видел кого-то, кто ушёл в поглощение полностью. Это было прекрасно и ужасно.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Есть место или состояние, в котором я чувствую, как Гештальт становится сильнее меня.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Кто-то из близких пытался меня остановить. Я не слушал.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• У меня есть символ или фраза, которая напоминает, зачем я иду до конца.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я ищу других, кто понимает путь так же, как я.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Иногда я уже не уверен, где заканчиваюсь я и начинается он.</div>
+                    </div>
+                </div>
+
+                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="value">• Я смотрю на обычных людей как на незавершённых.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Мне сложно долго сохранять привязанность к тем, кто отказывается идти дальше.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я могу сознательно усиливать свою боль, чтобы ускорить процесс.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Разговоры о «сохранении человечности» вызывают у меня презрение или усталость.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• В моменты слабости я начинаю бояться, что остановился на полпути.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="value">• Я рискую потерять остатки себя раньше, чем достигну того, к чему стремлюсь.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Заметки для ведущего
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Крючки для приключений</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li><strong>Пророчество:</strong> Персонаж получает видение о том, что Гештальт скоро изменится. Он должен понять, что это значит, и решить, как на это реагировать.</li>
+                                <li><strong>Конфликт веры:</strong> Персонаж встречает последователя другого пути. Они спорят о природе Гештальта — и этот спор может перерасти в нечто большее.</li>
+                                <li><strong>Испытание:</strong> Персонажу предлагают пройти обряд, который проверит его веру. Он может получить силу — или потерять себя.</li>
+                                <li><strong>Еретик:</strong> Кто-то из последователей отошёл от учения и теперь действует против других. Персонаж должен решить, как с ним поступить.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Вопросы для отыгрыша</strong>
+                        <div class="value">
+                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
+                                <li>Что для тебя важнее — вера или реальность?</li>
+                                <li>Где проходит грань, за которой ты перестаёшь быть собой?</li>
+                                <li>Как ты относишься к тем, кто не разделяет твою веру?</li>
+                                <li>Если бы ты мог выбрать — остаться человеком или стать чем-то большим — что бы ты выбрал?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+            <div class="backstory-block" id="tips">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Советы по отыгрышу
+                </h2>
+                <ul class="rp-list">
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                        <span><strong>Ты — верующий:</strong> Твоя вера определяет твои поступки. Она даёт тебе силу и цель, но она же может сделать тебя слепым к реальности.</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                        <span><strong>Связь с Гештальтом:</strong> Ты чувствуешь его внутри себя. Иногда это тепло и покой, иногда — холод и страх. Как ты справляешься с этим?</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                        <span><strong>Отношения с другими:</strong> Твоя вера может пугать или вдохновлять. Как ты общаешься с теми, кто не разделяет твоих убеждений?</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                        <span><strong>Цена веры:</strong> Ты знаешь, что твой путь может стоить тебе всего. Что ты готов отдать за свою веру?</span>
+                    </li>
                 </ul>
             </div>
 
-            <div class="list-block">
-                <h4>Связи</h4>
-                <ul>
-                    <li>Я почти сломался окончательно. То, что помогло мне удержаться, до сих пор со мной.</li>
-                    <li>Есть человек, которого я хочу «вытянуть» тем же путём, которым иду сам.</li>
-                    <li>Я веду записи о том, как меняется мой Гештальт, когда рана начинает затягиваться.</li>
-                    <li>Кто-то считает мой путь наивным. Я пока не доказал обратное.</li>
-                    <li>У меня есть место или ритуал, где я работаю со своей болью.</li>
-                    <li>Я боюсь, что однажды пойму: некоторые раны не заживают никогда.</li>
-                </ul>
-            </div>
+            <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
 
-            <div class="list-block">
-                <h4>Недостатки</h4>
-                <ul>
-                    <li>Я слишком сильно верю, что любую травму можно «правильно» прожить.</li>
-                    <li>Мне трудно принимать тех, кто сознательно отказывается лечиться.</li>
-                    <li>Иногда я давлю на людей своими идеалами сильнее, чем следует.</li>
-                    <li>Я могу игнорировать опасность, потому что верю в своё грядущее преображение.</li>
-                    <li>Сомнения в правильности пути вызывают у меня почти физическую тревогу.</li>
-                    <li>Я плохо переношу вид людей, которые полностью сдались своей боли.</li>
-                </ul>
-            </div>
         </div>
 
-        <!-- ПУТЬ ПОГЛОЩЕНИЯ -->
-        <div class="card">
-            <h2 class="section-title">Путь Поглощения</h2>
-            <p class="desc">Ты веришь, что человечество в его нынешнем виде должно закончиться. Настоящее будущее — за теми, кого полностью поглотил собственный Гештальт или хлорирование. Только растворившись в этой силе до конца, можно стать чем-то большим, чем сломанный человек.</p>
-
-            <div class="list-block">
-                <h4>Идеалы</h4>
-                <ul>
-                    <li><strong>Преодоление человека.</strong> Старое человечество изжило себя.</li>
-                    <li><strong>Полнота.</strong> Частичный Гештальт — это половинчатость. Нужно идти до конца.</li>
-                    <li><strong>Необходимость.</strong> Боль и разрушение — цена перехода.</li>
-                    <li><strong>Новый вид.</strong> Те, кто растворился полностью, станут основой завтрашнего дня.</li>
-                    <li><strong>Отбрасывание жалости.</strong> Жалость к «ещё-человеку» только тормозит процесс.</li>
-                    <li><strong>Принятие конца.</strong> Смерть прежнего «я» — не трагедия, а условие.</li>
-                </ul>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
             </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
 
-            <div class="list-block">
-                <h4>Связи</h4>
-                <ul>
-                    <li>Я видел кого-то, кто ушёл в поглощение полностью. Это было прекрасно и ужасно.</li>
-                    <li>Есть место или состояние, в котором я чувствую, как Гештальт становится сильнее меня.</li>
-                    <li>Кто-то из близких пытался меня остановить. Я не слушал.</li>
-                    <li>У меня есть символ или фраза, которая напоминает, зачем я иду до конца.</li>
-                    <li>Я ищу других, кто понимает путь так же, как я.</li>
-                    <li>Иногда я уже не уверен, где заканчиваюсь я и начинается он.</li>
-                </ul>
-            </div>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
 
-            <div class="list-block">
-                <h4>Недостатки</h4>
-                <ul>
-                    <li>Я смотрю на обычных людей как на незавершённых.</li>
-                    <li>Мне сложно долго сохранять привязанность к тем, кто отказывается идти дальше.</li>
-                    <li>Я могу сознательно усиливать свою боль, чтобы ускорить процесс.</li>
-                    <li>Разговоры о «сохранении человечности» вызывают у меня презрение или усталость.</li>
-                    <li>В моменты слабости я начинаю бояться, что остановился на полпути.</li>
-                    <li>Я рискую потерять остатки себя раньше, чем достигну того, к чему стремлюсь.</li>
-                </ul>
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
         </div>
 
     </div>
 
-    <footer>
-        Справочник по Альтер-Эго • Предыстории
-    </footer>
+    <script>
+        (function() {
+            'use strict';
+
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
