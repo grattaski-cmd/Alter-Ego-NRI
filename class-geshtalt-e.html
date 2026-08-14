@@ -277,25 +277,40 @@
             text-decoration: underline;
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* ===== РАСШИРЕННОЕ ПРОСТРАНСТВО ДЛЯ ТАБЛИЦ НА ТЕЛЕФОНАХ ===== */
         @media (max-width: 700px) {
-            .class-block {
-                padding: 1.2rem 1rem;
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
             }
-            .section-icon {
-                width: 1.4rem;
-                height: 1.4rem;
+            .class-block {
+                padding: 1rem 0.5rem;
+                border-radius: var(--radius);
+            }
+            .table-wrapper {
+                margin: 0.5rem -0.5rem;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
             }
             .table-wrapper table {
                 min-width: 500px;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.3rem 0.4rem;
+                white-space: nowrap;
             }
             .table-wrapper.style-table table {
                 min-width: 400px;
             }
-            .level-table th,
-            .level-table td {
-                padding: 0.4rem 0.5rem;
+            .ability-item {
+                padding: 0.6rem 0.8rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
             }
             .tab-button {
                 font-size: 0.78rem;
@@ -303,23 +318,33 @@
             }
         }
         @media (max-width: 480px) {
-            .quote-block {
-                padding: 1rem 1.2rem;
+            .container {
+                padding-left: 0.3rem;
+                padding-right: 0.3rem;
+            }
+            .class-block {
+                padding: 0.8rem 0.3rem;
+            }
+            .table-wrapper {
+                margin: 0.3rem -0.3rem;
             }
             .table-wrapper table {
                 min-width: 400px;
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.2rem 0.3rem;
             }
             .table-wrapper.style-table table {
                 min-width: 340px;
             }
-            .level-table th,
-            .level-table td {
-                padding: 0.3rem 0.3rem;
-            }
             .tab-button {
                 font-size: 0.7rem;
                 padding: 0.25rem 0.5rem;
+            }
+            .quote-block {
+                padding: 1rem 1.2rem;
             }
         }
     </style>
