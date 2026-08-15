@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Охотник за компонентами — Предыстория</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .backstory-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
+        }
+        .backstory-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .backstory-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
+        }
+        .backstory-block:hover {
+            border-color: var(--accent);
+        }
+
+        .feature-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 0.8rem;
+        }
+        .feature-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .feature-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .ideal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .ideal-card {
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            transition: border-color var(--transition);
+        }
+        .ideal-card:hover {
+            border-color: var(--accent);
+        }
+        .ideal-card strong {
+            color: var(--accent);
+            display: block;
+            font-size: 0.9rem;
+        }
+        .ideal-card p {
+            margin: 0.2rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .rp-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .rp-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .rp-list li:last-child {
+            border-bottom: none;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        @media (max-width: 700px) {
+            .backstory-title {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.6rem !important;
+            }
+            .backstory-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+            .backstory-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .ideal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .backstory-title {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title span {
+                font-size: 1.3rem !important;
+            }
+            .backstory-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
+
+    <div class="content">
+
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+        </header>
+
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/>
+                            <path d="M9 9h6v6H9V9z"/>
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Охотник за компонентами
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Поиск • Техника</p>
+            </div>
+
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «В руинах всегда есть что-то живое. Не люди — детали. Процессор, который ещё помнит свой код. Стабилизатор, который держит заряд. Нейроинтерфейс, который ждёт, чтобы его снова использовали. Я нахожу их. Я даю им второй шанс. И они дают мне шанс выжить.»
+                <span class="author">— Безымянный охотник за компонентами, сталкер руин</span>
+            </div>
+
+            <!-- ОПИСАНИЕ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Описание
+                </h2>
+                <p>Ты ищешь детали. Не готовые механизмы и не целые системы — а редкие, уцелевшие компоненты: процессоры старых моделей, стабилизаторы, куски брони, нейроинтерфейсы, энергоячейки, которые ещё можно оживить. Ты знаешь, где копать, что можно снять, а что лучше не трогать, и сколько это будет стоить на чёрном рынке или у техников.</p>
+                <p class="muted" style="margin-top: 0.8rem;">В мире, где почти всё уже разобрано или сгнило, ты один из тех, кто всё ещё находит ценное в руинах. Твоя работа грязная, опасная и часто одинокая. Но без людей вроде тебя многие андроиды и киборги давно бы остались без запчастей.</p>
+            </div>
+
+            <!-- ПОЧЕМУ ТЫ СТАЛ ОХОТНИКОМ ЗА КОМПОНЕНТАМИ -->
+            <div class="backstory-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                    </span>
+                    Почему ты стал охотником за компонентами?
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Выживание</strong>
+                        <div class="value">Ты научился искать детали, потому что это помогало выжить. Ты продаёшь их, обмениваешь или используешь сам.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Любопытство</strong>
+                        <div class="value">Ты всегда хотел знать, как устроены механизмы. Ты разбирал их, собирал, изучал — и понял, что это твоё призвание.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Привычка</strong>
+                        <div class="value">Ты вырос в руинах. Ты не помнишь, когда начал искать детали — это всегда было частью твоей жизни.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Долг</strong>
+                        <div class="value">Ты обязан кому-то или чему-то. Ты ищешь детали, чтобы помочь другим — андроидам, киборгам, поселениям.</div>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Игра</summary>
