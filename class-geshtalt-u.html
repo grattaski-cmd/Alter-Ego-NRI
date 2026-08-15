@@ -4,105 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>А. Гештальт U — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg: #0f0c08;
-            --card: #1c1812;
-            --accent: #c9a05f;
-            --text: #d4c5a9;
-            --border: #3a3024;
-            --muted: #8a7a5f;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-        header {
-            background: #16120d;
-            padding: 2.2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        header h1 {
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ ГЕШТАЛЬТ U ===== */
+
+        .class-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
             color: var(--accent);
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 0.02em;
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
         }
-        header p {
-            color: var(--muted);
-            margin: 0.6rem 0 0;
-            font-size: 1rem;
+        .class-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
-        nav {
-            background: #16120d;
-            padding: 0.9rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
         }
-        nav a {
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
             color: var(--accent);
-            margin: 0 0.9rem;
-            text-decoration: none;
-            font-size: 0.95rem;
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
         }
-        nav a:hover { text-decoration: underline; }
-        .container {
-            max-width: 980px;
-            margin: 2rem auto;
-            padding: 0 1rem 3rem;
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 1.6rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .section-title {
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            cursor: pointer;
-            user-select: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            cursor: pointer;
+            user-select: none;
         }
-        .section-title:hover { opacity: 0.9; }
-        .ability {
-            background: #16120d;
-            padding: 1.1rem 1.2rem;
-            margin: 1rem 0;
-            border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
-        }
-        .ability strong { color: var(--accent); }
-        .level-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-        .level-table th, .level-table td {
+
+        .class-block {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 0.55rem 0.7rem;
-            text-align: center;
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: border-color var(--transition);
         }
+        .class-block:hover {
+            border-color: var(--accent);
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 1rem;
+        }
+        .collapsible-content.open {
+            display: block;
+        }
+
+        .ability-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        .ability-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .ability-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .ability-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+        .ability-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+        }
+        .ability-item ul li {
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
+        /* ===== ОБЁРТКА ДЛЯ ТАБЛИЦ ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0.5rem 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .table-wrapper table {
+            min-width: 600px;
+            width: 100%;
+            margin: 0;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
         .level-table th {
-            background: #2c1e14;
+            background: var(--bg-nav);
+            color: var(--accent);
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .level-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            text-align: center;
+            color: var(--text);
+        }
+        .level-table td:last-child {
+            text-align: left;
+        }
+        .level-table tr:hover td {
+            background: var(--accent-glow);
+        }
+        .level-table .highlight {
             color: var(--accent);
             font-weight: 600;
         }
-        .level-table td:last-child { text-align: left; }
+
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -110,494 +190,902 @@
             margin-bottom: 1.2rem;
         }
         .tab-button {
-            padding: 0.55rem 1rem;
-            background: #2c1e14;
+            padding: 0.5rem 1rem;
+            background: var(--bg-nav);
             border: 1px solid var(--border);
-            color: var(--accent);
+            color: var(--text-muted);
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 0.92rem;
-            transition: background 0.15s;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            font-family: inherit;
+            flex-shrink: 0;
         }
-        .tab-button:hover { background: #3a2a1c; }
+        .tab-button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
         .tab-button.active {
             background: var(--accent);
-            color: #0f0c08;
+            color: #fff;
             border-color: var(--accent);
-            font-weight: 600;
         }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .collapsible-content { display: none; }
-        .collapsible-content.open { display: block; }
-        ul { padding-left: 1.3rem; }
-        li { margin-bottom: 0.35rem; }
-        .muted { color: var(--muted); font-size: 0.92rem; }
-        .badge {
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
             display: inline-block;
-            background: #2c1e14;
+            background: var(--accent-glow);
             color: var(--accent);
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-left: 0.4rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .tabs { gap: 0.35rem; }
-            .tab-button { padding: 0.45rem 0.7rem; font-size: 0.85rem; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .rp-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .rp-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .rp-list li:last-child {
+            border-bottom: none;
+        }
+        .rp-list .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 700px) {
+            .class-title {
+                font-size: 1.6rem !important;
+            }
+            .class-title span {
+                font-size: 1.6rem !important;
+            }
+            .class-title svg {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+            .class-block {
+                padding: 1.2rem 1rem;
+            }
+            .section-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+            .table-wrapper table {
+                min-width: 500px;
+                font-size: 0.8rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.4rem 0.5rem;
+            }
+            .tab-button {
+                font-size: 0.78rem;
+                padding: 0.35rem 0.7rem;
+            }
+            .ability-item {
+                padding: 0.6rem 0.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .class-title {
+                font-size: 1.3rem !important;
+            }
+            .class-title span {
+                font-size: 1.3rem !important;
+            }
+            .class-title svg {
+                width: 1.2rem !important;
+                height: 1.2rem !important;
+            }
+            .quote-block {
+                padding: 1rem 1.2rem;
+            }
+            .table-wrapper table {
+                min-width: 400px;
+                font-size: 0.7rem;
+            }
+            .level-table th,
+            .level-table td {
+                padding: 0.3rem 0.3rem;
+            }
+            .tab-button {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
+            .ability-item {
+                padding: 0.5rem 0.6rem;
+            }
+            .ability-item .value {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>А. Гештальт U</h1>
-        <p>Класс • Связи • Поддержка и разрыв</p>
-    </header>
 
-    <nav>
-        <a href="index.html">← К справочнику</a>
-        <a href="#base">Основы</a>
-        <a href="#styles">Стили</a>
-        <a href="#subclasses">Подклассы</a>
-        <a href="#absorption">Поглощение</a>
-    </nav>
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
 
-    <div class="container">
+    <div class="content">
 
-        <!-- ===== ОСНОВЫ ===== -->
-        <div class="card" id="base">
-            <h2 class="section-title">▼ Основные характеристики</h2>
-            <div class="collapsible-content open">
-                <p><strong>Хит-дай:</strong> 1d8<br>
-                <strong>Хиты на 1 уровне:</strong> 8 + модификатор Телосложения<br>
-                <strong>Хиты на следующих уровнях:</strong> 1d8 (или 5) + модификатор Телосложения</p>
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+        </header>
 
-                <p><strong>Владения</strong><br>
-                <strong>Броня:</strong> лёгкая, средняя<br>
-                <strong>Оружие:</strong> простое оружие, короткие клинки, пистолеты, современное лёгкое оружие<br>
-                <strong>Инструменты:</strong> один набор на выбор (музыкальные инструменты, набор целителя или инструменты для ремонта)<br>
-                <strong>Спасброски:</strong> Мудрость, Харизма<br>
-                <strong>Навыки:</strong> выберите два из: Проницательность, Убеждение, Запугивание, Представление, Обман, История</p>
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
 
-                <p><strong>Снаряжение:</strong> лёгкая броня, простое оружие, артефакт-фокус (предмет, связанный с вашей травмой), набор исследователя или путешественника.</p>
+        <div class="container">
+
+            <!-- ЗАГОЛОВОК -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.2rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.6rem" height="1.6rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        А. Гештальт U
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">Класс • Связь • Привязанность</p>
             </div>
-        </div>
 
-        <!-- ===== ТАБЛИЦА ПРОГРЕССИИ ===== -->
-        <div class="card">
-            <h2 class="section-title">▼ Таблица прогрессии</h2>
-            <div class="collapsible-content open">
-                <table class="level-table">
-                    <thead>
-                        <tr>
-                            <th>Ур.</th>
-                            <th>Бонус<br>мастерства</th>
-                            <th>Эссенции<br>Связи</th>
-                            <th>Особенности</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td>+2</td><td>2</td><td>Призыв Гештальта, Отношенческое чутьё</td></tr>
-                        <tr><td>2</td><td>+2</td><td>2</td><td>Боевая связь, Стиль проявления</td></tr>
-                        <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
-                        <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <strong>Подкласс</strong></td></tr>
-                        <tr><td>5</td><td>+3</td><td>3</td><td>—</td></tr>
-                        <tr><td>6</td><td>+3</td><td>3</td><td>Улучшение Стиля проявления</td></tr>
-                        <tr><td>7</td><td>+3</td><td>3</td><td><strong>Подкласс</strong></td></tr>
-                        <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
-                        <tr><td>10</td><td>+4</td><td>4</td><td>Улучшение Стиля проявления</td></tr>
-                        <tr><td>11</td><td>+4</td><td>4</td><td><strong>Подкласс</strong></td></tr>
-                        <tr><td>12</td><td>+4</td><td>4</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>13</td><td>+5</td><td>5</td><td>—</td></tr>
-                        <tr><td>14</td><td>+5</td><td>5</td><td>Улучшение Стиля проявления</td></tr>
-                        <tr><td>15</td><td>+5</td><td>5</td><td><strong>Подкласс</strong></td></tr>
-                        <tr><td>16</td><td>+5</td><td>5</td><td>Увеличение характеристик</td></tr>
-                        <tr><td>17</td><td>+6</td><td>6</td><td>—</td></tr>
-                        <tr><td>18</td><td>+6</td><td>6</td><td>Апофеоз Стиля проявления</td></tr>
-                        <tr><td>19</td><td>+6</td><td>6 (8*)</td><td>Увеличение характеристик, <strong>Апофеоз подкласса</strong></td></tr>
-                        <tr><td>20</td><td>+6</td><td>6 (8*)</td><td>—</td></tr>
-                    </tbody>
-                </table>
-                <p class="muted">* Подклассы US, UC и UG увеличивают максимум Эссенций на +2 на 19 уровне.</p>
+            <!-- ЦИТАТА -->
+            <div class="quote-block">
+                «Я не один. Даже когда я один, я слышу их голоса. Тех, кто остался во мне. Тех, кто ушёл. Тех, кто никогда не уйдёт. Гештальт U — это не сила. Это ответственность. За тех, с кем ты связан.»
+                <span class="author">— Безымянный носитель, странник с множеством лиц</span>
             </div>
-        </div>
 
-        <!-- ===== ОСНОВНЫЕ ОСОБЕННОСТИ ===== -->
-        <div class="card">
-            <h2 class="section-title">▼ Основные особенности класса</h2>
-            <div class="collapsible-content open">
-
-                <div class="ability">
-                    <strong>1 уровень — Призыв Гештальта</strong><br>
-                    Бонусным действием вы можете потратить <strong>1 Эссенцию Связи</strong>, чтобы призвать своего Альтернативного Гештальта. Он существует до 1 минуты (или пока вы его не отпустите, или пока его хиты не упадут до 0).<br><br>
-                    Переключение режима стоит 1 Эссенцию Связи.
-                </div>
-
-                <div class="ability">
-                    <strong>Эссенция Связи</strong><br>
-                    Количество Эссенций = ваш бонус мастерства.<br>
-                    Все Эссенции восстанавливаются после длинного отдыха.<br>
-                    После короткого отдыха вы восстанавливаете <strong>1 Эссенцию</strong>.
-                </div>
-
-                <div class="ability">
-                    <strong>Внутренний режим (Берсерк)</strong><br>
-                    Гештальт сливается с вами. Пока режим активен:<br>
-                    • Вы получаете временные хиты = <strong>2d6 + ваш уровень</strong><br>
-                    • Вы получаете бонус к урону атак оружием и атакам Гештальта, равный модификатору Харизмы<br>
-                    • Вы получаете сопротивление одному типу урона (выбирается при активации)
-                </div>
-
-                <div class="ability">
-                    <strong>Внешний режим (Маг-Спутник)</strong><br>
-                    Отдельное проявление появляется в свободном пространстве в пределах 5 футов.<br><br>
-                    <strong>Характеристики:</strong><br>
-                    • Хиты = половина ваших максимальных хитов (округл. вниз)<br>
-                    • КД = 13 + ваш модификатор Ловкости<br>
-                    • Скорость = ваша<br>
-                    • Бонус атаки = бонус мастерства + модификатор Харизмы<br>
-                    • Урон = 1d8 + модификатор Харизмы психического урона<br>
-                    • Действует сразу после вашего хода. Может перемещаться и совершать одно действие (Атака, Помощь, Рывок, Отход и т.д.). Не имеет собственной реакции.<br><br>
-                    Если хиты Внешнего Гештальта падают до 0, он исчезает, и вы получаете 1d6 психического урона.
-                </div>
-
-                <div class="ability">
-                    <strong>Отношенческое чутьё</strong><br>
-                    Вы всегда знаете эмоциональное состояние существ, с которыми у вас есть сильная эмоциональная связь, пока они находятся в пределах 60 футов.<br>
-                    Вы совершаете проверки Проницательности против таких существ с преимуществом.<br>
-                    Вы мгновенно чувствуете, когда такое существо получает урон или оказывается в смертельной опасности (в пределах 1 мили).
-                </div>
-
-                <div class="ability">
-                    <strong>2 уровень — Боевая связь</strong><br>
-                    Один раз за ход, когда вы или ваш Гештальт наносите урон существу, вы можете выбрать одного союзника в пределах 30 футов. Этот союзник получает на выбор:<br>
-                    • Временные хиты, равные половине нанесённого урона (округл. вниз), <strong>или</strong><br>
-                    • Преимущество на следующую атаку до конца своего следующего хода.
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== СТИЛИ ПРОЯВЛЕНИЯ ===== -->
-        <div class="card" id="styles">
-            <h2 class="section-title">▼ Стили проявления</h2>
-            <div class="collapsible-content open">
-                <p>На 2 уровне вы выбираете один Стиль проявления. Стиль можно сменить после длинного отдыха.</p>
-
-                <div class="tabs">
-                    <button class="tab-button active" onclick="openTab(event, 'resonance')">Эмоциональный резонанс</button>
-                    <button class="tab-button" onclick="openTab(event, 'rupture')">Разрыв уз</button>
-                </div>
-
-                <div id="resonance" class="tab-content active">
-                    <div class="ability">
-                        <strong>2 уровень</strong><br>
-                        Все способности, которые дают союзникам временные хиты, лечение, преимущество, сопротивление или снимают состояния, получают дополнительный бонус <strong>+1d4</strong>.<br><br>
-                        <strong>Личный якорь.</strong> Когда вы или Гештальт даёте эффект союзнику, тот дополнительно получает временные хиты = ваш уровень / 2. Один раз за длинный отдых вместо этого можно дать преимущество на одну атаку или проверку.<br><br>
-                        <strong>Резонансная волна</strong> (1 Эссенция, бонусное действие, 1/короткий отдых)<br>
-                        До 3 союзников в 30 футах получают один эффект на выбор:<br>
-                        1. Перемещение на половину скорости без провоцированных атак<br>
-                        2. Снятие одного состояния<br>
-                        3. Сопротивление одному типу урона на 1 минуту
-                    </div>
-                    <div class="ability">
-                        <strong>6 уровень</strong><br>
-                        Бонус +1d4 → <strong>+1d6</strong>. Резонансная волна действует на 5 союзников, радиус 60 футов. Можно реакцией передать часть своих временных хитов союзнику.
-                    </div>
-                    <div class="ability">
-                        <strong>10 уровень</strong><br>
-                        Бонус +1d6 → <strong>+1d8</strong>.<br>
-                        <strong>Гармония</strong> (1/длинный отдых): все союзники в 30 футах получают преимущество на один спасбросок в течение 1 минуты.
-                    </div>
-                    <div class="ability">
-                        <strong>14 уровень</strong><br>
-                        <strong>Сотрудничество</strong> (1/длинный отдых, действие, концентрация до 1 минуты): аура 30 футов. Союзники получают сопротивление к дробящему, колющему и рубящему урону.
-                    </div>
-                    <div class="ability">
-                        <strong>18 уровень — Апофеоз сердца</strong><br>
-                        Бонус становится <strong>+2d6</strong>.<br>
-                        Резонансная волна может один раз за длинный отдых поднять упавшего союзника с 0 хитов, восстановив ему <strong>3d8 + уровень/2</strong> хитов. После этого вы получаете 1 уровень истощения.
-                    </div>
-                </div>
-
-                <div id="rupture" class="tab-content">
-                    <div class="ability">
-                        <strong>2 уровень</strong><br>
-                        Все ваши атаки и атаки Гештальта наносят дополнительный психический или некротический урон = половина бонуса мастерства (округл. вверх).<br><br>
-                        <strong>Переломный момент</strong> (1/ход): когда вы наносите урон существу, которое вредило вам или вашим связям, вы можете наложить один эффект:<br>
-                        1. Испуг или отравление на 1 минуту (спасбросок Мудрости)<br>
-                        2. Цель теряет реакцию до начала своего следующего хода<br>
-                        3. Дополнительный психический урон = 2d6 + ваш уровень<br><br>
-                        <strong>Разрыв души</strong> (1 Эссенция, действие, 1/короткий отдых)<br>
-                        Цель в 60 футах совершает спасбросок Мудрости. При провале: 2d6 психического урона + помеха на атаки до конца своего следующего хода + не может получать лечение и полезные эффекты от союзников до конца своего следующего хода.
-                    </div>
-                    <div class="ability">
-                        <strong>6 уровень</strong><br>
-                        К урону Переломного момента добавляется бонус мастерства. Разрыв души: 3d6, добавляется «отравлен», можно использовать 2 раза за короткий отдых без Эссенции. При критическом ударе — 1 уровень истощения (1 раз за бой).
-                    </div>
-                    <div class="ability">
-                        <strong>10 уровень</strong><br>
-                        Разрыв души: 4d6, игнорирует сопротивление психическому/некротическому, накладывает глухоту или слепоту на 1 ход, радиус 90 футов, при провале помеха на спасброски.
-                    </div>
-                    <div class="ability">
-                        <strong>14 уровень</strong><br>
-                        <strong>Уничтожение души</strong> (1/длинный отдых, действие): цель совершает спасбросок Мудрости. При провале — 8d8 психического + 1 уровень истощения. В любом случае: помеха на атаки и спасброски + не может получать помощь от союзников до конца своего следующего хода.
-                    </div>
-                    <div class="ability">
-                        <strong>18 уровень — Апофеоз души</strong><br>
-                        Дополнительный урон = бонус мастерства × 2. Разрыв души — 6d6.<br>
-                        <strong>Отвергающее одиночество</strong> (1/длинный отдых, действие, концентрация до 1 минуты): 60-футовый шар или 90-футовый конус. Враги совершают спасбросок Мудрости. При провале: 6d10 психического + помеха на атаки и спасброски + не могут получать помощь от союзников + 1 уровень истощения. При успехе — половину урона и только помеху на атаки. Вы и союзники получаете временные хиты = уровень × 2 и преимущество на атаки против поражённых на 1 минуту.
+            <!-- ОСНОВЫ -->
+            <div class="class-block" id="base">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                    </span>
+                    Основные характеристики
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Хит-дай</strong>
+                            <span class="value">1d8</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на 1 уровне</strong>
+                            <span class="value">8 + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Хиты на следующих уровнях</strong>
+                            <span class="value">1d8 (или 5) + модификатор Телосложения</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Броня</strong>
+                            <span class="value">лёгкая, средняя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Оружие</strong>
+                            <span class="value">простое оружие</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Спасброски</strong>
+                            <span class="value">Мудрость, Харизма</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Навыки</strong>
+                            <span class="value">Проницательность + два на выбор из: Убеждение, Запугивание, Обман, Выступление</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Снаряжение</strong>
+                            <span class="value">лёгкая броня, простое оружие, фокус (предмет, символизирующий связь), набор путешественника.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ===== ПОДКЛАССЫ ===== -->
-        <div class="card" id="subclasses">
-            <h2 class="section-title">▼ Подклассы</h2>
-            <div class="collapsible-content open">
-                <div class="tabs">
-                    <button class="tab-button active" onclick="openSubTab(event, 'UF')">UF — Круг Доверия</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'UP')">UP — Симбиоз</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'US')">US — Голос Общества</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'UC')">UC — Капризная Игра</button>
-                    <button class="tab-button" onclick="openSubTab(event, 'UG')">UG — Эхо Утраты</button>
+            <!-- ТАБЛИЦА ПРОГРЕССИИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3.75 3v16.5M3.75 3h16.5M3.75 3L21 20.25"/><path d="M6.75 6.75h10.5M6.75 9h7.5M6.75 11.25h4.5"/></svg>
+                    </span>
+                    Таблица прогрессии
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="table-wrapper">
+                        <table class="level-table">
+                            <thead>
+                                <tr>
+                                    <th>Ур.</th>
+                                    <th>Бонус<br>мастерства</th>
+                                    <th>Узлы</th>
+                                    <th>Особенности</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>+2</td><td>2</td><td>Проявление Связи, Связующая нить</td></tr>
+                                <tr><td>2</td><td>+2</td><td>2</td><td>Стиль Связи</td></tr>
+                                <tr><td>3</td><td>+2</td><td>2</td><td>—</td></tr>
+                                <tr><td>4</td><td>+2</td><td>2</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>5</td><td>+3</td><td>3</td><td>Распределение боли</td></tr>
+                                <tr><td>6</td><td>+3</td><td>3</td><td>—</td></tr>
+                                <tr><td>7</td><td>+3</td><td>3</td><td>Глубокая связь, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>8</td><td>+3</td><td>3</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>9</td><td>+4</td><td>4</td><td>—</td></tr>
+                                <tr><td>10</td><td>+4</td><td>4</td><td>Усиление связей</td></tr>
+                                <tr><td>11</td><td>+4</td><td>4</td><td>Эхо связи, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>12</td><td>+4</td><td>4</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>13</td><td>+5</td><td>5</td><td>—</td></tr>
+                                <tr><td>14</td><td>+5</td><td>5</td><td>—</td></tr>
+                                <tr><td>15</td><td>+5</td><td>5</td><td>Нерасторжимая связь, <span class="highlight">Подкласс</span></td></tr>
+                                <tr><td>16</td><td>+5</td><td>5</td><td>Увеличение характеристик</td></tr>
+                                <tr><td>17</td><td>+6</td><td>6</td><td>—</td></tr>
+                                <tr><td>18</td><td>+6</td><td>6</td><td>—</td></tr>
+                                <tr><td>19</td><td>+6</td><td>6</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                                <tr><td>20</td><td>+6</td><td>8</td><td>Апофеоз Связи</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="muted">Максимум Узлов = бонус мастерства + 1. После короткого отдыха восстанавливается 1 Узел.</p>
                 </div>
+            </div>
 
-                <!-- UF -->
-                <div id="UF" class="tab-content active">
-                    <p class="muted">Ваш Гештальт рождается из уз дружбы — верности, братства и боли предательства. Вы — опора и щит своей «стаи».</p>
-
-                    <div class="ability">
-                        <strong>4 уровень — Круг Доверия</strong><br>
-                        Когда вы проявляете Гештальт, все союзники в 30 футах получают +1 к КД и +1d4 к одному спасброску (тип выбирает союзник в момент совершения).<br><br>
-                        <strong>Верная Защита</strong> (1 Эссенция, реакция): когда союзник в 30 футах получает урон, вы даёте ему сопротивление к этому урону.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — В трудный час</strong><br>
-                        <strong>Дар</strong> (1 Эссенция, бонусное действие): один союзник в 60 футах восстанавливает 2d8 + ваш уровень хитов и получает временные хиты = ваш уровень.<br>
-                        Когда вы или Гештальт исцеляете союзника, тот получает преимущество на следующую атаку или проверку.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Круглый стол</strong><br>
-                        Радиус эффектов → 60 футов. Пока Гештальт проявлен, союзники получают сопротивление психическому урону и урону ядом.<br><br>
-                        <strong>Нерушимая Связь</strong> (2 Эссенции, действие): до 6 союзников получают +2 к КД и преимущество на все спасброски на 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Щит Верности</strong><br>
-                        <strong>Щит Верности</strong> (1/длинный отдых, действие, концентрация до 1 минуты): аура 30 футов. Союзники получают сопротивление физическому урону. Когда союзник в ауре получает урон, вы можете реакцией перенаправить до половины урона на себя (с учётом сопротивления). Пока в ауре есть союзник — вы иммунны к состоянию «испуган».
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз F (Цикл)</strong><br>
-                        На 1 час максимальные хиты союзников в 60 футах увеличиваются на ваш уровень × 2. Один раз за это время любой союзник может воскреснуть с 4d8 + ваш уровень хитов.<br><br>
-                        <strong>Пассивно:</strong> пока в 60 футах есть хотя бы один союзник, все союзники получают преимущество на спасброски Мудрости и Харизмы, а вы — сопротивление психическому урону.
-                    </div>
-                </div>
-
-                <!-- UP -->
-                <div id="UP" class="tab-content">
-                    <p class="muted">Вы учитесь делить силу со своим Партнёром. Ваша сила — в единстве двоих.</p>
-
-                    <div class="ability">
-                        <strong>4 уровень — Симбиоз</strong><br>
-                        Когда вы проявляете Гештальт, вы назначаете одного Партнёра (себя или союзника в 30 футах). Пока Гештальт проявлен, у вас и Партнёра общий пул временных хитов и общее сопротивление одному типу урона.<br><br>
-                        <strong>Слияние</strong> (1 Эссенция, бонусное действие): вы и Партнёр получаете +1 к КД. Каждый из вас один раз за ход может совершить атаку или проверку с преимуществом. Длительность — 1 минута.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Эмоциональный Вампиризм</strong><br>
-                        Один раз за ход, когда вы или Партнёр наносите урон, вы можете восстановить хиты себе или Партнёру в размере половины нанесённого психического урона.<br><br>
-                        <strong>Связь Сердец</strong> (2 Эссенции, действие): пока вы в 30 футах друг от друга, оба получаете преимущество на все проверки и спасброски на 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Глубокое Слияние</strong><br>
-                        Радиус → 60 футов. Пока действует Симбиоз или Слияние, один раз за ход один из вас может совершить дополнительное бонусное действие. Пока вы рядом с Партнёром — сопротивление психическому урону.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Ревность и Единство</strong><br>
-                        <strong>Ревнивая Связь</strong> (2 Эссенции, реакция): когда Партнёр получает урон, вы телепортируетесь к нему (до 60 футов) и наносите атаковавшему 4d10 психического урона. Цель получает помеху на следующую атаку.<br><br>
-                        <strong>Полное Слияние</strong> (1/длинный отдых, действие, концентрация до 1 минуты): вы одновременно получаете преимущества обоих режимов Гештальта. Стоимость способностей на Эссенцию увеличивается на 1. Если один падает до 0 хитов — слияние заканчивается, оба получают 4d8 психического урона.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Партнёрства</strong><br>
-                        На 1 час максимальные хиты вас и Партнёра увеличиваются на ваш уровень × 2. Один раз за это время любой из вас может воскреснуть с 4d8 + ваш уровень хитов.<br><br>
-                        <strong>Пассивно:</strong> пока Партнёр жив и в 60 футах, вы оба иммунны к «очарован» и «испуган», а риск Поглощения снижается на 2.
-                    </div>
-                </div>
-
-                <!-- US -->
-                <div id="US" class="tab-content">
-                    <p class="muted">Ваш Гештальт рождается из давления общества, лидерства и бунта. Вы — голос толпы.</p>
-                    <p class="muted"><strong>Социальный урон</strong> — особый тип урона (психологическое давление). Существа с иммунитетом к «очарован» или «испуган» имеют к нему сопротивление. Конструкты, нежить и существа с Интеллектом ≤ 3 имеют иммунитет.</p>
-
-                    <div class="ability">
-                        <strong>4 уровень — Коллективная Воля</strong><br>
-                        Когда вы проявляете Гештальт, союзники в 30 футах получают +1 к атакам и +1d4 к проверкам Харизмы.<br><br>
-                        <strong>Голос Общества</strong> (1 Эссенция, бонусное действие): до 3 существ в 60 футах совершают спасбросок Мудрости. При провале — 2d6 социального урона и помеха на следующую атаку.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Общественное Мнение</strong><br>
-                        <strong>Давление Толпы</strong> (2 Эссенции, действие): точка в 90 футах, радиус 20 футов. Существа совершают спасбросок Мудрости. При провале — 4d8 социального урона и «испуган» на 1 минуту (повторный спасбросок в конце хода).<br>
-                        Союзники в 30 футах получают преимущество на Запугивание и Убеждение.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Лидер Толпы</strong><br>
-                        Радиус → 60 футов. Пока Гештальт проявлен, союзники получают +2 к КД и сопротивление психическому урону.<br><br>
-                        <strong>Коллективный Призыв</strong> (2 Эссенции, действие): до 4 Отголосков Толпы (КД 13, хиты 5 + уровень, атака = мастерство + Харизма, урон 1d6 + Харизма социального). Существуют 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Бунт и Единство</strong><br>
-                        <strong>Бунт Общества</strong> (1/длинный отдых, действие): враги в 60 футах совершают спасбросок Харизмы. При провале — 6d10 социального урона и не могут совершать реакции до конца своего следующего хода. Союзники получают временные хиты = уровень × 2 и преимущество на атаки на 1 минуту.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз Общества</strong><br>
-                        Максимум Эссенций +2.<br>
-                        <strong>Единый Голос</strong> (1/длинный отдых, 1 минута): союзники в 60 футах получают иммунитет к испугу и очарованию, +3 к КД и преимущество на все спасброски. Один раз можно использовать Коллективный Призыв бесплатно и с удвоенным числом миньонов.<br><br>
-                        <strong>Пассивно:</strong> пока в 60 футах ≥ 3 союзников — сопротивление социальному и психическому урону.
-                    </div>
-                </div>
-
-                <!-- UC -->
-                <div id="UC" class="tab-content">
-                    <p class="muted">Вы играете с реальностью, как ребёнок. Эта игра опасна. Ваш Гештальт — каприз, иллюзия и истерия.</p>
-
-                    <div class="ability">
-                        <strong>4 уровень — Невинная шалость</strong><br>
-                        Когда вы проявляете Гештальт, вы получаете +1d4 к проверкам Ловкости и Харизмы, а союзники в 30 футах — +1d4 к проверкам Скрытности.<br><br>
-                        <strong>«Не найдёшь»</strong> (1 Эссенция, бонусное действие): вы или союзник в 60 футах становитесь труднозаметным на 1 минуту (помеха на Внимательность против вас, преимущество на Скрытность).
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Капризы</strong><br>
-                        <strong>«Капризы»</strong> (2 Эссенции, действие): цель в 90 футах совершает спасбросок Мудрости. При провале — 4d8 электрического урона и состояние (испуган / отравлен / скован) на 1 минуту (повторный спасбросок в конце хода). Вы или союзник получаете временные хиты = 3d8 + ваш уровень.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Фантазия</strong><br>
-                        Радиус → 60 футов.<br>
-                        <strong>«Фантазия»</strong> (2 Эссенции, действие, концентрация до 1 минуты): зона 20 футов. Враги в зоне совершают атаки и проверки Внимательности с помехой. Один раз за ход можно заставить существо в зоне совершить спасбросок Мудрости: при провале — 3d10 электрического + скован или ослеплён до конца своего следующего хода. Вы и союзники в зоне получаете преимущество на Акробатику и Выступление.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Истерия</strong><br>
-                        <strong>«Истерия»</strong> (1/длинный отдых, действие): враги в 30 футах совершают спасбросок Харизмы. При провале — 6d10 электрического, недееспособны до конца своего следующего хода и испуганы на 1 минуту. Союзники получают преимущество на атаки против проваливших.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз C</strong><br>
-                        Максимум Эссенций +2.<br>
-                        <strong>«Долгожданное Чудо»</strong> (1/длинный отдых, 1 минута): вы и союзники в 60 футах получаете иммунитет к испугу и очарованию, +3 к КД и преимущество на все спасброски. Один раз можно использовать «Истерию» бесплатно.<br><br>
-                        <strong>Пассивно:</strong> пока Гештальт проявлен — сопротивление электрическому и психическому урону.
-                    </div>
-                </div>
-
-                <!-- UG -->
-                <div id="UG" class="tab-content">
-                    <p class="muted">Ваш Гештальт рождается из необратимой потери. Он — тень ушедшего и пустота внутри. Горе становится оружием.</p>
-
-                    <div class="ability">
-                        <strong>4 уровень — Эхо Памяти</strong><br>
-                        Когда вы проявляете Гештальт, вы получаете сопротивление некротическому и психическому урону.<br><br>
-                        <strong>«Последнее Слово»</strong> (1 Эссенция, бонусное действие): союзник в 60 футах получает временные хиты = 2d8 + ваш уровень и преимущество на следующий спасбросок в течение 1 минуты.
-                    </div>
-                    <div class="ability">
-                        <strong>7 уровень — Горечь Утраты</strong><br>
-                        <strong>«Горечь Утраты»</strong> (2 Эссенции, действие): цель в 90 футах совершает спасбросок Мудрости. При провале — 4d10 некротического урона и помеха на атаки и спасброски до конца своего следующего хода.<br>
-                        Один раз за ход, когда союзник в 30 футах получает урон, вы можете реакцией дать ему сопротивление к этому урону.
-                    </div>
-                    <div class="ability">
-                        <strong>11 уровень — Память об ушедших</strong><br>
-                        Радиус → 60 футов.<br>
-                        <strong>«Болезненные воспоминания»</strong> (2 Эссенции, действие): цель совершает спасбросок Мудрости. При провале — 6d10 некротического + «испуган» на 1 минуту (повторный спасбросок в конце хода).<br>
-                        Пока Гештальт проявлен, вы и союзники получаете сопротивление психическому и некротическому урону.
-                    </div>
-                    <div class="ability">
-                        <strong>15 уровень — Финальный Аккорд</strong><br>
-                        <strong>«Финальный Аккорд»</strong> (1/длинный отдых, действие): враги в 30 футах совершают спасбросок Харизмы. При провале — 8d10 некротического и не могут совершать реакции до конца своего следующего хода. Один союзник без сознания в радиусе может восстановить 4d10 + ваш уровень хитов.
-                    </div>
-                    <div class="ability">
-                        <strong>19 уровень — Апофеоз G</strong><br>
-                        Максимум Эссенций +2.<br>
-                        <strong>«Вечная Память»</strong> (1/длинный отдых, 1 минута): вы и союзники в 60 футах получаете иммунитет к испугу и очарованию, +3 к КД и преимущество на все спасброски. Один раз можно использовать «Финальный Аккорд» бесплатно.<br><br>
-                        <strong>Пассивно:</strong> пока в 60 футах есть хотя бы один союзник — сопротивление некротическому и психическому урону.
+            <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
+            <div class="class-block">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    </span>
+                    Основные особенности класса
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Узлы (основной ресурс)</strong>
+                            <div class="value">Основной ресурс класса. На 1 уровне равен 2.<br>
+                            Полностью восстанавливается после длинного отдыха.<br>
+                            После короткого отдыха восстанавливается половина максимума (округление вверх, минимум 1).</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>1 уровень — Проявление Связи</strong>
+                            <div class="value">Бонусным действием вы можете потратить <strong>1 Узел</strong>, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Узел.<br><br>
+                            <strong>Внутренний режим (Укоренение)</strong><br>
+                            • Временные хиты = 2d6 + ваш уровень<br>
+                            • Вы получаете преимущество на спасброски Харизмы и Мудрости<br>
+                            • Союзники в радиусе 30 футов получают +1 к КД<br><br>
+                            <strong>Внешний режим (Проекция связи)</strong><br>
+                            Отдельное проявление (хиты = половина ваших максимальных хитов). Действует сразу после вашего хода. Проекция может защищать союзников, занимая их место под атаками.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Связующая нить</strong>
+                            <div class="value">Вы можете установить ментальную связь с одним существом в пределах 30 футов (действие, 1 Узел). Связь длится 1 минуту.<br>
+                            • Вы знаете приблизительное состояние цели (здоровье, настроение, направление).<br>
+                            • Цель получает +1 к КД и спасброскам.<br>
+                            • Вы можете обмениваться простыми мысленными фразами (без слов).</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>5 уровень — Распределение боли</strong>
+                            <div class="value">Когда союзник в пределах 30 футов получает урон, вы можете реакцией (1 Узел) принять половину этого урона на себя.<br>
+                            Урон, который вы принимаете, нельзя уменьшить.<br>
+                            Если вы находитесь в режиме «Укоренение», вы также восстанавливаете хиты, равные принятому урону.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Глубокая связь</strong>
+                            <div class="value">Усиление «Связующей нити»:<br>
+                            • Вы можете установить Связующую нить на двух существ одновременно<br>
+                            • Союзники под Связующей нитью получают +1 к атакам<br>
+                            • Дистанция увеличивается до 60 футов<br>
+                            • Вы можете бонусным действием переместиться к союзнику, с которым у вас есть Связующая нить (30 футов), если вы находитесь в пределах 60 футов.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>10 уровень — Усиление связей</strong>
+                            <div class="value">Вы можете потратить 1 Узел, чтобы на 1 минуту усилить все активные Связующие нити:<br>
+                            • Союзники получают +1 к КД и +1 к урону<br>
+                            • Вы можете использовать Распределение боли без затраты Узла (но не чаще 1 раза за ход)</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Эхо связи</strong>
+                            <div class="value">Когда союзник под Связующей нитью совершает атаку или спасбросок, вы можете бонусным действием (1 Узел) скопировать его результат и использовать его для своей следующей проверки или спасброска (до конца вашего следующего хода).</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Нерасторжимая связь</strong>
+                            <div class="value">«Нерасторжимая связь» (1/длинный отдых, 1 минута):<br>
+                            • Вы устанавливаете Связующую нить на всех союзников в пределах 60 футов (без затраты Узлов)<br>
+                            • Распределение боли не требует реакции и Узлов (1 раз за ход)<br>
+                            • Союзники под Связующей нитью не могут быть испуганы или очарованы<br>
+                            • Когда союзник под Связью опускается до 0 хитов, вы можете реакцией восстановить ему 1d8 + ваш уровень хитов и получить временные хиты, равные этому числу</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>20 уровень — Апофеоз Связи</strong>
+                            <div class="value">Максимум Узлов +3.<br>
+                            Риск Поглощения исчезает.<br><br>
+                            <strong>«Апофеоз Связи»</strong> (1/длинный отдых, 1 минута):<br>
+                            • Все союзники в пределах 90 футов считаются под Связующей нитью<br>
+                            • Вы можете использовать Распределение боли без ограничений<br>
+                            • Когда союзник под Связью получает урон, вы можете реакцией полностью перенаправить этот урон на себя (вы получаете сопротивление к этому урону)<br>
+                            • Один раз за длительность вы можете восстановить все активные Связующие нити до максимума</div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- ПОДКЛАССЫ -->
+            <div class="class-block" id="subclasses">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </span>
+                    Подклассы
+                </h2>
+                <div class="collapsible-content open">
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="openSubTab(event, 'UR')">UR — Семья</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'UP')">UP — Партнёр</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'UF')">UF — Друзья</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'US')">US — Общество</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'UC')">UC — Дети</button>
+                        <button class="tab-button" onclick="openSubTab(event, 'UG')">UG — Ушедшие</button>
+                    </div>
+
+                    <!-- UR -->
+                    <div id="UR" class="tab-content active">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с семьёй — кровной или выбранной. Защита, ответственность и повторяющиеся сценарии.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Семейный узел</strong>
+                                <div class="value">Связующая нить на союзнике, который является членом семьи (по крови или по духу), даёт ему +1 к КД и преимущество на спасброски.<br>
+                                Вы можете потратить 1 Узел, чтобы реакцией принять весь урон, нанесённый члену семьи (без ограничения по расстоянию).</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Кровная связь</strong>
+                                <div class="value">Пока у вас есть активная Связующая нить с членом семьи, вы получаете +1 к атакам и +1d4 к урону.<br>
+                                Если член семьи опускается до 0 хитов, вы можете реакцией (1 Узел) восстановить ему 2d8 + уровень хитов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокие корни</strong>
+                                <div class="value">Члены семьи под Связующей нитью получают +1 к КД и +1 к спасброскам Мудрости.<br>
+                                Один раз за короткий отдых вы можете бонусным действием установить Связующую нить на всех союзников в пределах 60 футов (без затраты Узлов).</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимый узел</strong>
+                                <div class="value">«Нерасторжимый узел» (1/длинный отдых, 1 минута):<br>
+                                • Все члены семьи в пределах 60 футов считаются под Связующей нитью<br>
+                                • Распределение боли не требует реакции и Узлов<br>
+                                • Члены семьи получают +2 к КД и +2 к урону</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Семьи</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Семьи» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 90 футов считаются членами семьи<br>
+                                • Вы можете использовать Распределение боли без ограничений<br>
+                                • Один раз за длительность вы можете полностью восстановить всех союзников в пределах 60 футов на 3d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UP -->
+                    <div id="UP" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с партнёром — романтическая или глубокая дружеская. Созависимость, защита и риск потери.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Связь сердец</strong>
+                                <div class="value">Связующая нить с партнёром даёт ему +1 к КД и +1 к спасброскам Харизмы.<br>
+                                Когда вы находитесь в пределах 30 футов от партнёра, вы оба получаете +1 к атакам.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Защита партнёра</strong>
+                                <div class="value">Когда партнёр получает урон, вы можете реакцией (1 Узел) принять этот урон на себя и немедленно нанести атакующему 2d8 психического урона.<br>
+                                Пока партнёр жив, вы не можете быть испуганы или очарованы.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Общая боль</strong>
+                                <div class="value">Вы и партнёр делите временные хиты (максимум 20).<br>
+                                Один раз за короткий отдых вы можете восстановить партнёру 3d8 + уровень хитов, потратив 1 Узел.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимая связь сердец</strong>
+                                <div class="value">«Нерасторжимая связь» (1/длинный отдых, 1 минута):<br>
+                                • Вы и партнёр не можете быть разлучены эффектами (паралич, очарование, испуг)<br>
+                                • Вы оба получаете +2 к КД и +2 к урону<br>
+                                • Когда один из вас получает урон, другой может реакцией принять половину урона</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Сердец</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Сердец» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 60 футов считаются партнёрами<br>
+                                • Вы можете использовать Защиту партнёра без ограничений<br>
+                                • Один раз за длительность вы можете восстановить всех союзников в пределах 60 футов на 4d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UF -->
+                    <div id="UF" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с друзьями. Поддержка, верность и страх глубоких связей.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Дружеский узел</strong>
+                                <div class="value">Связующая нить с другом даёт ему +1 к КД и +1 к спасброскам Мудрости.<br>
+                                Вы можете потратить 1 Узел, чтобы реакцией переместиться к другу в пределах 60 футов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Верность</strong>
+                                <div class="value">Когда друг получает урон, вы можете реакцией (1 Узел) нанести атакующему 2d8 психического урона и восстановить себе хиты, равные половине нанесённого урона.<br>
+                                Пока друг жив, вы имеете преимущество на спасброски против страха.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокая дружба</strong>
+                                <div class="value">Друзья под Связующей нитью получают +1 к атакам и +1 к КД.<br>
+                                Один раз за короткий отдых вы можете бонусным действием восстановить всем друзьям в пределах 60 футов 2d8 + уровень хитов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимая дружба</strong>
+                                <div class="value">«Нерасторжимая дружба» (1/длинный отдых, 1 минута):<br>
+                                • Все друзья в пределах 60 футов считаются под Связующей нитью<br>
+                                • Вы можете использовать Верность без ограничений<br>
+                                • Друзья получают +2 к КД и +2 к урону</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Дружбы</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Дружбы» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 90 футов считаются друзьями<br>
+                                • Вы можете использовать Верность без ограничений<br>
+                                • Один раз за длительность вы можете восстановить всех союзников в пределах 60 футов на 3d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- US -->
+                    <div id="US" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с обществом. Чувство отчуждения, социальная тревога и желание принадлежать.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Чувство общества</strong>
+                                <div class="value">Вы можете установить Связующую нить на группу (до 5 существ) в пределах 30 футов, потратив 1 Узел. Группа получает +1 к КД и +1 к спасброскам Мудрости.<br>
+                                Вы знаете состояние всех существ в группе.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Социальный барьер</strong>
+                                <div class="value">Когда существо из группы получает урон, вы можете реакцией (1 Узел) применить «Социальный барьер» — цель получает сопротивление к этому урону и временные хиты, равные вашему уровню.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокое общество</strong>
+                                <div class="value">Группа под Связующей нитью получает +1 к атакам и +1 к КД.<br>
+                                Один раз за короткий отдых вы можете бонусным действием установить Связующую нить на всех союзников в пределах 60 футов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимое общество</strong>
+                                <div class="value">«Нерасторжимое общество» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 60 футов считаются под Связующей нитью<br>
+                                • Социальный барьер не требует реакции и Узлов<br>
+                                • Союзники получают +2 к КД и +2 к урону</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Общества</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Общества» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 90 футов считаются под Связующей нитью<br>
+                                • Вы можете использовать Социальный барьер без ограничений<br>
+                                • Один раз за длительность вы можете восстановить всех союзников в пределах 60 футов на 3d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UC -->
+                    <div id="UC" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с детьми — собственными или теми, кого ты взял под опеку. Забота, вина и гиперопека.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Опекун</strong>
+                                <div class="value">Связующая нить с ребёнком (или тем, кого ты считаешь ребёнком) даёт ему +1 к КД и +1 к спасброскам.<br>
+                                Вы можете потратить 1 Узел, чтобы реакцией принять весь урон, нанесённый ребёнку.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Защита ребёнка</strong>
+                                <div class="value">Когда ребёнок получает урон, вы можете реакцией (1 Узел) нанести атакующему 3d8 психического урона и восстановить ребёнку 2d8 + уровень хитов.<br>
+                                Пока ребёнок жив, вы имеете преимущество на спасброски против очарования.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокая опека</strong>
+                                <div class="value">Дети под Связующей нитью получают +1 к атакам и +1 к КД.<br>
+                                Один раз за короткий отдых вы можете бонусным действием восстановить всем детям в пределах 60 футов 2d8 + уровень хитов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимая опека</strong>
+                                <div class="value">«Нерасторжимая опека» (1/длинный отдых, 1 минута):<br>
+                                • Все дети в пределах 60 футов считаются под Связующей нитью<br>
+                                • Вы можете использовать Защиту ребёнка без ограничений<br>
+                                • Дети получают +2 к КД и +2 к урону</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Опеки</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Опеки» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 90 футов считаются детьми<br>
+                                • Вы можете использовать Защиту ребёнка без ограничений<br>
+                                • Один раз за длительность вы можете восстановить всех союзников в пределах 60 футов на 3d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UG -->
+                    <div id="UG" class="tab-content">
+                        <p class="muted" style="margin-bottom: 1rem;">Связь с ушедшими. Горе, привязанность к призракам и невозможность отпустить.</p>
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <strong>4 уровень — Тень ушедших</strong>
+                                <div class="value">Вы можете установить Связующую нить на место или предмет, связанный с ушедшим. На 1 минуту вы получаете +1 к КД и +1 к спасброскам Мудрости.<br>
+                                Вы можете задать один вопрос о месте или событии, связанном с ушедшим (ведущий даёт намёк или образ).</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>7 уровень — Призрачная защита</strong>
+                                <div class="value">Когда вы получаете урон, вы можете реакцией (1 Узел) призвать тень ушедшего — она принимает урон вместо вас (вы получаете сопротивление к урону).<br>
+                                Вы также получаете временные хиты, равные вашему уровню.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>11 уровень — Глубокое горе</strong>
+                                <div class="value">Вы можете установить Связующую нить на место или предмет, связанный с ушедшим, без затраты Узлов.<br>
+                                Один раз за короткий отдых вы можете бонусным действием восстановить себе 3d8 + уровень хитов.</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>15 уровень — Нерасторжимая тень</strong>
+                                <div class="value">«Нерасторжимая тень» (1/длинный отдых, 1 минута):<br>
+                                • Вы считаетесь под Связующей нитью с ушедшим<br>
+                                • Призрачная защита не требует реакции и Узлов<br>
+                                • Вы получаете +2 к КД и +2 к урону</div>
+                            </div>
+                            <div class="ability-item">
+                                <strong>19 уровень — Апофеоз Ушедших</strong>
+                                <div class="value">Максимум Узлов +2.<br>
+                                «Апофеоз Ушедших» (1/длинный отдых, 1 минута):<br>
+                                • Все союзники в пределах 90 футов считаются под Связующей нитью с ушедшим<br>
+                                • Вы можете использовать Призрачную защиту без ограничений<br>
+                                • Один раз за длительность вы можете восстановить всех союзников в пределах 60 футов на 3d10 + уровень</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПОГЛОЩЕНИЕ -->
+            <div class="class-block" id="absorption">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    </span>
+                    Поглощение (механика риска)
+                </h2>
+                <div class="collapsible-content open">
+                    <p style="margin-bottom: 1rem;"><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
+
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Как накапливается</strong>
+                            <div class="value">
+                                <ul>
+                                    <li>Трата 3+ Узлов за один бой — +1 уровень.</li>
+                                    <li>Потеря союзника под Связующей нитью.</li>
+                                    <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Уровни Поглощения (максимум 5)</strong>
+                            <div class="value">
+                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                    <strong style="color: var(--accent);">Уровень 1</strong>
+                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Преимущество на проверки Харизмы, связанные с привязанностью, но помеха на проверки Мудрости.</div>
+                                </div>
+                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                    <strong style="color: var(--accent);">Уровень 2</strong>
+                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">+1 к КД, но помеха на спасброски Мудрости.</div>
+                                </div>
+                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                    <strong style="color: var(--accent);">Уровень 3</strong>
+                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">В начале хода спасбросок Мудрости (Сл 15). При провале вы теряете контроль и начинаете действовать в интересах Гештальта.</div>
+                                </div>
+                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                    <strong style="color: var(--accent);">Уровень 4</strong>
+                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Помеха на все проверки и спасброски, не связанные с вашей Связью.</div>
+                                </div>
+                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                    <strong style="color: var(--accent);">Уровень 5</strong>
+                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Полная потеря контроля. Ведущий временно берёт управление (Гештальт действует в рамках вашей Связи). Возможен «Разрыв Связи».</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Восстановление</strong>
+                            <div class="value">• Длинный отдых — все уровни сбрасываются.<br>
+                            • Короткий отдых — можно снять 1 уровень (медитация, разговор, ритуал).<br>
+                            • Специальные способности и предметы могут снимать уровни.</div>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Особенности Гештальта U</strong>
+                            <div class="value">• Поглощение усиливается при сильном проявлении вашей главной Связи.<br>
+                            • На 3+ уровнях Связь начинает диктовать поведение (UR — гиперопека, UP — ревность, UF — изоляция и т.д.).<br>
+                            • На 5 уровне возможен «Разрыв Связи» — мощный, но неконтролируемый выброс эмоций, связанных с вашей Связью.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+            <div class="class-block" id="tips">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    </span>
+                    Советы по отыгрышу
+                </h2>
+                <ul class="rp-list">
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                        <span><strong>Ты — связь:</strong> Твоя сила — в отношениях с другими. Ты защищаешь, поддерживаешь, чувствуешь. Но иногда ты слишком привязываешься.</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                        <span><strong>Цена привязанности:</strong> Ты знаешь, что любовь и забота могут быть опасны. Ты готов рискнуть собой ради других — но готов ли ты потерять себя?</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                        <span><strong>Отношения с другими:</strong> Ты можешь быть опорой для многих. Но кто станет опорой для тебя?</span>
+                    </li>
+                    <li>
+                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                        <span><strong>Страх потери:</strong> Ты боишься, что однажды потеряешь всех, с кем связан. Или что они потеряют тебя. Как ты справляешься с этим страхом?</span>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="index.html#section-classes" class="back-link">← Вернуться к списку классов</a>
+
         </div>
 
-        <!-- ===== ПОГЛОЩЕНИЕ ===== -->
-        <div class="card" id="absorption">
-            <h2 class="section-title">▼ Поглощение (механика риска)</h2>
-            <div class="collapsible-content open">
-                <p><strong>Поглощение</strong> — процесс, когда Гештальт начинает брать верх над носителем.</p>
+        <!-- ПОДВАЛ -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
 
-                <div class="ability">
-                    <strong>Как накапливается</strong>
-                    <ul>
-                        <li>Каждый раз, когда вы тратите 3 или более Эссенций Связи за один бой — +1 уровень.</li>
-                        <li>Когда вы перенаправляете урон или стабилизируете союзника — +1 уровень (не чаще 1 раза за бой).</li>
-                        <li>Критический урон или провал важного спасброска, связанного с эмоциями и связями.</li>
-                        <li>Сильные эмоциональные события (потеря близкого, предательство и т.д.) — по решению ведущего.</li>
-                    </ul>
-                </div>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
 
-                <div class="ability">
-                    <strong>Уровни Поглощения (максимум 5)</strong>
-                    <table class="level-table">
-                        <tr><th>Уровень</th><th>Эффект</th></tr>
-                        <tr><td>1</td><td>Преимущество на атаки и проверки, связанные с вашей темой, но помеха на социальные проверки.</td></tr>
-                        <tr><td>2</td><td>+1 к урону и КД, но помеха на спасброски Мудрости.</td></tr>
-                        <tr><td>3</td><td>В начале своего хода совершаете спасбросок Мудрости (Сл 15). При провале теряете контроль на этот ход.</td></tr>
-                        <tr><td>4</td><td>Помеха на все спасброски и проверки, не связанные с вашей темой.</td></tr>
-                        <tr><td>5</td><td>Полная потеря контроля. Ведущий временно берёт управление персонажем (Гештальт действует в рамках вашей темы).</td></tr>
-                    </table>
-                </div>
-
-                <div class="ability">
-                    <strong>Восстановление</strong><br>
-                    • После длинного отдыха все уровни Поглощения сбрасываются.<br>
-                    • Можно снять 1 уровень за короткий отдых (медитация, разговор с близкими, ритуал).<br>
-                    • Специальные способности и предметы могут снимать уровни.
-                </div>
-
-                <div class="ability">
-                    <strong>Особенности Гештальта U</strong><br>
-                    • Поглощение усиливается, когда вы теряете или предаёте «своих».<br>
-                    • На 3+ уровнях вы можете невольно защищать или атаковать близких.<br>
-                    • На 5 уровне Гештальт может заставить вас «слиться» с кем-то из близких (совместное разделение урона или потеря контроля).
-                </div>
+        <div class="modal-overlay" id="modal">
+            <div class="modal-box">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <h3 id="modalTitle">Заголовок</h3>
+                <p id="modalDesc">Описание</p>
+                <span class="tag" id="modalTag">Тег</span>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Collapsible sections
-        document.querySelectorAll('.section-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const content = title.nextElementSibling;
-                if (content && content.classList.contains('collapsible-content')) {
-                    content.classList.toggle('open');
-                    title.textContent = content.classList.contains('open')
-                        ? title.textContent.replace('▶', '▼')
-                        : title.textContent.replace('▼', '▶');
+        (function() {
+            'use strict';
+
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
                 }
             });
-        });
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        // Style tabs
-        function openTab(evt, tabId) {
-            const parent = evt.currentTarget.closest('.card');
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
 
-        // Subclass tabs
-        function openSubTab(evt, tabId) {
-            const parent = evt.currentTarget.closest('.card');
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
+            document.querySelectorAll('.section-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.closest('.class-block').querySelector('.collapsible-content');
+                    if (content) {
+                        content.classList.toggle('open');
+                    }
+                });
+            });
+
+            window.openSubTab = function(evt, tabId) {
+                const parent = evt.currentTarget.closest('.class-block');
+                parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                evt.currentTarget.classList.add('active');
+            };
+
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0,
+                    mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX;
+                        const dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(function(p) {
+                        p.update();
+                        p.draw();
+                    });
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+            }
+
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            if (modal) {
+                modalClose.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
     </script>
+
 </body>
-</html> 
+</html>
