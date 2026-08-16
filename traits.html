@@ -28,7 +28,7 @@
     <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
-    <!-- ===== НАВИГАЦИЯ (фиксированная) ===== -->
+    <!-- ===== НАВИГАЦИЯ ===== -->
     <nav id="mainNav">
         <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
         <button class="nav-toggle" id="navToggle" aria-label="Меню">
@@ -54,7 +54,7 @@
         <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
         <div class="breadcrumbs" id="breadcrumbs"></div>
 
-        <!-- ===== ЗАГОЛОВОК СТРАНИЦЫ ===== -->
+        <!-- ===== ЗАГОЛОВОК ===== -->
         <h1 class="section-title">Черты</h1>
         <p class="section-desc">Особенности, которые определяют твоего персонажа. Каждая черта даёт уникальное преимущество.</p>
 
@@ -74,59 +74,7 @@
         </div>
 
         <!-- ===== СЕТКА ЧЕРТ ===== -->
-        <div class="trait-grid" id="traitsGrid">
-            <!-- Карточки будут сгенерированы скриптом, но для примера добавим несколько статичных -->
-            <div class="trait-card" data-category="physical">
-                <span class="tag">Физическая</span>
-                <h3>Крепкое тело</h3>
-                <p>Ваше тело закалено выживанием. +2 к выносливости и устойчивость к ядам.</p>
-            </div>
-            <div class="trait-card" data-category="mental">
-                <span class="tag">Ментальная</span>
-                <h3>Железная воля</h3>
-                <p>Ваш разум непоколебим. Сложно поддаться манипуляции или страху.</p>
-            </div>
-            <div class="trait-card" data-category="social">
-                <span class="tag">Социальная</span>
-                <h3>Светское обаяние</h3>
-                <p>Вы легко находите общий язык с людьми. Бонус к дипломатии и убеждению.</p>
-            </div>
-            <div class="trait-card" data-category="technical">
-                <span class="tag">Техническая</span>
-                <h3>Мастер-ремонтник</h3>
-                <p>Вы разбираетесь в механизмах и электронике. Чините и модифицируете снаряжение.</p>
-            </div>
-            <div class="trait-card" data-category="geshtalt">
-                <span class="tag">Гештальт</span>
-                <h3>Эхо памяти</h3>
-                <p>Ваш Гештальт сохранил отголоски прошлого. Иногда вы видите чужие воспоминания.</p>
-            </div>
-            <div class="trait-card" data-category="physical">
-                <span class="tag">Физическая</span>
-                <h3>Быстрая реакция</h3>
-                <p>Вы молниеносно реагируете на угрозы. Преимущество при инициативе.</p>
-            </div>
-            <div class="trait-card" data-category="mental">
-                <span class="tag">Ментальная</span>
-                <h3>Аналитический ум</h3>
-                <p>Вы замечаете детали, которые другие упускают. Бонус к расследованию.</p>
-            </div>
-            <div class="trait-card" data-category="geshtalt">
-                <span class="tag">Гештальт</span>
-                <h3>Слияние с тенью</h3>
-                <p>Ваш Гештальт позволяет вам сливаться с тенями, становясь невидимым в темноте.</p>
-            </div>
-            <div class="trait-card" data-category="social">
-                <span class="tag">Социальная</span>
-                <h3>Интуитивный психолог</h3>
-                <p>Вы читаете людей как открытую книгу. Бонус к определению лжи.</p>
-            </div>
-            <div class="trait-card" data-category="technical">
-                <span class="tag">Техническая</span>
-                <h3>Хакер</h3>
-                <p>Вы легко взламываете электронные системы и обходите защиту.</p>
-            </div>
-        </div>
+        <div class="trait-grid" id="traitsGrid"></div>
 
         <!-- ===== ПОДВАЛ ===== -->
         <footer>
@@ -149,59 +97,197 @@
 
     </div> <!-- .content -->
 
-    <!-- ===== МОДАЛКА (если нужна) ===== -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-box">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <h3 id="modalTitle">Заголовок</h3>
-            <p id="modalDesc">Описание</p>
-            <span class="tag" id="modalTag">Тег</span>
-        </div>
-    </div>
-
-    <!-- ===== ОБЩИЙ JS ===== -->
+    <!-- ===== ОБЩИЙ JS (для работы поиска и остальных функций) ===== -->
     <script src="main.js"></script>
+
+    <!-- ===== СПЕЦИФИЧНЫЙ JS ДЛЯ ЧЕРТ ===== -->
     <script>
         (function() {
             'use strict';
 
-            // Дополнительная логика для фильтров (работает поверх основного поиска)
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const traitCards = document.querySelectorAll('.trait-card');
+            // ============================================================
+            // ДАННЫЕ ЧЕРТ
+            // ============================================================
+            const traitsData = [
+                // Физические
+                { category: 'physical', tag: 'Физическая', name: 'Крепкое тело', desc: 'Ваше тело закалено выживанием. +2 к выносливости и устойчивость к ядам.' },
+                { category: 'physical', tag: 'Физическая', name: 'Быстрая реакция', desc: 'Вы молниеносно реагируете на угрозы. Преимущество при инициативе.' },
+                { category: 'physical', tag: 'Физическая', name: 'Бегун пустошей', desc: 'Вы привыкли к долгим переходам. Ваша скорость на 10 футов выше, вы не устаёте на длинных дистанциях.' },
+                { category: 'physical', tag: 'Физическая', name: 'Живучий', desc: 'Ваши раны заживают быстрее. При восстановлении хитов вы получаете +1 к каждому броску кости.' },
+                { category: 'physical', tag: 'Физическая', name: 'Тяжеловес', desc: 'Вы можете нести больше снаряжения. +20% к грузоподъёмности.' },
+                // Ментальные
+                { category: 'mental', tag: 'Ментальная', name: 'Железная воля', desc: 'Ваш разум непоколебим. Сложно поддаться манипуляции или страху.' },
+                { category: 'mental', tag: 'Ментальная', name: 'Аналитический ум', desc: 'Вы замечаете детали, которые другие упускают. Бонус к расследованию.' },
+                { category: 'mental', tag: 'Ментальная', name: 'Хладнокровие', desc: 'В критической ситуации вы не теряете голову. Преимущество при спасбросках от страха.' },
+                { category: 'mental', tag: 'Ментальная', name: 'Мастер планирования', desc: 'Вы всегда продумываете на 2 шага вперёд. Один раз в день вы можете изменить один бросок кубика.' },
+                { category: 'mental', tag: 'Ментальная', name: 'Феноменальная память', desc: 'Вы никогда не забываете то, что видели или слышали. Бонус к проверкам на запоминание информации.' },
+                // Социальные
+                { category: 'social', tag: 'Социальная', name: 'Светское обаяние', desc: 'Вы легко находите общий язык с людьми. Бонус к дипломатии и убеждению.' },
+                { category: 'social', tag: 'Социальная', name: 'Интуитивный психолог', desc: 'Вы читаете людей как открытую книгу. Бонус к определению лжи.' },
+                { category: 'social', tag: 'Социальная', name: 'Пленительная речь', desc: 'Ваши слова завораживают. Вы можете пытаться убедить любого персонажа хотя бы на несколько минут.' },
+                { category: 'social', tag: 'Социальная', name: 'Внушающий доверие', desc: 'Люди доверяют вам с первой встречи. +3 к социальным проверкам с незнакомцами.' },
+                { category: 'social', tag: 'Социальная', name: 'Мастер переговоров', desc: 'Вы всегда выбиваете лучшие условия. Бонус к торгу и поиску компромиссов.' },
+                // Технические
+                { category: 'technical', tag: 'Техническая', name: 'Мастер-ремонтник', desc: 'Вы разбираетесь в механизмах и электронике. Чините и модифицируете снаряжение.' },
+                { category: 'technical', tag: 'Техническая', name: 'Хакер', desc: 'Вы легко взламываете электронные системы и обходите защиту.' },
+                { category: 'technical', tag: 'Техническая', name: 'Инженер-конструктор', desc: 'Вы можете создать импровизированное устройство из подручных материалов.' },
+                { category: 'technical', tag: 'Техническая', name: 'Взрывотехник', desc: 'Вы знаете, как обращаться с взрывчаткой. Бонус к созданию и обезвреживанию взрывных устройств.' },
+                { category: 'technical', tag: 'Техническая', name: 'Архивариус технологий', desc: 'Вы знаете историю и принципы работы любых устройств. Бонус к идентификации техники.' },
+                // Гештальт
+                { category: 'geshtalt', tag: 'Гештальт', name: 'Эхо памяти', desc: 'Ваш Гештальт сохранил отголоски прошлого. Иногда вы видите чужие воспоминания.' },
+                { category: 'geshtalt', tag: 'Гештальт', name: 'Слияние с тенью', desc: 'Ваш Гештальт позволяет вам сливаться с тенями, становясь невидимым в темноте.' },
+                { category: 'geshtalt', tag: 'Гештальт', name: 'Обострённое восприятие', desc: 'Ваш Гештальт обостряет чувства. Вы видите в темноте и слышите на большом расстоянии.' },
+                { category: 'geshtalt', tag: 'Гештальт', name: 'Голос предков', desc: 'Ваш Гештальт говорит с вами во сне, давая подсказки и предупреждения.' },
+                { category: 'geshtalt', tag: 'Гештальт', name: 'Рваная душа', desc: 'Ваша душа связана с Гештальтом так сильно, что вы можете чувствовать эмоции других существ.' }
+            ];
 
-            if (filterButtons.length) {
-                filterButtons.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // Убираем active у всех кнопок
-                        filterButtons.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
+            // ============================================================
+            // РЕНДЕРИНГ КАРТОЧЕК
+            // ============================================================
+            const grid = document.getElementById('traitsGrid');
 
-                        const filter = this.dataset.filter;
-                        traitCards.forEach(card => {
-                            const category = card.dataset.category;
-                            // Если фильтр "all" или категория совпадает
-                            if (filter === 'all' || category === filter) {
-                                card.style.display = '';
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
-                    });
+            function renderTraits(data) {
+                grid.innerHTML = '';
+                data.forEach((trait, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'trait-card';
+                    card.dataset.category = trait.category;
+                    card.dataset.index = index;
+                    card.innerHTML = `
+                        <span class="tag">${trait.tag}</span>
+                        <h3>${trait.name}</h3>
+                        <p>${trait.desc}</p>
+                    `;
+                    grid.appendChild(card);
+
+                    // Анимация с задержкой (появляются красиво по очереди)
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, 50 + index * 80);
                 });
             }
 
-            // Принудительная анимация для карточек (если они уже visible)
+            // Первичный рендер
+            renderTraits(traitsData);
+
+            // ============================================================
+            // ФИЛЬТРЫ
+            // ============================================================
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            let currentFilter = 'all';
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    applyFilters();
+                });
+            });
+
+            // ============================================================
+            // ПОИСК + ФИЛЬТР
+            // ============================================================
+            const searchInput = document.getElementById('searchInput');
+
+            function applyFilters() {
+                const query = searchInput.value.toLowerCase().trim();
+                const cards = grid.querySelectorAll('.trait-card');
+
+                cards.forEach(card => {
+                    const category = card.dataset.category;
+                    const text = card.textContent.toLowerCase();
+                    const matchFilter = currentFilter === 'all' || category === currentFilter;
+                    const matchSearch = text.includes(query);
+                    const isVisible = matchFilter && matchSearch;
+
+                    card.style.display = isVisible ? '' : 'none';
+
+                    // Если карточка не видима, убираем visible, чтобы при повторном появлении анимация сработала
+                    if (!isVisible) {
+                        card.classList.remove('visible');
+                    } else {
+                        // Если карточка стала видимой, запускаем анимацию
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 50);
+                    }
+                });
+
+                // Показываем сообщение, если ничего не найдено
+                let noResults = document.getElementById('no-results-traits');
+                const visibleCards = grid.querySelectorAll('.trait-card[style*="display: block"], .trait-card:not([style*="display: none"])');
+                const hasVisible = visibleCards.length > 0;
+
+                if (!noResults) {
+                    noResults = document.createElement('p');
+                    noResults.id = 'no-results-traits';
+                    noResults.style.textAlign = 'center';
+                    noResults.style.color = 'var(--text-muted)';
+                    noResults.style.marginTop = '2rem';
+                    grid.after(noResults);
+                }
+
+                if ((query !== '' || currentFilter !== 'all') && !hasVisible) {
+                    noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос или фильтр.';
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            // Слушаем поиск
+            searchInput.addEventListener('input', applyFilters);
+
+            // ============================================================
+            // ИНТЕРСЕКЦИЯ ОБСЕРВЕР для карточек (если они не успели показаться)
+            // ============================================================
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && entry.target.style.display !== 'none') {
                         entry.target.classList.add('visible');
                     }
                 });
             }, { threshold: 0.1 });
 
-            traitCards.forEach(card => {
-                observer.observe(card);
-            });
+            // Наблюдаем за карточками после рендера
+            const allCards = grid.querySelectorAll('.trait-card');
+            allCards.forEach(card => observer.observe(card));
+
+            // ============================================================
+            // КЛИК ПО КАРТОЧКЕ → МОДАЛКА (используем ту же, что в main.js)
+            // ============================================================
+            // Модалка уже есть в main.js, и она работает с классом .card.
+            // Чтобы она работала с .trait-card, просто добавим обработчик:
+            const modal = document.getElementById('modal');
+            if (modal) {
+                const modalClose = document.getElementById('modalClose');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalDesc = document.getElementById('modalDesc');
+                const modalTag = document.getElementById('modalTag');
+
+                grid.addEventListener('click', function(e) {
+                    const card = e.target.closest('.trait-card');
+                    if (!card) return;
+                    const title = card.querySelector('h3')?.textContent || 'Без названия';
+                    const desc = card.querySelector('p')?.textContent || 'Нет описания';
+                    const tag = card.querySelector('.tag')?.textContent || '';
+                    if (modalTitle) modalTitle.textContent = title;
+                    if (modalDesc) modalDesc.textContent = desc;
+                    if (modalTag) modalTag.textContent = tag;
+                    modal.classList.add('active');
+                });
+
+                if (modalClose) {
+                    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+                }
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
 
         })();
     </script>
