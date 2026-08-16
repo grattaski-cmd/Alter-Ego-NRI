@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Авангард маны — Предыстория</title>
+    <title>Авангард маны — Предыстория — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Предыстория Авангард маны в мире Альтер-Эго: захватчик из иного мира, выживший любой ценой.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ===== */
         .backstory-title {
             position: relative;
             display: inline-block;
-            font-family: 'Courier New', monospace;
+            font-family: 'Cinzel', serif;
             letter-spacing: 0.08em;
             color: var(--accent);
             text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
@@ -24,42 +27,27 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .quote-block {
-            background: var(--bg-nav);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem 1.8rem;
-            margin: 1.8rem 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--text-muted);
-            position: relative;
+        .backstory-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
-        .quote-block::before {
-            content: '“';
-            font-size: 3rem;
-            color: var(--accent);
-            position: absolute;
-            top: -0.2rem;
-            left: 0.8rem;
-            opacity: 0.3;
-            font-style: normal;
-        }
-        .quote-block .author {
-            display: block;
-            margin-top: 0.6rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
+        .backstory-block:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
         }
 
         .section-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.6rem;
-            height: 1.6rem;
-            margin-right: 0.3rem;
+            width: 1.8rem;
+            height: 1.8rem;
             flex-shrink: 0;
             color: var(--accent);
         }
@@ -76,28 +64,25 @@
         .section-title {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            font-size: 1.6rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Cinzel', serif;
         }
 
-        .backstory-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: border-color var(--transition);
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
         }
-        .backstory-block:hover {
-            border-color: var(--accent);
-        }
-
         .feature-item {
             background: var(--bg-nav);
             padding: 0.8rem 1.2rem;
             border-left: 3px solid var(--accent);
             border-radius: 0 var(--radius) var(--radius) 0;
-            margin-bottom: 0.8rem;
         }
         .feature-item strong {
             color: var(--accent);
@@ -111,11 +96,10 @@
             overflow-wrap: break-word;
             max-width: 100%;
         }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
+        .feature-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+            color: var(--text);
         }
 
         .ideal-grid {
@@ -128,7 +112,7 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 0.8rem 1rem;
-            transition: border-color var(--transition);
+            transition: border-color 0.3s;
         }
         .ideal-card:hover {
             border-color: var(--accent);
@@ -142,32 +126,6 @@
             margin: 0.2rem 0 0;
             font-size: 0.85rem;
             color: var(--text);
-        }
-
-        .rp-icon {
-            width: 1.4rem;
-            height: 1.4rem;
-            flex-shrink: 0;
-            color: var(--accent);
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.5;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: gap var(--transition);
-        }
-        .back-link:hover {
-            gap: 12px;
-            text-decoration: underline;
         }
 
         .rp-list {
@@ -184,6 +142,15 @@
         }
         .rp-list li:last-child {
             border-bottom: none;
+        }
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
         }
 
         .muted {
@@ -202,333 +169,358 @@
             letter-spacing: 0.03em;
         }
 
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        #no-results-avangard {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
         @media (max-width: 700px) {
-            .backstory-title {
-                font-size: 1.6rem !important;
-            }
-            .backstory-title span {
-                font-size: 1.6rem !important;
-            }
-            .backstory-title svg {
-                width: 1.4rem !important;
-                height: 1.4rem !important;
-            }
-            .backstory-block {
-                padding: 1.2rem 1rem;
-            }
-            .section-icon {
-                width: 1.4rem;
-                height: 1.4rem;
-            }
-            .ideal-grid {
-                grid-template-columns: 1fr;
-            }
+            .backstory-title { font-size: 2rem !important; }
+            .backstory-title svg { width: 1.8rem !important; height: 1.8rem !important; }
+            .backstory-block { padding: 1.2rem; }
+            .section-icon { width: 1.4rem; height: 1.4rem; }
+            .ideal-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .backstory-title {
-                font-size: 1.3rem !important;
-            }
-            .backstory-title span {
-                font-size: 1.3rem !important;
-            }
-            .backstory-title svg {
-                width: 1.2rem !important;
-                height: 1.2rem !important;
-            }
-            .quote-block {
-                padding: 1rem 1.2rem;
-            }
+            .backstory-title { font-size: 1.6rem !important; }
+            .backstory-title svg { width: 1.4rem !important; height: 1.4rem !important; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
+
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
+    <!-- ===== НАВИГАЦИЯ (глобальная) ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html" class="active">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
+
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="content">
 
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        </header>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
-            <a href="lore.html">Лор</a>
-            <a href="traits.html">Черты</a>
-            <a href="Backstories.html">Предыстории</a>
-            <a href="alternative.html">Отыгрыш</a>
-        </nav>
-
-        <div class="container">
-
-            <!-- ЗАГОЛОВОК -->
-            <div style="margin-bottom: 1.5rem;">
-                <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
-                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 8v2"/>
-                            <path d="M8 12h2"/>
-                            <path d="M16 12h2"/>
-                            <path d="M12 16v2"/>
-                        </svg>
-                        Авангард маны
-                    </span>
-                </h1>
-                <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Захват • Выживание</p>
-            </div>
-
-            <!-- ЦИТАТА -->
-            <div class="quote-block">
-                «Мы не хотели быть завоевателями. Мы просто не хотели умирать. Мы видели, как наш мир сгорает, и знали, что если мы не займём их место — мы погибнем. Они называют это захватом. Мы называем это выживанием. Но когда я смотрю на их разрушенные дома — я знаю, что мы сделали неправильный выбор.»
-                <span class="author">— Безымянный авангард, бывший командир отряда захвата</span>
-            </div>
-
-            <!-- ОПИСАНИЕ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
-                    </span>
-                    Описание
-                </h2>
-                <p>Ты не просто перешёл через границу. Ты был одним из тех, кто пытался захватить территорию нового мира — не из злобы, а из отчаяния. Твой мир умирал, и единственный способ выжить для твоей группы был в том, чтобы взять то, что принадлежит другим. Местные называют это вторжением. Ты называешь это попыткой выжить.</p>
-                <p class="muted" style="margin-top: 0.8rem;">Ты не знал, что этот мир населён. Ты не знал, что твой мир принесёт разрушение. Ты просто видел землю, которая могла стать новым домом для тех, кто остался позади. Но теперь ты живёшь с этим — знанием, что ты взял то, что тебе не принадлежало. И это знание иногда тяжелее, чем шрамы.</p>
-            </div>
-
-            <!-- ПОЧЕМУ ТЫ СТАЛ АВАНГАРДОМ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
-                    </span>
-                    Почему ты стал авангардом?
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Приказ</strong>
-                        <div class="value">Ты был солдатом. Тебе сказали захватить территорию — ты выполнил приказ. Ты не знал, что здесь есть люди.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Спасение своих</strong>
-                        <div class="value">Ты хотел защитить тех, кто остался позади. Для тебя это был не захват — это была попытка создать убежище для своего народа.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Отчаяние</strong>
-                        <div class="value">Ты не видел другого выхода. Это был единственный способ выжить для тебя и для твоих близких.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Выживание</strong>
-                        <div class="value">Ты не хотел умирать. И ты знал, что без захвата этого мира ты и твои люди погибнут.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Убеждение</strong>
-                        <div class="value">Ты верил, что ваше право — занять этот мир. Вы были сильнее, и вы имели право выжить.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-                    </span>
-                    Владения и снаряжение
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Навыки</strong>
-                        <div class="value">Запугивание, Магия</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Инструменты</strong>
-                        <div class="value">—</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Языки</strong>
-                        <div class="value">один иномирный язык на выбор</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Снаряжение</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li>Остатки формы или доспехов, указывающие на твою роль в захвате</li>
-                                <li>Фляга</li>
-                                <li>Оружие или артефакт, принесённый из твоего мира</li>
-                                <li>Обрывок карты захваченной территории</li>
-                                <li>10 крышек</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ОСОБЕННОСТЬ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
-                    </span>
-                    Особенность: След завоевателя
-                </h2>
-                <p>Ты не просто пережил переход — ты был частью первой волны захвата. Ты знаешь, как действовать в условиях конфликта, как оценивать угрозы и как использовать свои навыки для доминирования. Ты умеешь подавлять сопротивление и распознавать слабые места в защите территорий. Местные жители часто чувствуют в тебе угрозу — даже когда ты не пытаешься её показать.</p>
-                <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При взаимодействии с группами или территориями, где есть конфликт, ты можешь сделать проверку Харизмы (Запугивание) или Мудрости (Проницательность), чтобы определить слабые места в обороне или получить преимущество в переговорах. Однако твоя репутация может работать против тебя, если местные жители узнают о твоём прошлом.</p>
-            </div>
-
-            <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </span>
-                    Идеалы, связи, недостатки
-                </h2>
-
-                <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
-                <div class="ideal-grid">
-                    <div class="ideal-card">
-                        <strong>Выживание</strong>
-                        <p>Я сделал то, что должен был сделать. Мы не могли выжить иначе.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Защита</strong>
-                        <p>Я шёл впереди, чтобы защитить тех, кто остался позади. Я не жалею об этом.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Ответственность</strong>
-                        <p>Я несу ответственность за то, что мы сделали. Но я не могу изменить прошлое.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Сила</strong>
-                        <p>Выживает тот, кто сильнее. Мы были сильнее. Это не оправдание — это факт.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Принятие</strong>
-                        <p>Я не могу изменить то, что сделал. Я могу только выбрать, кем быть сейчас.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Искупление</strong>
-                        <p>Если я могу помочь тем, кого мы затронули — возможно, это искупит часть вины.</p>
-                    </div>
-                </div>
-
-                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="value">• Я помню первую битву за территорию. Это изменило меня навсегда.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Есть человек из моего мира, который тоже был в отряде захвата. Мы не всегда говорим о прошлом.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я потерял кого-то важного в первой волне захвата. Иногда я вижу его лицо.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• У меня остались шрамы от первых сражений — напоминание о том, кем я был.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я встречал людей, чьи дома мы разрушили. Некоторые из них простили меня. Другие — нет.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я до сих пор не знаю, правильно ли я поступил.</div>
-                    </div>
-                </div>
-
-                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="value">• Я слишком часто вспоминаю то, что сделал. Это мешает мне жить здесь.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Мне трудно доверять местным — я знаю, что они боятся меня или ненавидят.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Иногда я инстинктивно оцениваю территорию как потенциальную цель для захвата.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я могу быть агрессивным, даже когда хочу помочь.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я слишком остро реагирую на обвинения в том, что я захватчик.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Мне сложно принять, что я никогда не вернусь в свой мир.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                    </span>
-                    Заметки для ведущего
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Крючки для приключений</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li><strong>Старые враги:</strong> Персонаж встречает выживших из поселений, которые он помогал захватывать. Они могут искать мести — или просить о помощи.</li>
-                                <li><strong>Следы захвата:</strong> Персонаж находит место, которое когда-то было его базой. Оно может скрывать тайны прошлого или быть ловушкой.</li>
-                                <li><strong>Новый конфликт:</strong> Кто-то пытается повторить захват, используя методы персонажа. Он должен решить, помогать или противостоять.</li>
-                                <li><strong>Искупление:</strong> Персонаж получает шанс помочь тем, кто пострадал от его действий. Но готов ли он к этому?</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Вопросы для отыгрыша</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li>Что ты чувствуешь, когда видишь последствия своих действий?</li>
-                                <li>Как ты относишься к местным жителям, которые боятся тебя?</li>
-                                <li>Что бы ты сделал, если бы мог изменить прошлое?</li>
-                                <li>Есть ли кто-то в этом мире, ради кого ты готов исправить свои ошибки?</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
-            <div class="backstory-block" id="tips">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                    </span>
-                    Советы по отыгрышу
-                </h2>
-                <ul class="rp-list">
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                        <span><strong>Ты — не герой:</strong> Ты не пришёл спасать этот мир. Ты пришёл выжить. И ты сделал то, что должен был сделать.</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-                        <span><strong>Прошлое как часть тебя:</strong> Ты не можешь изменить то, что сделал. Но ты можешь выбрать, что делать дальше.</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
-                        <span><strong>Отношения с местными:</strong> Ты нужен им, но они тебя ненавидят. Как ты с этим живёшь?</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
-                        <span><strong>Искупление или принятие:</strong> Ты можешь пытаться искупить то, что сделал. Или ты можешь принять, что это часть тебя. Что ты выберешь?</span>
-                    </li>
-                </ul>
-            </div>
-
-            <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
-
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по странице...">
         </div>
 
-        <!-- ПОДВАЛ -->
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <div style="margin-bottom: 1.5rem;">
+            <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem; gap: 0.6rem;">
+                <svg width="2.2rem" height="2.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 8v2"/>
+                    <path d="M8 12h2"/>
+                    <path d="M16 12h2"/>
+                    <path d="M12 16v2"/>
+                </svg>
+                Авангард маны
+            </h1>
+            <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Захват • Выживание</p>
+        </div>
+
+        <!-- ===== ЦИТАТА ===== -->
+        <div class="quote-block visible">
+            «Мы не хотели быть завоевателями. Мы просто не хотели умирать. Мы видели, как наш мир сгорает, и знали, что если мы не займём их место — мы погибнем. Они называют это захватом. Мы называем это выживанием. Но когда я смотрю на их разрушенные дома — я знаю, что мы сделали неправильный выбор.»
+            <span class="author">— Безымянный авангард, бывший командир отряда захвата</span>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ВЕСЬ КОНТЕНТ (блоки предыстории) с сохранением структуры -->
+        <!-- ============================================================ -->
+
+        <!-- ОПИСАНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                </span>
+                Описание
+            </h2>
+            <p>Ты не просто перешёл через границу. Ты был одним из тех, кто пытался захватить территорию нового мира — не из злобы, а из отчаяния. Твой мир умирал, и единственный способ выжить для твоей группы был в том, чтобы взять то, что принадлежит другим. Местные называют это вторжением. Ты называешь это попыткой выжить.</p>
+            <p class="muted" style="margin-top: 0.8rem;">Ты не знал, что этот мир населён. Ты не знал, что твой мир принесёт разрушение. Ты просто видел землю, которая могла стать новым домом для тех, кто остался позади. Но теперь ты живёшь с этим — знанием, что ты взял то, что тебе не принадлежало. И это знание иногда тяжелее, чем шрамы.</p>
+        </div>
+
+        <!-- ПОЧЕМУ ТЫ СТАЛ АВАНГАРДОМ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                </span>
+                Почему ты стал авангардом?
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Приказ</strong>
+                    <div class="value">Ты был солдатом. Тебе сказали захватить территорию — ты выполнил приказ. Ты не знал, что здесь есть люди.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Спасение своих</strong>
+                    <div class="value">Ты хотел защитить тех, кто остался позади. Для тебя это был не захват — это была попытка создать убежище для своего народа.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Отчаяние</strong>
+                    <div class="value">Ты не видел другого выхода. Это был единственный способ выжить для тебя и для твоих близких.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Выживание</strong>
+                    <div class="value">Ты не хотел умирать. И ты знал, что без захвата этого мира ты и твои люди погибнут.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Убеждение</strong>
+                    <div class="value">Ты верил, что ваше право — занять этот мир. Вы были сильнее, и вы имели право выжить.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                </span>
+                Владения и снаряжение
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Навыки</strong>
+                    <div class="value">Запугивание, Магия</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Инструменты</strong>
+                    <div class="value">—</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Языки</strong>
+                    <div class="value">один иномирный язык на выбор</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Снаряжение</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Остатки формы или доспехов, указывающие на твою роль в захвате</li>
+                            <li>Фляга</li>
+                            <li>Оружие или артефакт, принесённый из твоего мира</li>
+                            <li>Обрывок карты захваченной территории</li>
+                            <li>10 крышек</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОСОБЕННОСТЬ: СЛЕД ЗАВОЕВАТЕЛЯ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                </span>
+                Особенность: След завоевателя
+            </h2>
+            <p>Ты не просто пережил переход — ты был частью первой волны захвата. Ты знаешь, как действовать в условиях конфликта, как оценивать угрозы и как использовать свои навыки для доминирования. Ты умеешь подавлять сопротивление и распознавать слабые места в защите территорий. Местные жители часто чувствуют в тебе угрозу — даже когда ты не пытаешься её показать.</p>
+            <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При взаимодействии с группами или территориями, где есть конфликт, ты можешь сделать проверку Харизмы (Запугивание) или Мудрости (Проницательность), чтобы определить слабые места в обороне или получить преимущество в переговорах. Однако твоя репутация может работать против тебя, если местные жители узнают о твоём прошлом.</p>
+        </div>
+
+        <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                Идеалы, связи, недостатки
+            </h2>
+
+            <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+            <div class="ideal-grid">
+                <div class="ideal-card">
+                    <strong>Выживание</strong>
+                    <p>Я сделал то, что должен был сделать. Мы не могли выжить иначе.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Защита</strong>
+                    <p>Я шёл впереди, чтобы защитить тех, кто остался позади. Я не жалею об этом.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Ответственность</strong>
+                    <p>Я несу ответственность за то, что мы сделали. Но я не могу изменить прошлое.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Сила</strong>
+                    <p>Выживает тот, кто сильнее. Мы были сильнее. Это не оправдание — это факт.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Принятие</strong>
+                    <p>Я не могу изменить то, что сделал. Я могу только выбрать, кем быть сейчас.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Искупление</strong>
+                    <p>Если я могу помочь тем, кого мы затронули — возможно, это искупит часть вины.</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• Я помню первую битву за территорию. Это изменило меня навсегда.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Есть человек из моего мира, который тоже был в отряде захвата. Мы не всегда говорим о прошлом.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я потерял кого-то важного в первой волне захвата. Иногда я вижу его лицо.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• У меня остались шрамы от первых сражений — напоминание о том, кем я был.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я встречал людей, чьи дома мы разрушили. Некоторые из них простили меня. Другие — нет.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я до сих пор не знаю, правильно ли я поступил.</div>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• Я слишком часто вспоминаю то, что сделал. Это мешает мне жить здесь.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Мне трудно доверять местным — я знаю, что они боятся меня или ненавидят.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Иногда я инстинктивно оцениваю территорию как потенциальную цель для захвата.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я могу быть агрессивным, даже когда хочу помочь.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я слишком остро реагирую на обвинения в том, что я захватчик.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Мне сложно принять, что я никогда не вернусь в свой мир.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Заметки для ведущего
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Крючки для приключений</strong>
+                    <div class="value">
+                        <ul>
+                            <li><strong>Старые враги:</strong> Персонаж встречает выживших из поселений, которые он помогал захватывать. Они могут искать мести — или просить о помощи.</li>
+                            <li><strong>Следы захвата:</strong> Персонаж находит место, которое когда-то было его базой. Оно может скрывать тайны прошлого или быть ловушкой.</li>
+                            <li><strong>Новый конфликт:</strong> Кто-то пытается повторить захват, используя методы персонажа. Он должен решить, помогать или противостоять.</li>
+                            <li><strong>Искупление:</strong> Персонаж получает шанс помочь тем, кто пострадал от его действий. Но готов ли он к этому?</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <strong>Вопросы для отыгрыша</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Что ты чувствуешь, когда видишь последствия своих действий?</li>
+                            <li>Как ты относишься к местным жителям, которые боятся тебя?</li>
+                            <li>Что бы ты сделал, если бы мог изменить прошлое?</li>
+                            <li>Есть ли кто-то в этом мире, ради кого ты готов исправить свои ошибки?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+        <div class="backstory-block" id="tips">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Советы по отыгрышу
+            </h2>
+            <ul class="rp-list">
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    <span><strong>Ты — не герой:</strong> Ты не пришёл спасать этот мир. Ты пришёл выжить. И ты сделал то, что должен был сделать.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    <span><strong>Прошлое как часть тебя:</strong> Ты не можешь изменить то, что сделал. Но ты можешь выбрать, что делать дальше.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                    <span><strong>Отношения с местными:</strong> Ты нужен им, но они тебя ненавидят. Как ты с этим живёшь?</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    <span><strong>Искупление или принятие:</strong> Ты можешь пытаться искупить то, что сделал. Или ты можешь принять, что это часть тебя. Что ты выберешь?</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ===== НАЗАД К СПИСКУ ПРЕДЫСТОРИЙ ===== -->
+        <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
+
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -547,158 +539,59 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
-        </div>
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
 
-    </div>
-
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ===== -->
     <script>
         (function() {
             'use strict';
 
-            const toggle = document.getElementById('themeToggle');
-            const body = document.body;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
-            toggle.addEventListener('click', function() {
-                body.classList.add('theme-switching');
-                body.classList.toggle('light');
-                const isLight = body.classList.contains('light');
-                this.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                setTimeout(() => body.classList.remove('theme-switching'), 400);
-            });
-
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-            });
-
-            const backBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backBtn.classList.add('visible');
-                } else {
-                    backBtn.classList.remove('visible');
-                }
-            });
-            backBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-
-            const canvas = document.getElementById('particlesCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-                const PARTICLE_COUNT = 80;
-                let mouseX = 0,
-                    mouseY = 0;
-
-                function resizeCanvas() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                document.addEventListener('mousemove', function(e) {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                class Particle {
-                    constructor() {
-                        this.reset();
-                    }
-                    reset() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 3 + 1.5;
-                        this.speedX = (Math.random() - 0.5) * 0.3;
-                        this.speedY = (Math.random() - 0.5) * 0.1;
-                        this.opacity = Math.random() * 0.5 + 0.2;
-                    }
-                    update() {
-                        this.x += 0.08;
-                        const dx = this.x - mouseX;
-                        const dy = this.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            const angle = Math.atan2(dy, dx);
-                            const force = (120 - dist) / 120 * 0.6;
-                            this.x += Math.cos(angle) * force;
-                            this.y += Math.sin(angle) * force;
-                        }
-                        this.x += this.speedX;
-                        this.y += this.speedY;
-                        if (this.x > width + 20) this.x = -20;
-                        if (this.x < -20) this.x = width + 20;
-                        if (this.y > height + 20) this.y = -20;
-                        if (this.y < -20) this.y = height + 20;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
-                        ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push(new Particle());
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(function(p) {
-                        p.update();
-                        p.draw();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const blocks = document.querySelectorAll('.backstory-block, .quote-block');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    blocks.forEach(block => {
+                        const text = block.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        block.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
                     });
-                    requestAnimationFrame(animateParticles);
-                }
-                animateParticles();
-            }
-
-            const modal = document.getElementById('modal');
-            const modalClose = document.getElementById('modalClose');
-            if (modal) {
-                modalClose.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) modal.classList.remove('active');
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') modal.classList.remove('active');
+                    let noResults = document.getElementById('no-results-avangard');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-avangard';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        const wrap = searchInput.closest('.search-wrap');
+                        if (wrap) wrap.after(noResults);
+                        else searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
                 });
             }
 
         })();
+    </script>
+
+    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЛОАДЕРА ===== -->
+    <script>
+        setTimeout(function() {
+            var loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        }, 2000);
     </script>
 
 </body>
