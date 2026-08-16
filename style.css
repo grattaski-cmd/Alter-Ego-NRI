@@ -174,6 +174,8 @@ body.light #gradient-bg {
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.22;
+    filter: blur(0.8px);
 }
 
 /* ============================================================
@@ -345,25 +347,25 @@ nav a.active::after {
 }
 .search-input {
     width: 100%;
-    max-width: 500px;
-    padding: 0.8rem 1.5rem;
-    border-radius: 60px;
+    max-width: 440px;
+    padding: 0.75rem 1.4rem 0.75rem 2.9rem;
+    border-radius: 14px;
     border: 1px solid var(--border);
-    background: var(--bg-card);
+    background: var(--bg-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23a89bb5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") no-repeat 1rem center;
     color: var(--text);
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(12px);
 }
 .search-input::placeholder {
     color: var(--text-muted);
-    opacity: 0.6;
+    opacity: 0.65;
 }
 .search-input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-glow);
-    background: var(--bg-nav);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+    background-color: rgba(18, 15, 28, 0.85);
 }
 .search-input:focus + .search-clear {
     display: block;
