@@ -98,47 +98,116 @@
             font-size: 0.92rem;
         }
 
-        /* Side navigation */
-        .lore-nav {
-            position: sticky;
-            top: 1.2rem;
+        /* TOC at top */
+        .lore-toc {
             background: var(--bg-nav);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.2rem 1rem;
+            padding: 1.3rem 1.5rem;
             margin-bottom: 2rem;
-            z-index: 10;
         }
-        .lore-nav h3 {
+        .lore-toc h3 {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--text-muted);
-            margin-bottom: 0.8rem;
-            padding-left: 0.4rem;
+            margin-bottom: 0.9rem;
         }
-        .lore-nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
+        .lore-toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.45rem;
         }
-        .lore-nav a {
-            display: inline-block;
-            padding: 0.35rem 0.75rem;
-            border-radius: 60px;
-            font-size: 0.85rem;
+        .lore-toc a {
+            display: block;
+            padding: 0.4rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
             color: var(--text-muted);
             text-decoration: none;
             border: 1px solid transparent;
             transition: all var(--transition);
         }
-        .lore-nav a:hover,
-        .lore-nav a.active {
+        .lore-toc a:hover {
             color: var(--accent);
             border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Floating TOC button */
+        .toc-fab {
+            position: fixed;
+            bottom: 5.5rem;
+            right: 1.4rem;
+            z-index: 90;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-nav);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .toc-fab:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        .toc-fab svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        /* TOC overlay panel */
+        .toc-panel {
+            position: fixed;
+            bottom: 7.2rem;
+            right: 1.4rem;
+            width: min(280px, calc(100vw - 2rem));
+            max-height: 60vh;
+            overflow-y: auto;
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            z-index: 89;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+        }
+        .toc-panel.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .toc-panel h4 {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+            padding-left: 0.3rem;
+        }
+        .toc-panel a {
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all var(--transition);
+        }
+        .toc-panel a:hover {
+            color: var(--accent);
             background: var(--accent-glow);
         }
 
@@ -340,24 +409,24 @@
                 <p class="section-desc" style="margin-top: 0.2rem;">История мира • Мэйки • Гештальт • Альтернативный Гештальт</p>
             </div>
 
-            <!-- STICKY NAV -->
-            <div class="lore-nav" id="loreNav">
-                <h3>Навигация по разделу</h3>
-                <ul>
-                    <li><a href="#catastrophe">Катастрофа</a></li>
-                    <li><a href="#meiki">Мэйки</a></li>
-                    <li><a href="#paths">Два пути</a></li>
-                    <li><a href="#mutants">Мутанты</a></li>
-                    <li><a href="#quarantine">Карантин души</a></li>
-                    <li><a href="#gestalt">Гештальт</a></li>
-                    <li><a href="#replicants">Репликанты</a></li>
-                    <li><a href="#androids">Андроиды и Киборги</a></li>
-                    <li><a href="#newworld">Новый мир</a></li>
-                    <li><a href="#alt-gestalt">А. Гештальт</a></li>
-                    <li><a href="#echo">Эхо</a></li>
-                    <li><a href="#true-gestalt">Истинные Гештальты</a></li>
-                    <li><a href="#fragments">Фрагменты</a></li>
-                </ul>
+            <!-- TABLE OF CONTENTS -->
+            <div class="lore-toc" id="loreToc">
+                <h3>Содержание</h3>
+                <div class="lore-toc-grid">
+                    <a href="#catastrophe">Катастрофа</a>
+                    <a href="#meiki">Мэйки</a>
+                    <a href="#paths">Два пути</a>
+                    <a href="#mutants">Мутанты</a>
+                    <a href="#quarantine">Карантин души</a>
+                    <a href="#gestalt">Гештальт</a>
+                    <a href="#replicants">Репликанты</a>
+                    <a href="#androids">Андроиды и Киборги</a>
+                    <a href="#newworld">Новый мир</a>
+                    <a href="#alt-gestalt">А. Гештальт</a>
+                    <a href="#echo">Эхо</a>
+                    <a href="#true-gestalt">Истинные Гештальты</a>
+                    <a href="#fragments">Фрагменты</a>
+                </div>
             </div>
 
             <!-- QUOTE -->
@@ -618,6 +687,28 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
+        
+        <!-- Floating TOC -->
+        <button class="toc-fab" id="tocFab" aria-label="Содержание" title="Содержание">
+            <svg viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+        <div class="toc-panel" id="tocPanel">
+            <h4>Содержание</h4>
+            <a href="#catastrophe">Катастрофа</a>
+            <a href="#meiki">Мэйки</a>
+            <a href="#paths">Два пути</a>
+            <a href="#mutants">Мутанты</a>
+            <a href="#quarantine">Карантин души</a>
+            <a href="#gestalt">Гештальт</a>
+            <a href="#replicants">Репликанты</a>
+            <a href="#androids">Андроиды и Киборги</a>
+            <a href="#newworld">Новый мир</a>
+            <a href="#alt-gestalt">А. Гештальт</a>
+            <a href="#echo">Эхо</a>
+            <a href="#true-gestalt">Истинные Гештальты</a>
+            <a href="#fragments">Фрагменты</a>
+        </div>
+
         <button class="theme-toggle" id="themeToggle">🌙</button>
     </div>
 
@@ -659,23 +750,33 @@
             });
             backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-            // Active nav highlight
-            const sections = document.querySelectorAll('.lore-block[id]');
-            const navLinks = document.querySelectorAll('.lore-nav a');
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 120;
-                    if (scrollY >= sectionTop) current = section.getAttribute('id');
+            // TOC FAB toggle
+            const tocFab = document.getElementById('tocFab');
+            const tocPanel = document.getElementById('tocPanel');
+            if (tocFab && tocPanel) {
+                tocFab.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    tocPanel.classList.toggle('open');
                 });
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+                document.addEventListener('click', function(e) {
+                    if (!tocPanel.contains(e.target) && e.target !== tocFab) {
+                        tocPanel.classList.remove('open');
+                    }
                 });
-            });
+                tocPanel.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            tocPanel.classList.remove('open');
+                        }
+                    });
+                });
+            }
 
-            // Smooth scroll for nav
-            navLinks.forEach(link => {
+            // Smooth scroll for top TOC
+            document.querySelectorAll('.lore-toc a').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
@@ -744,3 +845,4 @@
     </script>
 </body>
 </html>
+
