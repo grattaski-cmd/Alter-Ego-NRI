@@ -4,22 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Черты — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Черты персонажей в мире Альтер-Эго: физические, ментальные, социальные, технические и гештальт-черты.">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
     <div id="loader">
         <div class="loader-spinner"></div>
         <div class="loader-text">АЛЬТЕР-ЭГО</div>
     </div>
 
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
+    <!-- ===== НАВИГАЦИЯ (фиксированная) ===== -->
     <nav id="mainNav">
-        <a href="index.html" class="nav-logo" style="font-family:var(--font-heading,'Cinzel',serif);font-size:1.05rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;font-weight:600;margin-right:auto;">АЛЬТЕР-ЭГО</a>
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
         <button class="nav-toggle" id="navToggle" aria-label="Меню">
             <span></span><span></span><span></span>
         </button>
@@ -34,48 +45,90 @@
         </div>
     </nav>
 
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="content">
 
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-            <p class="subtitle">Руководство по выживанию • Постапокалипсис • Гештальт</p>
-        </header>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">Гештальт</a>
-            <a href="lore.html">Лор</a>
-            <a href="traits.html">Черты</a>
-            <a href="Backstories.html">Предыстории</a>
-            <a href="alternative.html">Отыгрыш</a>
-        </nav>
+        <!-- ===== ЗАГОЛОВОК СТРАНИЦЫ ===== -->
+        <h1 class="section-title">Черты</h1>
+        <p class="section-desc">Особенности, которые определяют твоего персонажа. Каждая черта даёт уникальное преимущество.</p>
 
-        <div class="container">
-
-            <h1 class="section-title">Черты</h1>
-            <p class="section-desc">Особенности, которые определяют твоего персонажа. Каждая черта даёт уникальное преимущество.</p>
-
-            <!-- ПОИСК -->
-            <div class="search-wrap">
-                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
-            </div>
-
-            <!-- ФИЛЬТРЫ ПО КАТЕГОРИЯМ -->
-            <div class="filter-wrap" id="filterButtons">
-                <button class="filter-btn active" data-filter="all">Все</button>
-                <button class="filter-btn" data-filter="physical">Физические</button>
-                <button class="filter-btn" data-filter="mental">Ментальные</button>
-                <button class="filter-btn" data-filter="social">Социальные</button>
-                <button class="filter-btn" data-filter="technical">Технические</button>
-                <button class="filter-btn" data-filter="geshtalt">Гештальт</button>
-            </div>
-
-            <!-- СЕТКА С ЧЕРТАМИ -->
-            <div class="trait-grid" id="traitsGrid"></div>
-
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
         </div>
 
-        <!-- ПОДВАЛ -->
+        <!-- ===== ФИЛЬТРЫ ===== -->
+        <div class="filter-wrap" id="filterButtons">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="physical">Физические</button>
+            <button class="filter-btn" data-filter="mental">Ментальные</button>
+            <button class="filter-btn" data-filter="social">Социальные</button>
+            <button class="filter-btn" data-filter="technical">Технические</button>
+            <button class="filter-btn" data-filter="geshtalt">Гештальт</button>
+        </div>
+
+        <!-- ===== СЕТКА ЧЕРТ ===== -->
+        <div class="trait-grid" id="traitsGrid">
+            <!-- Карточки будут сгенерированы скриптом, но для примера добавим несколько статичных -->
+            <div class="trait-card" data-category="physical">
+                <span class="tag">Физическая</span>
+                <h3>Крепкое тело</h3>
+                <p>Ваше тело закалено выживанием. +2 к выносливости и устойчивость к ядам.</p>
+            </div>
+            <div class="trait-card" data-category="mental">
+                <span class="tag">Ментальная</span>
+                <h3>Железная воля</h3>
+                <p>Ваш разум непоколебим. Сложно поддаться манипуляции или страху.</p>
+            </div>
+            <div class="trait-card" data-category="social">
+                <span class="tag">Социальная</span>
+                <h3>Светское обаяние</h3>
+                <p>Вы легко находите общий язык с людьми. Бонус к дипломатии и убеждению.</p>
+            </div>
+            <div class="trait-card" data-category="technical">
+                <span class="tag">Техническая</span>
+                <h3>Мастер-ремонтник</h3>
+                <p>Вы разбираетесь в механизмах и электронике. Чините и модифицируете снаряжение.</p>
+            </div>
+            <div class="trait-card" data-category="geshtalt">
+                <span class="tag">Гештальт</span>
+                <h3>Эхо памяти</h3>
+                <p>Ваш Гештальт сохранил отголоски прошлого. Иногда вы видите чужие воспоминания.</p>
+            </div>
+            <div class="trait-card" data-category="physical">
+                <span class="tag">Физическая</span>
+                <h3>Быстрая реакция</h3>
+                <p>Вы молниеносно реагируете на угрозы. Преимущество при инициативе.</p>
+            </div>
+            <div class="trait-card" data-category="mental">
+                <span class="tag">Ментальная</span>
+                <h3>Аналитический ум</h3>
+                <p>Вы замечаете детали, которые другие упускают. Бонус к расследованию.</p>
+            </div>
+            <div class="trait-card" data-category="geshtalt">
+                <span class="tag">Гештальт</span>
+                <h3>Слияние с тенью</h3>
+                <p>Ваш Гештальт позволяет вам сливаться с тенями, становясь невидимым в темноте.</p>
+            </div>
+            <div class="trait-card" data-category="social">
+                <span class="tag">Социальная</span>
+                <h3>Интуитивный психолог</h3>
+                <p>Вы читаете людей как открытую книгу. Бонус к определению лжи.</p>
+            </div>
+            <div class="trait-card" data-category="technical">
+                <span class="tag">Техническая</span>
+                <h3>Хакер</h3>
+                <p>Вы легко взламываете электронные системы и обходите защиту.</p>
+            </div>
+        </div>
+
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -94,21 +147,63 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
+    <!-- ===== МОДАЛКА (если нужна) ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 id="modalTitle">Заголовок</h3>
+            <p id="modalDesc">Описание</p>
+            <span class="tag" id="modalTag">Тег</span>
         </div>
-
     </div>
 
-    
+    <!-- ===== ОБЩИЙ JS ===== -->
     <script src="main.js"></script>
+    <script>
+        (function() {
+            'use strict';
+
+            // Дополнительная логика для фильтров (работает поверх основного поиска)
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const traitCards = document.querySelectorAll('.trait-card');
+
+            if (filterButtons.length) {
+                filterButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Убираем active у всех кнопок
+                        filterButtons.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const filter = this.dataset.filter;
+                        traitCards.forEach(card => {
+                            const category = card.dataset.category;
+                            // Если фильтр "all" или категория совпадает
+                            if (filter === 'all' || category === filter) {
+                                card.style.display = '';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+
+            // Принудительная анимация для карточек (если они уже visible)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            traitCards.forEach(card => {
+                observer.observe(card);
+            });
+
+        })();
+    </script>
 </body>
 </html>
-
