@@ -4,110 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Черты — Справочник по Альтер-Эго</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Дополнительные стили только для этой страницы */
-        .trait-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .trait-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all var(--transition);
-            cursor: default;
-        }
-        .trait-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-        }
-
-        .trait-card .tag {
-            display: inline-block;
-            font-size: 0.7rem;
-            color: var(--accent);
-            background: var(--accent-glow);
-            padding: 0.2rem 0.8rem;
-            border-radius: 60px;
-            margin-bottom: 0.7rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            font-weight: 600;
-            align-self: flex-start;
-        }
-
-        .trait-card h3 {
-            color: var(--accent);
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
-            font-weight: 700;
-        }
-
-        .trait-card p {
-            margin: 0;
-            flex-grow: 1;
-            font-size: clamp(0.85rem, 1vw, 0.95rem);
-            color: var(--text);
-        }
-
-        .trait-card.hidden {
-            display: none;
-        }
-
-        /* Стили для фильтров (дополнение к .filter-btn) */
-        .filter-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-        }
-
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.4rem 1.2rem;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-        }
-        .filter-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
-
-        .search-wrap {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Убираем курсор-pointer у карточек (они не кликабельны) */
-        .trait-card {
-            cursor: default;
-        }
-    </style>
 </head>
 <body>
+
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
 
     <div id="progressBar"></div>
     <button id="backToTop" aria-label="Наверх">↑</button>
     <canvas id="particlesCanvas"></canvas>
+
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo" style="font-family:var(--font-heading,'Cinzel',serif);font-size:1.05rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;font-weight:600;margin-right:auto;">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="traits.html" class="active">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
 
     <div class="content">
 
@@ -182,239 +107,8 @@
 
     </div>
 
-    <script>
-        (function() {
-            // ============================================================
-            // ДАННЫЕ: все черты с категориями
-            // ============================================================
-            const traits = [
-                { name: "Выживший", desc: "Преимущество на спасброски против болезней и мутаций. +1 к Телосложению.", category: "physical" },
-                { name: "Заземление", desc: "Один раз за длинный отдых можете снять 1 уровень Поглощения. Преимущество на спасброски против эмоционального контроля.", category: "mental" },
-                { name: "Техно-Адаптация", desc: "Преимущество на ремонт техники и имплантов. Можете игнорировать один ЭМП-эффект за длинный отдых.", category: "technical" },
-                { name: "Социальная бабочка", desc: "Преимущество в обмане и убеждении. +1 к Харизме.", category: "social" },
-                { name: "Стабильный Гештальт", desc: "Риск Поглощения снижается 1 раз за бой. +1 к Мудрости или Харизме.", category: "geshtalt" },
-                { name: "Нетерпеливый", desc: "Один раз за короткий отдых можете потратить 2 Эссенции, чтобы получить +4 к урону на 1 минуту.", category: "physical" },
-                { name: "Связь с Партнёром", desc: "Когда вы рядом с «Партнёром», вы оба получаете +1 к КД и преимущество на один спасбросок за бой.", category: "social" },
-                { name: "Адаптация", desc: "Сопротивление одному типу урона. +1 к Телосложению.", category: "physical" },
-                { name: "Модульный Корпус", desc: "Можно один раз за длинный отдых заменить один трейт на другой (из списка).", category: "technical" },
-                { name: "Героическая душа", desc: "Один раз за бой можете принять весь урон вместо союзника. Вы получаете сопротивление к этому урону.", category: "social" },
-                { name: "Лидер", desc: "Пока в группе больше 3 союзников, все получают +1 к атакам и КД.", category: "social" },
-                { name: "Жертва", desc: "Когда вы падаете до 0 хитов, один союзник получает advantage на все атаки и +2 к КД до конца боя.", category: "geshtalt" }
-            ];
-
-            // ============================================================
-            // ОТОБРАЖЕНИЕ КАРТОЧЕК
-            // ============================================================
-            const grid = document.getElementById('traitsGrid');
-
-            function renderTraits(filter = 'all', search = '') {
-                const lowerSearch = search.toLowerCase().trim();
-                let html = '';
-
-                traits.forEach(trait => {
-                    const categoryMatch = filter === 'all' || trait.category === filter;
-                    const searchMatch = lowerSearch === '' ||
-                        trait.name.toLowerCase().includes(lowerSearch) ||
-                        trait.desc.toLowerCase().includes(lowerSearch);
-
-                    if (categoryMatch && searchMatch) {
-                        const categoryNames = {
-                            physical: 'Физические',
-                            mental: 'Ментальные',
-                            social: 'Социальные',
-                            technical: 'Технические',
-                            geshtalt: 'Гештальт'
-                        };
-                        html += `
-                            <div class="trait-card" data-category="${trait.category}">
-                                <span class="tag">${categoryNames[trait.category] || trait.category}</span>
-                                <h3>${trait.name}</h3>
-                                <p>${trait.desc}</p>
-                            </div>
-                        `;
-                    }
-                });
-
-                grid.innerHTML = html || '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Ничего не найдено 😔</p>';
-            }
-
-            // ============================================================
-            // ФИЛЬТРАЦИЯ
-            // ============================================================
-            const filterBtns = document.querySelectorAll('.filter-btn');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.dataset.filter;
-                    const searchInput = document.getElementById('searchInput');
-                    renderTraits(filter, searchInput.value);
-                });
-            });
-
-            // ============================================================
-            // ПОИСК
-            // ============================================================
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function() {
-                const activeFilter = document.querySelector('.filter-btn.active');
-                const filter = activeFilter ? activeFilter.dataset.filter : 'all';
-                renderTraits(filter, this.value);
-            });
-
-            // ============================================================
-            // ПОДКЛЮЧАЕМ ОБЩИЕ СКРИПТЫ (тема, прогресс-бар, и т.д.)
-            // Они уже есть в script.js, но мы их продублируем здесь,
-            // чтобы страница работала, даже если script.js не подключён
-            // ============================================================
-
-            // Тема
-            const toggle = document.getElementById('themeToggle');
-            const body = document.body;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
-            toggle.addEventListener('click', function() {
-                body.classList.add('theme-switching');
-                body.classList.toggle('light');
-                const isLight = body.classList.contains('light');
-                this.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                setTimeout(() => body.classList.remove('theme-switching'), 400);
-            });
-
-            // Прогресс-бар
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-            });
-
-            // Кнопка «Наверх»
-            const backBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backBtn.classList.add('visible');
-                } else {
-                    backBtn.classList.remove('visible');
-                }
-            });
-            backBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Навигация по якорям (если есть)
-            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) target.scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-
-            // Фон (песчинки) – если canvas есть
-            const canvas = document.getElementById('particlesCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-                const PARTICLE_COUNT = 80;
-                let mouseX = 0, mouseY = 0;
-
-                function resizeCanvas() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                document.addEventListener('mousemove', function(e) {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                class Particle {
-                    constructor() {
-                        this.reset();
-                    }
-                    reset() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 3 + 1.5;
-                        this.speedX = (Math.random() - 0.5) * 0.3;
-                        this.speedY = (Math.random() - 0.5) * 0.1;
-                        this.opacity = Math.random() * 0.5 + 0.2;
-                    }
-                    update() {
-                        this.x += 0.08;
-                        const dx = this.x - mouseX;
-                        const dy = this.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            const angle = Math.atan2(dy, dx);
-                            const force = (120 - dist) / 120 * 0.6;
-                            this.x += Math.cos(angle) * force;
-                            this.y += Math.sin(angle) * force;
-                        }
-                        this.x += this.speedX;
-                        this.y += this.speedY;
-                        if (this.x > width + 20) this.x = -20;
-                        if (this.x < -20) this.x = width + 20;
-                        if (this.y > height + 20) this.y = -20;
-                        if (this.y < -20) this.y = height + 20;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
-                        ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push(new Particle());
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(function(p) {
-                        p.update();
-                        p.draw();
-                    });
-                    requestAnimationFrame(animateParticles);
-                }
-                animateParticles();
-            }
-
-            // Модальное окно (если нужно – оставим, но на странице черт не используется)
-            // Можно убрать, но пусть будет для единообразия.
-            const modal = document.getElementById('modal');
-            const modalClose = document.getElementById('modalClose');
-            if (modal) {
-                modalClose.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) modal.classList.remove('active');
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') modal.classList.remove('active');
-                });
-            }
-
-            // ============================================================
-            // ЗАПУСКАЕМ ОТРИСОВКУ
-            // ============================================================
-            renderTraits('all', '');
-
-        })();
-    </script>
-
+    
+    <script src="main.js"></script>
 </body>
 </html>
+
