@@ -7,6 +7,117 @@
     <meta name="description" content="Черты персонажей в мире Альтер-Эго: физические, ментальные, социальные, технические и гештальт-черты.">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для страницы черт (добавляем прямо сюда, чтобы точно сработало) */
+        .filter-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            box-shadow: var(--shadow);
+            font-family: var(--font-body, 'Segoe UI', sans-serif);
+            letter-spacing: 0.03em;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .trait-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .trait-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.4rem 1.2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            cursor: default;
+        }
+        .trait-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .trait-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .trait-card .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            align-self: flex-start;
+        }
+        .trait-card h3 {
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .trait-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex: 1;
+        }
+        .trait-card .trait-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        #no-results-traits {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .trait-grid { grid-template-columns: 1fr; }
+            .filter-wrap { gap: 0.4rem; }
+            .filter-btn { font-size: 0.75rem; padding: 0.3rem 1rem; }
+        }
+    </style>
 </head>
 <body>
 
@@ -97,7 +208,17 @@
 
     </div> <!-- .content -->
 
-    <!-- ===== ОБЩИЙ JS (для работы поиска и остальных функций) ===== -->
+    <!-- ===== МОДАЛКА ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 id="modalTitle">Заголовок</h3>
+            <p id="modalDesc">Описание</p>
+            <span class="tag" id="modalTag">Тег</span>
+        </div>
+    </div>
+
+    <!-- ===== ОБЩИЙ JS ===== -->
     <script src="main.js"></script>
 
     <!-- ===== СПЕЦИФИЧНЫЙ JS ДЛЯ ЧЕРТ ===== -->
@@ -145,6 +266,7 @@
             // РЕНДЕРИНГ КАРТОЧЕК
             // ============================================================
             const grid = document.getElementById('traitsGrid');
+            let currentFilter = 'all';
 
             function renderTraits(data) {
                 grid.innerHTML = '';
@@ -160,10 +282,10 @@
                     `;
                     grid.appendChild(card);
 
-                    // Анимация с задержкой (появляются красиво по очереди)
+                    // Анимация с задержкой
                     setTimeout(() => {
                         card.classList.add('visible');
-                    }, 50 + index * 80);
+                    }, 50 + index * 60);
                 });
             }
 
@@ -174,7 +296,6 @@
             // ФИЛЬТРЫ
             // ============================================================
             const filterButtons = document.querySelectorAll('.filter-btn');
-            let currentFilter = 'all';
 
             filterButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -186,39 +307,37 @@
             });
 
             // ============================================================
-            // ПОИСК + ФИЛЬТР
+            // ПОИСК + ФИЛЬТР (объединённая функция)
             // ============================================================
             const searchInput = document.getElementById('searchInput');
 
             function applyFilters() {
                 const query = searchInput.value.toLowerCase().trim();
                 const cards = grid.querySelectorAll('.trait-card');
+                let hasVisible = false;
 
-                cards.forEach(card => {
+                cards.forEach((card, index) => {
                     const category = card.dataset.category;
                     const text = card.textContent.toLowerCase();
                     const matchFilter = currentFilter === 'all' || category === currentFilter;
                     const matchSearch = text.includes(query);
                     const isVisible = matchFilter && matchSearch;
 
-                    card.style.display = isVisible ? '' : 'none';
-
-                    // Если карточка не видима, убираем visible, чтобы при повторном появлении анимация сработала
-                    if (!isVisible) {
-                        card.classList.remove('visible');
+                    if (isVisible) {
+                        card.style.display = '';
+                        hasVisible = true;
+                        // Если карточка уже visible, не перезапускаем анимацию
+                        if (!card.classList.contains('visible')) {
+                            setTimeout(() => card.classList.add('visible'), 50 + index * 40);
+                        }
                     } else {
-                        // Если карточка стала видимой, запускаем анимацию
-                        setTimeout(() => {
-                            card.classList.add('visible');
-                        }, 50);
+                        card.style.display = 'none';
+                        card.classList.remove('visible');
                     }
                 });
 
-                // Показываем сообщение, если ничего не найдено
+                // Сообщение "ничего не найдено"
                 let noResults = document.getElementById('no-results-traits');
-                const visibleCards = grid.querySelectorAll('.trait-card[style*="display: block"], .trait-card:not([style*="display: none"])');
-                const hasVisible = visibleCards.length > 0;
-
                 if (!noResults) {
                     noResults = document.createElement('p');
                     noResults.id = 'no-results-traits';
@@ -240,25 +359,8 @@
             searchInput.addEventListener('input', applyFilters);
 
             // ============================================================
-            // ИНТЕРСЕКЦИЯ ОБСЕРВЕР для карточек (если они не успели показаться)
+            // КЛИК ПО КАРТОЧКЕ → МОДАЛКА
             // ============================================================
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.target.style.display !== 'none') {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            // Наблюдаем за карточками после рендера
-            const allCards = grid.querySelectorAll('.trait-card');
-            allCards.forEach(card => observer.observe(card));
-
-            // ============================================================
-            // КЛИК ПО КАРТОЧКЕ → МОДАЛКА (используем ту же, что в main.js)
-            // ============================================================
-            // Модалка уже есть в main.js, и она работает с классом .card.
-            // Чтобы она работала с .trait-card, просто добавим обработчик:
             const modal = document.getElementById('modal');
             if (modal) {
                 const modalClose = document.getElementById('modalClose');
@@ -288,6 +390,12 @@
                     if (e.key === 'Escape') modal.classList.remove('active');
                 });
             }
+
+            // ============================================================
+            // ИНИЦИАЛИЗАЦИЯ: применяем фильтры после рендера
+            // ============================================================
+            // Небольшая задержка, чтобы карточки успели отрендериться
+            setTimeout(applyFilters, 300);
 
         })();
     </script>
