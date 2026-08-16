@@ -178,25 +178,7 @@
             }
         });
     }
-
-    // ============================================================
-    // 9. ХЛЕБНЫЕ КРОШКИ (генерируются автоматически)
-    // ============================================================
-    const breadcrumbContainer = document.getElementById('breadcrumbs');
-    if (breadcrumbContainer) {
-        const path = window.location.pathname;
-        const page = path.split('/').pop() || 'index.html';
-        const pageName = page.replace('.html', '').replace(/-/g, ' ');
-        const capitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-        let html = '<a href="index.html">Главная</a>';
-        if (page !== 'index.html') {
-            html += ' <span class="separator">›</span> ';
-            html += `<span class="current">${capitalized}</span>`;
-        }
-        breadcrumbContainer.innerHTML = html;
-    }
-
-    // ============================================================
+ ============================================================
     // 10. ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC)
     // ============================================================
     const tocFab = document.getElementById('tocFab');
