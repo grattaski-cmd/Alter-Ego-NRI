@@ -6,9 +6,13 @@
     <title>А. Гештальт R — Справочник по Альтер-Эго</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ===== ОБЩИЕ ПЕРЕМЕННЫЕ (фиолетовый акцент, как в «Беглый раб») ===== */
+        /* ============================================================
+           ПОЛНОСТЬЮ ЕДИНЫЙ СТИЛЬ С «БЕГЛЫМ РАБОМ»
+           ============================================================ */
+
+        /* ----- ПЕРЕМЕННЫЕ (фиолетовый акцент) ----- */
         :root {
-            --bg: #0f0c0a;
+            --bg: #0f0c08;
             --bg-card: #1a1512;
             --bg-nav: #16110e;
             --accent: #b48ad9;
@@ -29,6 +33,7 @@
             --accent-glow: rgba(180, 138, 217, 0.2);
         }
 
+        /* ----- ОБЩИЕ СБРОСЫ ----- */
         * {
             box-sizing: border-box;
         }
@@ -41,7 +46,7 @@
             transition: background var(--transition), color var(--transition);
         }
 
-        /* ===== ШАПКА / НАВИГАЦИЯ ===== */
+        /* ----- ШАПКА / НАВИГАЦИЯ ----- */
         header {
             background: var(--bg-nav);
             padding: 2.2rem 1rem;
@@ -88,7 +93,7 @@
             padding: 0 1rem 3rem;
         }
 
-        /* ===== КАРТОЧКИ ===== */
+        /* ----- КАРТОЧКИ (как в «Беглом рабе») ----- */
         .class-block {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -133,7 +138,7 @@
             display: block;
         }
 
-        /* ===== ЭЛЕМЕНТЫ ===== */
+        /* ----- ЭЛЕМЕНТЫ (способности, списки) ----- */
         .ability-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -166,6 +171,7 @@
             margin-bottom: 0.15rem;
         }
 
+        /* ----- ТАБЛИЦЫ (с горизонтальной прокруткой) ----- */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -211,6 +217,7 @@
             font-weight: 600;
         }
 
+        /* ----- ВКЛАДКИ ПОДКЛАССОВ ----- */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -271,6 +278,7 @@
             letter-spacing: 0.03em;
         }
 
+        /* ----- ССЫЛКА НАЗАД ----- */
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -287,6 +295,7 @@
             text-decoration: underline;
         }
 
+        /* ----- ЦИТАТА (как в «Беглом рабе») ----- */
         .quote-block {
             background: var(--bg-nav);
             border-left: 4px solid var(--accent);
@@ -317,6 +326,7 @@
             font-size: 0.9rem;
         }
 
+        /* ----- ЗАГОЛОВОК КЛАССА (с подчёркиванием, как в «Беглом рабе») ----- */
         .class-title {
             position: relative;
             display: inline-block;
@@ -335,6 +345,7 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
+        /* ----- ИКОНКИ В ЗАГОЛОВКАХ ----- */
         .section-icon {
             display: inline-flex;
             align-items: center;
@@ -355,7 +366,7 @@
             stroke-linejoin: round;
         }
 
-        /* ===== ПРОГРЕСС-БАР И КНОПКА НАВЕРХ ===== */
+        /* ----- ПРОГРЕСС-БАР И КНОПКА «НАВЕРХ» ----- */
         #progressBar {
             position: fixed;
             top: 0;
@@ -393,7 +404,7 @@
             transform: scale(1.08);
         }
 
-        /* ===== ЧАСТИЦЫ ===== */
+        /* ----- ФОН (ЧАСТИЦЫ) ----- */
         #particlesCanvas {
             position: fixed;
             top: 0;
@@ -408,11 +419,11 @@
             z-index: 1;
         }
 
-        /* ===== ТЕМНАЯ / СВЕТЛАЯ ТЕМА ===== */
+        /* ----- КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (СПРАВА) ----- */
         .theme-toggle {
             position: fixed;
             bottom: 2.5rem;
-            left: 2rem;
+            right: 2rem;          /* ← теперь справа, как просили */
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -433,7 +444,7 @@
             transform: scale(1.05);
         }
 
-        /* ===== МОДАЛКА ===== */
+        /* ----- МОДАЛКА ----- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -483,7 +494,7 @@
             color: var(--text);
         }
 
-        /* ===== ПОДВАЛ ===== */
+        /* ----- ПОДВАЛ ----- */
         footer {
             background: var(--bg-nav);
             border-top: 1px solid var(--border);
@@ -566,7 +577,7 @@
                 font-size: 1.2rem;
             }
             .theme-toggle {
-                left: 1rem;
+                right: 1rem;      /* сохраняем справа */
                 bottom: 1.5rem;
                 width: 38px;
                 height: 38px;
