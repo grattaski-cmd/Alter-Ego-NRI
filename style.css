@@ -909,3 +909,114 @@ a:active {
     margin-top: auto;
 }
 .trait-card a:hover { gap: 8px; }
+
+/* ============================================================
+   ФИЛЬТРЫ (для страницы черт)
+   ============================================================ */
+.filter-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.4rem 1.4rem;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: var(--shadow);
+    font-family: var(--font-body);
+    letter-spacing: 0.03em;
+}
+.filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+.filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 24px var(--accent-glow);
+}
+
+/* ============================================================
+   СЕТКА ЧЕРТ
+   ============================================================ */
+.trait-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
+}
+
+.trait-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.4rem 1.2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.trait-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.trait-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: var(--accent);
+    box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+}
+.trait-card .tag {
+    display: inline-block;
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 0.1rem 0.8rem;
+    border-radius: 60px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    align-self: flex-start;
+}
+.trait-card h3 {
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+}
+.trait-card p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0;
+    flex: 1;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 700px) {
+    .trait-grid {
+        grid-template-columns: 1fr;
+    }
+    .filter-wrap {
+        gap: 0.4rem;
+    }
+    .filter-btn {
+        font-size: 0.75rem;
+        padding: 0.3rem 1rem;
+    }
+}
