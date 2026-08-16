@@ -370,3 +370,29 @@
     }
 
 })();
+
+// ===== ХЛЕБНЫЕ КРОШКИ =====
+const breadcrumbContainer = document.getElementById('breadcrumbs');
+if (breadcrumbContainer) {
+    const path = window.location.pathname;
+    const page = path.split('/').pop() || 'index.html';
+    const pageNames = {
+        'index.html': 'Главная',
+        'races.html': 'Расы',
+        'alt-gestalt.html': 'А. Гештальт',
+        'lore.html': 'Лор',
+        'traits.html': 'Черты',
+        'Backstories.html': 'Предыстории',
+        'alternative.html': 'Отыгрыш',
+        'true-gestalt.html': 'И. Гештальт',
+        'classes.html': 'Классы персонажей'
+    };
+    const pageName = pageNames[page] || page.replace('.html', '').replace(/-/g, ' ');
+    const capitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    let html = '<a href="index.html">Главная</a>';
+    if (page !== 'index.html') {
+        html += ' <span class="separator">›</span> ';
+        html += `<span class="current">${capitalized}</span>`;
+    }
+    breadcrumbContainer.innerHTML = html;
+}
