@@ -1,32 +1,13 @@
 (function() {
     'use strict';
 
-    // ===== 0. ЭКСТРЕННОЕ СКРЫТИЕ ЛОАДЕРА =====
-    // (даже если что-то упадёт, загрузочный экран исчезнет через 2.5 секунды)
+    // ============================================================
+    // 0. ЭКСТРЕННОЕ СКРЫТИЕ ЛОАДЕРА (если что-то пойдёт не так)
+    // ============================================================
     setTimeout(function() {
         const loader = document.getElementById('loader');
         if (loader) loader.classList.add('hidden');
     }, 2500);
-
-    // ===== 1. ЗАГРУЗОЧНЫЙ ЭКРАН =====
-    const loader = document.getElementById('loader');
-    if (loader) {
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                loader.classList.add('hidden');
-            }, 400);
-        });
-        // fallback
-        setTimeout(function() {
-            if (!loader.classList.contains('hidden')) {
-                loader.classList.add('hidden');
-            }
-        }, 3000);
-    }
-
-
-(function() {
-    'use strict';
 
     // ============================================================
     // 1. ЗАГРУЗОЧНЫЙ ЭКРАН
@@ -36,8 +17,7 @@
         window.addEventListener('load', function() {
             setTimeout(function() {
                 loader.classList.add('hidden');
-                document.querySelector('.content, .container')?.classList.add('loaded');
-            }, 600);
+            }, 400);
         });
         setTimeout(function() {
             if (!loader.classList.contains('hidden')) {
@@ -111,7 +91,7 @@
     }
 
     // ============================================================
-    // 6. НАВИГАЦИЯ — скролл и активная ссылка
+    // 6. НАВИГАЦИЯ — скролл
     // ============================================================
     const nav = document.getElementById('mainNav');
     if (nav) {
@@ -174,8 +154,7 @@
     // ============================================================
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        // Добавили .card-link для поиска на главной
-        const allCards = document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .gestalt-block, .lore-block');
+        const allCards = document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .gestalt-block, .lore-block, .trait-card, .backstory-card');
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
             let hasVisible = false;
@@ -195,7 +174,9 @@
                 noResults.style.textAlign = 'center';
                 noResults.style.color = 'var(--text-muted)';
                 noResults.style.marginTop = '2rem';
-                searchInput.parentNode.after(noResults);
+                const wrap = searchInput.closest('.search-wrap');
+                if (wrap) wrap.after(noResults);
+                else searchInput.parentNode.after(noResults);
             }
             if (query !== '' && !hasVisible) {
                 noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
@@ -205,7 +186,36 @@
             }
         });
     }
- ============================================================
+
+    // ============================================================
+    // 9. ХЛЕБНЫЕ КРОШКИ (русские названия)
+    // ============================================================
+    const breadcrumbContainer = document.getElementById('breadcrumbs');
+    if (breadcrumbContainer) {
+        const path = window.location.pathname;
+        const page = path.split('/').pop() || 'index.html';
+        const pageNames = {
+            'index.html': 'Главная',
+            'races.html': 'Расы',
+            'alt-gestalt.html': 'А. Гештальт',
+            'true-gestalt.html': 'И. Гештальт',
+            'classes.html': 'Классы персонажей',
+            'lore.html': 'Лор',
+            'traits.html': 'Черты',
+            'Backstories.html': 'Предыстории',
+            'alternative.html': 'Отыгрыш'
+        };
+        const pageName = pageNames[page] || page.replace('.html', '').replace(/-/g, ' ');
+        const capitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+        let html = '<a href="index.html">Главная</a>';
+        if (page !== 'index.html') {
+            html += ' <span class="separator">›</span> ';
+            html += `<span class="current">${capitalized}</span>`;
+        }
+        breadcrumbContainer.innerHTML = html;
+    }
+
+    // ============================================================
     // 10. ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC)
     // ============================================================
     const tocFab = document.getElementById('tocFab');
@@ -243,8 +253,7 @@
         });
     }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
-    // Добавили .card-link в список наблюдаемых
-    document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .quote-block:not(.visible), .gestalt-block, .lore-block').forEach(el => {
+    document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .quote-block:not(.visible), .gestalt-block, .lore-block, .trait-card, .backstory-card').forEach(el => {
         observer.observe(el);
     });
 
@@ -310,9 +319,8 @@
 
     // ============================================================
     // 13. МИКРО-ВЗАИМОДЕЙСТВИЯ: Ripple-эффект для кнопок
-    //     (Исключаем фиксированные элементы, чтобы не ломать позиционирование)
     // ============================================================
-    document.querySelectorAll('.btn, .card a').forEach(el => {
+    document.querySelectorAll('.btn, .card a, .filter-btn, .toc-fab, .theme-toggle, #backToTop').forEach(el => {
         el.addEventListener('click', function(e) {
             const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -329,7 +337,6 @@
             ripple.style.transform = 'scale(0)';
             ripple.style.transition = 'transform 0.6s, opacity 0.6s';
             ripple.style.opacity = '0.6';
-            // Если у элемента position static, делаем relative для корректного позиционирования ripple
             const computed = window.getComputedStyle(this).position;
             if (computed === 'static') {
                 this.style.position = 'relative';
@@ -345,7 +352,7 @@
     });
 
     // ============================================================
-    // 14. МОДАЛЬНОЕ ОКНО (для карточек на index и похожих страницах)
+    // 14. МОДАЛЬНОЕ ОКНО
     // ============================================================
     const modal = document.getElementById('modal');
     if (modal) {
@@ -354,7 +361,7 @@
         const modalDesc = document.getElementById('modalDesc');
         const modalTag = document.getElementById('modalTag');
 
-        document.querySelectorAll('.card').forEach(function(card) {
+        document.querySelectorAll('.card, .trait-card, .backstory-card').forEach(function(card) {
             card.addEventListener('click', function(e) {
                 if (e.target.closest('a')) return;
                 const title = this.querySelector('h3')?.textContent || 'Без названия';
@@ -379,31 +386,3 @@
     }
 
 })();
-
-// ===== ХЛЕБНЫЕ КРОШКИ (русские названия) =====
-const breadcrumbContainer = document.getElementById('breadcrumbs');
-if (breadcrumbContainer) {
-    const path = window.location.pathname;
-    const page = path.split('/').pop() || 'index.html';
-    
-    const pageNames = {
-        'index.html': 'Главная',
-        'races.html': 'Расы',
-        'alt-gestalt.html': 'А. Гештальт',
-        'true-gestalt.html': 'И. Гештальт',
-        'classes.html': 'Классы персонажей',
-        'lore.html': 'Лор',
-        'traits.html': 'Черты',
-        'Backstories.html': 'Предыстории',
-        'alternative.html': 'Отыгрыш'
-    };
-    
-    const pageName = pageNames[page] || page.replace('.html', '').replace(/-/g, ' ');
-    const capitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-    let html = '<a href="index.html">Главная</a>';
-    if (page !== 'index.html') {
-        html += ' <span class="separator">›</span> ';
-        html += `<span class="current">${capitalized}</span>`;
-    }
-    breadcrumbContainer.innerHTML = html;
-}
