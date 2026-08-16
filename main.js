@@ -1,6 +1,33 @@
 (function() {
     'use strict';
 
+    // ===== 0. ЭКСТРЕННОЕ СКРЫТИЕ ЛОАДЕРА =====
+    // (даже если что-то упадёт, загрузочный экран исчезнет через 2.5 секунды)
+    setTimeout(function() {
+        const loader = document.getElementById('loader');
+        if (loader) loader.classList.add('hidden');
+    }, 2500);
+
+    // ===== 1. ЗАГРУЗОЧНЫЙ ЭКРАН =====
+    const loader = document.getElementById('loader');
+    if (loader) {
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 400);
+        });
+        // fallback
+        setTimeout(function() {
+            if (!loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+            }
+        }, 3000);
+    }
+
+
+(function() {
+    'use strict';
+
     // ============================================================
     // 1. ЗАГРУЗОЧНЫЙ ЭКРАН
     // ============================================================
