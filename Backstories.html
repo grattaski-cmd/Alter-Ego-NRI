@@ -4,121 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Предыстории — Справочник по Альтер-Эго</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Дополнительные стили только для этой страницы -->
-    <style>
-        .backstory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .backstory-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all var(--transition);
-            cursor: default;
-        }
-        .backstory-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-        }
-
-        .backstory-card .tag {
-            display: inline-block;
-            font-size: 0.7rem;
-            color: var(--accent);
-            background: var(--accent-glow);
-            padding: 0.2rem 0.8rem;
-            border-radius: 60px;
-            margin-bottom: 0.7rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            font-weight: 600;
-            align-self: flex-start;
-        }
-
-        .backstory-card h3 {
-            color: var(--accent);
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
-            font-weight: 700;
-        }
-
-        .backstory-card p {
-            margin: 0 0 1rem;
-            flex-grow: 1;
-            font-size: clamp(0.85rem, 1vw, 0.95rem);
-            color: var(--text);
-        }
-
-        .backstory-card a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: gap var(--transition);
-        }
-        .backstory-card a:hover {
-            gap: 12px;
-            text-decoration: underline;
-        }
-
-        .backstory-card.hidden {
-            display: none;
-        }
-
-        /* Фильтры */
-        .filter-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-        }
-
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.4rem 1.2rem;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-        }
-        .filter-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
-
-        .search-wrap {
-            margin-bottom: 1.5rem;
-        }
-    </style>
 </head>
 <body>
+
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
 
     <div id="progressBar"></div>
     <button id="backToTop" aria-label="Наверх">↑</button>
     <canvas id="particlesCanvas"></canvas>
+
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo" style="font-family:var(--font-heading,'Cinzel',serif);font-size:1.05rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;font-weight:600;margin-right:auto;">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html" class="active">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
 
     <div class="content">
 
@@ -198,263 +112,8 @@
 
     </div>
 
-    <script>
-        (function() {
-            'use strict';
-
-            // ============================================================
-            // 1. ДАННЫЕ ПРЕДЫСТОРИЙ
-            // ============================================================
-            const backstories = [
-                // Выживание
-                { name: "Странник пустошей", desc: "Живёт дорогами. Знает маршруты, мёртвые зоны и где ещё можно найти воду.", category: "выживание", link: "strannik-pustroshey.html" },
-                { name: "Хранитель убежища", desc: "Умеет поддерживать жизнь в закрытых и полузакрытых поселениях. Земля и стены — его забота.", category: "выживание", link: "hranitel-ubezhishcha.html" },
-                // Силовые
-                { name: "Солдат старого мира", desc: "Служил ещё до катастрофы. Сохранил дисциплину, привычки и взгляд на мир.", category: "силовые", link: "soldat-starogo-mira.html" },
-                { name: "Ополченец поселения", desc: "Защищает одну из выживших общин. Местный, надёжный, знающий своих.", category: "силовые", link: "opolchenets.html" },
-                { name: "Охотник на мутантов", desc: "Специализируется на уничтожении и изучении заражённых. Знает их повадки.", category: "силовые", link: "ohotnik-na-mutantov.html" },
-                { name: "Чистильщик", desc: "Зачищает территории от чумы и следов Гештальта по заказу поселений.", category: "силовые", link: "chistilshchik.html" },
-                { name: "Страж периметра", desc: "Постоянно стоит на границе безопасной зоны. Первый, кто видит опасность.", category: "силовые", link: "strazh-perimetra.html" },
-                // Гештальт
-                { name: "Избежавший поглощения", desc: "Почти стал частью Гештальта, но сумел остановиться или вырваться.", category: "гештальт", link: "izbezhavshiy-pogloshcheniya.html" },
-                { name: "Свидетель поглощения", desc: "Видел, как близкого человека полностью переписало. Это изменило его навсегда.", category: "гештальт", link: "svidetel-pogloshcheniya.html" },
-                { name: "Изгнанный", desc: "Изгнали из общины из-за признаков Гештальта, мутации или просто страха.", category: "гештальт", link: "izgnannyy.html" },
-                { name: "Последователь Гештальта", desc: "Верит, что растворение в Гештальте — следующий этап существования.", category: "гештальт", link: "posledovatel-geshtalta.html" },
-                { name: "Падальщик памяти", desc: "Собирает записи, воспоминания и обломки личностей тех, кого уже поглотило.", category: "гештальт", link: "padalshchik-pamyati.html" },
-                // Мана
-                { name: "Беженец из мира маны", desc: "Пришёл вместе с магической катастрофой. Чужой среди чужих.", category: "мана", link: "bezhenets-many.html" },
-                { name: "Жертва Белого Пепла", desc: "Пережил Синдром Белого Пепла и остался с его последствиями.", category: "мана", link: "zhertva-belogo-pepla.html" },
-                { name: "Манолог", desc: "Изучает аномалии, проявления маны и точки соприкосновения миров.", category: "мана", link: "manolog.html" },
-                { name: "Проводник", desc: "Умеет находить и использовать тонкие места между мирами.", category: "мана", link: "provodnik.html" },
-                { name: "Авангард маны", desc: "Пришёл как часть вторжения, а не как беженец. Завоеватель по происхождению.", category: "мана", link: "avangard-many.html" },
-                // Техника
-                { name: "Системный техник", desc: "Чинит андроидов, киборгов и старую технику. Понимает протоколы.", category: "техника", link: "sistemnyy-tekhnik.html" },
-                { name: "Саботажник протоколов", desc: "Специализируется на взломе и искажении остаточных программ андроидов.", category: "техника", link: "sabotazhnik-protokolov.html" },
-                { name: "Охотник за компонентами", desc: "Ищет и извлекает редкие детали из старой техники и разрушенных машин.", category: "техника", link: "ohotnik-za-komponentami.html" },
-                { name: "Перепрошивальщик", desc: "Глубже обычного техника меняет и ломает остаточные протоколы андроидов.", category: "техника", link: "pereproshivalshchik.html" },
-                // Общество
-                { name: "Посредник", desc: "Торгует и ведёт переговоры между разными группами выживших.", category: "общество", link: "posrednik.html" },
-                { name: "Информатор", desc: "Живёт слухами, долгами и чужими секретами. Знает больше, чем говорит.", category: "общество", link: "informator.html" },
-                { name: "Целитель чумы", desc: "Лечит или хотя бы сдерживает мутацию и заражение. Редкий и ценный специалист.", category: "общество", link: "tselitel-chumy.html" },
-                { name: "Дети руин", desc: "Родился уже после катастрофы. Не помнит «нормальный» мир.", category: "общество", link: "deti-ruin.html" },
-                // Религия
-                { name: "Хранитель старой веры", desc: "Пытается сохранить докатастрофные религии и ритуалы.", category: "религия", link: "hranitel-staroy-very.html" },
-                { name: "Отрицатель", desc: "Радикальный рационалист. Отрицает и Гештальт, и ману как «чудо».", category: "религия", link: "otritsatel.html" },
-                // Преступность
-                { name: "Рейдер", desc: "Берёт силой то, что нужно. Живёт за счёт других поселений и караванов.", category: "преступность", link: "reyder.html" },
-                { name: "Контрабандист", desc: "Перевозит запрещённое между зонами. Знает тайные тропы и людей.", category: "преступность", link: "kontrabandist.html" },
-                { name: "Долговой раб", desc: "Живёт (или жил) в долговой кабале. Долг может быть старым или совсем свежим.", category: "преступность", link: "dolgovoy-rab.html" },
-                // Героизм
-                { name: "Защитник слабых", desc: "Сознательно берёт на себя роль защитника в маленьком масштабе.", category: "героизм", link: "zashchitnik-slabykh.html" },
-                { name: "Искатель утраченного", desc: "Ищет не ресурсы, а остатки «нормального» мира — книги, музыку, смысл.", category: "героизм", link: "iskatel-utrachennogo.html" },
-                // Наука
-                { name: "Исследователь чумы", desc: "Изучает магическую чуму, мутации и способы им противостоять.", category: "наука", link: "issledovatel-chumy.html" },
-                { name: "Архивариус", desc: "Собирает и сохраняет докатастрофные знания, записи и технологии.", category: "наука", link: "arkhivarius.html" },
-                // Рабство
-                { name: "Бывший подопытный", desc: "Использовали для экспериментов с чумой, Гештальтом или маной.", category: "рабство", link: "byvshiy-podopytnyy.html" },
-                { name: "Беглый раб", desc: "Сбежал из рабства. До сих пор оглядывается через плечо.", category: "рабство", link: "beglyy-rab.html" }
-            ];
-
-            // ============================================================
-            // 2. ОТОБРАЖЕНИЕ КАРТОЧЕК
-            // ============================================================
-            const grid = document.getElementById('backstoriesGrid');
-
-            function renderBackstories(filter = 'all', search = '') {
-                const lowerSearch = search.toLowerCase().trim();
-                let html = '';
-
-                backstories.forEach(item => {
-                    const categoryMatch = filter === 'all' || item.category === filter;
-                    const searchMatch = lowerSearch === '' ||
-                        item.name.toLowerCase().includes(lowerSearch) ||
-                        item.desc.toLowerCase().includes(lowerSearch);
-
-                    if (categoryMatch && searchMatch) {
-                        html += `
-                            <div class="backstory-card" data-category="${item.category}">
-                                <span class="tag">${item.category}</span>
-                                <h3>${item.name}</h3>
-                                <p>${item.desc}</p>
-                                <a href="${item.link}">Подробнее →</a>
-                            </div>
-                        `;
-                    }
-                });
-
-                grid.innerHTML = html || '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Ничего не найдено 😔</p>';
-            }
-
-            // ============================================================
-            // 3. ФИЛЬТРАЦИЯ И ПОИСК
-            // ============================================================
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const searchInput = document.getElementById('searchInput');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const filter = this.dataset.filter;
-                    renderBackstories(filter, searchInput.value);
-                });
-            });
-
-            searchInput.addEventListener('input', function() {
-                const activeFilter = document.querySelector('.filter-btn.active');
-                const filter = activeFilter ? activeFilter.dataset.filter : 'all';
-                renderBackstories(filter, this.value);
-            });
-
-            // ============================================================
-            // 4. ПОДКЛЮЧАЕМ ОБЩИЕ СКРИПТЫ (тема, прогресс-бар, кнопка вверх, фон)
-            // Дублируем здесь, чтобы страница работала даже без script.js
-            // ============================================================
-
-            // Тема
-            const toggle = document.getElementById('themeToggle');
-            const body = document.body;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
-            toggle.addEventListener('click', function() {
-                body.classList.add('theme-switching');
-                body.classList.toggle('light');
-                const isLight = body.classList.contains('light');
-                this.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                setTimeout(() => body.classList.remove('theme-switching'), 400);
-            });
-
-            // Прогресс-бар
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-            });
-
-            // Кнопка «Наверх»
-            const backBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backBtn.classList.add('visible');
-                } else {
-                    backBtn.classList.remove('visible');
-                }
-            });
-            backBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Навигация по якорям (если есть)
-            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) target.scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-
-            // Фон (песчинки)
-            const canvas = document.getElementById('particlesCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-                const PARTICLE_COUNT = 80;
-                let mouseX = 0, mouseY = 0;
-
-                function resizeCanvas() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                document.addEventListener('mousemove', function(e) {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                class Particle {
-                    constructor() {
-                        this.reset();
-                    }
-                    reset() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 3 + 1.5;
-                        this.speedX = (Math.random() - 0.5) * 0.3;
-                        this.speedY = (Math.random() - 0.5) * 0.1;
-                        this.opacity = Math.random() * 0.5 + 0.2;
-                    }
-                    update() {
-                        this.x += 0.08;
-                        const dx = this.x - mouseX;
-                        const dy = this.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            const angle = Math.atan2(dy, dx);
-                            const force = (120 - dist) / 120 * 0.6;
-                            this.x += Math.cos(angle) * force;
-                            this.y += Math.sin(angle) * force;
-                        }
-                        this.x += this.speedX;
-                        this.y += this.speedY;
-                        if (this.x > width + 20) this.x = -20;
-                        if (this.x < -20) this.x = width + 20;
-                        if (this.y > height + 20) this.y = -20;
-                        if (this.y < -20) this.y = height + 20;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
-                        ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push(new Particle());
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(function(p) {
-                        p.update();
-                        p.draw();
-                    });
-                    requestAnimationFrame(animateParticles);
-                }
-                animateParticles();
-            }
-
-            // Модальное окно (для единообразия, не используется на этой странице)
-            const modal = document.getElementById('modal');
-            const modalClose = document.getElementById('modalClose');
-            if (modal) {
-                modalClose.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) modal.classList.remove('active');
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') modal.classList.remove('active');
-                });
-            }
-
-            // ============================================================
-            // 5. ПЕРВИЧНЫЙ РЕНДЕР
-            // ============================================================
-            renderBackstories('all', '');
-
-        })();
-    </script>
-
+    
+    <script src="main.js"></script>
 </body>
 </html>
+
