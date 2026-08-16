@@ -2,33 +2,24 @@
     'use strict';
 
     // ============================================================
-    // 0. ЭКСТРЕННОЕ СКРЫТИЕ ЛОАДЕРА (на всякий случай)
+    // 0. ГАРАНТИРОВАННОЕ СКРЫТИЕ ЛОАДЕРА
     // ============================================================
+    // Скрываем сразу, как только скрипт загрузился
+    var loader = document.getElementById('loader');
+    if (loader) {
+        loader.classList.add('hidden');
+    }
+
+    // Дублируем через таймаут на случай, если что-то помешало
     setTimeout(function() {
-        var loader = document.getElementById('loader');
-        if (loader) loader.classList.add('hidden');
+        var loader2 = document.getElementById('loader');
+        if (loader2) {
+            loader2.classList.add('hidden');
+        }
     }, 2000);
 
     // ============================================================
-    // 1. ЗАГРУЗОЧНЫЙ ЭКРАН
-    // ============================================================
-    (function() {
-        var loader = document.getElementById('loader');
-        if (!loader) return;
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                loader.classList.add('hidden');
-            }, 400);
-        });
-        setTimeout(function() {
-            if (!loader.classList.contains('hidden')) {
-                loader.classList.add('hidden');
-            }
-        }, 3000);
-    })();
-
-    // ============================================================
-    // 2. ТЕМА (светлая/тёмная)
+    // 1. ТЕМА (светлая/тёмная)
     // ============================================================
     (function() {
         var themeToggle = document.getElementById('themeToggle');
@@ -52,7 +43,7 @@
     })();
 
     // ============================================================
-    // 3. ДИНАМИЧЕСКИЙ ГРАДИЕНТНЫЙ ФОН
+    // 2. ДИНАМИЧЕСКИЙ ГРАДИЕНТНЫЙ ФОН
     // ============================================================
     (function() {
         var gradientBg = document.getElementById('gradient-bg');
@@ -72,7 +63,7 @@
     })();
 
     // ============================================================
-    // 4. ПРОГРЕСС-БАР
+    // 3. ПРОГРЕСС-БАР
     // ============================================================
     (function() {
         var progressBar = document.getElementById('progressBar');
@@ -86,7 +77,7 @@
     })();
 
     // ============================================================
-    // 5. КНОПКА «НАВЕРХ»
+    // 4. КНОПКА «НАВЕРХ»
     // ============================================================
     (function() {
         var backBtn = document.getElementById('backToTop');
@@ -101,7 +92,7 @@
     })();
 
     // ============================================================
-    // 6. НАВИГАЦИЯ — скролл и активная ссылка
+    // 5. НАВИГАЦИЯ — скролл
     // ============================================================
     (function() {
         var nav = document.getElementById('mainNav');
@@ -112,31 +103,8 @@
         });
     })();
 
-    // Подсветка активной ссылки (для страниц с якорями)
-    (function() {
-        var navLinks = document.querySelectorAll('.nav-links a');
-        if (!navLinks.length) return;
-        var sections = document.querySelectorAll('.lore-block, .quote-block, .dev-note, .subtype-card, .type-header');
-        if (!sections.length) return;
-        window.addEventListener('scroll', function() {
-            var current = '';
-            sections.forEach(function(section) {
-                var top = section.offsetTop - 150;
-                if (window.scrollY >= top) {
-                    current = section.id;
-                }
-            });
-            navLinks.forEach(function(link) {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    })();
-
     // ============================================================
-    // 7. БУРГЕР-МЕНЮ
+    // 6. БУРГЕР-МЕНЮ
     // ============================================================
     (function() {
         var navToggle = document.getElementById('navToggle');
@@ -163,7 +131,7 @@
     })();
 
     // ============================================================
-    // 8. ПОИСК ПО САЙТУ
+    // 7. ПОИСК ПО САЙТУ
     // ============================================================
     (function() {
         var searchInput = document.getElementById('searchInput');
@@ -203,7 +171,7 @@
     })();
 
     // ============================================================
-    // 9. ХЛЕБНЫЕ КРОШКИ (русские названия)
+    // 8. ХЛЕБНЫЕ КРОШКИ (русские названия)
     // ============================================================
     (function() {
         var breadcrumbContainer = document.getElementById('breadcrumbs');
@@ -232,7 +200,7 @@
     })();
 
     // ============================================================
-    // 10. ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC)
+    // 9. ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC)
     // ============================================================
     (function() {
         var tocFab = document.getElementById('tocFab');
@@ -260,7 +228,7 @@
     })();
 
     // ============================================================
-    // 11. АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК (Intersection Observer)
+    // 10. АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК (Intersection Observer)
     // ============================================================
     (function() {
         var elements = document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .quote-block:not(.visible), .gestalt-block, .lore-block, .trait-card, .backstory-card');
@@ -278,7 +246,7 @@
     })();
 
     // ============================================================
-    // 12. ЧАСТИЦЫ
+    // 11. ЧАСТИЦЫ
     // ============================================================
     (function() {
         var canvas = document.getElementById('particlesCanvas');
@@ -351,7 +319,7 @@
     })();
 
     // ============================================================
-    // 13. МИКРО-ВЗАИМОДЕЙСТВИЯ: Ripple-эффект для кнопок
+    // 12. МИКРО-ВЗАИМОДЕЙСТВИЯ: Ripple-эффект для кнопок
     // ============================================================
     (function() {
         var elements = document.querySelectorAll('.btn, .card a, .filter-btn, .toc-fab, .theme-toggle, #backToTop');
@@ -391,7 +359,7 @@
     })();
 
     // ============================================================
-    // 14. МОДАЛЬНОЕ ОКНО
+    // 13. МОДАЛЬНОЕ ОКНО
     // ============================================================
     (function() {
         var modal = document.getElementById('modal');
