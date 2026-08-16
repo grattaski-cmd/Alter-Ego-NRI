@@ -6,16 +6,14 @@
     <title>А. Гештальт R — Справочник по Альтер-Эго</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ============================================================
-           ПОЛНОСТЬЮ ЕДИНЫЙ СТИЛЬ С «БЕГЛЫМ РАБОМ»
-           ============================================================ */
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ ГЕШТАЛЬТ R ===== */
+        /* — полностью повторяют стили Гештальт F, но с фиолетовым акцентом — */
 
-        /* ----- ПЕРЕМЕННЫЕ (фиолетовый акцент) ----- */
         :root {
             --bg: #0f0c08;
             --bg-card: #1a1512;
             --bg-nav: #16110e;
-            --accent: #b48ad9;
+            --accent: #b48ad9;           /* фиолетовый */
             --accent-glow: rgba(180, 138, 217, 0.15);
             --text: #d4c5a9;
             --text-muted: #8a7a5f;
@@ -33,78 +31,71 @@
             --accent-glow: rgba(180, 138, 217, 0.2);
         }
 
-        /* ----- ОБЩИЕ СБРОСЫ ----- */
-        * {
-            box-sizing: border-box;
+        .class-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
         }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            transition: background var(--transition), color var(--transition);
+        .class-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        /* ----- ШАПКА / НАВИГАЦИЯ ----- */
-        header {
+        .quote-block {
             background: var(--bg-nav);
-            padding: 2.2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            transition: background var(--transition), border-color var(--transition);
-        }
-        header h1 {
-            color: var(--accent);
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 0.02em;
-        }
-        header p {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
             color: var(--text-muted);
-            margin: 0.6rem 0 0;
-            font-size: 1rem;
+            position: relative;
         }
-
-        nav {
-            background: var(--bg-nav);
-            padding: 0.9rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        nav a {
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
             color: var(--accent);
-            margin: 0 0.9rem;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color var(--transition);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
         }
-        nav a:hover {
-            text-decoration: underline;
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
         }
 
-        .container {
-            max-width: 980px;
-            margin: 2rem auto;
-            padding: 0 1rem 3rem;
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
         }
-
-        /* ----- КАРТОЧКИ (как в «Беглом рабе») ----- */
-        .class-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
-        }
-        .class-block:hover {
-            border-color: var(--accent);
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .section-title {
@@ -113,21 +104,19 @@
             gap: 0.4rem;
             cursor: pointer;
             user-select: none;
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            font-weight: 600;
+        }
+
+        .class-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transition: border-color var(--transition);
         }
-        .section-title .arrow {
-            display: inline-block;
-            transition: transform 0.2s;
-            margin-right: 0.3rem;
-            font-size: 0.9rem;
-        }
-        .section-title .arrow.open {
-            transform: rotate(90deg);
+        .class-block:hover {
+            border-color: var(--accent);
         }
 
         .collapsible-content {
@@ -138,7 +127,6 @@
             display: block;
         }
 
-        /* ----- ЭЛЕМЕНТЫ (способности, списки) ----- */
         .ability-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -149,29 +137,28 @@
             padding: 0.8rem 1.2rem;
             border-left: 3px solid var(--accent);
             border-radius: 0 var(--radius) var(--radius) 0;
-            transition: background var(--transition);
         }
         .ability-item strong {
             color: var(--accent);
             display: block;
             margin-bottom: 0.2rem;
         }
-        .ability-item .value,
-        .ability-item p,
-        .ability-item ul {
+        .ability-item .value {
             color: var(--text);
             font-size: 0.93rem;
-            margin: 0.3rem 0 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
         .ability-item ul {
-            padding-left: 1.2rem;
-            margin-top: 0.2rem;
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
         }
         .ability-item ul li {
-            margin-bottom: 0.15rem;
+            margin-bottom: 0.2rem;
+            color: var(--text);
         }
 
-        /* ----- ТАБЛИЦЫ (с горизонтальной прокруткой) ----- */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -187,6 +174,7 @@
             border-collapse: collapse;
             font-size: 0.9rem;
         }
+
         .level-table th {
             background: var(--bg-nav);
             color: var(--accent);
@@ -217,7 +205,6 @@
             font-weight: 600;
         }
 
-        /* ----- ВКЛАДКИ ПОДКЛАССОВ ----- */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -253,15 +240,6 @@
             display: block;
         }
 
-        .subgroup-title {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 2.2rem 0 1rem;
-            font-weight: 600;
-        }
-
         .muted {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -278,7 +256,6 @@
             letter-spacing: 0.03em;
         }
 
-        /* ----- ССЫЛКА НАЗАД ----- */
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -295,243 +272,15 @@
             text-decoration: underline;
         }
 
-        /* ----- ЦИТАТА (как в «Беглом рабе») ----- */
-        .quote-block {
-            background: var(--bg-nav);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem 1.8rem;
-            margin: 1.8rem 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--text-muted);
-            position: relative;
-            transition: background var(--transition);
-        }
-        .quote-block::before {
-            content: '“';
-            font-size: 3rem;
-            color: var(--accent);
-            position: absolute;
-            top: -0.2rem;
-            left: 0.8rem;
-            opacity: 0.3;
-            font-style: normal;
-        }
-        .quote-block .author {
-            display: block;
-            margin-top: 0.6rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        /* ----- ЗАГОЛОВОК КЛАССА (с подчёркиванием, как в «Беглом рабе») ----- */
-        .class-title {
-            position: relative;
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.08em;
-            color: var(--accent);
-            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
-        }
-        .class-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -4px;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-
-        /* ----- ИКОНКИ В ЗАГОЛОВКАХ ----- */
-        .section-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.6rem;
-            height: 1.6rem;
-            margin-right: 0.3rem;
-            flex-shrink: 0;
-            color: var(--accent);
-        }
-        .section-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* ----- ПРОГРЕСС-БАР И КНОПКА «НАВЕРХ» ----- */
-        #progressBar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: var(--accent);
-            z-index: 999;
-            transition: width 0.08s linear;
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
-        #backToTop {
-            position: fixed;
-            bottom: 2.5rem;
-            right: 2rem;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            font-size: 1.4rem;
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s, transform 0.2s;
-            z-index: 999;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-        }
-        #backToTop.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #backToTop:hover {
-            transform: scale(1.08);
-        }
-
-        /* ----- ФОН (ЧАСТИЦЫ) ----- */
-        #particlesCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .content {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ----- КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (СПРАВА) ----- */
-        .theme-toggle {
-            position: fixed;
-            bottom: 2.5rem;
-            right: 2rem;          /* ← теперь справа, как просили */
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--bg-nav);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 1.3rem;
-            cursor: pointer;
-            z-index: 999;
-            transition: all var(--transition);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .theme-toggle:hover {
-            border-color: var(--accent);
-            transform: scale(1.05);
-        }
-
-        /* ----- МОДАЛКА ----- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            max-width: 480px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .modal-close {
-            position: absolute;
-            top: 0.6rem;
-            right: 0.8rem;
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color var(--transition);
-        }
-        .modal-close:hover {
-            color: var(--accent);
-        }
-        .modal-box h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-        .modal-box p {
-            color: var(--text);
-        }
-
-        /* ----- ПОДВАЛ ----- */
-        footer {
-            background: var(--bg-nav);
-            border-top: 1px solid var(--border);
-            padding: 2rem 1rem;
-            text-align: center;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .footer-socials {
-            display: flex;
-            justify-content: center;
-            gap: 1.8rem;
-            flex-wrap: wrap;
-            margin-bottom: 0.8rem;
-        }
-        .footer-socials a {
-            color: var(--text-muted);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.9rem;
-            transition: color var(--transition);
-        }
-        .footer-socials a:hover {
-            color: var(--accent);
-        }
-        .footer-socials svg {
-            width: 1.2rem;
-            height: 1.2rem;
-            fill: currentColor;
-        }
-        .footer-copy {
+        .subgroup-title {
             color: var(--text-muted);
             font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 2.2rem 0 1rem;
+            font-weight: 600;
         }
 
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 700px) {
             .class-title {
                 font-size: 1.6rem !important;
@@ -564,24 +313,6 @@
             }
             .ability-item {
                 padding: 0.6rem 0.8rem;
-            }
-            nav a {
-                margin: 0 0.5rem;
-                font-size: 0.85rem;
-            }
-            #backToTop {
-                right: 1rem;
-                bottom: 1.5rem;
-                width: 38px;
-                height: 38px;
-                font-size: 1.2rem;
-            }
-            .theme-toggle {
-                right: 1rem;      /* сохраняем справа */
-                bottom: 1.5rem;
-                width: 38px;
-                height: 38px;
-                font-size: 1.1rem;
             }
         }
         @media (max-width: 480px) {
@@ -616,11 +347,43 @@
             .ability-item .value {
                 font-size: 0.85rem;
             }
-            nav a {
-                margin: 0 0.3rem;
-                font-size: 0.75rem;
+        }
+
+        /* ===== КНОПКА ТЕМЫ СПРАВА ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 999;
+            transition: all var(--transition);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        @media (max-width: 700px) {
+            .theme-toggle {
+                right: 1rem;
+                bottom: 1.5rem;
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
             }
         }
+
+        /* остальные глобальные стили (прогресс-бар, частицы, модалка, подвал) — берутся из F, они уже есть в коде ниже */
     </style>
 </head>
 <body>
