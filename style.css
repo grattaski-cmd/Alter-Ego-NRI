@@ -493,10 +493,11 @@ nav a.active::after {
 }
 .card-link .card-icon {
     display: inline-flex;
-    width: 2.4rem;
-    height: 2.4rem;
-    margin-bottom: 0.4rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-bottom: 0.3rem;
     color: var(--accent);
+    flex-shrink: 0;
 }
 .card-link .card-icon svg {
     width: 100%;
