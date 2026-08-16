@@ -247,7 +247,7 @@
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
-        const PARTICLE_COUNT = 80;
+        const PARTICLE_COUNT = 55;
         let mouseX = 0, mouseY = 0;
 
         function resizeCanvas() {
@@ -263,10 +263,10 @@
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 3 + 1.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.1;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 2.2 + 0.8;
+                this.speedX = (Math.random() - 0.5) * 0.25;
+                this.speedY = (Math.random() - 0.5) * 0.08;
+                this.opacity = Math.random() * 0.28 + 0.08;
             }
             update() {
                 this.x += 0.08;
@@ -287,7 +287,7 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                ctx.fillStyle = `rgba(180, 165, 140, ${this.opacity})`;
                 ctx.fill();
             }
         }
@@ -331,4 +331,39 @@
         });
     });
 
+    // ============================================================
+    // 14. МОДАЛЬНОЕ ОКНО (для карточек на index и похожих страницах)
+    // ============================================================
+    const modal = document.getElementById('modal');
+    const modalClose = document.getElementById('modalClose');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalTag = document.getElementById('modalTag');
+
+    if (modal) {
+        document.querySelectorAll('.card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('a')) return; // не открываем, если кликнули по ссылке
+                const title = this.querySelector('h3')?.textContent || 'Без названия';
+                const desc = this.querySelector('p')?.textContent || 'Нет описания';
+                const tag = this.querySelector('.tag')?.textContent || '';
+                if (modalTitle) modalTitle.textContent = title;
+                if (modalDesc) modalDesc.textContent = desc;
+                if (modalTag) modalTag.textContent = tag;
+                modal.classList.add('active');
+            });
+        });
+
+        if (modalClose) {
+            modalClose.addEventListener('click', () => modal.classList.remove('active'));
+        }
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) modal.classList.remove('active');
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') modal.classList.remove('active');
+        });
+    }
+
 })();
+
