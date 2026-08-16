@@ -4,22 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Предыстории — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Предыстории персонажей в мире Альтер-Эго: от выживших до учёных и преступников.">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== СТИЛИ ДЛЯ СТРАНИЦЫ ПРЕДЫСТОРИЙ ===== */
+        .filter-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            box-shadow: var(--shadow);
+            font-family: var(--font-body, 'Segoe UI', sans-serif);
+            letter-spacing: 0.03em;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .backstory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .backstory-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.4rem 1.2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            cursor: default;
+        }
+        .backstory-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .backstory-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .backstory-card .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            align-self: flex-start;
+        }
+        .backstory-card h3 {
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .backstory-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex: 1;
+        }
+        .backstory-card .backstory-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        #no-results-backstories {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .backstory-grid { grid-template-columns: 1fr; }
+            .filter-wrap { gap: 0.4rem; }
+            .filter-btn { font-size: 0.75rem; padding: 0.3rem 1rem; }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
     <div id="loader">
         <div class="loader-spinner"></div>
         <div class="loader-text">АЛЬТЕР-ЭГО</div>
     </div>
 
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
+    <!-- ===== НАВИГАЦИЯ ===== -->
     <nav id="mainNav">
-        <a href="index.html" class="nav-logo" style="font-family:var(--font-heading,'Cinzel',serif);font-size:1.05rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;font-weight:600;margin-right:auto;">АЛЬТЕР-ЭГО</a>
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
         <button class="nav-toggle" id="navToggle" aria-label="Меню">
             <span></span><span></span><span></span>
         </button>
@@ -34,53 +156,44 @@
         </div>
     </nav>
 
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="content">
 
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        </header>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
-            <a href="lore.html">Лор</a>
-            <a href="traits.html">Черты</a>
-            <a href="Backstories.html">Предыстории</a>
-            <a href="alternative.html">Отыгрыш</a>
-        </nav>
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <h1 class="section-title">Предыстории</h1>
+        <p class="section-desc">Откуда твой персонаж? Каждая предыстория даёт уникальные навыки и связи.</p>
 
-        <div class="container">
-
-            <h1 class="section-title">Предыстории</h1>
-            <p class="section-desc">Откуда твой персонаж? Каждая предыстория даёт уникальные навыки и связи.</p>
-
-            <!-- ПОИСК -->
-            <div class="search-wrap">
-                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
-            </div>
-
-            <!-- ФИЛЬТРЫ ПО КАТЕГОРИЯМ -->
-            <div class="filter-wrap" id="filterButtons">
-                <button class="filter-btn active" data-filter="all">Все</button>
-                <button class="filter-btn" data-filter="выживание">Выживание</button>
-                <button class="filter-btn" data-filter="силовые">Силовые</button>
-                <button class="filter-btn" data-filter="гештальт">Гештальт</button>
-                <button class="filter-btn" data-filter="мана">Мана</button>
-                <button class="filter-btn" data-filter="техника">Техника</button>
-                <button class="filter-btn" data-filter="общество">Общество</button>
-                <button class="filter-btn" data-filter="религия">Религия</button>
-                <button class="filter-btn" data-filter="преступность">Преступность</button>
-                <button class="filter-btn" data-filter="героизм">Героизм</button>
-                <button class="filter-btn" data-filter="наука">Наука</button>
-                <button class="filter-btn" data-filter="рабство">Рабство</button>
-            </div>
-
-            <!-- СЕТКА С ПРЕДЫСТОРИЯМИ -->
-            <div class="backstory-grid" id="backstoriesGrid"></div>
-
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
         </div>
 
-        <!-- ПОДВАЛ -->
+        <!-- ===== ФИЛЬТРЫ ===== -->
+        <div class="filter-wrap" id="filterButtons">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="выживание">Выживание</button>
+            <button class="filter-btn" data-filter="силовые">Силовые</button>
+            <button class="filter-btn" data-filter="гештальт">Гештальт</button>
+            <button class="filter-btn" data-filter="мана">Мана</button>
+            <button class="filter-btn" data-filter="техника">Техника</button>
+            <button class="filter-btn" data-filter="общество">Общество</button>
+            <button class="filter-btn" data-filter="религия">Религия</button>
+            <button class="filter-btn" data-filter="преступность">Преступность</button>
+            <button class="filter-btn" data-filter="героизм">Героизм</button>
+            <button class="filter-btn" data-filter="наука">Наука</button>
+            <button class="filter-btn" data-filter="рабство">Рабство</button>
+        </div>
+
+        <!-- ===== СЕТКА ПРЕДЫСТОРИЙ ===== -->
+        <div class="backstory-grid" id="backstoriesGrid"></div>
+
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -99,21 +212,204 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
+    <!-- ===== МОДАЛКА ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 id="modalTitle">Заголовок</h3>
+            <p id="modalDesc">Описание</p>
+            <span class="tag" id="modalTag">Тег</span>
         </div>
-
     </div>
 
-    
+    <!-- ===== ОБЩИЙ JS ===== -->
     <script src="main.js"></script>
+
+    <!-- ===== СПЕЦИФИЧНЫЙ JS ДЛЯ ПРЕДЫСТОРИЙ ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // ДАННЫЕ ПРЕДЫСТОРИЙ
+            // ============================================================
+            const backstoriesData = [
+                // Выживание
+                { category: 'выживание', tag: 'Выживание', name: 'Беженец', desc: 'Вы бежали от чумы и научились выживать в пустошах. Вы знаете, где найти воду и укрытие.' },
+                { category: 'выживание', tag: 'Выживание', name: 'Охотник', desc: 'Вы добывали пищу для своей общины. Отличное владение луком и знание повадок животных.' },
+                { category: 'выживание', tag: 'Выживание', name: 'Следопыт', desc: 'Вы провели годы в пустошах, изучая местность. Вы никогда не теряетесь и всегда находите путь.' },
+                // Силовые
+                { category: 'силовые', tag: 'Силовые', name: 'Солдат', desc: 'Вы служили в армии до катастрофы. Дисциплина, владение оружием и тактическое мышление.' },
+                { category: 'силовые', tag: 'Силовые', name: 'Гладиатор', desc: 'Вы сражались на арене за выживание. Вы умеете читать противника и наносить смертельные удары.' },
+                { category: 'силовые', tag: 'Силовые', name: 'Телохранитель', desc: 'Вы защищали важных людей. Вы всегда начеку и готовы принять удар на себя.' },
+                // Гештальт
+                { category: 'гештальт', tag: 'Гештальт', name: 'Носитель', desc: 'Ваш Гештальт проснулся первым. Вы чувствуете его присутствие и можете черпать силу из него.' },
+                { category: 'гештальт', tag: 'Гештальт', name: 'Исследователь', desc: 'Вы изучали природу Гештальтов. Вы знаете их слабые места и можете предсказывать их поведение.' },
+                { category: 'гештальт', tag: 'Гештальт', name: 'Отверженный', desc: 'Ваш Гештальт пугает людей. Вы привыкли к одиночеству и научились скрывать свою сущность.' },
+                // Мана
+                { category: 'мана', tag: 'Мана', name: 'Магический отпрыск', desc: 'В вашей семье всегда была магия. Вы интуитивно чувствуете потоки маны и можете управлять ими.' },
+                { category: 'мана', tag: 'Мана', name: 'Шаман', desc: 'Вы общаетесь с духами природы. Ваша мана связана с землёй и стихиями.' },
+                { category: 'мана', tag: 'Мана', name: 'Архивариус магии', desc: 'Вы изучили древние тексты и знаете ритуалы, о которых другие забыли.' },
+                // Техника
+                { category: 'техника', tag: 'Техника', name: 'Инженер', desc: 'Вы строите и чините механизмы. Вы можете создавать устройства из подручных материалов.' },
+                { category: 'техника', tag: 'Техника', name: 'Техник', desc: 'Вы обслуживаете сложное оборудование. Вы знаете, как заставить работать старые машины.' },
+                { category: 'техника', tag: 'Техника', name: 'Изобретатель', desc: 'Вы постоянно что-то изобретаете. Ваши гаджеты могут удивить даже опытных инженеров.' },
+                // Общество
+                { category: 'общество', tag: 'Общество', name: 'Лидер общины', desc: 'Вы управляли группой выживших. Ваше слово — закон, и люди готовы за вами идти.' },
+                { category: 'общество', tag: 'Общество', name: 'Дипломат', desc: 'Вы умеете договариваться с разными фракциями. Вы всегда находите компромисс.' },
+                { category: 'общество', tag: 'Общество', name: 'Торговец', desc: 'Вы путешествовали с караванами. Вы знаете цену вещам и умеете торговаться.' },
+                // Религия
+                { category: 'религия', tag: 'Религия', name: 'Послушник', desc: 'Вы служили в храме. Вы знаете древние обряды и можете изгонять тёмные силы.' },
+                { category: 'религия', tag: 'Религия', name: 'Отшельник', desc: 'Вы жили в уединении, молясь и медитируя. Ваша вера даёт вам силу в трудные моменты.' },
+                { category: 'религия', tag: 'Религия', name: 'Инквизитор', desc: 'Вы охотились на еретиков и мутантов. Вы знаете, как распознать тёмное влияние.' },
+                // Преступность
+                { category: 'преступность', tag: 'Преступность', name: 'Вор', desc: 'Вы промышляли кражей. Вы умеете взламывать замки и обходить ловушки.' },
+                { category: 'преступность', tag: 'Преступность', name: 'Контрабандист', desc: 'Вы перевозили запрещённые товары. Вы знаете обходные пути и имеете связи на чёрном рынке.' },
+                { category: 'преступность', tag: 'Преступность', name: 'Убийца', desc: 'Вы устраняли цели. Вы знаете, как уничтожить противника тихо и эффективно.' },
+                // Героизм
+                { category: 'героизм', tag: 'Героизм', name: 'Спасатель', desc: 'Вы спасали людей из руин. Вы готовы рисковать собой ради других.' },
+                { category: 'героизм', tag: 'Героизм', name: 'Защитник', desc: 'Вы защищали слабых. Ваша цель — сделать мир безопаснее.' },
+                { category: 'героизм', tag: 'Героизм', name: 'Доброволец', desc: 'Вы всегда там, где нужна помощь. Вы не боитесь трудностей.' },
+                // Наука
+                { category: 'наука', tag: 'Наука', name: 'Учёный', desc: 'Вы изучали мир до и после катастрофы. Ваши знания помогут понять, что происходит.' },
+                { category: 'наука', tag: 'Наука', name: 'Медик', desc: 'Вы спасали жизни, леча раны и болезни. Вы умеете работать с медицинским оборудованием.' },
+                { category: 'наука', tag: 'Наука', name: 'Биолог', desc: 'Вы изучали мутации и заболевания. Вы знаете, как работает Синдром Белого Пепла.' },
+                // Рабство
+                { category: 'рабство', tag: 'Рабство', name: 'Освобождённый', desc: 'Вы были рабом, но сбежали. Вы знаете психологию угнетателей и можете противостоять им.' },
+                { category: 'рабство', tag: 'Рабство', name: 'Беглый каторжник', desc: 'Вы сбежали с каторги. Вы научились выживать в самых суровых условиях.' },
+                { category: 'рабство', tag: 'Рабство', name: 'Восставший', desc: 'Вы участвовали в восстании. Вы знаете, как организовать сопротивление.' }
+            ];
+
+            // ============================================================
+            // РЕНДЕРИНГ КАРТОЧЕК
+            // ============================================================
+            const grid = document.getElementById('backstoriesGrid');
+            let currentFilter = 'all';
+
+            function renderBackstories(data) {
+                grid.innerHTML = '';
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'backstory-card';
+                    card.dataset.category = item.category;
+                    card.dataset.index = index;
+                    card.innerHTML = `
+                        <span class="tag">${item.tag}</span>
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                    `;
+                    grid.appendChild(card);
+
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, 50 + index * 60);
+                });
+            }
+
+            renderBackstories(backstoriesData);
+
+            // ============================================================
+            // ФИЛЬТРЫ
+            // ============================================================
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    applyFilters();
+                });
+            });
+
+            // ============================================================
+            // ПОИСК + ФИЛЬТР
+            // ============================================================
+            const searchInput = document.getElementById('searchInput');
+
+            function applyFilters() {
+                const query = searchInput.value.toLowerCase().trim();
+                const cards = grid.querySelectorAll('.backstory-card');
+                let hasVisible = false;
+
+                cards.forEach((card, index) => {
+                    const category = card.dataset.category;
+                    const text = card.textContent.toLowerCase();
+                    const matchFilter = currentFilter === 'all' || category === currentFilter;
+                    const matchSearch = text.includes(query);
+                    const isVisible = matchFilter && matchSearch;
+
+                    if (isVisible) {
+                        card.style.display = '';
+                        hasVisible = true;
+                        if (!card.classList.contains('visible')) {
+                            setTimeout(() => card.classList.add('visible'), 50 + index * 40);
+                        }
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.remove('visible');
+                    }
+                });
+
+                let noResults = document.getElementById('no-results-backstories');
+                if (!noResults) {
+                    noResults = document.createElement('p');
+                    noResults.id = 'no-results-backstories';
+                    noResults.style.textAlign = 'center';
+                    noResults.style.color = 'var(--text-muted)';
+                    noResults.style.marginTop = '2rem';
+                    grid.after(noResults);
+                }
+
+                if ((query !== '' || currentFilter !== 'all') && !hasVisible) {
+                    noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос или фильтр.';
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            searchInput.addEventListener('input', applyFilters);
+
+            // ============================================================
+            // МОДАЛКА
+            // ============================================================
+            const modal = document.getElementById('modal');
+            if (modal) {
+                const modalClose = document.getElementById('modalClose');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalDesc = document.getElementById('modalDesc');
+                const modalTag = document.getElementById('modalTag');
+
+                grid.addEventListener('click', function(e) {
+                    const card = e.target.closest('.backstory-card');
+                    if (!card) return;
+                    const title = card.querySelector('h3')?.textContent || 'Без названия';
+                    const desc = card.querySelector('p')?.textContent || 'Нет описания';
+                    const tag = card.querySelector('.tag')?.textContent || '';
+                    if (modalTitle) modalTitle.textContent = title;
+                    if (modalDesc) modalDesc.textContent = desc;
+                    if (modalTag) modalTag.textContent = tag;
+                    modal.classList.add('active');
+                });
+
+                if (modalClose) {
+                    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+                }
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+            // Первоначальное применение фильтров
+            setTimeout(applyFilters, 300);
+
+        })();
+    </script>
 </body>
 </html>
-
