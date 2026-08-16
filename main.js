@@ -9,11 +9,9 @@
         window.addEventListener('load', function() {
             setTimeout(function() {
                 loader.classList.add('hidden');
-                // Запускаем анимацию появления контента
                 document.querySelector('.content, .container')?.classList.add('loaded');
             }, 600);
         });
-        // fallback: если страница загружается слишком долго
         setTimeout(function() {
             if (!loader.classList.contains('hidden')) {
                 loader.classList.add('hidden');
@@ -53,8 +51,10 @@
             x += 0.2 * direction;
             y += 0.1 * direction;
             if (x > 80 || x < 20) direction *= -1;
-            gradientBg.style.background =
-                `radial-gradient(circle at ${x}% ${y}%, ${body.classList.contains('light') ? '#f0ebe5' : '#1a1320'}, ${body.classList.contains('light') ? '#f7f3ee' : '#0b0a0f'} 80%)`;
+            const isLight = body.classList.contains('light');
+            const color1 = isLight ? '#f0ebe5' : '#1a1320';
+            const color2 = isLight ? '#f7f3ee' : '#0b0a0f';
+            gradientBg.style.background = `radial-gradient(circle at ${x}% ${y}%, ${color1}, ${color2} 80%)`;
         }, 100);
     }
 
@@ -147,22 +147,20 @@
     // ============================================================
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        // Находим все карточки (как на главной, так и на других страницах)
-        const allCards = document.querySelectorAll('.card, .race-card, .subtype-card, .gestalt-block, .lore-block');
+        // Добавили .card-link для поиска на главной
+        const allCards = document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .gestalt-block, .lore-block');
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
             let hasVisible = false;
             allCards.forEach(card => {
                 const text = card.textContent.toLowerCase();
                 const isMatch = text.includes(query);
-                card.style.display = isMatch || query === '' ? '' : 'none';
+                card.style.display = (isMatch || query === '') ? '' : 'none';
                 if (isMatch) hasVisible = true;
-                // Анимация: если карточка видима, но ещё не visible, добавляем
                 if (isMatch && !card.classList.contains('visible')) {
                     card.classList.add('visible');
                 }
             });
-            // Показываем сообщение, если ничего не найдено
             let noResults = document.getElementById('no-results');
             if (!noResults) {
                 noResults = document.createElement('p');
@@ -236,7 +234,8 @@
         });
     }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.card, .race-card, .subtype-card, .quote-block:not(.visible), .gestalt-block, .lore-block').forEach(el => {
+    // Добавили .card-link в список наблюдаемых
+    document.querySelectorAll('.card, .card-link, .race-card, .subtype-card, .quote-block:not(.visible), .gestalt-block, .lore-block').forEach(el => {
         observer.observe(el);
     });
 
@@ -302,8 +301,9 @@
 
     // ============================================================
     // 13. МИКРО-ВЗАИМОДЕЙСТВИЯ: Ripple-эффект для кнопок
+    //     (Исключаем фиксированные элементы, чтобы не ломать позиционирование)
     // ============================================================
-    document.querySelectorAll('.btn, .card a, .toc-fab, .theme-toggle, #backToTop').forEach(el => {
+    document.querySelectorAll('.btn, .card a').forEach(el => {
         el.addEventListener('click', function(e) {
             const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -320,7 +320,7 @@
             ripple.style.transform = 'scale(0)';
             ripple.style.transition = 'transform 0.6s, opacity 0.6s';
             ripple.style.opacity = '0.6';
-            // Do not override position on fixed elements (theme-toggle, toc-fab, backToTop)
+            // Если у элемента position static, делаем relative для корректного позиционирования ripple
             const computed = window.getComputedStyle(this).position;
             if (computed === 'static') {
                 this.style.position = 'relative';
@@ -339,15 +339,15 @@
     // 14. МОДАЛЬНОЕ ОКНО (для карточек на index и похожих страницах)
     // ============================================================
     const modal = document.getElementById('modal');
-    const modalClose = document.getElementById('modalClose');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalTag = document.getElementById('modalTag');
-
     if (modal) {
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalTag = document.getElementById('modalTag');
+
         document.querySelectorAll('.card').forEach(function(card) {
             card.addEventListener('click', function(e) {
-                if (e.target.closest('a')) return; // не открываем, если кликнули по ссылке
+                if (e.target.closest('a')) return;
                 const title = this.querySelector('h3')?.textContent || 'Без названия';
                 const desc = this.querySelector('p')?.textContent || 'Нет описания';
                 const tag = this.querySelector('.tag')?.textContent || '';
@@ -370,5 +370,3 @@
     }
 
 })();
-
-
