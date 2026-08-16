@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>А. Гештальт F — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Альтернативный Гештальт F — Воспоминание. Травма, ПТСР и сила памяти.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ СТРАНИЦЫ ГЕШТАЛЬТ F ===== */
-
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ===== */
         .class-title {
             position: relative;
             display: inline-block;
-            font-family: 'Courier New', monospace;
+            font-family: 'Cinzel', serif;
             letter-spacing: 0.08em;
             color: var(--accent);
             text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
@@ -26,42 +27,27 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .quote-block {
-            background: var(--bg-nav);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem 1.8rem;
-            margin: 1.8rem 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--text-muted);
-            position: relative;
+        .class-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
-        .quote-block::before {
-            content: '“';
-            font-size: 3rem;
-            color: var(--accent);
-            position: absolute;
-            top: -0.2rem;
-            left: 0.8rem;
-            opacity: 0.3;
-            font-style: normal;
-        }
-        .quote-block .author {
-            display: block;
-            margin-top: 0.6rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
+        .class-block:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
         }
 
         .section-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.6rem;
-            height: 1.6rem;
-            margin-right: 0.3rem;
+            width: 1.8rem;
+            height: 1.8rem;
             flex-shrink: 0;
             color: var(--accent);
         }
@@ -78,22 +64,15 @@
         .section-title {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            font-size: 1.6rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Cinzel', serif;
             cursor: pointer;
             user-select: none;
-        }
-
-        .class-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: border-color var(--transition);
-        }
-        .class-block:hover {
-            border-color: var(--accent);
         }
 
         .collapsible-content {
@@ -136,7 +115,6 @@
             color: var(--text);
         }
 
-        /* ===== ОБЁРТКА ДЛЯ ТАБЛИЦ (ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА) ===== */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -218,27 +196,21 @@
             display: block;
         }
 
-        .muted {
+        .subgroup-title {
             color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .tag {
-            display: inline-block;
-            background: var(--accent-glow);
-            color: var(--accent);
-            padding: 0.1rem 0.6rem;
-            border-radius: 60px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.1em;
+            margin: 2.2rem 0 1rem;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 0.5rem;
+            margin-top: 1.5rem;
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
@@ -250,968 +222,932 @@
             text-decoration: underline;
         }
 
-        .subgroup-title {
+        .muted {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 2.2rem 0 1rem;
-            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 700px) {
-            .class-title {
-                font-size: 1.6rem !important;
-            }
-            .class-title span {
-                font-size: 1.6rem !important;
-            }
-            .class-title svg {
-                width: 1.4rem !important;
-                height: 1.4rem !important;
-            }
+        #no-results-class-f {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
 
-            .class-block {
-                padding: 1.2rem 1rem;
-            }
-            .section-icon {
-                width: 1.4rem;
-                height: 1.4rem;
-            }
-            .table-wrapper table {
-                min-width: 500px;
-                font-size: 0.8rem;
-            }
-            .level-table th,
-            .level-table td {
-                padding: 0.4rem 0.5rem;
-            }
-            .tab-button {
-                font-size: 0.78rem;
-                padding: 0.35rem 0.7rem;
-            }
-            .ability-item {
-                padding: 0.6rem 0.8rem;
-            }
+        @media (max-width: 700px) {
+            .class-title { font-size: 2rem !important; }
+            .class-title svg { width: 1.8rem !important; height: 1.8rem !important; }
+            .class-block { padding: 1.2rem; }
+            .section-icon { width: 1.4rem; height: 1.4rem; }
+            .table-wrapper table { min-width: 500px; font-size: 0.8rem; }
+            .level-table th, .level-table td { padding: 0.4rem 0.5rem; }
+            .tab-button { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
+            .ability-item { padding: 0.6rem 0.8rem; }
         }
         @media (max-width: 480px) {
-            .class-title {
-                font-size: 1.3rem !important;
-            }
-            .class-title span {
-                font-size: 1.3rem !important;
-            }
-            .class-title svg {
-                width: 1.2rem !important;
-                height: 1.2rem !important;
-            }
-
-            .quote-block {
-                padding: 1rem 1.2rem;
-            }
-            .table-wrapper table {
-                min-width: 400px;
-                font-size: 0.7rem;
-            }
-            .level-table th,
-            .level-table td {
-                padding: 0.3rem 0.3rem;
-            }
-            .tab-button {
-                font-size: 0.7rem;
-                padding: 0.25rem 0.5rem;
-            }
-            .ability-item {
-                padding: 0.5rem 0.6rem;
-            }
-            .ability-item .value {
-                font-size: 0.85rem;
-            }
+            .class-title { font-size: 1.6rem !important; }
+            .class-title svg { width: 1.4rem !important; height: 1.4rem !important; }
+            .table-wrapper table { min-width: 400px; font-size: 0.7rem; }
+            .tab-button { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
+
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
-    <div class="content">
-
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        </header>
-
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
-            <a href="lore.html">Лор</a>
+    <!-- ===== НАВИГАЦИЯ (глобальная) ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html" class="active">А. Гештальт</a>
             <a href="traits.html">Черты</a>
             <a href="Backstories.html">Предыстории</a>
             <a href="alternative.html">Отыгрыш</a>
-        </nav>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
 
-        <div class="container">
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
 
-            <!-- ЗАГОЛОВОК -->
-            <div style="margin-bottom: 1.5rem;">
-                <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.2rem;">
-                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        <svg width="1.6rem" height="1.6rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 3.13 2.87 5.87 5 7.87V20h4v-3.13c2.13-2 5-4.74 5-7.87 0-3.87-3.13-7-7-7z"/>
-                            <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                        </svg>
-                        А. Гештальт F
-                    </span>
-                </h1>
-                <p class="section-desc" style="margin-top: 0.2rem;">Класс • Воспоминание • Травма • ПТСР / КПТСР</p>
-            </div>
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
+    <div class="content">
 
-            <!-- ЦИТАТА -->
-            <div class="quote-block">
-                «Травма — это не слабость. Это шрам, который учит тебя выживать. Каждый раз, когда я вспоминаю, я становлюсь сильнее. Потому что то, что не убило меня, теперь работает на меня.»
-                <span class="author">— Ворон, Гештальт F, изгнанник из клана «Серая стая»</span>
-            </div>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
-            <!-- ОСНОВЫ -->
-            <div class="class-block" id="base">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
-                    </span>
-                    Основные характеристики
-                </h2>
-                <div class="collapsible-content open">
-                    <div class="ability-grid">
-                        <div class="ability-item">
-                            <strong>Хит-дай</strong>
-                            <span class="value">1d8</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Хиты на 1 уровне</strong>
-                            <span class="value">8 + модификатор Телосложения</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Хиты на следующих уровнях</strong>
-                            <span class="value">1d8 (или 5) + модификатор Телосложения</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Броня</strong>
-                            <span class="value">лёгкая</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Оружие</strong>
-                            <span class="value">простое оружие, короткие клинки, дальнобойное лёгкое оружие</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Спасброски</strong>
-                            <span class="value">Ловкость, Харизма</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Навыки</strong>
-                            <span class="value">выберите три из: Акробатика, Скрытность, Проницательность, Обман, Восприятие, Выживание</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>Снаряжение</strong>
-                            <span class="value">лёгкая броня, два коротких клинка или короткий клинок + дальнобойное оружие, фокус (предмет, связанный с травмой), набор вора или путешественника.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ТАБЛИЦА ПРОГРЕССИИ -->
-            <div class="class-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M3.75 3v16.5M3.75 3h16.5M3.75 3L21 20.25"/><path d="M6.75 6.75h10.5M6.75 9h7.5M6.75 11.25h4.5"/></svg>
-                    </span>
-                    Таблица прогрессии
-                </h2>
-                <div class="collapsible-content open">
-                    <div class="table-wrapper">
-                        <table class="level-table">
-                            <thead>
-                                <tr>
-                                    <th>Ур.</th>
-                                    <th>Бонус<br>мастерства</th>
-                                    <th>Воспоминание</th>
-                                    <th>Особенности</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>1</td><td>+2</td><td>3</td><td>Проявление Воспоминания, Отзвук</td></tr>
-                                <tr><td>2</td><td>+2</td><td>3</td><td>След Прошлого</td></tr>
-                                <tr><td>3</td><td>+2</td><td>3</td><td>—</td></tr>
-                                <tr><td>4</td><td>+2</td><td>3</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
-                                <tr><td>5</td><td>+3</td><td>4</td><td>Дополнительная атака</td></tr>
-                                <tr><td>6</td><td>+3</td><td>4</td><td>—</td></tr>
-                                <tr><td>7</td><td>+3</td><td>4</td><td>Живое Воспоминание, <span class="highlight">Подкласс</span></td></tr>
-                                <tr><td>8</td><td>+3</td><td>4</td><td>Увеличение характеристик</td></tr>
-                                <tr><td>9</td><td>+4</td><td>5</td><td>Углубление Отзвука</td></tr>
-                                <tr><td>10</td><td>+4</td><td>5</td><td>—</td></tr>
-                                <tr><td>11</td><td>+4</td><td>5</td><td>Тень Прошлого, <span class="highlight">Подкласс</span></td></tr>
-                                <tr><td>12</td><td>+4</td><td>5</td><td>Увеличение характеристик</td></tr>
-                                <tr><td>13</td><td>+5</td><td>6</td><td>Быстрый Сброс</td></tr>
-                                <tr><td>14</td><td>+5</td><td>6</td><td>—</td></tr>
-                                <tr><td>15</td><td>+5</td><td>6</td><td>Пережитое, <span class="highlight">Подкласс</span></td></tr>
-                                <tr><td>16</td><td>+5</td><td>6</td><td>Увеличение характеристик</td></tr>
-                                <tr><td>17</td><td>+6</td><td>7</td><td>—</td></tr>
-                                <tr><td>18</td><td>+6</td><td>7</td><td>Глубокая Память</td></tr>
-                                <tr><td>19</td><td>+6</td><td>7</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
-                                <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Воспоминания</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="muted">Максимум Воспоминаний = бонус мастерства + 1. После короткого отдыха восстанавливается 1 Воспоминание.</p>
-                </div>
-            </div>
-
-            <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
-            <div class="class-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-                    </span>
-                    Основные особенности класса
-                </h2>
-                <div class="collapsible-content open">
-                    <div class="ability-grid">
-                        <div class="ability-item">
-                            <strong>Воспоминание (основной ресурс)</strong>
-                            <span class="value">Максимум Воспоминаний = бонус мастерства + 1 (на 1 уровне — 3).<br>
-                            Полностью восстанавливается после длинного отдыха.<br>
-                            После короткого отдыха восстанавливается 1 Воспоминание.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>1 уровень — Проявление Воспоминания</strong>
-                            <span class="value">Бонусным действием ты можешь потратить 1 Воспоминание, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Воспоминание.<br><br>
-                            <strong>Внутренний режим (Погружение)</strong><br>
-                            • Скорость увеличивается на 10 футов<br>
-                            • Ты получаешь +1d4 к урону оружия<br>
-                            • Ты можешь использовать действие Отход бонусным действием<br>
-                            • Каждый раз, когда ты получаешь урон в этом режиме, ты получаешь 1 Отзвук<br><br>
-                            <strong>Внешний режим (Проекция)</strong><br>
-                            Ты создаёшь видимую проекцию Воспоминания в свободном пространстве в пределах 30 футов.<br>
-                            • КД 13 + модификатор Ловкости<br>
-                            • Хиты = половина твоих максимальных хитов<br>
-                            • Скорость 30 футов<br>
-                            • Может атаковать (бонус атаки = мастерство + Ловкость или Харизма, урон 1d6 + модификатор)<br><br>
-                            <strong>Тень:</strong> Бонусным действием ты можешь приказать проекции стать Тенью. Пока она Тень — она невидима для врагов без преимущества на Восприятие, даёт тебе лёгкое укрытие в пределах 10 футов и не может атаковать.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>2 уровень — След Прошлого</strong>
-                            <span class="value">Когда ты перемещаешься минимум на 15 футов по прямой и сразу после этого атакуешь существо, ты наносишь дополнительный 1d6 урона.<br>
-                            Кроме того, ты получаешь преимущество на проверки Скрытности, если в течение последнего хода проявлял Гештальт.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>5 уровень — Дополнительная атака</strong>
-                            <span class="value">Когда ты используешь действие Атака, ты можешь атаковать дважды вместо одного.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>7 уровень — Живое Воспоминание</strong>
-                            <span class="value"><strong>Усиление режимов:</strong><br>
-                            • Внутренний режим: дополнительный урон увеличивается до +1d6, скорость +15 футов<br>
-                            • Внешний режим: проекция получает +2 к КД и может атаковать дважды, если ты используешь действие Атака<br><br>
-                            <strong>Сброс Отзвука</strong> (1 Воспоминание, бонусное действие)<br>
-                            Ты снимаешь с себя 1 Отзвук. Если после этого у тебя не осталось Отзвуков, ты получаешь временные хиты, равные удвоенному твоему уровню, и можешь сразу переместиться на половину своей скорости без провоцированных атак.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>9 уровень — Углубление Отзвука</strong>
-                            <span class="value">Эффекты Отзвука усиливаются (см. раздел «Отзвук»). Кроме того, когда ты получаешь критический удар, ты автоматически получаешь 1 Отзвук.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>11 уровень — Тень Прошлого</strong>
-                            <span class="value">Пока активен Внешний режим, ты можешь бонусным действием приказать проекции стать Тенью или наоборот — выйти из состояния Тени и сразу совершить одну атаку.<br><br>
-                            <strong>Метка Воспоминания</strong> (2 Воспоминания, действие)<br>
-                            Ты выбираешь существо в пределах 60 футов. На 1 минуту:<br>
-                            • Твои атаки по этой цели наносят дополнительный 1d8 урона<br>
-                            • Цель не может совершать провоцированные атаки против тебя<br>
-                            • Если цель опускается до 0 хитов, ты восстанавливаешь 1 Воспоминание</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>13 уровень — Быстрый Сброс</strong>
-                            <span class="value">Сброс Отзвука теперь можно использовать 1 раз за ход (по-прежнему стоит 1 Воспоминание).<br>
-                            Кроме того, когда ты используешь действие Отход, твоя скорость увеличивается на 10 футов до конца хода.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>15 уровень — Пережитое</strong>
-                            <span class="value"><strong>Пережитое</strong> (1/длинный отдых, реакция)<br>
-                            Когда ты должен получить урон, ты можешь полностью предотвратить этот урон. После этого ты получаешь 2 Отзвука и становишься невидимым до начала своего следующего хода (или до тех пор, пока не атакуешь).<br>
-                            Пока Гештальт проявлен, ты получаешь сопротивление психическому урону.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>18 уровень — Глубокая Память</strong>
-                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br>
-                            Пока у тебя 0 Отзвуков, ты получаешь +1 к КД и преимущество на спасброски Ловкости.</span>
-                        </div>
-                        <div class="ability-item">
-                            <strong>20 уровень — Апофеоз Воспоминания</strong>
-                            <span class="value">Максимум Воспоминаний увеличивается на +3.<br><br>
-                            <strong>Апофеоз Воспоминания</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                            • Ты одновременно находишься в обоих режимах<br>
-                            • Отзвуки больше не накладывают штрафы<br>
-                            • Все твои атаки наносят дополнительный 2d8 урона<br>
-                            • Один раз за время действия ты можешь реакцией полностью игнорировать урон от одной атаки или эффекта<br><br>
-                            <strong>Пассивно:</strong> Ты получаешь сопротивление психическому урону и преимущество на спасброски против испуга и очарования.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ПОДКЛАССЫ -->
-            <div class="class-block" id="subclasses">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </span>
-                    Подклассы
-                </h2>
-                <div class="collapsible-content open">
-                    <div class="tabs">
-                        <button class="tab-button active" onclick="openSubTab(event, 'FM')">FM — Пустота</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FV')">FV — Насилие</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FA')">FA — Пепел</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FS')">FS — Стыд</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FG')">FG — Вина</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FB')">FB — Предательство</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FI')">FI — Несправедливость</button>
-                        <button class="tab-button" onclick="openSubTab(event, 'FP')">FP — Петля</button>
-                    </div>
-
-                    <!-- FM -->
-                    <div id="FM" class="tab-content active">
-                       
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>Боль Утраты</strong>
-                                <span class="value">При выборе подкласса ты определяешь одну Боль Утраты. Пока она активна, ты получаешь бонусы против всего, что с ней связано. На 11 уровне можно сюжетно изменить Боль Утраты или добавить одну вторичную (вторичная даёт половину бонусов).</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>4 уровень — Горечь</strong>
-                                <span class="value"><strong>Клеймо Потери</strong> (1 Воспоминание, бонусное действие)<br>
-                                Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
-                                • Твои атаки по этой цели наносят дополнительный 1d6 урона (половина некротического, половина психического)<br>
-                                • Каждый раз, когда ты попадаешь по цели с Клеймом, ты восстанавливаешь хиты, равные половине этого дополнительного урона<br><br>
-                                <strong>Аура Пустоты</strong><br>
-                                Пока Гештальт проявлен во Внешнем режиме, проекция создаёт Ауру Пустоты радиусом 10 футов. Все враги, начинающие ход в этой ауре, получают 1d4 некротического урона, а ты получаешь временные хиты, равные нанесённому урону.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Кровосток</strong>
-                                <span class="value"><strong>Кровосток</strong> (2 Воспоминания, действие)<br>
-                                Одно существо в пределах 30 футов должно совершить спасбросок Телосложения.<br>
-                                При провале цель получает 3d8 урона (некротический + психический), и ты восстанавливаешь хиты, равные половине нанесённого урона.<br>
-                                При успехе — половину урона без лечения.<br>
-                                Если цель находится под Клеймом Потери, урон увеличивается до 4d8, а ты восстанавливаешь хиты полностью.<br>
-                                Пока активна Аура Пустоты, один раз за ход ты можешь бонусным действием переместить проекцию на 20 футов.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Ненасытность</strong>
-                                <span class="value">• Дополнительный урон Клейма Потери увеличивается до 1d10<br>
-                                • Аура Пустоты увеличивается до 15 футов и наносит 1d6 урона<br>
-                                • Когда ты опускаешь существо до 0 хитов под действием Клейма или Ауры, ты снимаешь с себя 1 Отзвук и получаешь временные хиты, равные твоему уровню<br><br>
-                                <strong>Связь с Болью Утраты</strong><br>
-                                Против всего, что связано с твоей Болью Утраты, способности подкласса наносят дополнительный 1d6 урона, а спасброски против них совершаются с помехой.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Поглощение</strong>
-                                <span class="value"><strong>Поглощение</strong> (1/длинный отдых, действие)<br>
-                                Ты выбираешь точку в пределах 60 футов. Все враги в радиусе 20 футов должны совершить спасбросок Телосложения.<br>
-                                При провале существо получает 6d8 урона (некротический + психический), и ты восстанавливаешь хиты, равные половине всего нанесённого этим эффектом урона.<br>
-                                При успехе — половину урона.<br>
-                                На 1 минуту Аура Пустоты увеличивается до 20 футов и наносит 2d6 урона.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Пустоты</strong>
-                                <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
-                                <strong>Апофеоз Пустоты</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                                • Клеймо Потери и Аура Пустоты действуют одновременно и усиливаются: дополнительный урон Клейма становится 2d8, Аура наносит 2d8 урона<br>
-                                • Каждый раз, когда ты восстанавливаешь хиты от способностей подкласса, ты также получаешь столько же временных хитов<br>
-                                • Один раз за время действия ты можешь реакцией, когда существо в пределах 30 футов получает урон, дополнительно нанести ему 3d8 некротического урона и восстановить себе такое же количество хитов<br><br>
-                                <strong>Пассивно:</strong> Пока у тебя есть хотя бы 1 Отзвук, ты получаешь сопротивление некротическому и психическому урону.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FV -->
-                    <div id="FV" class="tab-content">
-                        <p class="muted" style="margin-bottom: 1rem;">Насилие. Два пути: Агнец и Хищник. Выбор на 4 уровне, смена возможна на 11 уровне.</p>
-
-                        <div class="subgroup-title">Путь Агнца</div>
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Ответный удар</strong>
-                                <span class="value"><strong>Ответный удар</strong> (реакция)<br>
-                                Когда существо в пределах 5 футов наносит тебе урон атакой ближнего боя, ты можешь реакцией нанести ему 1d8 + модификатор Ловкости урона (половина физического, половина психического). Ты восстанавливаешь хиты, равные половине нанесённого этим способом урона.<br><br>
-                                <strong>Ускользание</strong><br>
-                                Пока Гештальт проявлен, ты можешь использовать действие Отход бонусным действием. Скорость увеличивается на 10 футов, пока у тебя есть хотя бы 1 Отзвук.<br><br>
-                                <strong>Связь путей</strong><br>
-                                Пока в пределах 30 футов находится существо с путём Хищник, ты получаешь помеху на спасброски против страха, но дополнительный урон Ответного удара увеличивается на 1d4.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Кровавый щит</strong>
-                                <span class="value"><strong>Кровавый щит</strong> (1 Воспоминание, реакция)<br>
-                                Когда ты получаешь урон, ты можешь реакцией:<br>
-                                • Нанести атакующему 2d8 урона (некротический + психический)<br>
-                                • Восстановить себе хиты, равные половине этого урона<br>
-                                • Переместиться на половину своей скорости без провоцированных атак<br>
-                                Если урон был критическим, дополнительный урон увеличивается до 3d8.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Перепутье</strong>
-                                <span class="value">Ты можешь сменить Путь на Хищника. Если остаёшься Агнцем:<br>
-                                <strong>Отражение Боли</strong> — когда ты используешь Ответный удар или Кровавый щит, ты можешь часть получаемого урона (до своего уровня) перенаправить обратно на атакующего в виде психического урона.<br>
-                                Дополнительный урон Ответного удара увеличивается до 1d10.<br><br>
-                                <strong>Парный эффект</strong><br>
-                                Если союзник с путём Хищник атакует существо, которое только что ударило тебя, оба вы получаете +1d4 к урону по этой цели до конца вашего следующего хода.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Жертвенная ярость</strong>
-                                <span class="value"><strong>Жертвенная ярость</strong> (1/длинный отдых, реакция)<br>
-                                Когда ты опускаешься ниже половины хитов или получаешь критический удар, ты можешь активировать эту способность. На 1 минуту:<br>
-                                • Скорость увеличивается на 20 футов<br>
-                                • Все твои ответные реакции наносят дополнительный 2d8 урона<br>
-                                • Каждый раз, когда ты наносишь урон реакцией, ты восстанавливаешь 1d6 + уровень хитов<br>
-                                • Ты получаешь преимущество на атаки против существа, которое последним нанесло тебе урон<br>
-                                После окончания эффекта ты получаешь 2 Отзвука.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Жертвенности</strong>
-                                <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
-                                <strong>Апофеоз Жертвенности</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                                • Все твои реакции, связанные с получением урона, больше не требуют реакции (1 раз за ход бесплатно)<br>
-                                • Урон ответных способностей увеличивается на 2d8<br>
-                                • Каждый раз, когда тебя поражают атакой ближнего боя, атакующий автоматически получает 2d8 психического урона<br>
-                                • Ты получаешь сопротивление одному типу урона на свой выбор (можно менять бонусным действием)<br><br>
-                                <strong>Пассивно:</strong> Пока у тебя есть хотя бы 1 Отзвук, ты получаешь +1 к КД и преимущество на спасброски Ловкости.<br>
-                                <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Хищник, ты получаешь помеху на спасброски против страха, но все твои ответные атаки наносят дополнительный 1d6 урона.</span>
-                            </div>
-                        </div>
-
-                        <div class="subgroup-title">Путь Хищника</div>
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Метка Жертвы</strong>
-                                <span class="value"><strong>Метка Жертвы</strong> (1 Воспоминание, бонусное действие)<br>
-                                Ты отмечаешь одно существо в пределах 60 футов как свою Жертву. Одновременно может быть только одна Метка. Пока Метка активна (1 минута):<br>
-                                • Твои атаки по Жертве наносят дополнительный 1d6 урона (физический + психический)<br>
-                                • Жертва совершает спасброски против страха с помехой<br>
-                                • Когда Жертва получает урон от тебя, ты восстанавливаешь хиты, равные половине дополнительного урона Метки<br><br>
-                                <strong>Охотничий Инстинкт</strong><br>
-                                Пока у тебя есть активная Метка Жертвы, твоя скорость увеличивается на 10 футов, когда ты двигаешься к ней.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Наслаждение Болью</strong>
-                                <span class="value"><strong>Наслаждение Болью</strong> (1 Воспоминание, бонусное действие)<br>
-                                Пока у тебя есть Метка Жертвы, ты можешь усилить её до конца своего следующего хода:<br>
-                                • Дополнительный урон Метки увеличивается до 1d10<br>
-                                • Каждый раз, когда Жертва получает урон от тебя, она должна преуспеть в спасброске Мудрости, иначе становится испуганной тобой до конца своего следующего хода<br>
-                                • Ты получаешь временные хиты, равные твоему уровню<br><br>
-                                <strong>Связь путей</strong><br>
-                                Пока в пределах 30 футов находится существо с путём Агнец, ты получаешь +1 к броскам атаки по своей Жертве.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Перепутье</strong>
-                                <span class="value">Ты можешь сменить Путь на Агнца. Если остаёшься Хищником:<br>
-                                <strong>Доминирование</strong> — Жертва под твоей Меткой совершает атаки по тебе с помехой. Дополнительный урон Метки становится 1d10 постоянно.<br><br>
-                                <strong>Парный эффект</strong><br>
-                                Если союзник с путём Агнец атакует твою Жертву, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Травля</strong>
-                                <span class="value"><strong>Травля</strong> (1/длинный отдых, действие)<br>
-                                Ты выбираешь существо в пределах 60 футов. На 1 минуту оно становится твоей Жертвой (без затраты Воспоминания), и действуют эффекты:<br>
-                                • Дополнительный урон Метки увеличивается до 2d8<br>
-                                • Каждый раз, когда Жертва получает урон, она получает дополнительный 1d6 психического урона<br>
-                                • Ты восстанавливаешь хиты, равные этому дополнительному психическому урону<br>
-                                • Скорость Жертвы снижается на 10 футов, пока она видит тебя</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Хищника</strong>
-                                <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
-                                <strong>Апофеоз Хищника</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                                • Метка Жертвы действует на двух существ одновременно<br>
-                                • Дополнительный урон Метки становится 2d8<br>
-                                • Каждый раз, когда Жертва получает урон от тебя, ты восстанавливаешь 1d8 + уровень хитов<br>
-                                • Жертвы автоматически проваливают первый спасбросок против страха перед тобой<br><br>
-                                <strong>Пассивно:</strong> Пока у тебя есть активная Метка Жертвы, ты получаешь сопротивление психическому урону.<br>
-                                <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Агнец, ты получаешь +2 к урону по Жертве, а Агнец получает помеху на спасброски против страха.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FA -->
-                    <div id="FA" class="tab-content">
-
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Первое Правило</strong>
-                                <span class="value"><strong>Зона Правил</strong> (1 Воспоминание, действие)<br>
-                                Ты создаёшь зону радиусом 15 футов в пределах 30 футов. Зона существует 1 минуту (концентрация). При создании ты выбираешь одно Правило из списка.<br>
-                                Пока зона активна, ты получаешь +1 к КД, если находишься внутри неё.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>Список Правил</strong>
-                                <span class="value"><strong>Базовые (с 4 уровня):</strong><br>
-                                • Пепельные Оковы — скорость врагов −10 футов, труднопроходимая местность<br>
-                                • Запрет Восстановления — враги не могут восстанавливать хиты и получать временные хиты<br>
-                                • Давящий Пепел — враги в начале хода получают 1d6 урона пеплом<br>
-                                • Скованный Шаг — враги не могут использовать Рывок и Отход<br>
-                                • Пепельная Пелена — помеха на Внимательность и атаки по существам вне зоны<br><br>
-                                <strong>Дополнительные (с 7 уровня):</strong><br>
-                                • Пепельный Яд — при получении урона враг получает ещё 1d4 урона пеплом<br>
-                                • Окаменение Шага — 2 фута перемещения за каждый фут<br>
-                                • Запрет Магии — помеха на проверки концентрации<br>
-                                • Пепельный Барьер — чтобы выйти из зоны, нужен спасбросок Силы, иначе скорость 0<br>
-                                • Высушивание — помеха на спасброски Телосложения<br><br>
-                                <strong>Высокие (с 11–15):</strong><br>
-                                • Полный Запрет Полёта — летающие падают<br>
-                                • Пепельная Тишина — нельзя использовать вербальные компоненты<br>
-                                • Обратный Поток — притягивание на 10 футов к центру<br>
-                                • Хрупкость — дополнительный 1d6 урона от первого попадания в ходу</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Перепись</strong>
-                                <span class="value"><strong>Перепись</strong> (2 Воспоминания, бонусное действие)<br>
-                                Пока у тебя есть активная Зона Правил, ты можешь изменить её Правило или добавить второе Правило (максимум два одновременно).<br>
-                                Каждый раз, когда ты используешь Перепись, ты получаешь 1 Отзвук.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Двойная Зона</strong>
-                                <span class="value">Ты можешь поддерживать две Зоны Правил одновременно. Радиус зон увеличивается до 20 футов.<br><br>
-                                <strong>Пепельный Взрыв</strong> (реакция)<br>
-                                Когда ты получаешь 3 или больше Отзвуков, пока у тебя есть активная зона, ты можешь реакцией взорвать одну зону. Все существа в ней совершают спасбросок Телосложения. При провале: 4d8 урона пеплом + скорость 0 до конца их следующего хода. При успехе — половину урона. Зона исчезает, ты снимаешь 1 Отзвук.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Господство Пепла</strong>
-                                <span class="value"><strong>Господство Пепла</strong> (1/длинный отдых, действие)<br>
-                                Ты создаёшь большую зону радиусом 30 футов на 1 минуту. Внутри неё ты можешь одновременно поддерживать три Правила, а также:<br>
-                                • Враги совершают спасброски против твоих способностей с помехой<br>
-                                • Ты игнорируешь труднопроходимую местность<br>
-                                • Каждый раз, когда враг в зоне получает урон, ты можешь бонусным действием нанести ему дополнительный 1d8 урона пеплом<br>
-                                Пока действует Господство, любой Отзвук, который ты получаешь, увеличивается на 1.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Пепла</strong>
-                                <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
-                                <strong>Апофеоз Пепла</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                                • Зона радиусом 40 футов<br>
-                                • Можно иметь любое количество Правил одновременно<br>
-                                • Враги в зоне автоматически получают 2d6 урона пеплом в начале своего хода<br>
-                                • Один раз за время действия можно реакцией взорвать зону как усиленный Пепельный Взрыв (6d8 урона + скорость 0)<br>
-                                • Пока Апофеоз активен, Отзвуки не накладывают штрафы<br><br>
-                                <strong>Пассивно:</strong> Пока у тебя есть хотя бы одна активная Зона Правил, ты получаешь сопротивление дробящему и некротическому урону.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FS -->
-                    <div id="FS" class="tab-content">
-                        
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>Ресурс: Стыд</strong>
-                                <span class="value">Максимум Стыда = бонус мастерства + 2.<br>
-                                Как получать:<br>
-                                • Получение Отзвука → +1 Стыд<br>
-                                • Провал атаки или проверки на глазах у врагов → +1 Стыд<br>
-                                • Неуклюжесть (1/ход): добровольно получить помеху на атаку или проверку → +1 Стыд<br>
-                                • Публичный стыд (по интенсивности): +1, +2 или +3 Стыда</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>4 уровень — Три Жжения</strong>
-                                <span class="value">Все приёмы стоят 1 Стыд.<br><br>
-                                <strong>Огонь — Вспышка Стыда</strong> (бонусное действие)<br>
-                                Следующая атака до конца хода наносит дополнительный 1d6 огненного урона. При попадании цель загорается и получает 1d4 огненного урона в начале своего хода (1 раунд).<br><br>
-                                <strong>Лёд — Холодный Стыд</strong> (бонусное действие)<br>
-                                Одно существо в пределах 30 футов: скорость −10 футов и оно не может совершать реакции до конца твоего следующего хода.<br><br>
-                                <strong>Электричество — Разряд Унижения</strong> (действие)<br>
-                                Одно существо в пределах 30 футов — спасбросок Ловкости. Провал: 2d6 электрического урона + нельзя использовать бонусные действия до конца своего следующего хода. Успех: половина урона.<br><br>
-                                <strong>Неуклюжесть</strong><br>
-                                1 раз за ход можно добровольно получить помеху на атаку/проверку, чтобы получить 1 Стыд.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Публичное Горение</strong>
-                                <span class="value">При получении Стыда от сильного публичного унижения ты получаешь +1 дополнительный Стыд.<br><br>
-                                Усиленные приёмы:<br>
-                                • Огонь: +1d8 урона, горение 1d6<br>
-                                • Лёд: скорость −15 футов + помеха на первую атаку<br>
-                                • Электричество: 3d6 урона, при провале цель роняет один удерживаемый предмет</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Смешение Стихий</strong>
-                                <span class="value">Ты можешь тратить 2 Стыда, чтобы использовать комбинацию двух стихий (1 раз за ход).<br><br>
-                                <strong>Огонь + Лёд = Раскалённый Пар</strong> (действие)<br>
-                                Точка в пределах 30 футов, радиус 10 футов. Спасбросок Телосложения. Провал: 3d6 урона (огонь + холод) + скорость −10 футов. Успех: половина урона.<br><br>
-                                <strong>Огонь + Электричество = Взрывной Разряд</strong> (действие)<br>
-                                Одно существо в пределах 40 футов — спасбросок Ловкости. Провал: 4d6 урона (огонь + электричество) + горение 1d6 + нельзя использовать реакции. Успех: половина урона.<br><br>
-                                <strong>Лёд + Электричество = Сковывающий Разряд</strong> (действие)<br>
-                                Одно существо в пределах 30 футов — спасбросок Телосложения. Провал: 3d6 электрического урона, скорость 0 до конца следующего хода, нельзя совершать реакции. Успех: половина урона и скорость −10 футов.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Клеймо Стыда</strong>
-                                <span class="value"><strong>Клеймо Стыда</strong> (1/длинный отдых, действие)<br>
-                                Одно существо в пределах 60 футов на 1 минуту:<br>
-                                • Все твои приёмы и комбинации против него стоят на 1 Стыд меньше (минимум 0)<br>
-                                • Цель получает +1d6 урона от всех твоих стихийных атак<br>
-                                • Каждый раз, когда цель проваливает спасбросок против твоих способностей, ты восстанавливаешь 1 Стыд</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Стыда</strong>
-                                <span class="value">Максимум Воспоминаний +2. Максимум Стыда +3.<br><br>
-                                <strong>Апофеоз Стыда</strong> (1/длинный отдых, 1 минута)<br>
-                                • Можно свободно комбинировать все три стихии<br>
-                                • Все стихийные приёмы и комбинации наносят дополнительный 1d8 урона<br>
-                                • Неуклюжесть больше не даёт помеху (Стыд всё равно приходит)<br>
-                                • Один раз за длительность: реакция на получение урона — вспышка всех трёх стихий (3d8 смешанного урона в радиусе 10 футов)<br><br>
-                                <strong>Пассивно:</strong> При 3+ Стыда — сопротивление огню, холоду и электричеству.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FG -->
-                    <div id="FG" class="tab-content">
-                        
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Бремя</strong>
-                                <span class="value"><strong>Клеймо Вины</strong> (1 Воспоминание, бонусное действие)<br>
-                                Одно существо в пределах 60 футов получает Клеймо на 1 минуту.<br>
-                                • Цель совершает атаки и проверки Харизмы с помехой<br>
-                                • Каждый раз, когда ты попадаешь по цели с Клеймом, ты восстанавливаешь 1d4 + модификатор Харизмы хитов<br><br>
-                                <strong>Принять Бремя</strong> (1 Воспоминание, действие)<br>
-                                Ты выбираешь союзника в пределах 30 футов. С него снимается одно состояние или дебафф. Ты получаешь это состояние/дебафф на себя на 1 минуту и одновременно получаешь временные хиты, равные твоему уровню + 2 × модификатор Харизмы.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Искупление</strong>
-                                <span class="value"><strong>Песнь Вины</strong> (2 Воспоминания, действие)<br>
-                                Ты начинаешь выступление (голос или инструмент). Все враги в пределах 20 футов должны совершить спасбросок Мудрости. При провале они получают 3d6 психического урона и на 1 минуту их скорость снижается на 10 футов. Ты восстанавливаешь хиты, равные половине нанесённого урона.<br>
-                                Если ты используешь инструмент или открыто выступаешь, урон увеличивается до 4d6.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Общее Бремя</strong>
-                                <span class="value">Клеймо Вины теперь можно накладывать на двух существ одновременно. Лечение от Клейма увеличивается до 1d6 + Харизма.<br><br>
-                                <strong>Разделить Вину</strong> (2 Воспоминания, бонусное действие)<br>
-                                Ты можешь перенести один свой дебафф или состояние на врага с Клеймом Вины (враг получает спасбросок Мудрости). При успешном переносе ты восстанавливаешь 2d6 хитов.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Искупительная Жертва</strong>
-                                <span class="value"><strong>Искупительная Жертва</strong> (1/длинный отдых, действие)<br>
-                                Ты принимаешь на себя боль всех союзников в пределах 30 футов. Каждый союзник восстанавливает хиты, равные 4d8 + твой уровень. Ты получаешь урон, равный половине от суммы всего исцеления (этот урон нельзя уменьшить), и на 1 минуту все твои Клейма Вины наносят дополнительный 1d8 психического урона.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Вины</strong>
-                                <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
-                                <strong>Апофеоз Вины</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
-                                • Клеймо Вины действует на любое количество существ в пределах 30 футов<br>
-                                • Каждый раз, когда существо под Клеймом получает урон, ты восстанавливаешь 1d6 хитов<br>
-                                • Союзники в пределах 30 футов получают +2 к спасброскам<br>
-                                • Один раз за время действия ты можешь реакцией полностью снять с союзника любой дебафф или состояние и перенести его на врага<br><br>
-                                <strong>Пассивно:</strong> Пока на тебе есть хотя бы один дебафф или Отзвук, ты получаешь сопротивление психическому урону и +1 к КД.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FB -->
-                    <div id="FB" class="tab-content">
-                        
-
-                        <div class="subgroup-title">Путь Предателя</div>
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Нож в Доверии</strong>
-                                <span class="value"><strong>Метка Близости</strong> (1 Воспоминание, бонусное действие)<br>
-                                Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
-                                • Если ты атакуешь цель из скрытности или пока цель считает тебя союзником / не враждебна, атака наносит дополнительный 1d8 урона<br>
-                                • Ты получаешь преимущество на проверки Харизмы (Обман и Убеждение) против этой цели<br><br>
-                                <strong>Тень Предателя</strong><br>
-                                Пока Гештальт проявлен, ты можешь попытаться спрятаться даже в лёгком укрытии. Скорость +10 футов в ход, когда ты выходишь из скрытности.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Холодный Расчёт</strong>
-                                <span class="value"><strong>Холодный Расчёт</strong> (1 Воспоминание, бонусное действие)<br>
-                                Пока у тебя есть Метка Близости, до конца твоего следующего хода:<br>
-                                • Дополнительный урон Метки увеличивается до 1d12<br>
-                                • Цель не может совершать провоцированные атаки против тебя<br>
-                                • Если атака из скрытности или доверия попадает, цель должна преуспеть в спасброске Мудрости, иначе получает помеху на атаки до конца своего следующего хода<br><br>
-                                <strong>Связь путей</strong><br>
-                                Пока в пределах 30 футов находится Преданный, ты получаешь +1d4 к дополнительному урону Метки Близости.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Перепутье</strong>
-                                <span class="value">Ты можешь сменить Путь на Преданного. Если остаёшься Предателем:<br>
-                                • Дополнительный урон Метки становится 1d12 постоянно<br>
-                                • Преимущество на Скрытность в пределах 10 футов от существа, которое считает тебя союзником<br><br>
-                                <strong>Парный эффект</strong><br>
-                                Если Преданный атакует твою цель с Меткой Близости, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Идеальный Удар</strong>
-                                <span class="value"><strong>Идеальный Удар</strong> (1/длинный отдых, действие)<br>
-                                Существо в пределах 60 футов на 1 минуту становится целью Метки Близости (без затраты). Эффекты:<br>
-                                • Дополнительный урон увеличивается до 2d8<br>
-                                • Первая атака по цели из скрытности или доверия автоматически считается критическим попаданием при попадании<br>
-                                • Цель совершает спасброски против твоих способностей с помехой</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Предателя</strong>
-                                <span class="value">Максимум Воспоминаний +2.<br><br>
-                                <strong>Апофеоз Предателя</strong> (1/длинный отдых, 1 минута)<br>
-                                • Метка Близости действует на двух существ<br>
-                                • Дополнительный урон Метки 2d8<br>
-                                • Один раз за ход можно атаковать из скрытности, не раскрывая себя полностью<br>
-                                • При нанесении дополнительного урона Метки восстанавливаешь 1d6 хитов<br><br>
-                                <strong>Пассивно:</strong> Пока есть Метка Близости — преимущество на инициативу и +1 к КД против атак цели.<br>
-                                <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Преданный, дополнительный урон Метки +1d6.</span>
-                            </div>
-                        </div>
-
-                        <div class="subgroup-title">Путь Преданного</div>
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>4 уровень — Чутьё на Нож</strong>
-                                <span class="value"><strong>Метка Подозрения</strong> (1 Воспоминание, бонусное действие)<br>
-                                Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
-                                • Преимущество на проверки Мудрости (Внимательность и Проницательность) против цели<br>
-                                • Если цель атакует тебя или союзника, ты можешь реакцией переместиться на половину скорости к ней и совершить одну атаку оружием с дополнительным 1d6 урона<br><br>
-                                <strong>Гипербдительность</strong><br>
-                                Пока Гештальт проявлен: +2 к Внимательности, тебя нельзя застигнуть врасплох.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Разоблачение</strong>
-                                <span class="value"><strong>Разоблачение</strong> (1 Воспоминание, реакция)<br>
-                                Когда существо под Меткой Подозрения атакует тебя или союзника, ты можешь реакцией:<br>
-                                • Нанести ему 2d8 психического урона<br>
-                                • Наложить помеху на все атаки до конца его следующего хода<br>
-                                • Переместиться на 10 футов без провоцированных атак<br><br>
-                                <strong>Связь путей</strong><br>
-                                Пока в пределах 30 футов находится Предатель, ты получаешь +1d4 к дополнительному урону Метки, но совершаешь спасброски против страха с помехой.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Перепутье</strong>
-                                <span class="value">Ты можешь сменить Путь на Предателя. Если остаёшься Преданным:<br>
-                                • Дополнительный урон ответной атаки увеличивается до 1d10<br>
-                                • Преимущество на спасброски против очарования и обмана<br><br>
-                                <strong>Парный эффект</strong><br>
-                                Если Предатель атакует существо под твоей Меткой Подозрения, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Цена Предательства</strong>
-                                <span class="value"><strong>Цена Предательства</strong> (1/длинный отдых, реакция)<br>
-                                Когда существо под Меткой наносит урон тебе или союзнику, ты можешь активировать способность. На 1 минуту:<br>
-                                • Каждая атака этого существа по тебе или союзникам наносит ему самому 1d8 психического урона<br>
-                                • Ты получаешь преимущество на все атаки против него<br>
-                                • Скорость существа −10 футов, пока оно в пределах 30 футов от тебя</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Преданного</strong>
-                                <span class="value">Максимум Воспоминаний +2.<br><br>
-                                <strong>Апофеоз Преданного</strong> (1/длинный отдых, 1 минута)<br>
-                                • Метка Подозрения действует на двух существ<br>
-                                • Ответная атака наносит дополнительный 2d8 урона<br>
-                                • Автоматический успех проверок Проницательности против существ под Меткой<br>
-                                • Один раз за длительность: реакцией полностью предотвратить урон от атаки существа под Меткой и перенаправить его обратно в виде психического<br><br>
-                                <strong>Пассивно:</strong> Пока есть Метка Подозрения — +1 к КД и преимущество на инициативу.<br>
-                                <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Предатель, дополнительный урон ответных атак +1d6, но помеха на спасброски против страха.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FI -->
-                    <div id="FI" class="tab-content">
-                        
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>Ресурс: Бессилие</strong>
-                                <span class="value">Максимум = бонус мастерства.<br>
-                                Получаешь при: Отзвуке, провале спасброска против «высших», осознанном принятии слабости.<br>
-                                Если на максимуме — помеха на атаки и проверки Харизмы, пока не потратишь хотя бы 1.<br><br>
-                                <strong>Траты Бессилия:</strong><br>
-                                • 1 (бонусное действие): Усиление Приговора — враги в зоне −1 к атакам и спасброскам, реактивный урон +1d6<br>
-                                • 1 (бонусное действие): Возложить Бремя — помеха на следующий спасбросок + нельзя восстанавливать хиты<br>
-                                • 1 (бонусное действие): Принять Бессилие как Силу — снять 1 Отзвук, временные хиты = уровень + Харизма, преимущество на атаки по зоне<br>
-                                • 2 (действие): Голос Суда — все в зоне спасбросок Мудрости, 2d6 психического + потеря реакции<br>
-                                • 2 (бонусное действие): Слом Иерархии — «высшее» существо считается равным, теряет преимущества, атакует тебя с помехой</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>4 уровень — Зал Суда</strong>
-                                <span class="value"><strong>Зал Суда</strong> (1 Воспоминание, действие)<br>
-                                Зона радиусом 15 футов в пределах 30 футов на 1 минуту (концентрация).<br>
-                                Пока враг в зоне:<br>
-                                • Проверки Харизмы и Запугивания с помехой<br>
-                                • Один раз за ход, когда он атакует, ты можешь реакцией нанести 1d6 психического урона (1d8 против высших)<br>
-                                Против высших по статусу спасброски против твоих способностей совершаются с помехой.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Вес Приговора</strong>
-                                <span class="value">Ты получаешь доступ ко всем базовым тратам Бессилия (за 1 очко).</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Общий Суд</strong>
-                                <span class="value">Радиус Зала Суда увеличивается до 25 футов. Можно поддерживать зону без концентрации, но тогда получаешь 1 Бессилие в начале каждого своего хода.<br><br>
-                                <strong>Клеймо Виновного</strong> (2 Воспоминания, действие)<br>
-                                Одно существо в Зале Суда — спасбросок Мудрости. Провал: становится Виновным на 1 минуту (атаки по нему с преимуществом, его атаки с помехой). Против высших — спасбросок с помехой.<br>
-                                Открываются траты за 2 Бессилия.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Высший Суд</strong>
-                                <span class="value"><strong>Высший Суд</strong> (1/длинный отдых, действие)<br>
-                                Большой Зал Суда радиусом 30 футов на 1 минуту:<br>
-                                • Все враги получают помеху на атаки и спасброски Мудрости<br>
-                                • Реактивный урон 2d6 (2d8 против высших)<br>
-                                • Когда враг в зоне падает до 0 хитов — снимаешь 1 Бессилие или восстанавливаешь 1 Воспоминание<br>
-                                Если у тебя 3+ Бессилия, враги в начале хода получают 1d6 психического урона.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Несправедливости</strong>
-                                <span class="value">Максимум Воспоминаний +2. Максимум Бессилия +2.<br><br>
-                                <strong>Апофеоз Несправедливости</strong> (1/длинный отдых, 1 минута)<br>
-                                • Зал Суда радиусом 40 футов<br>
-                                • Все враги в зоне считаются «высшими»<br>
-                                • Бонусным действием можно тратить 1 Бессилие, чтобы нанести всем врагам в зоне 2d6 психического урона<br>
-                                • Один раз: Окончательный Приговор — спасбросок Мудрости, при провале недееспособность на 1 минуту<br><br>
-                                <strong>Пассивно:</strong> Пока есть хотя бы 1 Бессилие — сопротивление психическому урону.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FP -->
-                    <div id="FP" class="tab-content">
-                        
-                        <div class="ability-grid">
-                            <div class="ability-item">
-                                <strong>Якоря Травмы</strong>
-                                <span class="value">Ты получаешь по одному Якорю на уровнях 4, 7, 11 и 15. Каждый Якорь — конкретная сцена травмы. Пока активен, даёт один бонус (нельзя брать один и тот же дважды).<br><br>
-                                <strong>Примеры бонусов Якорей:</strong><br>
-                                • +1d4 к урону первой атаки в бою<br>
-                                • +1 к атакам в первый ход боя<br>
-                                • +1d6 урона по существам, которые уже атаковали в этом ходу<br>
-                                • Преимущество на атаку после перемещения на 15+ футов<br>
-                                • +5 / +10 футов к скорости<br>
-                                • +1 к инициативе<br>
-                                • Преимущество на спасброски против страха / очарования<br>
-                                • +1 к спасброскам Мудрости<br>
-                                • Сопротивление психическому урону 1/короткий отдых<br>
-                                • Помеха на провоцированные атаки против тебя от уже атакованных существ<br>
-                                • +1d4 к урону по существам с состояниями<br>
-                                • Преимущество на Проницательность и Внимательность в определённых ситуациях</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>4 уровень — Первая Петля</strong>
-                                <span class="value">Первый Якорь.<br><br>
-                                <strong>Личная Петля</strong> (1 Воспоминание, бонусное действие)<br>
-                                До конца твоего следующего хода: скорость +15 футов, можешь совершить одну дополнительную атаку оружием как бонусное действие, если перемещался минимум на 10 футов.<br><br>
-                                <strong>Навязанный Повтор</strong> (1 Воспоминание, реакция)<br>
-                                Когда враг в пределах 30 футов совершает атаку, ты можешь реакцией заставить его повторить эту атаку по той же цели в начале его следующего хода (с помехой).</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>7 уровень — Ускорение Круга</strong>
-                                <span class="value">Второй Якорь.<br><br>
-                                <strong>Ускорение Круга</strong> (1 Воспоминание, бонусное действие)<br>
-                                До конца твоего хода ты получаешь дополнительное бонусное действие (только для атаки, Отхода или Рывка).<br><br>
-                                <strong>Срыв Повтора</strong> (1 Воспоминание, действие)<br>
-                                Одно существо в пределах 30 футов — спасбросок Мудрости. Провал: до конца следующего хода не может менять цель атак, теряет реакции, атаки по новым целям с помехой.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>11 уровень — Глубокая Петля</strong>
-                                <span class="value">Третий Якорь.<br><br>
-                                <strong>Глубокая Петля</strong> (2 Воспоминания, действие)<br>
-                                Точка в пределах 40 футов, радиус 15 футов. Враги совершают спасбросок Мудрости. Провал: до конца следующего хода должны повторять последнее действие, не могут использовать бонусные действия, получают 2d6 психического урона в начале хода.<br>
-                                Ты сам получаешь +10 футов к скорости и одну атаку бонусным действием.</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>15 уровень — Замыкание</strong>
-                                <span class="value">Четвёртый Якорь.<br><br>
-                                <strong>Замыкание</strong> (1/длинный отдых, действие)<br>
-                                На 1 минуту зона радиусом 25 футов:<br>
-                                • Враги в начале хода получают 1d8 психического урона и должны преуспеть в спасброске Мудрости, иначе повторяют последнее перемещение или атаку<br>
-                                • Ты получаешь дополнительное бонусное действие каждый ход<br>
-                                • Скорость +20 футов<br>
-                                • Один раз за длительность можно реакцией заставить врага полностью повторить предыдущий ход</span>
-                            </div>
-                            <div class="ability-item">
-                                <strong>19 уровень — Апофеоз Петли</strong>
-                                <span class="value">Максимум Воспоминаний +2.<br><br>
-                                <strong>Апофеоз Петли</strong> (1/длинный отдых, 1 минута)<br>
-                                • Все Якоря дают удвоенные бонусы<br>
-                                • Дополнительное действие каждый ход (только Атака или Рывок)<br>
-                                • Враги в пределах 30 футов совершают спасброски против твоих способностей с помехой<br>
-                                • Один раз за длительность: реакцией отменить действие врага и заставить повторить предыдущее<br><br>
-                                <strong>Пассивно:</strong> Пока активен хотя бы один Якорь — сопротивление психическому урону и +1 к инициативе.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ОТЗВУК (переработанный блок без таблицы) -->
-            <div class="class-block" id="echo">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
-                    </span>
-                    Отзвук (механика риска)
-                </h2>
-                <div class="collapsible-content open">
-                    <p style="margin-bottom: 1rem;"><strong>Отзвук</strong> — последствия слишком глубокого погружения в травму. Особенно активен во Внутреннем режиме.</p>
-
-                    <div class="ability-grid">
-
-                        <div class="ability-item">
-                            <strong>Как накапливается</strong>
-                            <div class="value">
-                                <ul>
-                                    <li>Получение урона во Внутреннем режиме</li>
-                                    <li>Критические удары по тебе</li>
-                                    <li>Некоторые способности подклассов</li>
-                                    <li>Сильные триггеры (по решению ведущего)</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="ability-item">
-                            <strong>Эффекты Отзвука</strong>
-                            <div class="value">
-                                <!-- Уровень 1 -->
-                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
-                                    <strong style="color: var(--accent);">1 Отзвук</strong>
-                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Помеха на спасброски Мудрости</div>
-                                </div>
-                                <!-- Уровень 2 -->
-                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
-                                    <strong style="color: var(--accent);">2 Отзвука</strong>
-                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Скорость −10 футов + помеха на проверки Ловкости</div>
-                                </div>
-                                <!-- Уровень 3 -->
-                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
-                                    <strong style="color: var(--accent);">3 Отзвука</strong>
-                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">В начале хода психический урон = уровень</div>
-                                </div>
-                                <!-- Уровень 4+ -->
-                                <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
-                                    <strong style="color: var(--accent);">4+ Отзвуков</strong>
-                                    <div style="margin-top: 0.2rem; font-size: 0.9rem;">Помеха на все атаки и спасброски до конца следующего хода</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="ability-item">
-                            <strong>Сброс</strong>
-                            <div class="value">
-                                • Короткий или длинный отдых — полный сброс<br>
-                                • Способность «Сброс Отзвука» (7+ уровень)<br>
-                                • Некоторые подклассовые эффекты
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <a href="index.html#section-classes" class="back-link">← Вернуться к списку классов</a>
-
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по странице...">
         </div>
 
-        <!-- ПОДВАЛ -->
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <div style="margin-bottom: 1.5rem;">
+            <h1 class="section-title class-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem; gap: 0.6rem;">
+                <svg width="2.2rem" height="2.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 3.13 2.87 5.87 5 7.87V20h4v-3.13c2.13-2 5-4.74 5-7.87 0-3.87-3.13-7-7-7z"/>
+                    <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                </svg>
+                А. Гештальт F
+            </h1>
+            <p class="section-desc" style="margin-top: 0.2rem;">Класс • Воспоминание • Травма • ПТСР / КПТСР</p>
+        </div>
+
+        <!-- ===== ЦИТАТА ===== -->
+        <div class="quote-block visible">
+            «Травма — это не слабость. Это шрам, который учит тебя выживать. Каждый раз, когда я вспоминаю, я становлюсь сильнее. Потому что то, что не убило меня, теперь работает на меня.»
+            <span class="author">— Ворон, Гештальт F, изгнанник из клана «Серая стая»</span>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ВЕСЬ КОНТЕНТ (классовые блоки) с сохранением структуры -->
+        <!-- ============================================================ -->
+
+        <!-- ОСНОВЫ -->
+        <div class="class-block" id="base">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                </span>
+                Основные характеристики
+            </h2>
+            <div class="collapsible-content open">
+                <div class="ability-grid">
+                    <div class="ability-item">
+                        <strong>Хит-дай</strong>
+                        <span class="value">1d8</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Хиты на 1 уровне</strong>
+                        <span class="value">8 + модификатор Телосложения</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Хиты на следующих уровнях</strong>
+                        <span class="value">1d8 (или 5) + модификатор Телосложения</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Броня</strong>
+                        <span class="value">лёгкая</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Оружие</strong>
+                        <span class="value">простое оружие, короткие клинки, дальнобойное лёгкое оружие</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Спасброски</strong>
+                        <span class="value">Ловкость, Харизма</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Навыки</strong>
+                        <span class="value">выберите три из: Акробатика, Скрытность, Проницательность, Обман, Восприятие, Выживание</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Снаряжение</strong>
+                        <span class="value">лёгкая броня, два коротких клинка или короткий клинок + дальнобойное оружие, фокус (предмет, связанный с травмой), набор вора или путешественника.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ТАБЛИЦА ПРОГРЕССИИ -->
+        <div class="class-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3.75 3v16.5M3.75 3h16.5M3.75 3L21 20.25"/><path d="M6.75 6.75h10.5M6.75 9h7.5M6.75 11.25h4.5"/></svg>
+                </span>
+                Таблица прогрессии
+            </h2>
+            <div class="collapsible-content open">
+                <div class="table-wrapper">
+                    <table class="level-table">
+                        <thead>
+                            <tr>
+                                <th>Ур.</th>
+                                <th>Бонус<br>мастерства</th>
+                                <th>Воспоминание</th>
+                                <th>Особенности</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>+2</td><td>3</td><td>Проявление Воспоминания, Отзвук</td></tr>
+                            <tr><td>2</td><td>+2</td><td>3</td><td>След Прошлого</td></tr>
+                            <tr><td>3</td><td>+2</td><td>3</td><td>—</td></tr>
+                            <tr><td>4</td><td>+2</td><td>3</td><td>Увеличение характеристик, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>5</td><td>+3</td><td>4</td><td>Дополнительная атака</td></tr>
+                            <tr><td>6</td><td>+3</td><td>4</td><td>—</td></tr>
+                            <tr><td>7</td><td>+3</td><td>4</td><td>Живое Воспоминание, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>8</td><td>+3</td><td>4</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>9</td><td>+4</td><td>5</td><td>Углубление Отзвука</td></tr>
+                            <tr><td>10</td><td>+4</td><td>5</td><td>—</td></tr>
+                            <tr><td>11</td><td>+4</td><td>5</td><td>Тень Прошлого, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>12</td><td>+4</td><td>5</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>13</td><td>+5</td><td>6</td><td>Быстрый Сброс</td></tr>
+                            <tr><td>14</td><td>+5</td><td>6</td><td>—</td></tr>
+                            <tr><td>15</td><td>+5</td><td>6</td><td>Пережитое, <span class="highlight">Подкласс</span></td></tr>
+                            <tr><td>16</td><td>+5</td><td>6</td><td>Увеличение характеристик</td></tr>
+                            <tr><td>17</td><td>+6</td><td>7</td><td>—</td></tr>
+                            <tr><td>18</td><td>+6</td><td>7</td><td>Глубокая Память</td></tr>
+                            <tr><td>19</td><td>+6</td><td>7</td><td><span class="highlight">Апофеоз подкласса</span></td></tr>
+                            <tr><td>20</td><td>+6</td><td>10</td><td>Апофеоз Воспоминания</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="muted">Максимум Воспоминаний = бонус мастерства + 1. После короткого отдыха восстанавливается 1 Воспоминание.</p>
+            </div>
+        </div>
+
+        <!-- ОСНОВНЫЕ ОСОБЕННОСТИ -->
+        <div class="class-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                </span>
+                Основные особенности класса
+            </h2>
+            <div class="collapsible-content open">
+                <div class="ability-grid">
+                    <div class="ability-item">
+                        <strong>Воспоминание (основной ресурс)</strong>
+                        <span class="value">Максимум Воспоминаний = бонус мастерства + 1 (на 1 уровне — 3).<br>
+                        Полностью восстанавливается после длинного отдыха.<br>
+                        После короткого отдыха восстанавливается 1 Воспоминание.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>1 уровень — Проявление Воспоминания</strong>
+                        <span class="value">Бонусным действием ты можешь потратить 1 Воспоминание, чтобы проявить Гештальт на 1 минуту. Переключение режима стоит 1 Воспоминание.<br><br>
+                        <strong>Внутренний режим (Погружение)</strong><br>
+                        • Скорость увеличивается на 10 футов<br>
+                        • Ты получаешь +1d4 к урону оружия<br>
+                        • Ты можешь использовать действие Отход бонусным действием<br>
+                        • Каждый раз, когда ты получаешь урон в этом режиме, ты получаешь 1 Отзвук<br><br>
+                        <strong>Внешний режим (Проекция)</strong><br>
+                        Ты создаёшь видимую проекцию Воспоминания в свободном пространстве в пределах 30 футов.<br>
+                        • КД 13 + модификатор Ловкости<br>
+                        • Хиты = половина твоих максимальных хитов<br>
+                        • Скорость 30 футов<br>
+                        • Может атаковать (бонус атаки = мастерство + Ловкость или Харизма, урон 1d6 + модификатор)<br><br>
+                        <strong>Тень:</strong> Бонусным действием ты можешь приказать проекции стать Тенью. Пока она Тень — она невидима для врагов без преимущества на Восприятие, даёт тебе лёгкое укрытие в пределах 10 футов и не может атаковать.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>2 уровень — След Прошлого</strong>
+                        <span class="value">Когда ты перемещаешься минимум на 15 футов по прямой и сразу после этого атакуешь существо, ты наносишь дополнительный 1d6 урона.<br>
+                        Кроме того, ты получаешь преимущество на проверки Скрытности, если в течение последнего хода проявлял Гештальт.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>5 уровень — Дополнительная атака</strong>
+                        <span class="value">Когда ты используешь действие Атака, ты можешь атаковать дважды вместо одного.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>7 уровень — Живое Воспоминание</strong>
+                        <span class="value"><strong>Усиление режимов:</strong><br>
+                        • Внутренний режим: дополнительный урон увеличивается до +1d6, скорость +15 футов<br>
+                        • Внешний режим: проекция получает +2 к КД и может атаковать дважды, если ты используешь действие Атака<br><br>
+                        <strong>Сброс Отзвука</strong> (1 Воспоминание, бонусное действие)<br>
+                        Ты снимаешь с себя 1 Отзвук. Если после этого у тебя не осталось Отзвуков, ты получаешь временные хиты, равные удвоенному твоему уровню, и можешь сразу переместиться на половину своей скорости без провоцированных атак.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>9 уровень — Углубление Отзвука</strong>
+                        <span class="value">Эффекты Отзвука усиливаются (см. раздел «Отзвук»). Кроме того, когда ты получаешь критический удар, ты автоматически получаешь 1 Отзвук.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>11 уровень — Тень Прошлого</strong>
+                        <span class="value">Пока активен Внешний режим, ты можешь бонусным действием приказать проекции стать Тенью или наоборот — выйти из состояния Тени и сразу совершить одну атаку.<br><br>
+                        <strong>Метка Воспоминания</strong> (2 Воспоминания, действие)<br>
+                        Ты выбираешь существо в пределах 60 футов. На 1 минуту:<br>
+                        • Твои атаки по этой цели наносят дополнительный 1d8 урона<br>
+                        • Цель не может совершать провоцированные атаки против тебя<br>
+                        • Если цель опускается до 0 хитов, ты восстанавливаешь 1 Воспоминание</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>13 уровень — Быстрый Сброс</strong>
+                        <span class="value">Сброс Отзвука теперь можно использовать 1 раз за ход (по-прежнему стоит 1 Воспоминание).<br>
+                        Кроме того, когда ты используешь действие Отход, твоя скорость увеличивается на 10 футов до конца хода.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>15 уровень — Пережитое</strong>
+                        <span class="value"><strong>Пережитое</strong> (1/длинный отдых, реакция)<br>
+                        Когда ты должен получить урон, ты можешь полностью предотвратить этот урон. После этого ты получаешь 2 Отзвука и становишься невидимым до начала своего следующего хода (или до тех пор, пока не атакуешь).<br>
+                        Пока Гештальт проявлен, ты получаешь сопротивление психическому урону.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>18 уровень — Глубокая Память</strong>
+                        <span class="value">Максимум Воспоминаний увеличивается на +2.<br>
+                        Пока у тебя 0 Отзвуков, ты получаешь +1 к КД и преимущество на спасброски Ловкости.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>20 уровень — Апофеоз Воспоминания</strong>
+                        <span class="value">Максимум Воспоминаний увеличивается на +3.<br><br>
+                        <strong>Апофеоз Воспоминания</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                        • Ты одновременно находишься в обоих режимах<br>
+                        • Отзвуки больше не накладывают штрафы<br>
+                        • Все твои атаки наносят дополнительный 2d8 урона<br>
+                        • Один раз за время действия ты можешь реакцией полностью игнорировать урон от одной атаки или эффекта<br><br>
+                        <strong>Пассивно:</strong> Ты получаешь сопротивление психическому урону и преимущество на спасброски против испуга и очарования.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ПОДКЛАССЫ -->
+        <div class="class-block" id="subclasses">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                Подклассы
+            </h2>
+            <div class="collapsible-content open">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openSubTab(event, 'FM')">FM — Пустота</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FV')">FV — Насилие</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FA')">FA — Пепел</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FS')">FS — Стыд</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FG')">FG — Вина</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FB')">FB — Предательство</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FI')">FI — Несправедливость</button>
+                    <button class="tab-button" onclick="openSubTab(event, 'FP')">FP — Петля</button>
+                </div>
+
+                <!-- FM -->
+                <div id="FM" class="tab-content active">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Боль Утраты</strong>
+                            <span class="value">При выборе подкласса ты определяешь одну Боль Утраты. Пока она активна, ты получаешь бонусы против всего, что с ней связано. На 11 уровне можно сюжетно изменить Боль Утраты или добавить одну вторичную (вторичная даёт половину бонусов).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>4 уровень — Горечь</strong>
+                            <span class="value"><strong>Клеймо Потери</strong> (1 Воспоминание, бонусное действие)<br>
+                            Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
+                            • Твои атаки по этой цели наносят дополнительный 1d6 урона (половина некротического, половина психического)<br>
+                            • Каждый раз, когда ты попадаешь по цели с Клеймом, ты восстанавливаешь хиты, равные половине этого дополнительного урона<br><br>
+                            <strong>Аура Пустоты</strong><br>
+                            Пока Гештальт проявлен во Внешнем режиме, проекция создаёт Ауру Пустоты радиусом 10 футов. Все враги, начинающие ход в этой ауре, получают 1d4 некротического урона, а ты получаешь временные хиты, равные нанесённому урону.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Кровосток</strong>
+                            <span class="value"><strong>Кровосток</strong> (2 Воспоминания, действие)<br>
+                            Одно существо в пределах 30 футов должно совершить спасбросок Телосложения.<br>
+                            При провале цель получает 3d8 урона (некротический + психический), и ты восстанавливаешь хиты, равные половине нанесённого урона.<br>
+                            При успехе — половину урона без лечения.<br>
+                            Если цель находится под Клеймом Потери, урон увеличивается до 4d8, а ты восстанавливаешь хиты полностью.<br>
+                            Пока активна Аура Пустоты, один раз за ход ты можешь бонусным действием переместить проекцию на 20 футов.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Ненасытность</strong>
+                            <span class="value">• Дополнительный урон Клейма Потери увеличивается до 1d10<br>
+                            • Аура Пустоты увеличивается до 15 футов и наносит 1d6 урона<br>
+                            • Когда ты опускаешь существо до 0 хитов под действием Клейма или Ауры, ты снимаешь с себя 1 Отзвук и получаешь временные хиты, равные твоему уровню<br><br>
+                            <strong>Связь с Болью Утраты</strong><br>
+                            Против всего, что связано с твоей Болью Утраты, способности подкласса наносят дополнительный 1d6 урона, а спасброски против них совершаются с помехой.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Поглощение</strong>
+                            <span class="value"><strong>Поглощение</strong> (1/длинный отдых, действие)<br>
+                            Ты выбираешь точку в пределах 60 футов. Все враги в радиусе 20 футов должны совершить спасбросок Телосложения.<br>
+                            При провале существо получает 6d8 урона (некротический + психический), и ты восстанавливаешь хиты, равные половине всего нанесённого этим эффектом урона.<br>
+                            При успехе — половину урона.<br>
+                            На 1 минуту Аура Пустоты увеличивается до 20 футов и наносит 2d6 урона.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Пустоты</strong>
+                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
+                            <strong>Апофеоз Пустоты</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                            • Клеймо Потери и Аура Пустоты действуют одновременно и усиливаются: дополнительный урон Клейма становится 2d8, Аура наносит 2d8 урона<br>
+                            • Каждый раз, когда ты восстанавливаешь хиты от способностей подкласса, ты также получаешь столько же временных хитов<br>
+                            • Один раз за время действия ты можешь реакцией, когда существо в пределах 30 футов получает урон, дополнительно нанести ему 3d8 некротического урона и восстановить себе такое же количество хитов<br><br>
+                            <strong>Пассивно:</strong> Пока у тебя есть хотя бы 1 Отзвук, ты получаешь сопротивление некротическому и психическому урону.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FV -->
+                <div id="FV" class="tab-content">
+                    <p class="muted" style="margin-bottom: 1rem;">Насилие. Два пути: Агнец и Хищник. Выбор на 4 уровне, смена возможна на 11 уровне.</p>
+
+                    <div class="subgroup-title">Путь Агнца</div>
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Ответный удар</strong>
+                            <span class="value"><strong>Ответный удар</strong> (реакция)<br>
+                            Когда существо в пределах 5 футов наносит тебе урон атакой ближнего боя, ты можешь реакцией нанести ему 1d8 + модификатор Ловкости урона (половина физического, половина психического). Ты восстанавливаешь хиты, равные половине нанесённого этим способом урона.<br><br>
+                            <strong>Ускользание</strong><br>
+                            Пока Гештальт проявлен, ты можешь использовать действие Отход бонусным действием. Скорость увеличивается на 10 футов, пока у тебя есть хотя бы 1 Отзвук.<br><br>
+                            <strong>Связь путей</strong><br>
+                            Пока в пределах 30 футов находится существо с путём Хищник, ты получаешь помеху на спасброски против страха, но дополнительный урон Ответного удара увеличивается на 1d4.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Кровавый щит</strong>
+                            <span class="value"><strong>Кровавый щит</strong> (1 Воспоминание, реакция)<br>
+                            Когда ты получаешь урон, ты можешь реакцией:<br>
+                            • Нанести атакующему 2d8 урона (некротический + психический)<br>
+                            • Восстановить себе хиты, равные половине этого урона<br>
+                            • Переместиться на половину своей скорости без провоцированных атак<br>
+                            Если урон был критическим, дополнительный урон увеличивается до 3d8.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Перепутье</strong>
+                            <span class="value">Ты можешь сменить Путь на Хищника. Если остаёшься Агнцем:<br>
+                            <strong>Отражение Боли</strong> — когда ты используешь Ответный удар или Кровавый щит, ты можешь часть получаемого урона (до своего уровня) перенаправить обратно на атакующего в виде психического урона.<br>
+                            Дополнительный урон Ответного удара увеличивается до 1d10.<br><br>
+                            <strong>Парный эффект</strong><br>
+                            Если союзник с путём Хищник атакует существо, которое только что ударило тебя, оба вы получаете +1d4 к урону по этой цели до конца вашего следующего хода.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Жертвенная ярость</strong>
+                            <span class="value"><strong>Жертвенная ярость</strong> (1/длинный отдых, реакция)<br>
+                            Когда ты опускаешься ниже половины хитов или получаешь критический удар, ты можешь активировать эту способность. На 1 минуту:<br>
+                            • Скорость увеличивается на 20 футов<br>
+                            • Все твои ответные реакции наносят дополнительный 2d8 урона<br>
+                            • Каждый раз, когда ты наносишь урон реакцией, ты восстанавливаешь 1d6 + уровень хитов<br>
+                            • Ты получаешь преимущество на атаки против существа, которое последним нанесло тебе урон<br>
+                            После окончания эффекта ты получаешь 2 Отзвука.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Жертвенности</strong>
+                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
+                            <strong>Апофеоз Жертвенности</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                            • Все твои реакции, связанные с получением урона, больше не требуют реакции (1 раз за ход бесплатно)<br>
+                            • Урон ответных способностей увеличивается на 2d8<br>
+                            • Каждый раз, когда тебя поражают атакой ближнего боя, атакующий автоматически получает 2d8 психического урона<br>
+                            • Ты получаешь сопротивление одному типу урона на свой выбор (можно менять бонусным действием)<br><br>
+                            <strong>Пассивно:</strong> Пока у тебя есть хотя бы 1 Отзвук, ты получаешь +1 к КД и преимущество на спасброски Ловкости.<br>
+                            <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Хищник, ты получаешь помеху на спасброски против страха, но все твои ответные атаки наносят дополнительный 1d6 урона.</span>
+                        </div>
+                    </div>
+
+                    <div class="subgroup-title">Путь Хищника</div>
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Метка Жертвы</strong>
+                            <span class="value"><strong>Метка Жертвы</strong> (1 Воспоминание, бонусное действие)<br>
+                            Ты отмечаешь одно существо в пределах 60 футов как свою Жертву. Одновременно может быть только одна Метка. Пока Метка активна (1 минута):<br>
+                            • Твои атаки по Жертве наносят дополнительный 1d6 урона (физический + психический)<br>
+                            • Жертва совершает спасброски против страха с помехой<br>
+                            • Когда Жертва получает урон от тебя, ты восстанавливаешь хиты, равные половине дополнительного урона Метки<br><br>
+                            <strong>Охотничий Инстинкт</strong><br>
+                            Пока у тебя есть активная Метка Жертвы, твоя скорость увеличивается на 10 футов, когда ты двигаешься к ней.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Наслаждение Болью</strong>
+                            <span class="value"><strong>Наслаждение Болью</strong> (1 Воспоминание, бонусное действие)<br>
+                            Пока у тебя есть Метка Жертвы, ты можешь усилить её до конца своего следующего хода:<br>
+                            • Дополнительный урон Метки увеличивается до 1d10<br>
+                            • Каждый раз, когда Жертва получает урон от тебя, она должна преуспеть в спасброске Мудрости, иначе становится испуганной тобой до конца своего следующего хода<br>
+                            • Ты получаешь временные хиты, равные твоему уровню<br><br>
+                            <strong>Связь путей</strong><br>
+                            Пока в пределах 30 футов находится существо с путём Агнец, ты получаешь +1 к броскам атаки по своей Жертве.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Перепутье</strong>
+                            <span class="value">Ты можешь сменить Путь на Агнца. Если остаёшься Хищником:<br>
+                            <strong>Доминирование</strong> — Жертва под твоей Меткой совершает атаки по тебе с помехой. Дополнительный урон Метки становится 1d10 постоянно.<br><br>
+                            <strong>Парный эффект</strong><br>
+                            Если союзник с путём Агнец атакует твою Жертву, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Травля</strong>
+                            <span class="value"><strong>Травля</strong> (1/длинный отдых, действие)<br>
+                            Ты выбираешь существо в пределах 60 футов. На 1 минуту оно становится твоей Жертвой (без затраты Воспоминания), и действуют эффекты:<br>
+                            • Дополнительный урон Метки увеличивается до 2d8<br>
+                            • Каждый раз, когда Жертва получает урон, она получает дополнительный 1d6 психического урона<br>
+                            • Ты восстанавливаешь хиты, равные этому дополнительному психическому урону<br>
+                            • Скорость Жертвы снижается на 10 футов, пока она видит тебя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Хищника</strong>
+                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
+                            <strong>Апофеоз Хищника</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                            • Метка Жертвы действует на двух существ одновременно<br>
+                            • Дополнительный урон Метки становится 2d8<br>
+                            • Каждый раз, когда Жертва получает урон от тебя, ты восстанавливаешь 1d8 + уровень хитов<br>
+                            • Жертвы автоматически проваливают первый спасбросок против страха перед тобой<br><br>
+                            <strong>Пассивно:</strong> Пока у тебя есть активная Метка Жертвы, ты получаешь сопротивление психическому урону.<br>
+                            <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Агнец, ты получаешь +2 к урону по Жертве, а Агнец получает помеху на спасброски против страха.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FA -->
+                <div id="FA" class="tab-content">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Первое Правило</strong>
+                            <span class="value"><strong>Зона Правил</strong> (1 Воспоминание, действие)<br>
+                            Ты создаёшь зону радиусом 15 футов в пределах 30 футов. Зона существует 1 минуту (концентрация). При создании ты выбираешь одно Правило из списка.<br>
+                            Пока зона активна, ты получаешь +1 к КД, если находишься внутри неё.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>Список Правил</strong>
+                            <span class="value"><strong>Базовые (с 4 уровня):</strong><br>
+                            • Пепельные Оковы — скорость врагов −10 футов, труднопроходимая местность<br>
+                            • Запрет Восстановления — враги не могут восстанавливать хиты и получать временные хиты<br>
+                            • Давящий Пепел — враги в начале хода получают 1d6 урона пеплом<br>
+                            • Скованный Шаг — враги не могут использовать Рывок и Отход<br>
+                            • Пепельная Пелена — помеха на Внимательность и атаки по существам вне зоны<br><br>
+                            <strong>Дополнительные (с 7 уровня):</strong><br>
+                            • Пепельный Яд — при получении урона враг получает ещё 1d4 урона пеплом<br>
+                            • Окаменение Шага — 2 фута перемещения за каждый фут<br>
+                            • Запрет Магии — помеха на проверки концентрации<br>
+                            • Пепельный Барьер — чтобы выйти из зоны, нужен спасбросок Силы, иначе скорость 0<br>
+                            • Высушивание — помеха на спасброски Телосложения<br><br>
+                            <strong>Высокие (с 11–15):</strong><br>
+                            • Полный Запрет Полёта — летающие падают<br>
+                            • Пепельная Тишина — нельзя использовать вербальные компоненты<br>
+                            • Обратный Поток — притягивание на 10 футов к центру<br>
+                            • Хрупкость — дополнительный 1d6 урона от первого попадания в ходу</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Перепись</strong>
+                            <span class="value"><strong>Перепись</strong> (2 Воспоминания, бонусное действие)<br>
+                            Пока у тебя есть активная Зона Правил, ты можешь изменить её Правило или добавить второе Правило (максимум два одновременно).<br>
+                            Каждый раз, когда ты используешь Перепись, ты получаешь 1 Отзвук.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Двойная Зона</strong>
+                            <span class="value">Ты можешь поддерживать две Зоны Правил одновременно. Радиус зон увеличивается до 20 футов.<br><br>
+                            <strong>Пепельный Взрыв</strong> (реакция)<br>
+                            Когда ты получаешь 3 или больше Отзвуков, пока у тебя есть активная зона, ты можешь реакцией взорвать одну зону. Все существа в ней совершают спасбросок Телосложения. При провале: 4d8 урона пеплом + скорость 0 до конца их следующего хода. При успехе — половину урона. Зона исчезает, ты снимаешь 1 Отзвук.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Господство Пепла</strong>
+                            <span class="value"><strong>Господство Пепла</strong> (1/длинный отдых, действие)<br>
+                            Ты создаёшь большую зону радиусом 30 футов на 1 минуту. Внутри неё ты можешь одновременно поддерживать три Правила, а также:<br>
+                            • Враги совершают спасброски против твоих способностей с помехой<br>
+                            • Ты игнорируешь труднопроходимую местность<br>
+                            • Каждый раз, когда враг в зоне получает урон, ты можешь бонусным действием нанести ему дополнительный 1d8 урона пеплом<br>
+                            Пока действует Господство, любой Отзвук, который ты получаешь, увеличивается на 1.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Пепла</strong>
+                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
+                            <strong>Апофеоз Пепла</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                            • Зона радиусом 40 футов<br>
+                            • Можно иметь любое количество Правил одновременно<br>
+                            • Враги в зоне автоматически получают 2d6 урона пеплом в начале своего хода<br>
+                            • Один раз за время действия можно реакцией взорвать зону как усиленный Пепельный Взрыв (6d8 урона + скорость 0)<br>
+                            • Пока Апофеоз активен, Отзвуки не накладывают штрафы<br><br>
+                            <strong>Пассивно:</strong> Пока у тебя есть хотя бы одна активная Зона Правил, ты получаешь сопротивление дробящему и некротическому урону.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FS -->
+                <div id="FS" class="tab-content">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Ресурс: Стыд</strong>
+                            <span class="value">Максимум Стыда = бонус мастерства + 2.<br>
+                            Как получать:<br>
+                            • Получение Отзвука → +1 Стыд<br>
+                            • Провал атаки или проверки на глазах у врагов → +1 Стыд<br>
+                            • Неуклюжесть (1/ход): добровольно получить помеху на атаку или проверку → +1 Стыд<br>
+                            • Публичный стыд (по интенсивности): +1, +2 или +3 Стыда</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>4 уровень — Три Жжения</strong>
+                            <span class="value">Все приёмы стоят 1 Стыд.<br><br>
+                            <strong>Огонь — Вспышка Стыда</strong> (бонусное действие)<br>
+                            Следующая атака до конца хода наносит дополнительный 1d6 огненного урона. При попадании цель загорается и получает 1d4 огненного урона в начале своего хода (1 раунд).<br><br>
+                            <strong>Лёд — Холодный Стыд</strong> (бонусное действие)<br>
+                            Одно существо в пределах 30 футов: скорость −10 футов и оно не может совершать реакции до конца твоего следующего хода.<br><br>
+                            <strong>Электричество — Разряд Унижения</strong> (действие)<br>
+                            Одно существо в пределах 30 футов — спасбросок Ловкости. Провал: 2d6 электрического урона + нельзя использовать бонусные действия до конца своего следующего хода. Успех: половина урона.<br><br>
+                            <strong>Неуклюжесть</strong><br>
+                            1 раз за ход можно добровольно получить помеху на атаку/проверку, чтобы получить 1 Стыд.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Публичное Горение</strong>
+                            <span class="value">При получении Стыда от сильного публичного унижения ты получаешь +1 дополнительный Стыд.<br><br>
+                            Усиленные приёмы:<br>
+                            • Огонь: +1d8 урона, горение 1d6<br>
+                            • Лёд: скорость −15 футов + помеха на первую атаку<br>
+                            • Электричество: 3d6 урона, при провале цель роняет один удерживаемый предмет</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Смешение Стихий</strong>
+                            <span class="value">Ты можешь тратить 2 Стыда, чтобы использовать комбинацию двух стихий (1 раз за ход).<br><br>
+                            <strong>Огонь + Лёд = Раскалённый Пар</strong> (действие)<br>
+                            Точка в пределах 30 футов, радиус 10 футов. Спасбросок Телосложения. Провал: 3d6 урона (огонь + холод) + скорость −10 футов. Успех: половина урона.<br><br>
+                            <strong>Огонь + Электричество = Взрывной Разряд</strong> (действие)<br>
+                            Одно существо в пределах 40 футов — спасбросок Ловкости. Провал: 4d6 урона (огонь + электричество) + горение 1d6 + нельзя использовать реакции. Успех: половина урона.<br><br>
+                            <strong>Лёд + Электричество = Сковывающий Разряд</strong> (действие)<br>
+                            Одно существо в пределах 30 футов — спасбросок Телосложения. Провал: 3d6 электрического урона, скорость 0 до конца следующего хода, нельзя совершать реакции. Успех: половина урона и скорость −10 футов.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Клеймо Стыда</strong>
+                            <span class="value"><strong>Клеймо Стыда</strong> (1/длинный отдых, действие)<br>
+                            Одно существо в пределах 60 футов на 1 минуту:<br>
+                            • Все твои приёмы и комбинации против него стоят на 1 Стыд меньше (минимум 0)<br>
+                            • Цель получает +1d6 урона от всех твоих стихийных атак<br>
+                            • Каждый раз, когда цель проваливает спасбросок против твоих способностей, ты восстанавливаешь 1 Стыд</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Стыда</strong>
+                            <span class="value">Максимум Воспоминаний +2. Максимум Стыда +3.<br><br>
+                            <strong>Апофеоз Стыда</strong> (1/длинный отдых, 1 минута)<br>
+                            • Можно свободно комбинировать все три стихии<br>
+                            • Все стихийные приёмы и комбинации наносят дополнительный 1d8 урона<br>
+                            • Неуклюжесть больше не даёт помеху (Стыд всё равно приходит)<br>
+                            • Один раз за длительность: реакция на получение урона — вспышка всех трёх стихий (3d8 смешанного урона в радиусе 10 футов)<br><br>
+                            <strong>Пассивно:</strong> При 3+ Стыда — сопротивление огню, холоду и электричеству.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FG -->
+                <div id="FG" class="tab-content">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Бремя</strong>
+                            <span class="value"><strong>Клеймо Вины</strong> (1 Воспоминание, бонусное действие)<br>
+                            Одно существо в пределах 60 футов получает Клеймо на 1 минуту.<br>
+                            • Цель совершает атаки и проверки Харизмы с помехой<br>
+                            • Каждый раз, когда ты попадаешь по цели с Клеймом, ты восстанавливаешь 1d4 + модификатор Харизмы хитов<br><br>
+                            <strong>Принять Бремя</strong> (1 Воспоминание, действие)<br>
+                            Ты выбираешь союзника в пределах 30 футов. С него снимается одно состояние или дебафф. Ты получаешь это состояние/дебафф на себя на 1 минуту и одновременно получаешь временные хиты, равные твоему уровню + 2 × модификатор Харизмы.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Искупление</strong>
+                            <span class="value"><strong>Песнь Вины</strong> (2 Воспоминания, действие)<br>
+                            Ты начинаешь выступление (голос или инструмент). Все враги в пределах 20 футов должны совершить спасбросок Мудрости. При провале они получают 3d6 психического урона и на 1 минуту их скорость снижается на 10 футов. Ты восстанавливаешь хиты, равные половине нанесённого урона.<br>
+                            Если ты используешь инструмент или открыто выступаешь, урон увеличивается до 4d6.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Общее Бремя</strong>
+                            <span class="value">Клеймо Вины теперь можно накладывать на двух существ одновременно. Лечение от Клейма увеличивается до 1d6 + Харизма.<br><br>
+                            <strong>Разделить Вину</strong> (2 Воспоминания, бонусное действие)<br>
+                            Ты можешь перенести один свой дебафф или состояние на врага с Клеймом Вины (враг получает спасбросок Мудрости). При успешном переносе ты восстанавливаешь 2d6 хитов.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Искупительная Жертва</strong>
+                            <span class="value"><strong>Искупительная Жертва</strong> (1/длинный отдых, действие)<br>
+                            Ты принимаешь на себя боль всех союзников в пределах 30 футов. Каждый союзник восстанавливает хиты, равные 4d8 + твой уровень. Ты получаешь урон, равный половине от суммы всего исцеления (этот урон нельзя уменьшить), и на 1 минуту все твои Клейма Вины наносят дополнительный 1d8 психического урона.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Вины</strong>
+                            <span class="value">Максимум Воспоминаний увеличивается на +2.<br><br>
+                            <strong>Апофеоз Вины</strong> (1/длинный отдых, действие, длительность 1 минута)<br>
+                            • Клеймо Вины действует на любое количество существ в пределах 30 футов<br>
+                            • Каждый раз, когда существо под Клеймом получает урон, ты восстанавливаешь 1d6 хитов<br>
+                            • Союзники в пределах 30 футов получают +2 к спасброскам<br>
+                            • Один раз за время действия ты можешь реакцией полностью снять с союзника любой дебафф или состояние и перенести его на врага<br><br>
+                            <strong>Пассивно:</strong> Пока на тебе есть хотя бы один дебафф или Отзвук, ты получаешь сопротивление психическому урону и +1 к КД.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FB -->
+                <div id="FB" class="tab-content">
+                    <div class="subgroup-title">Путь Предателя</div>
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Нож в Доверии</strong>
+                            <span class="value"><strong>Метка Близости</strong> (1 Воспоминание, бонусное действие)<br>
+                            Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
+                            • Если ты атакуешь цель из скрытности или пока цель считает тебя союзником / не враждебна, атака наносит дополнительный 1d8 урона<br>
+                            • Ты получаешь преимущество на проверки Харизмы (Обман и Убеждение) против этой цели<br><br>
+                            <strong>Тень Предателя</strong><br>
+                            Пока Гештальт проявлен, ты можешь попытаться спрятаться даже в лёгком укрытии. Скорость +10 футов в ход, когда ты выходишь из скрытности.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Холодный Расчёт</strong>
+                            <span class="value"><strong>Холодный Расчёт</strong> (1 Воспоминание, бонусное действие)<br>
+                            Пока у тебя есть Метка Близости, до конца твоего следующего хода:<br>
+                            • Дополнительный урон Метки увеличивается до 1d12<br>
+                            • Цель не может совершать провоцированные атаки против тебя<br>
+                            • Если атака из скрытности или доверия попадает, цель должна преуспеть в спасброске Мудрости, иначе получает помеху на атаки до конца своего следующего хода<br><br>
+                            <strong>Связь путей</strong><br>
+                            Пока в пределах 30 футов находится Преданный, ты получаешь +1d4 к дополнительному урону Метки Близости.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Перепутье</strong>
+                            <span class="value">Ты можешь сменить Путь на Преданного. Если остаёшься Предателем:<br>
+                            • Дополнительный урон Метки становится 1d12 постоянно<br>
+                            • Преимущество на Скрытность в пределах 10 футов от существа, которое считает тебя союзником<br><br>
+                            <strong>Парный эффект</strong><br>
+                            Если Преданный атакует твою цель с Меткой Близости, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Идеальный Удар</strong>
+                            <span class="value"><strong>Идеальный Удар</strong> (1/длинный отдых, действие)<br>
+                            Существо в пределах 60 футов на 1 минуту становится целью Метки Близости (без затраты). Эффекты:<br>
+                            • Дополнительный урон увеличивается до 2d8<br>
+                            • Первая атака по цели из скрытности или доверия автоматически считается критическим попаданием при попадании<br>
+                            • Цель совершает спасброски против твоих способностей с помехой</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Предателя</strong>
+                            <span class="value">Максимум Воспоминаний +2.<br><br>
+                            <strong>Апофеоз Предателя</strong> (1/длинный отдых, 1 минута)<br>
+                            • Метка Близости действует на двух существ<br>
+                            • Дополнительный урон Метки 2d8<br>
+                            • Один раз за ход можно атаковать из скрытности, не раскрывая себя полностью<br>
+                            • При нанесении дополнительного урона Метки восстанавливаешь 1d6 хитов<br><br>
+                            <strong>Пассивно:</strong> Пока есть Метка Близости — преимущество на инициативу и +1 к КД против атак цели.<br>
+                            <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Преданный, дополнительный урон Метки +1d6.</span>
+                        </div>
+                    </div>
+
+                    <div class="subgroup-title">Путь Преданного</div>
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>4 уровень — Чутьё на Нож</strong>
+                            <span class="value"><strong>Метка Подозрения</strong> (1 Воспоминание, бонусное действие)<br>
+                            Ты отмечаешь одно существо в пределах 60 футов. На 1 минуту:<br>
+                            • Преимущество на проверки Мудрости (Внимательность и Проницательность) против цели<br>
+                            • Если цель атакует тебя или союзника, ты можешь реакцией переместиться на половину скорости к ней и совершить одну атаку оружием с дополнительным 1d6 урона<br><br>
+                            <strong>Гипербдительность</strong><br>
+                            Пока Гештальт проявлен: +2 к Внимательности, тебя нельзя застигнуть врасплох.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Разоблачение</strong>
+                            <span class="value"><strong>Разоблачение</strong> (1 Воспоминание, реакция)<br>
+                            Когда существо под Меткой Подозрения атакует тебя или союзника, ты можешь реакцией:<br>
+                            • Нанести ему 2d8 психического урона<br>
+                            • Наложить помеху на все атаки до конца его следующего хода<br>
+                            • Переместиться на 10 футов без провоцированных атак<br><br>
+                            <strong>Связь путей</strong><br>
+                            Пока в пределах 30 футов находится Предатель, ты получаешь +1d4 к дополнительному урону Метки, но совершаешь спасброски против страха с помехой.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Перепутье</strong>
+                            <span class="value">Ты можешь сменить Путь на Предателя. Если остаёшься Преданным:<br>
+                            • Дополнительный урон ответной атаки увеличивается до 1d10<br>
+                            • Преимущество на спасброски против очарования и обмана<br><br>
+                            <strong>Парный эффект</strong><br>
+                            Если Предатель атакует существо под твоей Меткой Подозрения, оба вы получаете +1d4 к урону по ней до конца вашего следующего хода.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Цена Предательства</strong>
+                            <span class="value"><strong>Цена Предательства</strong> (1/длинный отдых, реакция)<br>
+                            Когда существо под Меткой наносит урон тебе или союзнику, ты можешь активировать способность. На 1 минуту:<br>
+                            • Каждая атака этого существа по тебе или союзникам наносит ему самому 1d8 психического урона<br>
+                            • Ты получаешь преимущество на все атаки против него<br>
+                            • Скорость существа −10 футов, пока оно в пределах 30 футов от тебя</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Преданного</strong>
+                            <span class="value">Максимум Воспоминаний +2.<br><br>
+                            <strong>Апофеоз Преданного</strong> (1/длинный отдых, 1 минута)<br>
+                            • Метка Подозрения действует на двух существ<br>
+                            • Ответная атака наносит дополнительный 2d8 урона<br>
+                            • Автоматический успех проверок Проницательности против существ под Меткой<br>
+                            • Один раз за длительность: реакцией полностью предотвратить урон от атаки существа под Меткой и перенаправить его обратно в виде психического<br><br>
+                            <strong>Пассивно:</strong> Пока есть Метка Подозрения — +1 к КД и преимущество на инициативу.<br>
+                            <strong>Связь путей (усиленная):</strong> Пока в пределах 30 футов есть Предатель, дополнительный урон ответных атак +1d6, но помеха на спасброски против страха.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FI -->
+                <div id="FI" class="tab-content">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Ресурс: Бессилие</strong>
+                            <span class="value">Максимум = бонус мастерства.<br>
+                            Получаешь при: Отзвуке, провале спасброска против «высших», осознанном принятии слабости.<br>
+                            Если на максимуме — помеха на атаки и проверки Харизмы, пока не потратишь хотя бы 1.<br><br>
+                            <strong>Траты Бессилия:</strong><br>
+                            • 1 (бонусное действие): Усиление Приговора — враги в зоне −1 к атакам и спасброскам, реактивный урон +1d6<br>
+                            • 1 (бонусное действие): Возложить Бремя — помеха на следующий спасбросок + нельзя восстанавливать хиты<br>
+                            • 1 (бонусное действие): Принять Бессилие как Силу — снять 1 Отзвук, временные хиты = уровень + Харизма, преимущество на атаки по зоне<br>
+                            • 2 (действие): Голос Суда — все в зоне спасбросок Мудрости, 2d6 психического + потеря реакции<br>
+                            • 2 (бонусное действие): Слом Иерархии — «высшее» существо считается равным, теряет преимущества, атакует тебя с помехой</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>4 уровень — Зал Суда</strong>
+                            <span class="value"><strong>Зал Суда</strong> (1 Воспоминание, действие)<br>
+                            Зона радиусом 15 футов в пределах 30 футов на 1 минуту (концентрация).<br>
+                            Пока враг в зоне:<br>
+                            • Проверки Харизмы и Запугивания с помехой<br>
+                            • Один раз за ход, когда он атакует, ты можешь реакцией нанести 1d6 психического урона (1d8 против высших)<br>
+                            Против высших по статусу спасброски против твоих способностей совершаются с помехой.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Вес Приговора</strong>
+                            <span class="value">Ты получаешь доступ ко всем базовым тратам Бессилия (за 1 очко).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Общий Суд</strong>
+                            <span class="value">Радиус Зала Суда увеличивается до 25 футов. Можно поддерживать зону без концентрации, но тогда получаешь 1 Бессилие в начале каждого своего хода.<br><br>
+                            <strong>Клеймо Виновного</strong> (2 Воспоминания, действие)<br>
+                            Одно существо в Зале Суда — спасбросок Мудрости. Провал: становится Виновным на 1 минуту (атаки по нему с преимуществом, его атаки с помехой). Против высших — спасбросок с помехой.<br>
+                            Открываются траты за 2 Бессилия.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Высший Суд</strong>
+                            <span class="value"><strong>Высший Суд</strong> (1/длинный отдых, действие)<br>
+                            Большой Зал Суда радиусом 30 футов на 1 минуту:<br>
+                            • Все враги получают помеху на атаки и спасброски Мудрости<br>
+                            • Реактивный урон 2d6 (2d8 против высших)<br>
+                            • Когда враг в зоне падает до 0 хитов — снимаешь 1 Бессилие или восстанавливаешь 1 Воспоминание<br>
+                            Если у тебя 3+ Бессилия, враги в начале хода получают 1d6 психического урона.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Несправедливости</strong>
+                            <span class="value">Максимум Воспоминаний +2. Максимум Бессилия +2.<br><br>
+                            <strong>Апофеоз Несправедливости</strong> (1/длинный отдых, 1 минута)<br>
+                            • Зал Суда радиусом 40 футов<br>
+                            • Все враги в зоне считаются «высшими»<br>
+                            • Бонусным действием можно тратить 1 Бессилие, чтобы нанести всем врагам в зоне 2d6 психического урона<br>
+                            • Один раз: Окончательный Приговор — спасбросок Мудрости, при провале недееспособность на 1 минуту<br><br>
+                            <strong>Пассивно:</strong> Пока есть хотя бы 1 Бессилие — сопротивление психическому урону.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FP -->
+                <div id="FP" class="tab-content">
+                    <div class="ability-grid">
+                        <div class="ability-item">
+                            <strong>Якоря Травмы</strong>
+                            <span class="value">Ты получаешь по одному Якорю на уровнях 4, 7, 11 и 15. Каждый Якорь — конкретная сцена травмы. Пока активен, даёт один бонус (нельзя брать один и тот же дважды).<br><br>
+                            <strong>Примеры бонусов Якорей:</strong><br>
+                            • +1d4 к урону первой атаки в бою<br>
+                            • +1 к атакам в первый ход боя<br>
+                            • +1d6 урона по существам, которые уже атаковали в этом ходу<br>
+                            • Преимущество на атаку после перемещения на 15+ футов<br>
+                            • +5 / +10 футов к скорости<br>
+                            • +1 к инициативе<br>
+                            • Преимущество на спасброски против страха / очарования<br>
+                            • +1 к спасброскам Мудрости<br>
+                            • Сопротивление психическому урону 1/короткий отдых<br>
+                            • Помеха на провоцированные атаки против тебя от уже атакованных существ<br>
+                            • +1d4 к урону по существам с состояниями<br>
+                            • Преимущество на Проницательность и Внимательность в определённых ситуациях</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>4 уровень — Первая Петля</strong>
+                            <span class="value">Первый Якорь.<br><br>
+                            <strong>Личная Петля</strong> (1 Воспоминание, бонусное действие)<br>
+                            До конца твоего следующего хода: скорость +15 футов, можешь совершить одну дополнительную атаку оружием как бонусное действие, если перемещался минимум на 10 футов.<br><br>
+                            <strong>Навязанный Повтор</strong> (1 Воспоминание, реакция)<br>
+                            Когда враг в пределах 30 футов совершает атаку, ты можешь реакцией заставить его повторить эту атаку по той же цели в начале его следующего хода (с помехой).</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>7 уровень — Ускорение Круга</strong>
+                            <span class="value">Второй Якорь.<br><br>
+                            <strong>Ускорение Круга</strong> (1 Воспоминание, бонусное действие)<br>
+                            До конца твоего хода ты получаешь дополнительное бонусное действие (только для атаки, Отхода или Рывка).<br><br>
+                            <strong>Срыв Повтора</strong> (1 Воспоминание, действие)<br>
+                            Одно существо в пределах 30 футов — спасбросок Мудрости. Провал: до конца следующего хода не может менять цель атак, теряет реакции, атаки по новым целям с помехой.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>11 уровень — Глубокая Петля</strong>
+                            <span class="value">Третий Якорь.<br><br>
+                            <strong>Глубокая Петля</strong> (2 Воспоминания, действие)<br>
+                            Точка в пределах 40 футов, радиус 15 футов. Враги совершают спасбросок Мудрости. Провал: до конца следующего хода должны повторять последнее действие, не могут использовать бонусные действия, получают 2d6 психического урона в начале хода.<br>
+                            Ты сам получаешь +10 футов к скорости и одну атаку бонусным действием.</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>15 уровень — Замыкание</strong>
+                            <span class="value">Четвёртый Якорь.<br><br>
+                            <strong>Замыкание</strong> (1/длинный отдых, действие)<br>
+                            На 1 минуту зона радиусом 25 футов:<br>
+                            • Враги в начале хода получают 1d8 психического урона и должны преуспеть в спасброске Мудрости, иначе повторяют последнее перемещение или атаку<br>
+                            • Ты получаешь дополнительное бонусное действие каждый ход<br>
+                            • Скорость +20 футов<br>
+                            • Один раз за длительность можно реакцией заставить врага полностью повторить предыдущий ход</span>
+                        </div>
+                        <div class="ability-item">
+                            <strong>19 уровень — Апофеоз Петли</strong>
+                            <span class="value">Максимум Воспоминаний +2.<br><br>
+                            <strong>Апофеоз Петли</strong> (1/длинный отдых, 1 минута)<br>
+                            • Все Якоря дают удвоенные бонусы<br>
+                            • Дополнительное действие каждый ход (только Атака или Рывок)<br>
+                            • Враги в пределах 30 футов совершают спасброски против твоих способностей с помехой<br>
+                            • Один раз за длительность: реакцией отменить действие врага и заставить повторить предыдущее<br><br>
+                            <strong>Пассивно:</strong> Пока активен хотя бы один Якорь — сопротивление психическому урону и +1 к инициативе.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОТЗВУК -->
+        <div class="class-block" id="echo">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                </span>
+                Отзвук (механика риска)
+            </h2>
+            <div class="collapsible-content open">
+                <p style="margin-bottom: 1rem;"><strong>Отзвук</strong> — последствия слишком глубокого погружения в травму. Особенно активен во Внутреннем режиме.</p>
+
+                <div class="ability-grid">
+                    <div class="ability-item">
+                        <strong>Как накапливается</strong>
+                        <div class="value">
+                            <ul>
+                                <li>Получение урона во Внутреннем режиме</li>
+                                <li>Критические удары по тебе</li>
+                                <li>Некоторые способности подклассов</li>
+                                <li>Сильные триггеры (по решению ведущего)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ability-item">
+                        <strong>Эффекты Отзвука</strong>
+                        <div class="value">
+                            <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                <strong style="color: var(--accent);">1 Отзвук</strong>
+                                <div style="margin-top: 0.2rem; font-size: 0.9rem;">Помеха на спасброски Мудрости</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                <strong style="color: var(--accent);">2 Отзвука</strong>
+                                <div style="margin-top: 0.2rem; font-size: 0.9rem;">Скорость −10 футов + помеха на проверки Ловкости</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                <strong style="color: var(--accent);">3 Отзвука</strong>
+                                <div style="margin-top: 0.2rem; font-size: 0.9rem;">В начале хода психический урон = уровень</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                                <strong style="color: var(--accent);">4+ Отзвуков</strong>
+                                <div style="margin-top: 0.2rem; font-size: 0.9rem;">Помеха на все атаки и спасброски до конца следующего хода</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ability-item">
+                        <strong>Сброс</strong>
+                        <div class="value">
+                            • Короткий или длинный отдых — полный сброс<br>
+                            • Способность «Сброс Отзвука» (7+ уровень)<br>
+                            • Некоторые подклассовые эффекты
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== НАЗАД К СПИСКУ КЛАССОВ ===== -->
+        <a href="alt-gestalt.html" class="back-link">← Вернуться к списку классов</a>
+
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -1230,84 +1166,50 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
-        </div>
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
 
-    </div>
-
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ СТРАНИЦЫ ===== -->
     <script>
         (function() {
             'use strict';
 
-            // ============================================================
-            // 1. ТЕМА
-            // ============================================================
-            const toggle = document.getElementById('themeToggle');
-            const body = document.body;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
-            toggle.addEventListener('click', function() {
-                body.classList.add('theme-switching');
-                body.classList.toggle('light');
-                const isLight = body.classList.contains('light');
-                this.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                setTimeout(() => body.classList.remove('theme-switching'), 400);
-            });
-
-            // ============================================================
-            // 2. ПРОГРЕСС-БАР
-            // ============================================================
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-            });
-
-            // ============================================================
-            // 3. КНОПКА «НАВЕРХ»
-            // ============================================================
-            const backBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backBtn.classList.add('visible');
-                } else {
-                    backBtn.classList.remove('visible');
-                }
-            });
-            backBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // ============================================================
-            // 4. НАВИГАЦИЯ ПО ЯКОРЯМ
-            // ============================================================
-            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // ===== ПОИСК =====
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const blocks = document.querySelectorAll('.class-block, .quote-block');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    blocks.forEach(block => {
+                        const text = block.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        block.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
+                    });
+                    let noResults = document.getElementById('no-results-class-f');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-class-f';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        const wrap = searchInput.closest('.search-wrap');
+                        if (wrap) wrap.after(noResults);
+                        else searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
                     }
                 });
-            });
+            }
 
-            // ============================================================
-            // 5. COLLAPSIBLE СЕКЦИИ
-            // ============================================================
+            // ===== COLLAPSIBLE =====
             document.querySelectorAll('.section-title').forEach(title => {
                 title.addEventListener('click', function() {
                     const content = this.closest('.class-block').querySelector('.collapsible-content');
@@ -1317,9 +1219,7 @@
                 });
             });
 
-            // ============================================================
-            // 6. ВКЛАДКИ ПОДКЛАССОВ
-            // ============================================================
+            // ===== ВКЛАДКИ =====
             window.openSubTab = function(evt, tabId) {
                 const parent = evt.currentTarget.closest('.class-block');
                 parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1327,100 +1227,6 @@
                 document.getElementById(tabId).classList.add('active');
                 evt.currentTarget.classList.add('active');
             };
-
-            // ============================================================
-            // 7. ФОН (песчинки)
-            // ============================================================
-            const canvas = document.getElementById('particlesCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-                const PARTICLE_COUNT = 80;
-                let mouseX = 0,
-                    mouseY = 0;
-
-                function resizeCanvas() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                document.addEventListener('mousemove', function(e) {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                class Particle {
-                    constructor() {
-                        this.reset();
-                    }
-                    reset() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 3 + 1.5;
-                        this.speedX = (Math.random() - 0.5) * 0.3;
-                        this.speedY = (Math.random() - 0.5) * 0.1;
-                        this.opacity = Math.random() * 0.5 + 0.2;
-                    }
-                    update() {
-                        this.x += 0.08;
-                        const dx = this.x - mouseX;
-                        const dy = this.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            const angle = Math.atan2(dy, dx);
-                            const force = (120 - dist) / 120 * 0.6;
-                            this.x += Math.cos(angle) * force;
-                            this.y += Math.sin(angle) * force;
-                        }
-                        this.x += this.speedX;
-                        this.y += this.speedY;
-                        if (this.x > width + 20) this.x = -20;
-                        if (this.x < -20) this.x = width + 20;
-                        if (this.y > height + 20) this.y = -20;
-                        if (this.y < -20) this.y = height + 20;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
-                        ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push(new Particle());
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(function(p) {
-                        p.update();
-                        p.draw();
-                    });
-                    requestAnimationFrame(animateParticles);
-                }
-                animateParticles();
-            }
-
-            // ============================================================
-            // 8. МОДАЛКА
-            // ============================================================
-            const modal = document.getElementById('modal');
-            const modalClose = document.getElementById('modalClose');
-            if (modal) {
-                modalClose.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) modal.classList.remove('active');
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') modal.classList.remove('active');
-                });
-            }
 
         })();
     </script>
