@@ -3,8 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Справочник по Альтер-Эго</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Справочник по Альтер-Эго — Главная</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0815;
+            --bg-card: rgba(18, 15, 28, 0.6);
+            --bg-nav: rgba(14, 11, 22, 0.7);
+            --border: rgba(180, 138, 217, 0.15);
+            --accent: #b48ad9;
+            --accent-glow: rgba(180, 138, 217, 0.2);
+            --text: #e4ddf0;
+            --text-muted: #a89bb5;
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.5);
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        body.light {
+            --bg: #f2edf7;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-nav: rgba(240, 235, 245, 0.8);
+            --border: rgba(120, 90, 150, 0.2);
+            --text: #1c1824;
+            --text-muted: #4a4055;
+            --accent: #8b6bb0;
+            --accent-glow: rgba(139, 107, 176, 0.15);
+            --shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        a { color: var(--accent); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 6rem 1.5rem 3rem; }
+
+        /* ===== PROGRESS BAR ===== */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #e0b0ff);
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* ===== BACK TO TOP ===== */
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 1.4rem;
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-nav);
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow);
+        }
+        #backToTop.visible { opacity: 1; pointer-events: auto; }
+        #backToTop:hover { background: var(--accent); color: #fff; transform: scale(1.1); }
+
+        /* ===== PARTICLES ===== */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .content { position: relative; z-index: 1; }
+
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            padding: 1rem 0 0.5rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        /* ===== NAVIGATION (fixed, glass) ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 8, 15, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(180, 138, 217, 0.15);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        nav.scrolled {
+            background: rgba(10, 8, 15, 0.95);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+        }
+        body.light nav {
+            background: rgba(240, 235, 245, 0.8);
+            border-bottom-color: rgba(120, 90, 150, 0.2);
+        }
+        body.light nav.scrolled {
+            background: rgba(240, 235, 245, 0.96);
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            position: relative;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), #e0b0ff);
+            transition: width 0.3s ease;
+        }
+        nav a:hover,
+        nav a.active {
+            color: var(--accent);
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: 0.3s;
+        }
+        .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        @media (max-width: 700px) {
+            nav { padding: 0.6rem 1rem; }
+            .nav-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 8, 15, 0.98);
+                backdrop-filter: blur(12px);
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid var(--border);
+                gap: 0.5rem;
+            }
+            body.light .nav-links {
+                background: rgba(240, 235, 245, 0.98);
+            }
+            .nav-links.open { display: flex; }
+            nav a { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            nav a::after { display: none; }
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            top: 4.2rem;
+            right: 1rem;
+            z-index: 99;
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            color: var(--text);
+        }
+        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+
+        /* ===== MAIN PAGE STYLES ===== */
+        .hero {
+            text-align: center;
+            padding: 2rem 1rem 3rem;
+            position: relative;
+        }
+        .hero h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #b48ad9, #e0b0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+        }
+        .hero .sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            letter-spacing: 0.1em;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .section-title svg {
+            width: 1.8rem;
+            height: 1.8rem;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.8rem;
+            font-size: 1rem;
+        }
+
+        /* Cards grid for sections */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .card-link {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.2rem;
+            text-align: center;
+            transition: all 0.3s;
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .card-link.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card-link:hover {
+            transform: translateY(-6px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .card-link .icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        .card-link h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .card-link p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .quote-block {
+            background: var(--bg-card);
+            backdrop-filter: blur(4px);
+            border-left: 4px solid var(--accent);
+            padding: 1.8rem 2rem;
+            margin: 2.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .quote-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 4rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.5rem;
+            left: 0.8rem;
+            opacity: 0.2;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.8rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .footer-socials a:hover { color: var(--accent); }
+        .footer-socials svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+    </style>
 </head>
 <body>
 
@@ -12,147 +408,107 @@
     <button id="backToTop" aria-label="Наверх">↑</button>
     <canvas id="particlesCanvas"></canvas>
 
-    <div class="content">
-
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        </header>
-
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
+    <!-- ===== FIXED NAVIGATION ===== -->
+    <nav id="mainNav">
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" class="active">Главная</a>
             <a href="lore.html">Лор</a>
+            <a href="races.html">Расы</a>
+            <a href="classes.html">А. Гештальт</a>
             <a href="traits.html">Черты</a>
             <a href="Backstories.html">Предыстории</a>
             <a href="alternative.html">Отыгрыш</a>
-        </nav>
+        </div>
+    </nav>
 
-        <div class="container">
+    <button class="theme-toggle" id="themeToggle">🌙</button>
 
-            <div class="search-wrap">
-                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
-            </div>
+    <div class="content">
 
-            <!-- =========================== -->
-            <!-- РАСЫ                         -->
-            <!-- =========================== -->
-            <section id="section-races" class="section">
-                <h2 class="section-title">Расы</h2>
-                <p class="section-desc">Те, кто выжил, изменился или пришёл из другого мира.</p>
+        <header>
+            <h1>Справочник по Альтер-Эго</h1>
+        </header>
 
-                <!-- Обычные -->
-                <div class="subgroup-title">Обычные</div>
-                <div class="grid">
-                    <div class="card" data-category="race">
-                        <span class="tag">Гибкость</span>
-                        <h3>Человек</h3>
-                        <p>Лучше всех приспосабливается к новым условиям. Основа общества, часто чувствует себя самым уязвимым среди изменённых.</p>
-                        <a href="human.html">Подробнее →</a>
-                    </div>
-                </div>
-
-                <!-- Изменённые -->
-                <div class="subgroup-title">Изменённые</div>
-                <div class="grid">
-                    <div class="card" data-category="race">
-                        <span class="tag">Стабильность</span>
-                        <h3>Андроид</h3>
-                        <p>Искусственное тело даёт высокую устойчивость и защиту от контроля. Многие до сих пор борются с остаточными протоколами.</p>
-                        <a href="android.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Вампиризм</span>
-                        <h3>Репликант</h3>
-                        <p>Сила и восстановление приходят через боль. Постоянно балансирует на грани поглощения Гештальтом.</p>
-                        <a href="replicant.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Танк</span>
-                        <h3>Мутант</h3>
-                        <p>Тело, искажённое чумой, даёт высокую живучесть. Гротескная внешность пугает и отталкивает.</p>
-                        <a href="mutant.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Информация</span>
-                        <h3>Эхо</h3>
-                        <p>Обострённое восприятие и способность поддерживать других. Личность почти полностью поглощена Гештальтом.</p>
-                        <a href="echo.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Модули</span>
-                        <h3>Киборг</h3>
-                        <p>Человек, усиливший себя имплантами. Может перенастраивать своё тело под задачу.</p>
-                        <a href="cyborg.html">Подробнее →</a>
-                    </div>
-                </div>
-
-                <!-- Магические -->
-                <div class="subgroup-title">Магические</div>
-                <div class="grid">
-                    <div class="card" data-category="race">
-                        <span class="tag">Магия</span>
-                        <h3>Мэйки-кацу</h3>
-                        <p>Врождённая мана и сильная защита от заклинаний. Пришельцы из мира, принёсшего магию и Белый пепел.</p>
-                        <a href="meiki-katsu.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Универсал</span>
-                        <h3>Мэйки-дзин</h3>
-                        <p>Сочетает человеческую гибкость с частицей маны. Потомки Мэйки-кацу и людей.</p>
-                        <a href="meiki-dzin.html">Подробнее →</a>
-                    </div>
-                    <div class="card" data-category="race">
-                        <span class="tag">Мобильность</span>
-                        <h3>Руро</h3>
-                        <p>Маленькие, быстрые и почти летающие. Сыпучие тела и крылатые пончо делают их неуловимыми.</p>
-                        <a href="ruro.html">Подробнее →</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- =========================== -->
-            <!-- АЛЬТЕРНАТИВНЫЙ ГЕШТАЛЬТ     -->
-            <!-- =========================== -->
-            <section id="section-classes" class="section">
-                <h2 class="section-title">Альтернативный Гештальт</h2>
-                <p class="section-desc">Пять путей силы, рождённых из внутреннего конфликта и травмы мира.</p>
-                <div class="grid">
-                    <div class="card" data-category="class">
-                        <span class="tag">Защита</span>
-                        <h3>А. Гештальт U</h3>
-                        <p>Сила через связь с другими. Защищает и поддерживает союзников, рискуя раствориться в них.</p>
-                        <a href="class-geshtalt-u.html">Перейти к классу →</a>
-                    </div>
-                    <div class="card" data-category="class">
-                        <span class="tag">Эмоции</span>
-                        <h3>А. Гештальт E</h3>
-                        <p>Чистые чувства становятся оружием. Чем сильнее эмоция — тем мощнее проявление.</p>
-                        <a href="class-geshtalt-e.html">Перейти к классу →</a>
-                    </div>
-                    <div class="card" data-category="class">
-                        <span class="tag">Потенциал</span>
-                        <h3>А. Гештальт R</h3>
-                        <p>Сила из того, что так и не случилось. Нереализованные возможности и несбывшиеся мечты.</p>
-                        <a href="class-geshtalt-r.html">Перейти к классу →</a>
-                    </div>
-                    <div class="card" data-category="class">
-                        <span class="tag">Травма</span>
-                        <h3>А. Гештальт F</h3>
-                        <p>Прожитая боль становится источником силы. Каждый шрам — это ресурс.</p>
-                        <a href="class-geshtalt-f.html">Перейти к классу →</a>
-                    </div>
-                    <div class="card" data-category="class">
-                        <span class="tag">Раскол</span>
-                        <h3>А. Гештальт M</h3>
-                        <p>Конфликт с самим собой. Две стороны личности борются за контроль.</p>
-                        <a href="class-geshtalt-m.html">Перейти к классу →</a>
-                    </div>
-                </div>
-            </section>
-
+        <!-- ===== HERO ===== -->
+        <div class="hero">
+            <h1>Альтер-Эго</h1>
+            <p>Мир, где душа — это ресурс, а магия — следствие распада. Добро пожаловать в справочник по вселенной, созданной для настольной ролевой игры.</p>
+            <span class="sub">Синдром Белого Пепла • Мэйки • Гештальты • Выживание</span>
         </div>
 
-        <!-- ===== ПОДВАЛ ===== -->
+        <!-- ===== QUOTE ===== -->
+        <div class="quote-block visible">
+            Мир не рухнул — он истончился. День за днём, словно песок сквозь пальцы, цивилизация просыпалась сквозь белую пыльцу.
+            <span class="author">— из записей неизвестного архивариуса</span>
+        </div>
+
+        <!-- ===== ABOUT PROJECT ===== -->
+        <section>
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                О проекте
+            </h2>
+            <p style="color: var(--text); margin-bottom: 1rem;">
+                <strong>«Альтер-Эго»</strong> — это настольная ролевая игра в жанре пост-апокалиптического хоррора с элементами магии и психологической драмы. Игроки берут на себя роли выживших, чьи души были изменены загадочной субстанцией Мэйки. Одни заключили сделку с голосом, другие — прошли через карантин и стали Репликантами, третьи — носят в себе Альтернативный Гештальт, искусственный дух, питающийся травмой.
+            </p>
+            <p style="color: var(--text-muted);">
+                Этот сайт — ваш путеводитель по миру, расам, классам, чертам и предысториям. Здесь вы найдёте всё необходимое для создания персонажа и погружения в атмосферу.
+            </p>
+        </section>
+
+        <!-- ===== SECTIONS NAVIGATION ===== -->
+        <section style="margin-top: 2.5rem;">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+                Разделы справочника
+            </h2>
+            <p class="section-desc">Выберите раздел, чтобы узнать больше о мире, персонажах и правилах.</p>
+
+            <div class="cards-grid">
+                <a href="lore.html" class="card-link">
+                    <span class="icon">📖</span>
+                    <h3>Лор</h3>
+                    <p>История мира, катастрофа, Мэйки, Гештальты и хроники</p>
+                </a>
+                <a href="races.html" class="card-link">
+                    <span class="icon">🧬</span>
+                    <h3>Расы</h3>
+                    <p>Люди, мутанты, андроиды, репликанты, эхо и другие</p>
+                </a>
+                <a href="classes.html" class="card-link">
+                    <span class="icon">⚡</span>
+                    <h3>А. Гештальт</h3>
+                    <p>Пять путей силы, рождённых из травмы и внутреннего конфликта</p>
+                </a>
+                <a href="traits.html" class="card-link">
+                    <span class="icon">🎯</span>
+                    <h3>Черты</h3>
+                    <p>Особенности и таланты вашего персонажа</p>
+                </a>
+                <a href="Backstories.html" class="card-link">
+                    <span class="icon">📜</span>
+                    <h3>Предыстории</h3>
+                    <p>Бэкграунды, определяющие ваше прошлое и мотивацию</p>
+                </a>
+                <a href="alternative.html" class="card-link">
+                    <span class="icon">🎭</span>
+                    <h3>Отыгрыш</h3>
+                    <p>Советы по ролевой игре, созданию образа и взаимодействию</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== FINAL QUOTE ===== -->
+        <div class="quote-block visible" style="margin-top: 2.5rem;">
+            Технология до сих пор экспериментальна. Никто не знает, чем она обернётся: новой эрой, где магия и технологии сосуществуют… или медленным исчезновением последних остатков человечества.
+            <span class="author">— из открытых материалов проекта «Альтер-Эго»</span>
+        </div>
+
+        <a href="lore.html" class="back-link" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 1.5rem; color: var(--accent); font-weight: 600; transition: gap 0.3s;">Погрузиться в лор →</a>
+
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -171,21 +527,146 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <!-- КНОПКА ТЕМЫ -->
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <!-- МОДАЛЬНОЕ ОКНО -->
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
-        </div>
+    <script>
+        (function() {
+            'use strict';
 
-    </div>
+            // ===== THEME =====
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
 
-    <script src="script.js"></script>
+            // ===== PROGRESS BAR =====
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ===== BACK TO TOP =====
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) backBtn.classList.add('visible');
+                else backBtn.classList.remove('visible');
+            });
+            backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // ===== NAVIGATION SCROLL =====
+            const nav = document.getElementById('mainNav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // ===== BURGER MENU =====
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('open');
+                });
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('open');
+                    });
+                });
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target)) {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('open');
+                    }
+                });
+            }
+
+            // ===== INTERSECTION OBSERVER (reveal cards & quote) =====
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.card-link, .quote-block:not(.visible)').forEach(el => {
+                observer.observe(el);
+            });
+
+            // ===== PARTICLES =====
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height, particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0, mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+                class Particle {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX, dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX; this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+        })();
+    </script>
 </body>
 </html>
