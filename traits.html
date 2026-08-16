@@ -399,5 +399,15 @@
 
         })();
     </script>
+<script>
+    // АВАРИЙНОЕ СКРЫТИЕ ЗАГРУЗОЧНОГО ЭКРАНА
+    (function() {
+        var loader = document.getElementById('loader');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+    })();
+</script>
+
 </body>
 </html>
