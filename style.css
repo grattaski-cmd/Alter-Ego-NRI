@@ -223,11 +223,12 @@ nav a.active::after {
     nav a::after { display: none; }
 }
 
-/* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
-.content {
+/* ===== ОСНОВНОЙ КОНТЕЙНЕР (исправленный отступ) ===== */
+.content,
+.container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 6rem 1.5rem 3rem;
+    padding: 7rem 1.5rem 3rem;   /* ← увеличен верхний отступ до 7rem */
     position: relative;
     z-index: 1;
 }
