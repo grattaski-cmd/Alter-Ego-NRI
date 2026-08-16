@@ -324,7 +324,7 @@
         }
         .section-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* Floating TOC (no static TOC) */
+        /* Floating TOC */
         .toc-fab {
             position: fixed;
             bottom: 5.5rem;
@@ -550,8 +550,11 @@
             <span></span><span></span><span></span>
         </button>
         <div class="nav-links" id="navLinks">
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы персонажей</a>
             <a href="lore.html" class="active">Лор</a>
             <a href="traits.html">Черты</a>
             <a href="Backstories.html">Предыстории</a>
@@ -578,7 +581,7 @@
             <p class="section-desc">История мира • Мэйки • Гештальт • Альтернативный Гештальт</p>
         </div>
 
-        <!-- ===== QUOTE (now immediately after title) ===== -->
+        <!-- ===== QUOTE ===== -->
         <div class="quote-block visible">
             Мир не рухнул — он истончился. День за днём, словно песок сквозь пальцы, цивилизация просыпалась сквозь белую пыльцу. И лишь когда последний город стал силуэтом из мрамора, люди поняли: они уже не те, кем были.
             <span class="author">— из записей неизвестного архивариуса, дата утеряна</span>
@@ -892,7 +895,7 @@
                 if (window.scrollY > 50) nav.classList.add('scrolled');
                 else nav.classList.remove('scrolled');
 
-                // Highlight active section
+                // Highlight active section (only for internal # links)
                 const sections = document.querySelectorAll('.lore-block, .quote-block, .dev-note');
                 let current = '';
                 sections.forEach(section => {
@@ -920,14 +923,12 @@
                     this.classList.toggle('active');
                     navLinksContainer.classList.toggle('open');
                 });
-                // Close menu on link click (mobile)
                 navLinksContainer.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         navToggle.classList.remove('active');
                         navLinksContainer.classList.remove('open');
                     });
                 });
-                // Close on outside click
                 document.addEventListener('click', function(e) {
                     if (!nav.contains(e.target)) {
                         navToggle.classList.remove('active');
@@ -936,7 +937,7 @@
                 });
             }
 
-            // ===== TOC FAB (only floating) =====
+            // ===== TOC FAB =====
             const tocFab = document.getElementById('tocFab');
             const tocPanel = document.getElementById('tocPanel');
             if (tocFab && tocPanel) {
@@ -949,7 +950,6 @@
                         tocPanel.classList.remove('open');
                     }
                 });
-                // Smooth scroll from TOC panel
                 tocPanel.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
