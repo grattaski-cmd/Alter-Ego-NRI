@@ -948,8 +948,10 @@ a:active {
     box-shadow: 0 0 24px var(--accent-glow);
 }
 
+
+
 /* ============================================================
-   СЕТКА ЧЕРТ
+   СТРАНИЦА ЧЕРТ
    ============================================================ */
 .trait-grid {
     display: grid;
@@ -971,7 +973,7 @@ a:active {
     transform: translateY(20px);
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: default;
 }
 .trait-card.visible {
     opacity: 1;
@@ -1007,16 +1009,46 @@ a:active {
     flex: 1;
 }
 
-/* Адаптив для мобильных */
+.filter-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.4rem 1.4rem;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: var(--shadow);
+}
+.filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+.filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 24px var(--accent-glow);
+}
+
+#no-results-traits {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 2rem;
+}
+
 @media (max-width: 700px) {
-    .trait-grid {
-        grid-template-columns: 1fr;
-    }
-    .filter-wrap {
-        gap: 0.4rem;
-    }
-    .filter-btn {
-        font-size: 0.75rem;
-        padding: 0.3rem 1rem;
-    }
+    .trait-grid { grid-template-columns: 1fr; }
+    .filter-wrap { gap: 0.4rem; }
+    .filter-btn { font-size: 0.75rem; padding: 0.3rem 1rem; }
 }
