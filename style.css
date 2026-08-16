@@ -1,4 +1,6 @@
-/* ===== RESET & BASE ===== */
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -17,6 +19,8 @@
     --radius: 16px;
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --font-heading: 'Cinzel', 'Courier New', serif;
+    --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 body.light {
@@ -32,13 +36,14 @@ body.light {
 }
 
 body {
+    font-family: var(--font-body);
     background: var(--bg);
     color: var(--text);
-    font-family: 'Segoe UI', 'Courier New', monospace;
     line-height: 1.7;
     min-height: 100vh;
     overflow-x: hidden;
     transition: background var(--transition), color var(--transition);
+    margin: 0;
 }
 
 a {
@@ -46,13 +51,81 @@ a {
     text-decoration: none;
 }
 
-/* ===== КАСТОМНЫЙ СКРОЛЛБАР ===== */
+/* ============================================================
+   ЗАГРУЗОЧНЫЙ ЭКРАН
+   ============================================================ */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 4px solid var(--border);
+    border-top-color: var(--accent);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.loader-text {
+    font-family: var(--font-heading);
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ============================================================
+   ДИНАМИЧЕСКИЙ ГРАДИЕНТНЫЙ ФОН
+   ============================================================ */
+#gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 30%, #1a1320, #0b0a0f 80%);
+    transition: background 1s ease;
+}
+body.light #gradient-bg {
+    background: radial-gradient(circle at 70% 40%, #f0ebe5, #f7f3ee 80%);
+}
+
+/* ============================================================
+   СКРОЛЛБАР
+   ============================================================ */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* ===== ПРОГРЕСС-БАР ===== */
+/* ============================================================
+   ПРОГРЕСС-БАР
+   ============================================================ */
 #progressBar {
     position: fixed;
     top: 0;
@@ -65,7 +138,9 @@ a {
     box-shadow: 0 0 12px var(--accent-glow);
 }
 
-/* ===== КНОПКА «НАВЕРХ» ===== */
+/* ============================================================
+   КНОПКА «НАВЕРХ»
+   ============================================================ */
 #backToTop {
     position: fixed;
     bottom: 2rem;
@@ -88,7 +163,9 @@ a {
 #backToTop.visible { opacity: 1; pointer-events: auto; }
 #backToTop:hover { background: var(--accent); color: #fff; transform: scale(1.1); }
 
-/* ===== ЧАСТИЦЫ ===== */
+/* ============================================================
+   ЧАСТИЦЫ
+   ============================================================ */
 #particlesCanvas {
     position: fixed;
     top: 0;
@@ -99,7 +176,9 @@ a {
     pointer-events: none;
 }
 
-/* ===== ШАПКА ===== */
+/* ============================================================
+   ШАПКА
+   ============================================================ */
 header {
     text-align: center;
     padding: 1.5rem 0 0.5rem;
@@ -107,14 +186,17 @@ header {
     margin-bottom: 2rem;
 }
 header h1 {
-    font-size: 1.6rem;
-    letter-spacing: 0.15em;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
     color: var(--text-muted);
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
 }
 
-/* ===== НАВИГАЦИЯ (fixed, glass) ===== */
+/* ============================================================
+   НАВИГАЦИЯ (fixed, glass)
+   ============================================================ */
 nav {
     position: fixed;
     top: 0;
@@ -223,17 +305,85 @@ nav a.active::after {
     nav a::after { display: none; }
 }
 
-/* ===== ОСНОВНОЙ КОНТЕЙНЕР (исправленный отступ) ===== */
+/* ============================================================
+   ХЛЕБНЫЕ КРОШКИ
+   ============================================================ */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 1rem 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.breadcrumbs a {
+    color: var(--accent);
+    transition: color 0.3s;
+}
+.breadcrumbs a:hover {
+    color: var(--text);
+    text-decoration: underline;
+}
+.breadcrumbs .separator {
+    opacity: 0.4;
+}
+.breadcrumbs .current {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ============================================================
+   ПОИСК
+   ============================================================ */
+.search-wrap {
+    margin: 0 0 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+.search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 60px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    backdrop-filter: blur(4px);
+}
+.search-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+.search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+    background: var(--bg-nav);
+}
+.search-input:focus + .search-clear {
+    display: block;
+}
+
+/* ============================================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+   ============================================================ */
 .content,
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 7rem 1.5rem 3rem;   /* ← увеличен верхний отступ до 7rem */
+    padding: 7rem 1.5rem 3rem;
     position: relative;
     z-index: 1;
 }
 
-/* ===== ТЕМА (кнопка переключения) ===== */
+/* ============================================================
+   ТЕМА (кнопка переключения)
+   ============================================================ */
 .theme-toggle {
     position: fixed;
     top: 4.2rem;
@@ -250,10 +400,68 @@ nav a.active::after {
     transition: all 0.3s;
     box-shadow: var(--shadow);
     color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+.theme-toggle:hover { transform: scale(1.1) rotate(10deg); border-color: var(--accent); }
 
-/* ===== КАРТОЧКИ (общие) ===== */
+/* ============================================================
+   АНИМИРОВАННЫЕ КНОПКИ
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.6rem 1.6rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 30px var(--accent-glow);
+}
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.btn-primary:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+}
+
+/* ============================================================
+   КАРТОЧКИ (общие)
+   ============================================================ */
 .card {
     background: var(--bg-card);
     backdrop-filter: blur(8px);
@@ -308,7 +516,9 @@ nav a.active::after {
 }
 .card a:hover { gap: 8px; }
 
-/* ===== СЕТКА ===== */
+/* ============================================================
+   СЕТКА
+   ============================================================ */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -316,7 +526,9 @@ nav a.active::after {
     margin-top: 1rem;
 }
 
-/* ===== ЦИТАТА ===== */
+/* ============================================================
+   ЦИТАТА
+   ============================================================ */
 .quote-block {
     background: var(--bg-card);
     backdrop-filter: blur(4px);
@@ -354,7 +566,9 @@ nav a.active::after {
     font-size: 0.9rem;
 }
 
-/* ===== ССЫЛКА НАЗАД ===== */
+/* ============================================================
+   ССЫЛКА НАЗАД
+   ============================================================ */
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -367,7 +581,9 @@ nav a.active::after {
 }
 .back-link:hover { gap: 12px; text-decoration: underline; }
 
-/* ===== ПОДВАЛ ===== */
+/* ============================================================
+   ПОДВАЛ
+   ============================================================ */
 footer {
     margin-top: 4rem;
     padding: 2rem 0 1rem;
@@ -396,7 +612,9 @@ footer {
     fill: currentColor;
 }
 
-/* ===== ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC) ===== */
+/* ============================================================
+   ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ (TOC)
+   ============================================================ */
 .toc-fab {
     position: fixed;
     bottom: 5.5rem;
@@ -479,7 +697,9 @@ body.light .toc-panel {
     transform: translateX(4px);
 }
 
-/* ===== АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== */
+/* ============================================================
+   АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ
+   ============================================================ */
 .theme-switching {
     animation: themeFade 0.3s ease;
 }
@@ -487,4 +707,42 @@ body.light .toc-panel {
     0% { opacity: 0.8; }
     50% { opacity: 0.4; }
     100% { opacity: 1; }
+}
+
+/* ============================================================
+   МИКРО-ВЗАИМОДЕЙСТВИЯ (hover, focus, active)
+   ============================================================ */
+*:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+.btn:active {
+    transform: scale(0.96);
+}
+.card:active {
+    transform: scale(0.99) !important;
+}
+a:active {
+    opacity: 0.7;
+}
+
+/* плавное появление при загрузке */
+.content, .container {
+    animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
+@media (max-width: 700px) {
+    header h1 { font-size: 1.4rem; }
+    .content, .container { padding: 7rem 1rem 2rem; }
+    .grid { grid-template-columns: 1fr; }
+    .theme-toggle { width: 38px; height: 38px; font-size: 1rem; top: 3.8rem; right: 0.8rem; }
+    #backToTop { width: 40px; height: 40px; font-size: 1.2rem; bottom: 1.5rem; right: 1rem; }
+    .breadcrumbs { font-size: 0.75rem; }
 }
