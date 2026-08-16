@@ -4,23 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расы — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Расы мира Альтер-Эго: люди, мутанты, андроиды, репликанты, эхо, киборги и магические расы.">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== СТИЛИ ДЛЯ СТРАНИЦЫ РАС ===== */
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, var(--accent), #e0b0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .page-title svg {
+            width: 2.2rem;
+            height: 2.2rem;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subgroup-title {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.04em;
+            font-family: 'Cinzel', serif;
+            scroll-margin-top: 80px;
+        }
+
+        .race-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .race-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+        }
+        .race-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .race-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .race-card .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+            align-self: flex-start;
+        }
+        .race-card h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .race-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            flex: 1;
+        }
+        .race-card a {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: gap 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .race-card a:hover { gap: 8px; }
+
+        @media (max-width: 700px) {
+            .page-title { font-size: 2rem; }
+            .race-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
     <div id="loader">
         <div class="loader-spinner"></div>
         <div class="loader-text">АЛЬТЕР-ЭГО</div>
     </div>
 
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
-    <!-- ===== FIXED NAVIGATION ===== -->
+    <!-- ===== ГЛОБАЛЬНАЯ ШАПКА ===== -->
+    <header>
+        <h1>Справочник по Альтер-Эго</h1>
+    </header>
+
+    <!-- ===== НАВИГАЦИЯ ===== -->
     <nav id="mainNav">
-        <a href="index.html" class="nav-logo" style="font-family:var(--font-heading,'Cinzel',serif);font-size:1.05rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;font-weight:600;margin-right:auto;">АЛЬТЕР-ЭГО</a>
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
         <button class="nav-toggle" id="navToggle" aria-label="Меню">
             <span></span><span></span><span></span>
         </button>
@@ -35,13 +158,19 @@
         </div>
     </nav>
 
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
     <button class="theme-toggle" id="themeToggle">🌙</button>
 
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="content">
 
-        <header>
-            <h1>Справочник по Альтер-Эго</h1>
-        </header>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по расам...">
+        </div>
 
         <!-- ===== TITLE ===== -->
         <div style="margin-bottom: 0.5rem;">
@@ -132,7 +261,7 @@
         <!-- ===== BACK LINK ===== -->
         <a href="index.html" class="back-link">← Вернуться на главную</a>
 
-        <!-- ===== FOOTER ===== -->
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -153,7 +282,7 @@
 
     </div> <!-- .content -->
 
-    <!-- ===== FLOATING TOC (как в лоре) ===== -->
+    <!-- ===== ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ ===== -->
     <button class="toc-fab" id="tocFab" aria-label="Содержание" title="Содержание">
         <svg viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
     </button>
@@ -164,8 +293,60 @@
         <a href="#magical">Магические</a>
     </div>
 
-    
+    <!-- ===== ОБЩИЙ JS ===== -->
     <script src="main.js"></script>
+
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ПО КАРТОЧКАМ ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const raceCards = document.querySelectorAll('.race-card');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    raceCards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        card.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
+                        if (match && !card.classList.contains('visible')) {
+                            card.classList.add('visible');
+                        }
+                    });
+                    let noResults = document.getElementById('no-results-races');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-races';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.race-card').forEach(card => {
+                observer.observe(card);
+            });
+
+        })();
+    </script>
 </body>
 </html>
-
