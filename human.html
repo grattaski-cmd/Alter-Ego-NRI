@@ -595,4 +595,71 @@
                     Telegram
                 </a>
                 <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+    </div> <!-- .content -->
+
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
+
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const blocks = document.querySelectorAll('.race-block, .quote-block');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    blocks.forEach(block => {
+                        const text = block.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        block.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
+                    });
+                    let noResults = document.getElementById('no-results-human');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-human';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        const wrap = searchInput.closest('.search-wrap');
+                        if (wrap) wrap.after(noResults);
+                        else searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            }
+
+        })();
+    </script>
+
+    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЛОАДЕРА ===== -->
+    <script>
+        setTimeout(function() {
+            var loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        }, 2000);
+    </script>
+
+</body>
+</html>
