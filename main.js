@@ -209,7 +209,7 @@
             tocPanel.classList.toggle('open');
         });
         document.addEventListener('click', function(e) {
-            if (!tocPanel.contains(e.target) && e.target !== tocFab) {
+            if (!tocPanel.contains(e.target) && !tocFab.contains(e.target)) {
                 tocPanel.classList.remove('open');
             }
         });
@@ -320,7 +320,11 @@
             ripple.style.transform = 'scale(0)';
             ripple.style.transition = 'transform 0.6s, opacity 0.6s';
             ripple.style.opacity = '0.6';
-            this.style.position = 'relative';
+            // Do not override position on fixed elements (theme-toggle, toc-fab, backToTop)
+            const computed = window.getComputedStyle(this).position;
+            if (computed === 'static') {
+                this.style.position = 'relative';
+            }
             this.style.overflow = 'hidden';
             this.appendChild(ripple);
             requestAnimationFrame(() => {
@@ -366,4 +370,5 @@
     }
 
 })();
+
 
