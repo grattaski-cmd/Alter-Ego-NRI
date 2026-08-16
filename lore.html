@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лор — Справочник по Альтер-Эго</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== LORE PAGE SPECIFIC ===== */
+        .lore-title {
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
+        }
+        .lore-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .quote-block {
+            background: var(--bg-nav);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '“';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.2rem;
+            left: 0.8rem;
+            opacity: 0.3;
+            font-style: normal;
+        }
+        .quote-block .author {
+            display: block;
+            margin-top: 0.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-right: 0.3rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .lore-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+        }
+        .lore-block p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .lore-block p:last-child {
+            margin-bottom: 0;
+        }
+        .lore-block .muted {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        /* Side navigation */
+        .lore-nav {
+            position: sticky;
+            top: 1.2rem;
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1rem;
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+        .lore-nav h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            padding-left: 0.4rem;
+        }
+        .lore-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .lore-nav a {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: all var(--transition);
+        }
+        .lore-nav a:hover,
+        .lore-nav a.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Lost Media style blocks */
+        .lost-media {
+            background: #0d0b10;
+            border: 1px dashed #3a3148;
+            border-radius: 8px;
+            padding: 1.2rem 1.4rem;
+            margin: 1.4rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+            color: #8a8199;
+            position: relative;
+        }
+        .lost-media::before {
+            content: 'FRAGMENT // LOST MEDIA';
+            position: absolute;
+            top: -0.6rem;
+            left: 1rem;
+            background: var(--bg);
+            padding: 0 0.5rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #5c5368;
+        }
+        .lost-media .redacted {
+            background: #2a2433;
+            color: transparent;
+            user-select: none;
+            border-radius: 2px;
+            padding: 0 0.15rem;
+        }
+        .lost-media .glitch {
+            color: #c4a8e0;
+            opacity: 0.7;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.4rem;
+            top: 0.3rem;
+            bottom: 0.3rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.4rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.55rem;
+            top: 0.45rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .timeline-item .time {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+        .timeline-item .desc {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        /* Classification grid */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .class-card {
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: border-color var(--transition);
+        }
+        .class-card:hover {
+            border-color: var(--accent);
+        }
+        .class-card .code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .class-card .name {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Warning / note */
+        .dev-note {
+            background: linear-gradient(135deg, rgba(180,138,217,0.08), rgba(180,138,217,0.02));
+            border: 1px solid rgba(180,138,217,0.25);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .dev-note .label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        @media (max-width: 700px) {
+            .two-col { grid-template-columns: 1fr; }
+            .lore-nav ul { flex-direction: column; }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progressBar"></div>
+    <button id="backToTop" aria-label="Наверх">↑</button>
+    <canvas id="particlesCanvas"></canvas>
+
+    <div class="content">
+
+        <header>
+            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
+        </header>
+
+        <nav>
+            <a href="index.html#section-races">Расы</a>
+            <a href="index.html#section-classes">А. Гештальт</a>
+            <a href="lore.html" style="color: var(--accent);">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </nav>
+
+        <div class="container">
+
+            <!-- TITLE -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 class="section-title lore-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
+                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
+                        </svg>
+                        Лор
+                    </span>
+                </h1>
+                <p class="section-desc" style="margin-top: 0.2rem;">История мира • Мэйки • Гештальт • Альтернативный Гештальт</p>
+            </div>
+
+            <!-- STICKY NAV -->
+            <div class="lore-nav" id="loreNav">
+                <h3>Навигация по разделу</h3>
+                <ul>
+                    <li><a href="#catastrophe">Катастрофа</a></li>
+                    <li><a href="#meiki">Мэйки</a></li>
+                    <li><a href="#paths">Два пути</a></li>
+                    <li><a href="#mutants">Мутанты</a></li>
+                    <li><a href="#quarantine">Карантин души</a></li>
+                    <li><a href="#gestalt">Гештальт</a></li>
+                    <li><a href="#replicants">Репликанты</a></li>
+                    <li><a href="#androids">Андроиды и Киборги</a></li>
+                    <li><a href="#newworld">Новый мир</a></li>
+                    <li><a href="#alt-gestalt">А. Гештальт</a></li>
+                    <li><a href="#echo">Эхо</a></li>
+                    <li><a href="#true-gestalt">Истинные Гештальты</a></li>
+                    <li><a href="#fragments">Фрагменты</a></li>
+                </ul>
+            </div>
+
+            <!-- QUOTE -->
+            <div class="quote-block">
+                Мир не закончился в один день. Он осыпался. Медленно. Белым пеплом.
+                <span class="author">— из записей неизвестного архивариуса, дата утеряна</span>
+            </div>
+
+            <!-- 1. CATASTROPHE -->
+            <div class="lore-block" id="catastrophe">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                    </span>
+                    Катастрофа
+                </h2>
+                <p>В эпоху, которую позже назовут «золотым веком», человечество считало, что стоит на пороге бесконечного процветания. Технологии росли. Границы раздвигались. Будущее казалось управляемым.</p>
+                <p>Именно тогда на мир обрушилась болезнь, какой не знала ни одна эпоха. Её назвали <strong>Синдромом Белого Пепла</strong>.</p>
+                <p class="muted">Первые случаи фиксировались как единичные. Через месяцы — как эпидемия. Через годы — как конец всего, что люди считали цивилизацией.</p>
+            </div>
+
+            <!-- 2. MEIKI -->
+            <div class="lore-block" id="meiki">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423z"/></svg>
+                    </span>
+                    Мэйки
+                </h2>
+                <p>Возбудителем оказалась не обычная бактерия. Это была экстрапространственная форма жизни — <strong>Мэйки</strong>.</p>
+                <p>Мэйки всегда присутствовал в мире в ничтожных количествах. Люди просто не умели его видеть. Когда концентрация резко возросла, то, что когда-то называли магией в легендах, оказалось реальным — и смертельным.</p>
+                <p>Мэйки поражает в первую очередь <strong>Душу</strong>. Тело начинает разрушаться лишь после того, как душа оказывается захвачена. Именно поэтому все попытки лечить тело оказывались бессмысленны.</p>
+                <p class="muted">Позже учёные поймут: Мэйки — не просто патоген. За ним стоит нечто большее. Неизвестная сила, которую заражённые называли «Богом». До сих пор никто не знает, разум это, закон другого мира или сама ткань реальности, начавшая отвечать.</p>
+            </div>
+
+            <!-- 3. TWO PATHS -->
+            <div class="lore-block" id="paths">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+                    </span>
+                    Два пути
+                </h2>
+                <p>Заражённый начинал слышать голос. Голос предлагал сделку: стать марионеткой и уничтожить человечество.</p>
+
+                <div class="two-col" style="margin-top: 1.2rem;">
+                    <div style="background: var(--bg-nav); padding: 1.2rem; border-radius: 12px; border-left: 3px solid #c45c5c;">
+                        <strong style="color: #c45c5c;">Отказ</strong>
+                        <p style="margin-top: 0.5rem; font-size: 0.93rem;">Человек медленно превращался в статую. Издалека она могла казаться мраморной. Вблизи становилось ясно: это не камень. Это плотный, рассыпчатый белый налёт, который въелся под кожу и пророс сквозь плоть. Города превращались в пустоши из таких фигур — хрупких, готовых осыпаться от сильного ветра.</p>
+                    </div>
+                    <div style="background: var(--bg-nav); padding: 1.2rem; border-radius: 12px; border-left: 3px solid #7a9e6a;">
+                        <strong style="color: #7a9e6a;">Принятие</strong>
+                        <p style="margin-top: 0.5rem; font-size: 0.93rem;">Человек становился Мутантом. Сила росла. Рассудок — нет. Или менялся до неузнаваемости. Голос продолжал отдавать приказы. Тело перестраивалось под новую роль.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. MUTANTS -->
+            <div class="lore-block" id="mutants">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"/></svg>
+                    </span>
+                    Мутанты
+                </h2>
+                <p>Мутанты — те, кто принял предложение. Их тела менялись необратимо.</p>
+                <p>Кожа местами приобретала мраморную, слегка рассыпчатую структуру. Она могла деформироваться, трескаться и смещаться. Другие участки, наоборот, набухали. Под кожей выступали тёмные вены, ткани разрастались неровными, опухолевидными массами. Глаза теряли цвет. Зрение постепенно снижалось — иногда до почти полной слепоты.</p>
+                <p>Часть мутантов полностью лишалась рассудка и сбивалась в агрессивные стаи. Другие сохраняли способность мыслить и даже общаться. Были и те, кто, казалось, слышал того самого «Бога» яснее остальных — и вёл за собой остальных.</p>
+                <p class="muted">Мутанты стали одной из главных угроз нового мира. Но также — одним из самых трагических его символов. Они тоже когда-то были людьми.</p>
+            </div>
+
+            <!-- 5. QUARANTINE -->
+            <div class="lore-block" id="quarantine">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
+                    </span>
+                    Карантин души
+                </h2>
+                <p>Когда стало ясно, что тело спасти невозможно, учёные пошли на крайность. Они научились извлекать Душу из ещё живого тела и помещать её в герметичное «спящее» пространство.</p>
+                <p>Человек в этом состоянии не осознавал себя. Душа пребывала в чём-то похожем на спячку. Но спячка оказалась неполной. Что-то внутри всё равно менялось.</p>
+                <p>Извлечённые души становились крепче. Обретали форму, близкую к гуманоидной. Но оставались сгустками магической энергии. Их назвали <strong>Гештальтами</strong>.</p>
+            </div>
+
+            <!-- 6. GESTALT -->
+            <div class="lore-block" id="gestalt">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                    </span>
+                    Гештальт
+                </h2>
+                <p>Гештальт — это уже не совсем прежняя душа. Это её отражение, прошедшее через карантин. Более устойчивое. Более... иное.</p>
+                <p>Первые попытки вернуть Гештальт в обычное тело провалились. Тела отторгали его. Люди без души превращались в пустые оболочки — без воли, без чувств, с угасающим разумом. Гештальты без тела начинали разрушаться, словно от коррозии.</p>
+                <p>Годы шли. Болезнь забирала жизни. Эксперименты — тоже. Мир погружался в упадок.</p>
+            </div>
+
+            <!-- 7. REPLICANTS -->
+            <div class="lore-block" id="replicants">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                    </span>
+                    Репликанты
+                </h2>
+                <p>Решение нашли на грани отчаяния. Создать тело <strong>не по образу прежнего человека, а по данным самого Гештальта</strong>.</p>
+                <p>Так появились Репликанты.</p>
+                <p>Репликант почти помнит, кем был. Почти чувствует себя прежним. Но карантин оставляет след. Личность сдвигается. Воспоминания искажаются. Внутри всегда остаётся напряжение между телом и тем, что когда-то было душой.</p>
+                <p>Иногда Гештальт приходится переносить повторно. С каждым разом Репликант становится стабильнее — и всё дальше от того человека, которым был когда-то.</p>
+                <p class="muted">Не всех удалось спасти. Тех, кого болезнь уже успела глубоко затронуть, коррозия продолжала пожирать даже после переноса. В итоге оставался живой Репликант — но это был уже не тот человек. Многие здоровые отказались от процедуры именно поэтому. Для них это было не лучше, чем стать статуей из пепла.</p>
+            </div>
+
+            <!-- 8. ANDROIDS & CYBORGS -->
+            <div class="lore-block" id="androids">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25zm.75-12h9v9h-9v-9z"/></svg>
+                    </span>
+                    Андроиды и Киборги
+                </h2>
+                <p>Параллельно другая группа учёных, потеряв надежду спасти души, создала <strong>Андроидов</strong> — полностью искусственных существ. Они не нуждались в пище, сне и воздухе. Сначала их использовали как рабочую силу и ассистентов. Со временем некоторые начали проявлять то, что было похоже на настоящее сознание.</p>
+                <p>Те, кто отказался от переноса души, искали другие пути. Так появились <strong>Киборги</strong> — люди, заменившие плоть протезами, усиленными магией. Они верили, что сохраняют человечность, даже когда от прежнего тела почти ничего не оставалось.</p>
+            </div>
+
+            <!-- 9. NEW WORLD -->
+            <div class="lore-block" id="newworld">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+                    </span>
+                    Новый мир
+                </h2>
+                <p>Мэйки изменил не только людей. Природа стала враждебной. Появились существа, которых раньше не существовало.</p>
+                <p><strong>Мэйки-кацу</strong> — коренная раса из мира, откуда пришёл Мэйки. Они выглядят почти как люди, но их природа иная. Они рождаются с врождённой маной и глубокой связью с этой силой.</p>
+                <p><strong>Мэйки-дзин</strong> — полукровки. Дети Мэйки-кацу и людей. Они сочетают человеческую гибкость с частицей чужой магии.</p>
+                <p>Позже были обнаружены <strong>Руро</strong> — небольшие существа в масках вместо лиц. Они рассыпаются, словно пепел, и перемещаются по воздуху с помощью крылатых пончо. Их происхождение до сих пор неясно.</p>
+            </div>
+
+            <!-- 10. ALT GESTALT -->
+            <div class="lore-block" id="alt-gestalt">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                    </span>
+                    Альтернативный Гештальт
+                </h2>
+                <p>Когда обычной магии людям оказалось недостаточно, ведущий учёный <strong>Йоаке Асахи</strong> предложила новую разработку.</p>
+                <p>Сначала почти всё оставшееся население чипировали. Чип связывал человека с его Гештальтом и позволял ощущать Мэйки.</p>
+                <p>Затем на основе данных оригинального Гештальта начали создавать <strong>Альтернативные Гештальты</strong>.</p>
+                <p>Альтернативный Гештальт — искусственный магический дух. Он нематериален, но с ним можно взаимодействовать, говорить и даже «коснуться». Он связан с носителем через устройство и чип. Через него обычный человек впервые получил возможность полноценно использовать магию.</p>
+                <p>Сила Альтернативного Гештальта берётся из <strong>незакрытого Гештальта</strong> — глубокой травмы, гложущего чувства, незавершённого внутреннего цикла. Чем сильнее это незакрытое место, тем сильнее дух.</p>
+
+                <div class="class-grid">
+                    <div class="class-card">
+                        <div class="code">U</div>
+                        <div class="name">Межличностный</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="code">E</div>
+                        <div class="name">Эмоциональный</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="code">R</div>
+                        <div class="name">Нереализованный</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="code">F</div>
+                        <div class="name">Событийный</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="code">M</div>
+                        <div class="name">Личностный</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.2rem;" class="muted">У каждого типа есть свои подтипы. Классификация до сих пор уточняется.</p>
+            </div>
+
+            <!-- 11. ECHO -->
+            <div class="lore-block" id="echo">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
+                    </span>
+                    Эхо
+                </h2>
+                <p>Альтернативный Гештальт — инструмент выживания. Но он опасен.</p>
+                <p>Если травма носителя слишком глубока, дух может ощутить превосходство и попытаться захватить тело. В этом случае оригинальная личность постепенно стирается. Остаются лишь отголоски.</p>
+                <p>Таких существ называют <strong>Эхо</strong>.</p>
+                <p class="muted">Они всё ещё двигаются. Всё ещё говорят. Но это уже больше проекция, чем тот, кем они были.</p>
+            </div>
+
+            <!-- 12. TRUE GESTALT -->
+            <div class="lore-block" id="true-gestalt">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                    </span>
+                    Истинные Гештальты
+                </h2>
+
+                <div class="dev-note">
+                    <div class="label">Статус: в разработке</div>
+                    <p style="margin:0; font-size: 0.95rem;">Существует гипотеза о возможности создания Гештальтов, основанных не на травме и расколе, а на созидательных, интегрированных паттернах: принятии, связи, восстановлении, целостности. Такие сущности получили рабочее название <strong>Истинные Гештальты</strong>.</p>
+                    <p style="margin: 0.6rem 0 0; font-size: 0.9rem; color: var(--text-muted);">В отличие от Альтернативных, они должны быть стабильнее и почти не стремиться к захвату носителя. Исследования продолжаются. Публичных результатов пока нет.</p>
+                </div>
+            </div>
+
+            <!-- 13. FRAGMENTS / LOST MEDIA -->
+            <div class="lore-block" id="fragments">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg>
+                    </span>
+                    Фрагменты архива
+                </h2>
+                <p class="muted" style="margin-bottom: 1rem;">Ниже приведены уцелевшие обрывки записей. Происхождение и достоверность части из них не подтверждены.</p>
+
+                <div class="lost-media">
+                    «Они видят только пустоту. А я вижу тропы. Там, где мир истончается, где Мэйки течёт как вода…»
+                    <br><span class="glitch">[запись повреждена]</span>
+                </div>
+
+                <div class="lost-media">
+                    Отчёт 47-Б. Субъект после третьего переноса Гештальта. Память о семье — 12%. Эмоциональный отклик на прежние триггеры — нестабилен. Рекомендация: повторный перенос через 14 циклов.
+                    <br><br>
+                    Примечание на полях: <span class="redacted">████████</span> «Он уже не тот. Но лучше, чем статуя.»
+                </div>
+
+                <div class="lost-media">
+                    …машина времени… индивидуальный доступ… старший учёный Йоаке Асахи… засекречено…
+                    <br><span class="glitch">[данные удалены / уровень доступа недостаточен]</span>
+                </div>
+
+                <div class="lost-media">
+                    «Если Гештальт — отражение души, то что происходит с отражением, когда душа уже не может себя узнать?»
+                    <br><br>
+                    — фрагмент личного дневника, автор неизвестен
+                </div>
+            </div>
+
+            <!-- FINAL NOTE -->
+            <div class="quote-block" style="margin-top: 2rem;">
+                Технология до сих пор экспериментальна. Никто не знает, чем она обернётся: новой эрой, в которой магия и технологии сосуществуют… или медленным исчезновением последних остатков человечества среди пустошей из белого пепла.
+                <span class="author">— из открытых материалов проекта «Альтер-Эго»</span>
+            </div>
+
+            <a href="index.html" class="back-link">← Вернуться на главную</a>
+
+        </div>
+
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">Patreon</a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">Boosty</a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // Theme
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                body.classList.add('light');
+                toggle.textContent = '☀️';
+            }
+            toggle.addEventListener('click', function() {
+                body.classList.add('theme-switching');
+                body.classList.toggle('light');
+                const isLight = body.classList.contains('light');
+                this.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                setTimeout(() => body.classList.remove('theme-switching'), 400);
+            });
+
+            // Progress bar
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            });
+
+            // Back to top
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) backBtn.classList.add('visible');
+                else backBtn.classList.remove('visible');
+            });
+            backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // Active nav highlight
+            const sections = document.querySelectorAll('.lore-block[id]');
+            const navLinks = document.querySelectorAll('.lore-nav a');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 120;
+                    if (scrollY >= sectionTop) current = section.getAttribute('id');
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+                });
+            });
+
+            // Smooth scroll for nav
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+
+            // Particles (same as other pages)
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height, particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0, mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+                class Particle {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX, dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX; this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+        })();
+    </script>
+</body>
+</html>
