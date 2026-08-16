@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* ===== СПЕЦИФИЧНЫЕ СТИЛИ ДЛЯ АЛЬТЕРНАТИВНОГО ГЕШТАЛЬТА ===== */
-        /* (не конфликтуют с основным style.css) */
-
         .page-title {
             font-family: 'Courier New', monospace;
             font-size: 2.6rem;
@@ -35,45 +33,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* ===== QUOTE ===== */
-        .quote-block {
-            background: var(--bg-card);
-            backdrop-filter: blur(4px);
-            border-left: 4px solid var(--accent);
-            padding: 1.8rem 2rem;
-            margin: 1.5rem 0 2.5rem 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--text-muted);
-            position: relative;
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        .quote-block.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .quote-block::before {
-            content: '“';
-            font-size: 4rem;
-            color: var(--accent);
-            position: absolute;
-            top: -0.5rem;
-            left: 0.8rem;
-            opacity: 0.2;
-            font-style: normal;
-        }
-        .quote-block .author {
-            display: block;
-            margin-top: 0.8rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        /* ===== INTRO ===== */
         .intro-block {
             background: var(--bg-card);
             backdrop-filter: blur(8px);
@@ -83,15 +42,12 @@
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
         }
-        .intro-block p {
-            color: var(--text);
-        }
+        .intro-block p { color: var(--text); }
         .intro-block .muted {
             color: var(--text-muted);
             margin-top: 0.5rem;
         }
 
-        /* ===== TYPE HEADER ===== */
         .type-header {
             display: flex;
             align-items: center;
@@ -149,7 +105,6 @@
             font-size: 0.95rem;
         }
 
-        /* ===== SUBTYPE CARDS ===== */
         .subtype-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -220,111 +175,6 @@
             background: var(--accent-glow);
         }
 
-        /* ===== BACK LINK ===== */
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 2rem;
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: gap 0.3s;
-        }
-        .back-link:hover { gap: 12px; text-decoration: underline; }
-
-        /* ===== FLOATING TOC ===== */
-        .toc-fab {
-            position: fixed;
-            bottom: 5.5rem;
-            right: 1.4rem;
-            z-index: 90;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--bg-nav);
-            backdrop-filter: blur(8px);
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-        }
-        .toc-fab:hover {
-            border-color: var(--accent);
-            transform: scale(1.1) rotate(90deg);
-        }
-        .toc-fab svg {
-            width: 22px;
-            height: 22px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.5;
-        }
-
-        .toc-panel {
-            position: fixed;
-            bottom: 7.2rem;
-            right: 1.4rem;
-            width: min(300px, calc(100vw - 2rem));
-            max-height: 60vh;
-            overflow-y: auto;
-            background: rgba(14, 11, 22, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.2rem;
-            z-index: 89;
-            box-shadow: 0 16px 64px rgba(0,0,0,0.7);
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.95) translateY(10px);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        body.light .toc-panel {
-            background: rgba(240, 235, 245, 0.95);
-        }
-        .toc-panel.open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1) translateY(0);
-        }
-        .toc-panel h4 {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin: 0.6rem 0 0.3rem 0;
-            padding-left: 0.3rem;
-        }
-        .toc-panel h4:first-of-type { margin-top: 0; }
-        .toc-panel .toc-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.2rem;
-            margin-bottom: 0.2rem;
-        }
-        .toc-panel a {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: all var(--transition);
-            border: 1px solid transparent;
-        }
-        .toc-panel a:hover {
-            color: var(--accent);
-            background: var(--accent-glow);
-            border-color: var(--accent);
-        }
-
-        /* ===== АДАПТИВ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ ===== */
         @media (max-width: 700px) {
             .type-header .type-tag { display: none; }
             .type-header .type-link { margin-left: auto; }
@@ -341,24 +191,30 @@
     <!-- ===== ШАПКА ===== -->
     <header>
         <h1>Справочник по Альтер-Эго</h1>
-        <div class="subtitle">Мир, где душа — это ресурс, а магия — следствие распада</div>
     </header>
 
     <!-- ===== НАВИГАЦИЯ ===== -->
-    <nav>
-        <a href="index.html">Главная</a>
-        <a href="races.html">Расы</a>
-        <a href="alt-gestalt.html" class="active">А. Гештальт</a>
-        <a href="true-gestalt.html">И. Гештальт</a>
-        <a href="classes.html">Классы персонажей</a>
-        <a href="lore.html">Лор</a>
-        <a href="traits.html">Черты</a>
-        <a href="Backstories.html">Предыстории</a>
-        <a href="alternative.html">Отыгрыш</a>
+    <nav id="mainNav">
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html" class="active">А. Гештальт</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы персонажей</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+        </div>
     </nav>
 
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
     <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
-    <div class="container">
+    <div class="content">
 
         <!-- ЗАГОЛОВОК СТРАНИЦЫ -->
         <div style="margin-bottom: 0.5rem;">
@@ -624,7 +480,7 @@
         <!-- ===== НАЗАД НА ГЛАВНУЮ ===== -->
         <a href="index.html" class="back-link">← Вернуться на главную</a>
 
-    </div> <!-- /container -->
+    </div> <!-- /content -->
 
     <!-- ===== ПОДВАЛ ===== -->
     <footer>
@@ -645,9 +501,6 @@
         <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
     </footer>
 
-    <!-- ===== КНОПКА ТЕМЫ ===== -->
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-
     <!-- ===== ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ ===== -->
     <button class="toc-fab" id="tocFab" aria-label="Содержание" title="Содержание">
         <svg viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
@@ -656,56 +509,46 @@
         <h4>Содержание</h4>
 
         <h4>U — Связь</h4>
-        <div class="toc-group">
-            <a href="#UF">UF</a>
-            <a href="#UP">UP</a>
-            <a href="#US">US</a>
-            <a href="#UC">UC</a>
-            <a href="#UG">UG</a>
-        </div>
+        <a href="#UF">UF — Круг Доверия</a>
+        <a href="#UP">UP — Симбиоз</a>
+        <a href="#US">US — Голос Общества</a>
+        <a href="#UC">UC — Капризная Игра</a>
+        <a href="#UG">UG — Эхо Утраты</a>
 
         <h4>E — Эмоция</h4>
-        <div class="toc-group">
-            <a href="#EW">EW</a>
-            <a href="#ER">ER</a>
-            <a href="#ES">ES</a>
-            <a href="#EF">EF</a>
-            <a href="#EG">EG</a>
-            <a href="#EL">EL</a>
-            <a href="#EA">EA</a>
-        </div>
+        <a href="#EW">EW — Ярость</a>
+        <a href="#ER">ER — Обида</a>
+        <a href="#ES">ES — Печаль</a>
+        <a href="#EF">EF — Страх</a>
+        <a href="#EG">EG — Вина</a>
+        <a href="#EL">EL — Любовь</a>
+        <a href="#EA">EA — Амбивалентность</a>
 
         <h4>R — Нереализованность</h4>
-        <div class="toc-group">
-            <a href="#RT">RT</a>
-            <a href="#RD">RD</a>
-            <a href="#RS">RS</a>
-            <a href="#RM">RM</a>
-            <a href="#RV">RV</a>
-        </div>
+        <a href="#RT">RT — Цель</a>
+        <a href="#RD">RD — Мечта</a>
+        <a href="#RS">RS — Путь</a>
+        <a href="#RM">RM — Упущенное</a>
+        <a href="#RV">RV — Викарный</a>
 
         <h4>F — Травма</h4>
-        <div class="toc-group">
-            <a href="#FM">FM</a>
-            <a href="#FV">FV</a>
-            <a href="#FA">FA</a>
-            <a href="#FS">FS</a>
-            <a href="#FG">FG</a>
-            <a href="#FB">FB</a>
-            <a href="#FI">FI</a>
-            <a href="#FP">FP</a>
-        </div>
+        <a href="#FM">FM — Пустота</a>
+        <a href="#FV">FV — Насилие</a>
+        <a href="#FA">FA — Пепел</a>
+        <a href="#FS">FS — Стыд</a>
+        <a href="#FG">FG — Вина</a>
+        <a href="#FB">FB — Предательство</a>
+        <a href="#FI">FI — Несправедливость</a>
+        <a href="#FP">FP — Петля</a>
 
         <h4>M — Раскол</h4>
-        <div class="toc-group">
-            <a href="#MC">MC</a>
-            <a href="#MS">MS</a>
-            <a href="#MI">MI</a>
-            <a href="#MA">MA</a>
-            <a href="#MP">MP</a>
-            <a href="#MB">MB</a>
-            <a href="#MU">MU</a>
-        </div>
+        <a href="#MC">MC — Две Потребности</a>
+        <a href="#MS">MS — Тень</a>
+        <a href="#MI">MI — Ребёнок</a>
+        <a href="#MA">MA — Самокритика</a>
+        <a href="#MP">MP — Персона</a>
+        <a href="#MB">MB — Дереализация</a>
+        <a href="#MU">MU — Нереализованность</a>
     </div>
 
     <!-- ===== СКРИПТЫ ===== -->
@@ -745,6 +588,36 @@
             });
             backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+            // Навигация — скролл
+            const nav = document.getElementById('mainNav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // Бургер-меню
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('open');
+                });
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('open');
+                    });
+                });
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target)) {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('open');
+                    }
+                });
+            }
+
             // Плавающее оглавление
             const tocFab = document.getElementById('tocFab');
             const tocPanel = document.getElementById('tocPanel');
@@ -783,6 +656,63 @@
                 observer.observe(el);
             });
 
+            // Частицы
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height, particles = [];
+                const PARTICLE_COUNT = 80;
+                let mouseX = 0, mouseY = 0;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+                class Particle {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.size = Math.random() * 3 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    update() {
+                        this.x += 0.08;
+                        const dx = this.x - mouseX, dy = this.y - mouseY;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (120 - dist) / 120 * 0.6;
+                            this.x += Math.cos(angle) * force;
+                            this.y += Math.sin(angle) * force;
+                        }
+                        this.x += this.speedX; this.y += this.speedY;
+                        if (this.x > width + 20) this.x = -20;
+                        if (this.x < -20) this.x = width + 20;
+                        if (this.y > height + 20) this.y = -20;
+                        if (this.y < -20) this.y = height + 20;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
         })();
     </script>
 </body>
