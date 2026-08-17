@@ -1,10 +1,265 @@
-const traitsData = [
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Черты — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Черты персонажей в мире Альтер-Эго: физические, ментальные, социальные, технические и гештальт-черты.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для страницы черт */
+        .filter-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            box-shadow: var(--shadow);
+            font-family: var(--font-body, 'Segoe UI', sans-serif);
+            letter-spacing: 0.03em;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .trait-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .trait-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.4rem 1.2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, opacity 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            cursor: default;
+        }
+        .trait-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .trait-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .trait-card .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            align-self: flex-start;
+        }
+        .trait-card h3 {
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        .trait-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex: 1;
+        }
+        .trait-card .trait-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        #no-results-traits {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .trait-grid { grid-template-columns: 1fr; }
+            .filter-wrap { gap: 0.4rem; }
+            .filter-btn { font-size: 0.75rem; padding: 0.3rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
+
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
+    <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
+    <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== НАВИГАЦИЯ ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="traits.html" class="active">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
+
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
+    <div class="content">
+
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <h1 class="section-title">Черты</h1>
+        <p class="section-desc">Особенности, которые определяют твоего персонажа. Каждая черта — осознанный выбор вместо увеличения характеристик.</p>
+
+        <!-- ===== ПРАВИЛА ===== -->
+        <div class="race-block" style="margin-bottom: 2.5rem;">
+            <h2 class="section-title" style="font-size: 1.35rem; margin-bottom: 1rem;">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                </span>
+                Правила получения черт
+            </h2>
+            <div style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.65;">
+                <p style="margin-bottom: 0.9rem;"><strong style="color: var(--accent);">1. Когда берутся черты</strong><br>
+                На 1 уровне черту получает только <strong>Человек</strong> с происхождением «Универсал» (одна черта на выбор).<br>
+                В дальнейшем черты берутся <strong>вместо Увеличения характеристик (ASI)</strong>. Когда класс даёт +2 к одной характеристике или +1 к двум — вы можете взять одну черту вместо этого. Черта сама по себе не даёт бонуса к характеристикам.</p>
+
+                <p style="margin-bottom: 0.9rem;"><strong style="color: var(--accent);">2. Правило против дублирования</strong><br>
+                Если раса, происхождение или другая особенность уже даёт вам тот же механический эффект (сопротивление определённому типу урона, преимущество на конкретный спасбросок, тёмное зрение, увеличение скорости и т.п.), черта <strong>не даёт</strong> этот эффект повторно. Вы получаете только уникальную часть черты или выбираете другую.</p>
+
+                <p style="margin-bottom: 0.9rem;"><strong style="color: var(--accent);">3. Эксклюзивность Гештальт-черт</strong><br>
+                Черты категории «Гештальт» доступны только персонажам, у которых есть Гештальт (класс Гештальта, раса/происхождение, связанное с Гештальтом, или явное разрешение мастера).</p>
+
+                <p style="margin-bottom: 0;"><strong style="color: var(--accent);">4. Количество</strong><br>
+                Ограничений по количеству черт нет (кроме правила эксклюзивности Гештальта).</p>
+            </div>
+        </div>
+
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по названию или описанию...">
+        </div>
+
+        <!-- ===== ФИЛЬТРЫ ===== -->
+        <div class="filter-wrap" id="filterButtons">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="physical">Физические</button>
+            <button class="filter-btn" data-filter="mental">Ментальные</button>
+            <button class="filter-btn" data-filter="social">Социальные</button>
+            <button class="filter-btn" data-filter="technical">Технические</button>
+            <button class="filter-btn" data-filter="geshtalt">Гештальт</button>
+        </div>
+
+        <!-- ===== СЕТКА ЧЕРТ ===== -->
+        <div class="trait-grid" id="traitsGrid"></div>
+
+        <!-- ===== ПОДВАЛ ===== -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+    </div> <!-- .content -->
+
+    <!-- ===== МОДАЛКА ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 id="modalTitle">Заголовок</h3>
+            <p id="modalDesc">Описание</p>
+            <span class="tag" id="modalTag">Тег</span>
+        </div>
+    </div>
+
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
+
+    <!-- ===== ИСПРАВЛЕННЫЙ СПЕЦИФИЧНЫЙ JS ДЛЯ ЧЕРТ ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // ДАННЫЕ ЧЕРТ
+            // ============================================================
+            const traitsData = [
     // ==================== ФИЗИЧЕСКИЕ ====================
     {
         category: 'physical',
         tag: 'Физическая',
         name: 'Крепкое тело',
-        desc: 'Сопротивление урону ядом. Когда вы восстанавливаете хиты от Hit Dice, добавляете +1 к каждому броску кости.'
+        desc: 'Преимущество на спасброски против яда. Когда вы восстанавливаете хиты от Hit Dice, добавляете +1 к каждому броску кости.'
     },
     {
         category: 'physical',
@@ -34,13 +289,13 @@ const traitsData = [
         category: 'physical',
         tag: 'Физическая',
         name: 'Стальная кожа',
-        desc: 'Пока вы не в тяжёлой броне, ваш КБ равен 12 + модификатор Ловкости (минимум 13).'
+        desc: 'Пока вы не носите броню и не используете щит, ваш КБ равен 11 + модификатор Ловкости (минимум 12).'
     },
     {
         category: 'physical',
         tag: 'Физическая',
         name: 'Хищный глаз',
-        desc: 'Вы видите в тусклом свете на 60 футов как при ярком. Преимущество на проверки Восприятия, основанные на зрении, в условиях плохой видимости.'
+        desc: 'В тусклом свете вы видите на 30 футов дальше обычного. Преимущество на проверки Восприятия, основанные на зрении, в условиях плохой видимости.'
     },
     {
         category: 'physical',
@@ -54,7 +309,7 @@ const traitsData = [
         category: 'mental',
         tag: 'Ментальная',
         name: 'Железная воля',
-        desc: 'Преимущество на спасброски от испуга и очарования. Один раз в день вы можете автоматически преуспеть в таком спасброске.'
+        desc: 'Преимущество на спасброски от испуга. Один раз в день, когда вы делаете спасбросок от очарования, вы можете совершить его с преимуществом.'
     },
     {
         category: 'mental',
@@ -199,54 +454,190 @@ const traitsData = [
         desc: 'Пока вы находитесь в зоне действия сети или системы, вы можете действием «войти» в неё. Вы получаете преимущество на проверки скрытности внутри цифрового пространства и можете перемещаться по связанным системам.'
     },
 
-    // ==================== ГЕШТАЛЬТ ====================
+    // ==================== ГЕШТАЛЬТ (только для персонажей с Гештальтом) ====================
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Эхо памяти',
-        desc: 'Один раз в длинный отдых вы можете коснуться предмета или места и получить короткий отголосок сильного воспоминания, связанного с ним (видение на 1–2 раунда).'
+        desc: 'Один раз в длинный отдых вы можете коснуться предмета или места и получить короткий отголосок сильного воспоминания, связанного с ним (видение на 1–2 раунда). [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Слияние с тенью',
-        desc: 'В тусклом свете или темноте вы можете действием слиться с тенями. Вы становитесь невидимым до конца своего следующего хода или пока не атакуете и не наложите заклинание.'
+        desc: 'В тусклом свете или темноте вы можете действием слиться с тенями. Вы становитесь невидимым до конца своего следующего хода или пока не атакуете и не наложите заклинание. [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Обострённое восприятие',
-        desc: 'Вы видите в темноте на 60 футов. Один раз в короткий отдых можете сосредоточиться и на 1 минуту слышать всё, что происходит в радиусе 100 футов.'
+        desc: 'Вы видите в темноте на 60 футов. Один раз в короткий отдых можете сосредоточиться и на 1 минуту слышать всё, что происходит в радиусе 100 футов. [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Голос предков',
-        desc: 'Во время короткого или длинного отдыха ваш Гештальт может дать вам одно предупреждение или подсказку. Один раз в день вы можете задать Гештальту один вопрос «да/нет» о текущей ситуации.'
+        desc: 'Во время короткого или длинного отдыха ваш Гештальт может дать вам одно предупреждение или подсказку. Один раз в день вы можете задать Гештальту один вопрос «да/нет» о текущей ситуации. [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Рваная душа',
-        desc: 'Вы чувствуете сильные эмоции существ в пределах 30 футов. Один раз в день можете «вытянуть» эмоцию у цели (спасбросок Мудрости). При успехе цель получает помеху на следующий бросок, а вы — преимущество на свой.'
+        desc: 'Вы чувствуете сильные эмоции существ в пределах 30 футов. Один раз в день можете «вытянуть» эмоцию у цели (спасбросок Мудрости). При успехе цель получает помеху на следующий бросок, а вы — преимущество на свой. [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Отголосок силы',
-        desc: 'Один раз в длинный отдых, когда вы падаете до 0 хитов, ваш Гештальт может на мгновение взять контроль. Вы мгновенно восстанавливаете 2к8 + ваш уровень хитов и можете совершить одно действие, после чего снова падаете без сознания (если хиты не выше 0).'
+        desc: 'Один раз в длинный отдых, когда вы падаете до 0 хитов, ваш Гештальт может на мгновение взять контроль. Вы мгновенно восстанавливаете 2к8 + ваш уровень хитов и можете совершить одно действие, после чего снова падаете без сознания (если хиты не выше 0). [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Искажённое присутствие',
-        desc: 'Существа звериного интеллекта и простые конструкты чувствуют к вам иррациональный страх или почтение. Преимущество на проверки Запугивания и Убеждения против них. Один раз в день можете заставить такое существо на 1 минуту замереть.'
+        desc: 'Существа звериного интеллекта и простые конструкты чувствуют к вам иррациональный страх или почтение. Преимущество на проверки Запугивания и Убеждения против них. Один раз в день можете заставить такое существо на 1 минуту замереть. [Только для персонажей с Гештальтом]'
     },
     {
         category: 'geshtalt',
         tag: 'Гештальт',
         name: 'Разрыв вуали',
-        desc: 'Один раз в длинный отдых вы можете на 1 минуту «разорвать» восприятие. В радиусе 15 футов все существа видят краткие отголоски чужих воспоминаний и эмоций. Вы сами получаете преимущество на все проверки Проницательности на это время.'
+        desc: 'Один раз в длинный отдых вы можете на 1 минуту «разорвать» восприятие. В радиусе 15 футов все существа видят краткие отголоски чужих воспоминаний и эмоций. Вы сами получаете преимущество на все проверки Проницательности на это время. [Только для персонажей с Гештальтом]'
     }
 ];
 
+            // ============================================================
+            // РЕНДЕРИНГ КАРТОЧЕК
+            // ============================================================
+            const grid = document.getElementById('traitsGrid');
+            let currentFilter = 'all';
+
+            function renderTraits(data) {
+                grid.innerHTML = '';
+                data.forEach((trait) => {
+                    const card = document.createElement('div');
+                    // Сразу добавляем класс visible, чтобы карточки были видны
+                    card.className = 'trait-card visible';
+                    card.dataset.category = trait.category;
+                    card.innerHTML = `
+                        <span class="tag">${trait.tag}</span>
+                        <h3>${trait.name}</h3>
+                        <p>${trait.desc}</p>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            renderTraits(traitsData);
+
+            // ============================================================
+            // ФИЛЬТРЫ
+            // ============================================================
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    applyFilters();
+                });
+            });
+
+            // ============================================================
+            // ПОИСК + ФИЛЬТР (объединённая функция)
+            // ============================================================
+            const searchInput = document.getElementById('searchInput');
+
+            function applyFilters() {
+                const query = searchInput.value.toLowerCase().trim();
+                const cards = grid.querySelectorAll('.trait-card');
+                let hasVisible = false;
+
+                cards.forEach((card) => {
+                    const category = card.dataset.category;
+                    const text = card.textContent.toLowerCase();
+                    const matchFilter = currentFilter === 'all' || category === currentFilter;
+                    const matchSearch = text.includes(query);
+                    const isVisible = matchFilter && matchSearch;
+
+                    if (isVisible) {
+                        card.style.display = '';
+                        card.classList.add('visible');
+                        hasVisible = true;
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.remove('visible');
+                    }
+                });
+
+                // Сообщение "ничего не найдено"
+                let noResults = document.getElementById('no-results-traits');
+                if (!noResults) {
+                    noResults = document.createElement('p');
+                    noResults.id = 'no-results-traits';
+                    noResults.style.textAlign = 'center';
+                    noResults.style.color = 'var(--text-muted)';
+                    noResults.style.marginTop = '2rem';
+                    grid.after(noResults);
+                }
+
+                if ((query !== '' || currentFilter !== 'all') && !hasVisible) {
+                    noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос или фильтр.';
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            searchInput.addEventListener('input', applyFilters);
+            // Применяем фильтры сразу после рендера (без задержки)
+            applyFilters();
+
+            // ============================================================
+            // КЛИК ПО КАРТОЧКЕ → МОДАЛКА
+            // ============================================================
+            const modal = document.getElementById('modal');
+            if (modal) {
+                const modalClose = document.getElementById('modalClose');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalDesc = document.getElementById('modalDesc');
+                const modalTag = document.getElementById('modalTag');
+
+                grid.addEventListener('click', function(e) {
+                    const card = e.target.closest('.trait-card');
+                    if (!card) return;
+                    const title = card.querySelector('h3')?.textContent || 'Без названия';
+                    const desc = card.querySelector('p')?.textContent || 'Нет описания';
+                    const tag = card.querySelector('.tag')?.textContent || '';
+                    if (modalTitle) modalTitle.textContent = title;
+                    if (modalDesc) modalDesc.textContent = desc;
+                    if (modalTag) modalTag.textContent = tag;
+                    modal.classList.add('active');
+                });
+
+                if (modalClose) {
+                    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+                }
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') modal.classList.remove('active');
+                });
+            }
+
+        })();
+    </script>
+
+    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЗАГРУЗОЧНОГО ЭКРАНА ===== -->
+    <script>
+        (function() {
+            var loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        })();
+    </script>
+
+</body>
+</html>
