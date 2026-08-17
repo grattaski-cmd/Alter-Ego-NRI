@@ -58,7 +58,7 @@
             border-radius: var(--radius);
             padding: 1.4rem 1.4rem 1.2rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, opacity 0.4s ease;
             opacity: 0;
             transform: translateY(20px);
             display: flex;
@@ -107,8 +107,9 @@
             align-items: center;
             gap: 4px;
             margin-top: auto;
+            text-decoration: none;
         }
-        .backstory-card a:hover { gap: 8px; }
+        .backstory-card a:hover { gap: 8px; text-decoration: underline; }
 
         #no-results-backstories {
             text-align: center;
@@ -221,13 +222,13 @@
     <!-- ===== ОБЩИЙ JS ===== -->
     <script src="main.js"></script>
 
-    <!-- ===== СПЕЦИФИЧНЫЙ JS ДЛЯ ПРЕДЫСТОРИЙ ===== -->
+    <!-- ===== ИСПРАВЛЕННЫЙ СПЕЦИФИЧНЫЙ JS ДЛЯ ПРЕДЫСТОРИЙ ===== -->
     <script>
         (function() {
             'use strict';
 
             // ============================================================
-            // ДАННЫЕ ПРЕДЫСТОРИЙ С ПРАВИЛЬНЫМИ ССЫЛКАМИ
+            // ДАННЫЕ ПРЕДЫСТОРИЙ
             // ============================================================
             const backstoriesData = [
                 // Выживание
@@ -274,14 +275,13 @@
                 { category: 'рабство', tag: 'Рабство', name: 'Освобождённый', desc: 'Вы были рабом, но сбежали. Вы знаете психологию угнетателей и можете противостоять им.', link: 'beglyy-rab.html' },
                 { category: 'рабство', tag: 'Рабство', name: 'Беглый каторжник', desc: 'Вы сбежали с каторги. Вы научились выживать в самых суровых условиях.', link: 'beglyy-rab.html' },
                 { category: 'рабство', tag: 'Рабство', name: 'Восставший', desc: 'Вы участвовали в восстании. Вы знаете, как организовать сопротивление.', link: 'dolgovoy-rab.html' },
-                // Дополнительные (из списка файлов)
+                // Дополнительные
                 { category: 'выживание', tag: 'Выживание', name: 'Странник пустошей', desc: 'Вы исходили пустоши вдоль и поперёк. Вы знаете каждый уголок и можете найти путь даже в самых гиблых местах.', link: 'strannik-pustroshey.html' },
                 { category: 'гештальт', tag: 'Гештальт', name: 'Избежавший поглощения', desc: 'Вы чудом избежали полного поглощения Гештальтом. Теперь вы носите в себе страх и мудрость тех, кто не выжил.', link: 'izbezhavshiy-pogloshcheniya.html' },
                 { category: 'гештальт', tag: 'Гештальт', name: 'Свидетель поглощения', desc: 'Вы видели, как Гештальт поглощает другого. Этот ужас навсегда изменил вас, но дал вам неожиданную силу.', link: 'svidetel-pogloshcheniya.html' },
                 { category: 'техника', tag: 'Техника', name: 'Саботажник протоколов', desc: 'Вы умеете обходить системы безопасности и ломать протоколы. Ваша цель — свобода от контроля.', link: 'sabotazhnik-protokolov.html' },
                 { category: 'техника', tag: 'Техника', name: 'Перепрошивальщик', desc: 'Вы перепрограммируете андроидов и другие системы. Вы даёте свободу искусственному разуму.', link: 'pereproshivalshchik.html' },
                 { category: 'преступность', tag: 'Преступность', name: 'Рейдер', desc: 'Вы грабили караваны и нападали на поселения. Ваша жизнь — постоянный риск и добыча.', link: 'reyder.html' },
-                { category: 'преступность', tag: 'Преступность', name: 'Контрабандист', desc: 'Вы перевозили запрещённые товары. Вы знаете обходные пути и имеете связи на чёрном рынке.', link: 'kontrabandist.html' },
                 { category: 'общество', tag: 'Общество', name: 'Информатор', desc: 'Вы собираете и продаёте информацию. Ваши знания — ваша валюта.', link: 'informator.html' },
                 { category: 'общество', tag: 'Общество', name: 'Посредник', desc: 'Вы улаживаете конфликты между фракциями. Вы знаете, кто кому должен, и как на этом заработать.', link: 'posrednik.html' },
                 { category: 'героизм', tag: 'Героизм', name: 'Защитник слабых', desc: 'Вы всегда на стороне тех, кто не может защитить себя. Ваш путь — справедливость.', link: 'zashchitnik-slabykh.html' },
@@ -303,11 +303,11 @@
 
             function renderBackstories(data) {
                 grid.innerHTML = '';
-                data.forEach((item, index) => {
+                data.forEach((item) => {
                     const card = document.createElement('div');
-                    card.className = 'backstory-card';
+                    // Сразу добавляем класс visible, чтобы карточки были видны
+                    card.className = 'backstory-card visible';
                     card.dataset.category = item.category;
-                    card.dataset.index = index;
                     card.innerHTML = `
                         <span class="tag">${item.tag}</span>
                         <h3>${item.name}</h3>
@@ -315,10 +315,6 @@
                         <a href="${item.link}">Подробнее →</a>
                     `;
                     grid.appendChild(card);
-
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, 50 + index * 60);
                 });
             }
 
@@ -339,7 +335,7 @@
             });
 
             // ============================================================
-            // ПОИСК + ФИЛЬТР
+            // ПОИСК + ФИЛЬТР (объединённая функция)
             // ============================================================
             const searchInput = document.getElementById('searchInput');
 
@@ -348,7 +344,7 @@
                 const cards = grid.querySelectorAll('.backstory-card');
                 let hasVisible = false;
 
-                cards.forEach((card, index) => {
+                cards.forEach((card) => {
                     const category = card.dataset.category;
                     const text = card.textContent.toLowerCase();
                     const matchFilter = currentFilter === 'all' || category === currentFilter;
@@ -357,10 +353,8 @@
 
                     if (isVisible) {
                         card.style.display = '';
+                        card.classList.add('visible');
                         hasVisible = true;
-                        if (!card.classList.contains('visible')) {
-                            setTimeout(() => card.classList.add('visible'), 50 + index * 40);
-                        }
                     } else {
                         card.style.display = 'none';
                         card.classList.remove('visible');
@@ -386,11 +380,21 @@
             }
 
             searchInput.addEventListener('input', applyFilters);
-
-            // Первоначальное применение фильтров
-            setTimeout(applyFilters, 300);
+            // Применяем фильтры сразу после рендера (без задержки)
+            applyFilters();
 
         })();
     </script>
+
+    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЗАГРУЗОЧНОГО ЭКРАНА ===== -->
+    <script>
+        (function() {
+            var loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        })();
+    </script>
+
 </body>
 </html>
