@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Солдат старого мира — Предыстория</title>
+    <title>Солдат старого мира — Предыстория — Справочник по Альтер-Эго</title>
+    <meta name="description" content="Предыстория Солдат старого мира в мире Альтер-Эго: ветеран, помнящий порядок и дисциплину утраченной эпохи.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ===== СПЕЦИФИЧЕСКИЕ СТИЛИ ===== */
         .backstory-title {
             position: relative;
             display: inline-block;
-            font-family: 'Courier New', monospace;
+            font-family: 'Cinzel', serif;
             letter-spacing: 0.08em;
             color: var(--accent);
             text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(180, 138, 217, 0.2);
@@ -24,42 +27,27 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .quote-block {
-            background: var(--bg-nav);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem 1.8rem;
-            margin: 1.8rem 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--text-muted);
-            position: relative;
+        .backstory-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
-        .quote-block::before {
-            content: '“';
-            font-size: 3rem;
-            color: var(--accent);
-            position: absolute;
-            top: -0.2rem;
-            left: 0.8rem;
-            opacity: 0.3;
-            font-style: normal;
-        }
-        .quote-block .author {
-            display: block;
-            margin-top: 0.6rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
+        .backstory-block:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
         }
 
         .section-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.6rem;
-            height: 1.6rem;
-            margin-right: 0.3rem;
+            width: 1.8rem;
+            height: 1.8rem;
             flex-shrink: 0;
             color: var(--accent);
         }
@@ -76,28 +64,25 @@
         .section-title {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            font-size: 1.6rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Cinzel', serif;
         }
 
-        .backstory-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: border-color var(--transition);
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
         }
-        .backstory-block:hover {
-            border-color: var(--accent);
-        }
-
         .feature-item {
             background: var(--bg-nav);
             padding: 0.8rem 1.2rem;
             border-left: 3px solid var(--accent);
             border-radius: 0 var(--radius) var(--radius) 0;
-            margin-bottom: 0.8rem;
         }
         .feature-item strong {
             color: var(--accent);
@@ -111,11 +96,10 @@
             overflow-wrap: break-word;
             max-width: 100%;
         }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
+        .feature-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+            color: var(--text);
         }
 
         .ideal-grid {
@@ -128,7 +112,7 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 0.8rem 1rem;
-            transition: border-color var(--transition);
+            transition: border-color 0.3s;
         }
         .ideal-card:hover {
             border-color: var(--accent);
@@ -142,32 +126,6 @@
             margin: 0.2rem 0 0;
             font-size: 0.85rem;
             color: var(--text);
-        }
-
-        .rp-icon {
-            width: 1.4rem;
-            height: 1.4rem;
-            flex-shrink: 0;
-            color: var(--accent);
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.5;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: gap var(--transition);
-        }
-        .back-link:hover {
-            gap: 12px;
-            text-decoration: underline;
         }
 
         .rp-list {
@@ -184,6 +142,15 @@
         }
         .rp-list li:last-child {
             border-bottom: none;
+        }
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
         }
 
         .muted {
@@ -202,329 +169,355 @@
             letter-spacing: 0.03em;
         }
 
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        #no-results-soldier {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
         @media (max-width: 700px) {
-            .backstory-title {
-                font-size: 1.6rem !important;
-            }
-            .backstory-title span {
-                font-size: 1.6rem !important;
-            }
-            .backstory-title svg {
-                width: 1.4rem !important;
-                height: 1.4rem !important;
-            }
-            .backstory-block {
-                padding: 1.2rem 1rem;
-            }
-            .section-icon {
-                width: 1.4rem;
-                height: 1.4rem;
-            }
-            .ideal-grid {
-                grid-template-columns: 1fr;
-            }
+            .backstory-title { font-size: 2rem !important; }
+            .backstory-title svg { width: 1.8rem !important; height: 1.8rem !important; }
+            .backstory-block { padding: 1.2rem; }
+            .section-icon { width: 1.4rem; height: 1.4rem; }
+            .ideal-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .backstory-title {
-                font-size: 1.3rem !important;
-            }
-            .backstory-title span {
-                font-size: 1.3rem !important;
-            }
-            .backstory-title svg {
-                width: 1.2rem !important;
-                height: 1.2rem !important;
-            }
-            .quote-block {
-                padding: 1rem 1.2rem;
-            }
+            .backstory-title { font-size: 1.6rem !important; }
+            .backstory-title svg { width: 1.4rem !important; height: 1.4rem !important; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">АЛЬТЕР-ЭГО</div>
+    </div>
+
+    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
     <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
     <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
     <canvas id="particlesCanvas"></canvas>
 
+    <!-- ===== НАВИГАЦИЯ (глобальная) ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html" class="active">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <a href="lore.html">Лор</a>
+        </div>
+    </nav>
+
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="content">
 
-        <header>
-            <h1>СПРАВОЧНИК ПО АЛЬТЕР-ЭГО</h1>
-        </header>
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
-        <nav>
-            <a href="index.html#section-races">Расы</a>
-            <a href="index.html#section-classes">А. Гештальт</a>
-            <a href="lore.html">Лор</a>
-            <a href="traits.html">Черты</a>
-            <a href="Backstories.html">Предыстории</a>
-            <a href="alternative.html">Отыгрыш</a>
-        </nav>
-
-        <div class="container">
-
-            <!-- ЗАГОЛОВОК -->
-            <div style="margin-bottom: 1.5rem;">
-                <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem;">
-                    <span style="background: var(--accent-glow); padding: 0.1rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
-                            <path d="M9 9h6v6H9V9z"/>
-                        </svg>
-                        Солдат старого мира
-                    </span>
-                </h1>
-                <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Дисциплина • Выживание</p>
-            </div>
-
-            <!-- ЦИТАТА -->
-            <div class="quote-block">
-                «Я помню, как выглядел мир. Я помню форму, устав, приказы и братство. Теперь всё это — прах. Но я всё ещё здесь. И пока я помню, кто я — этот мир не умер до конца.»
-                <span class="author">— Старый солдат, ветеран неизвестной войны</span>
-            </div>
-
-            <!-- ОПИСАНИЕ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
-                    </span>
-                    Описание
-                </h2>
-                <p>Ты служил ещё до того, как мир сломался. Помнишь уставы, которые уже никому не нужны, цепочки командования, которых больше нет, и привычку выполнять приказ, даже когда приказавший давно мёртв. Дисциплина осталась. Всё остальное — нет.</p>
-                <p class="muted" style="margin-top: 0.8rem;">Ты не просто выживший. Ты — последний свидетель того, каким мир был когда-то. И эта память — твоё оружие и твоё проклятие.</p>
-            </div>
-
-            <!-- ПОЧЕМУ СТАЛ СОЛДАТОМ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
-                    </span>
-                    Почему ты стал солдатом?
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Призвание</strong>
-                        <div class="value">Ты всегда знал, что будешь защищать. Это не просто работа — это твоя суть.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Семейная традиция</strong>
-                        <div class="value">Твой отец, дед и прадед носили форму. Ты продолжил их путь.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Долг</strong>
-                        <div class="value">Ты не хотел войны. Но когда мир рухнул, ты понял, что не можешь остаться в стороне.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Выживание</strong>
-                        <div class="value">Армия дала тебе навыки, которые помогли выжить. Ты остался солдатом, потому что это единственное, что ты умеешь.</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Братство</strong>
-                        <div class="value">Ты нашёл семью среди тех, кто носил ту же форму. Ты воюешь за них.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-                    </span>
-                    Владения и снаряжение
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Навыки</strong>
-                        <div class="value">Атлетика, Запугивание</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Инструменты</strong>
-                        <div class="value">Один игровой набор (карты или кости)</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Языки</strong>
-                        <div class="value">—</div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Снаряжение</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li>Старая военная форма или её остатки (поношенная, но ещё держащаяся)</li>
-                                <li>Игровой набор</li>
-                                <li>Фляга</li>
-                                <li>Знак отличия или жетон старой части</li>
-                                <li>15 крышек</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ОСОБЕННОСТЬ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
-                    </span>
-                    Особенность: Старая школа
-                </h2>
-                <p>Ты узнаёшь военную выучку, дисциплину и иерархию, даже если они сильно искажены временем. Бывшие солдаты, ополченцы и люди с армейским прошлым чаще воспринимают тебя как «своего» и охотнее реагируют на прямой, чёткий тон. Кроме того, ты можешь быстро оценить, насколько организована группа и кто в ней реально принимает решения.</p>
-                <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При взаимодействии с военными или организованными группами ты имеешь преимущество на проверки Харизмы (Убеждение) и Харизмы (Запугивание). Ты также можешь сделать проверку Мудрости (Проницательность), чтобы определить структуру власти в группе.</p>
-            </div>
-
-            <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </span>
-                    Идеалы, связи, недостатки
-                </h2>
-
-                <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
-                <div class="ideal-grid">
-                    <div class="ideal-card">
-                        <strong>Долг</strong>
-                        <p>Приказ есть приказ. Даже если отдавший его уже не существует.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Дисциплина</strong>
-                        <p>Без порядка люди превращаются в животных.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Братство</strong>
-                        <p>Те, с кем ты прошёл через настоящее, остаются своими навсегда.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Выживание любой ценой</strong>
-                        <p>Мёртвые ничего не защищают.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Память</strong>
-                        <p>Забыть, кем мы были — значит окончательно проиграть.</p>
-                    </div>
-                    <div class="ideal-card">
-                        <strong>Сила</strong>
-                        <p>Слабые не имеют права требовать защиты, если сами не готовы драться.</p>
-                    </div>
-                </div>
-
-                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="value">• У меня до сих пор есть жетон или нашивка старой части. Я храню её.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Кто-то из моего подразделения выжил. Я не знаю где, но иногда ищу следы.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я выполнил последний приказ командира, даже когда это уже не имело смысла.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Есть гражданский, которого я когда-то спас во время отступления. Он мне всё ещё должен.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я похоронил слишком многих. Один из них до сих пор мне снится.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Старый устав лежит у меня в вещах. Иногда я его перечитываю.</div>
-                    </div>
-                </div>
-
-                <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="value">• Мне тяжело подчиняться тем, кто не заслужил этого в моих глазах.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я до сих пор ловлю себя на том, что жду приказа, которого уже никто не даст.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Гражданские для меня часто выглядят слабыми и бестолковыми.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Я плохо переношу хаос и отсутствие чёткой структуры.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Иногда я применяю силу раньше, чем нужно, просто потому что так быстрее.</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="value">• Мне сложно признавать, что старый мир и его правила действительно умерли.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
-            <div class="backstory-block">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                    </span>
-                    Заметки для ведущего
-                </h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <strong>Крючки для приключений</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li><strong>Старый приказ:</strong> Персонаж находит документ с приказом, который не был выполнен. Он должен решить, выполнять его или оставить в прошлом.</li>
-                                <li><strong>Брат по оружию:</strong> Персонаж встречает выжившего из своего подразделения. Тот просит о помощи, но цена может быть слишком высока.</li>
-                                <li><strong>Жетон:</strong> Кто-то предлагает персонажу выкупить жетон его павшего товарища. Но это может быть ловушкой.</li>
-                                <li><strong>Последняя битва:</strong> Персонаж узнаёт, что его старая часть продолжает существовать в виде поселения. Но они живут по старым правилам, которые уже не работают.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <strong>Вопросы для отыгрыша</strong>
-                        <div class="value">
-                            <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                                <li>Что для тебя важнее — выполнить приказ или сохранить человечность?</li>
-                                <li>Как ты относишься к тем, кто не служил?</li>
-                                <li>Что ты чувствуешь, когда видишь старую военную форму?</li>
-                                <li>Если бы ты мог изменить один приказ, который отдал — что бы это было?</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
-            <div class="backstory-block" id="tips">
-                <h2 class="section-title">
-                    <span class="section-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                    </span>
-                    Советы по отыгрышу
-                </h2>
-                <ul class="rp-list">
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
-                        <span><strong>Дисциплина — твоя основа:</strong> Ты привык к порядку и структуре. Это твоя сила. Но иногда это мешает тебе видеть новые пути.</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-                        <span><strong>Братство по оружию:</strong> Ты ценишь тех, кто прошёл через то же, что и ты. Но иногда ты слишком сильно держишься за прошлое.</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
-                        <span><strong>Отношения с гражданскими:</strong> Ты смотришь на них свысока, потому что они не знают, что такое война. Но они умеют жить по-другому. Может быть, тебе стоит у них поучиться?</span>
-                    </li>
-                    <li>
-                        <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
-                        <span><strong>Память о прошлом:</strong> Ты помнишь мир, которого больше нет. Это даёт тебе силу и цель. Но иногда это мешает тебе видеть будущее.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
-
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по странице...">
         </div>
 
-        <!-- ПОДВАЛ -->
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <div style="margin-bottom: 1.5rem;">
+            <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem; gap: 0.6rem;">
+                <!-- Иконка из оригинальной страницы (шестерня и квадрат) -->
+                <svg width="2.2rem" height="2.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+                    <path d="M9 9h6v6H9V9z"/>
+                </svg>
+                Солдат старого мира
+            </h1>
+            <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Дисциплина • Выживание</p>
+        </div>
+
+        <!-- ===== ЦИТАТА ===== -->
+        <div class="quote-block visible">
+            «Я помню, как выглядел мир. Я помню форму, устав, приказы и братство. Теперь всё это — прах. Но я всё ещё здесь. И пока я помню, кто я — этот мир не умер до конца.»
+            <span class="author">— Старый солдат, ветеран неизвестной войны</span>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ВЕСЬ КОНТЕНТ (блоки предыстории) -->
+        <!-- ============================================================ -->
+
+        <!-- ОПИСАНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                </span>
+                Описание
+            </h2>
+            <p>Ты служил ещё до того, как мир сломался. Помнишь уставы, которые уже никому не нужны, цепочки командования, которых больше нет, и привычку выполнять приказ, даже когда приказавший давно мёртв. Дисциплина осталась. Всё остальное — нет.</p>
+            <p class="muted" style="margin-top: 0.8rem;">Ты не просто выживший. Ты — последний свидетель того, каким мир был когда-то. И эта память — твоё оружие и твоё проклятие.</p>
+        </div>
+
+        <!-- ПОЧЕМУ СТАЛ СОЛДАТОМ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                </span>
+                Почему ты стал солдатом?
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Призвание</strong>
+                    <div class="value">Ты всегда знал, что будешь защищать. Это не просто работа — это твоя суть.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Семейная традиция</strong>
+                    <div class="value">Твой отец, дед и прадед носили форму. Ты продолжил их путь.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Долг</strong>
+                    <div class="value">Ты не хотел войны. Но когда мир рухнул, ты понял, что не можешь остаться в стороне.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Выживание</strong>
+                    <div class="value">Армия дала тебе навыки, которые помогли выжить. Ты остался солдатом, потому что это единственное, что ты умеешь.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Братство</strong>
+                    <div class="value">Ты нашёл семью среди тех, кто носил ту же форму. Ты воюешь за них.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                </span>
+                Владения и снаряжение
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Навыки</strong>
+                    <div class="value">Атлетика, Запугивание</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Инструменты</strong>
+                    <div class="value">Один игровой набор (карты или кости)</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Языки</strong>
+                    <div class="value">—</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Снаряжение</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Старая военная форма или её остатки (поношенная, но ещё держащаяся)</li>
+                            <li>Игровой набор</li>
+                            <li>Фляга</li>
+                            <li>Знак отличия или жетон старой части</li>
+                            <li>15 крышек</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОСОБЕННОСТЬ: СТАРАЯ ШКОЛА -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                </span>
+                Особенность: Старая школа
+            </h2>
+            <p>Ты узнаёшь военную выучку, дисциплину и иерархию, даже если они сильно искажены временем. Бывшие солдаты, ополченцы и люди с армейским прошлым чаще воспринимают тебя как «своего» и охотнее реагируют на прямой, чёткий тон. Кроме того, ты можешь быстро оценить, насколько организована группа и кто в ней реально принимает решения.</p>
+            <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> При взаимодействии с военными или организованными группами ты имеешь преимущество на проверки Харизмы (Убеждение) и Харизмы (Запугивание). Ты также можешь сделать проверку Мудрости (Проницательность), чтобы определить структуру власти в группе.</p>
+        </div>
+
+        <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                Идеалы, связи, недостатки
+            </h2>
+
+            <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+            <div class="ideal-grid">
+                <div class="ideal-card">
+                    <strong>Долг</strong>
+                    <p>Приказ есть приказ. Даже если отдавший его уже не существует.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Дисциплина</strong>
+                    <p>Без порядка люди превращаются в животных.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Братство</strong>
+                    <p>Те, с кем ты прошёл через настоящее, остаются своими навсегда.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Выживание любой ценой</strong>
+                    <p>Мёртвые ничего не защищают.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Память</strong>
+                    <p>Забыть, кем мы были — значит окончательно проиграть.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Сила</strong>
+                    <p>Слабые не имеют права требовать защиты, если сами не готовы драться.</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• У меня до сих пор есть жетон или нашивка старой части. Я храню её.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Кто-то из моего подразделения выжил. Я не знаю где, но иногда ищу следы.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я выполнил последний приказ командира, даже когда это уже не имело смысла.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Есть гражданский, которого я когда-то спас во время отступления. Он мне всё ещё должен.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я похоронил слишком многих. Один из них до сих пор мне снится.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Старый устав лежит у меня в вещах. Иногда я его перечитываю.</div>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• Мне тяжело подчиняться тем, кто не заслужил этого в моих глазах.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я до сих пор ловлю себя на том, что жду приказа, которого уже никто не даст.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Гражданские для меня часто выглядят слабыми и бестолковыми.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я плохо переношу хаос и отсутствие чёткой структуры.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Иногда я применяю силу раньше, чем нужно, просто потому что так быстрее.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Мне сложно признавать, что старый мир и его правила действительно умерли.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Заметки для ведущего
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Крючки для приключений</strong>
+                    <div class="value">
+                        <ul>
+                            <li><strong>Старый приказ:</strong> Персонаж находит документ с приказом, который не был выполнен. Он должен решить, выполнять его или оставить в прошлом.</li>
+                            <li><strong>Брат по оружию:</strong> Персонаж встречает выжившего из своего подразделения. Тот просит о помощи, но цена может быть слишком высока.</li>
+                            <li><strong>Жетон:</strong> Кто-то предлагает персонажу выкупить жетон его павшего товарища. Но это может быть ловушкой.</li>
+                            <li><strong>Последняя битва:</strong> Персонаж узнаёт, что его старая часть продолжает существовать в виде поселения. Но они живут по старым правилам, которые уже не работают.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <strong>Вопросы для отыгрыша</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Что для тебя важнее — выполнить приказ или сохранить человечность?</li>
+                            <li>Как ты относишься к тем, кто не служил?</li>
+                            <li>Что ты чувствуешь, когда видишь старую военную форму?</li>
+                            <li>Если бы ты мог изменить один приказ, который отдал — что бы это было?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+        <div class="backstory-block" id="tips">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Советы по отыгрышу
+            </h2>
+            <ul class="rp-list">
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    <span><strong>Дисциплина — твоя основа:</strong> Ты привык к порядку и структуре. Это твоя сила. Но иногда это мешает тебе видеть новые пути.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    <span><strong>Братство по оружию:</strong> Ты ценишь тех, кто прошёл через то же, что и ты. Но иногда ты слишком сильно держишься за прошлое.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                    <span><strong>Отношения с гражданскими:</strong> Ты смотришь на них свысока, потому что они не знают, что такое война. Но они умеют жить по-другому. Может быть, тебе стоит у них поучиться?</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    <span><strong>Память о прошлом:</strong> Ты помнишь мир, которого больше нет. Это даёт тебе силу и цель. Но иногда это мешает тебе видеть будущее.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ===== НАЗАД К СПИСКУ ПРЕДЫСТОРИЙ ===== -->
+        <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
+
+        <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
                 <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
@@ -543,158 +536,59 @@
             <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
         </footer>
 
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div> <!-- .content -->
 
-        <div class="modal-overlay" id="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="modalClose">&times;</button>
-                <h3 id="modalTitle">Заголовок</h3>
-                <p id="modalDesc">Описание</p>
-                <span class="tag" id="modalTag">Тег</span>
-            </div>
-        </div>
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
 
-    </div>
-
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ===== -->
     <script>
         (function() {
             'use strict';
 
-            const toggle = document.getElementById('themeToggle');
-            const body = document.body;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                body.classList.add('light');
-                toggle.textContent = '☀️';
-            }
-            toggle.addEventListener('click', function() {
-                body.classList.add('theme-switching');
-                body.classList.toggle('light');
-                const isLight = body.classList.contains('light');
-                this.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                setTimeout(() => body.classList.remove('theme-switching'), 400);
-            });
-
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-            });
-
-            const backBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backBtn.classList.add('visible');
-                } else {
-                    backBtn.classList.remove('visible');
-                }
-            });
-            backBtn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-
-            const canvas = document.getElementById('particlesCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-                const PARTICLE_COUNT = 80;
-                let mouseX = 0,
-                    mouseY = 0;
-
-                function resizeCanvas() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                document.addEventListener('mousemove', function(e) {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                class Particle {
-                    constructor() {
-                        this.reset();
-                    }
-                    reset() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 3 + 1.5;
-                        this.speedX = (Math.random() - 0.5) * 0.3;
-                        this.speedY = (Math.random() - 0.5) * 0.1;
-                        this.opacity = Math.random() * 0.5 + 0.2;
-                    }
-                    update() {
-                        this.x += 0.08;
-                        const dx = this.x - mouseX;
-                        const dy = this.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            const angle = Math.atan2(dy, dx);
-                            const force = (120 - dist) / 120 * 0.6;
-                            this.x += Math.cos(angle) * force;
-                            this.y += Math.sin(angle) * force;
-                        }
-                        this.x += this.speedX;
-                        this.y += this.speedY;
-                        if (this.x > width + 20) this.x = -20;
-                        if (this.x < -20) this.x = width + 20;
-                        if (this.y > height + 20) this.y = -20;
-                        if (this.y < -20) this.y = height + 20;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(210, 190, 160, ${this.opacity})`;
-                        ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push(new Particle());
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(function(p) {
-                        p.update();
-                        p.draw();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const blocks = document.querySelectorAll('.backstory-block, .quote-block');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    blocks.forEach(block => {
+                        const text = block.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        block.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
                     });
-                    requestAnimationFrame(animateParticles);
-                }
-                animateParticles();
-            }
-
-            const modal = document.getElementById('modal');
-            const modalClose = document.getElementById('modalClose');
-            if (modal) {
-                modalClose.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) modal.classList.remove('active');
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') modal.classList.remove('active');
+                    let noResults = document.getElementById('no-results-soldier');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-soldier';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        const wrap = searchInput.closest('.search-wrap');
+                        if (wrap) wrap.after(noResults);
+                        else searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
                 });
             }
 
         })();
+    </script>
+
+    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЛОАДЕРА ===== -->
+    <script>
+        setTimeout(function() {
+            var loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        }, 2000);
     </script>
 
 </body>
