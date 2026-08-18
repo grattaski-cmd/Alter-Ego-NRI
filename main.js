@@ -396,10 +396,25 @@
         });
     })();
 
-})();
+    // ============================================================
+    // 14. СОЦИАЛЬНЫЕ ССЫЛКИ В ФУТЕРЕ (централизованно)
+    // ============================================================
+    (function() {
+        var socialLinks = {
+            'Telegram': 'https://t.me/blanche_fleur_space',
+            'Boosty': 'https://boosty.to/aimorwind'
+            // 'Patreon': 'https://patreon.com/...'  // добавь, когда будет
+        };
 
-var socialLinks = {
-    'Telegram': 'https://t.me/blanche_fleur_space',
-    'Boosty': 'https://boosty.to/aimorwind'
-    // 'Patreon': 'https://patreon.com/...'  // добавишь, когда будет
-};
+        document.querySelectorAll('.footer-socials a').forEach(function(a) {
+            var text = (a.textContent || '').trim();
+            for (var name in socialLinks) {
+                if (text.indexOf(name) !== -1) {
+                    a.href = socialLinks[name];
+                    break;
+                }
+            }
+        });
+    })();
+
+})();
