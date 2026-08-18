@@ -397,3 +397,9 @@
     })();
 
 })();
+
+var socialLinks = {
+    'Telegram': 'https://t.me/blanche_fleur_space',
+    'Boosty': 'https://boosty.to/aimorwind'
+    // 'Patreon': 'https://patreon.com/...'  // добавишь, когда будет
+};
