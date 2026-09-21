@@ -191,6 +191,643 @@
             margin-top: 2rem;
         }
     </style>
+
+</head>
+<body>
+<!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
+    <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
+    <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== НАВИГАЦИЯ (УЖЕ ЕСТЬ ЛОГОТИП) ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html" class="active">А. Гештальт</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <div class="lang-switch" aria-label="Language">
+            <a href="alt-gestalt.html" class="active">RU</a>
+            <a href="en/index.html">EN</a>
+        </div>
+        </div>
+    </nav>
+
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
+    <div class="content">
+
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по типам и описаниям...">
+        </div>
+
+        <!-- ===== ЗАГОЛОВОК СТРАНИЦЫ ===== -->
+        <div style="margin-bottom: 0.5rem;">
+            <h1 class="page-title">
+                <svg viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                А. Гештальт
+            </h1>
+            <p class="section-desc">Альтернативный Гештальт. В игре — Альтер. Пять путей силы из травмы и конфликта.</p>
+        </div>
+
+        <!-- ===== ЦИТАТА ===== -->
+        <div class="quote-block visible">
+            Каждый Гештальт — это рана, обретшая голос. И чем глубже она запрятана, тем громче она звучит.
+            <span class="author">— из лекций Йоаке Асахи</span>
+        </div>
+
+        <!-- ===== ВСТУПЛЕНИЕ ===== -->
+        <div class="intro-block">
+            <p><strong>Альтернативный Гештальт</strong> — в игре просто <strong>Альтер</strong>. Искусственный магический дух на основе данных извлечённой души. Он нематериален, но с ним можно взаимодействовать, говорить и даже «касаться». Связан с носителем через чип и устройство, даря обычным людям доступ к магии.</p>
+            <p class="muted">Сила духа питается от <strong>незакрытого Гештальта</strong> — глубокой травмы, гложущего чувства, незавершённого внутреннего цикла. Чем острее эта рана, тем могущественнее дух. Каждый тип соответствует определённому виду внутреннего конфликта.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== U — СВЯЗЬ ===== -->
+        <!-- ============================================================ -->
+        <div id="type-u">
+            <div class="type-header">
+                <span class="code-big">U</span>
+                <span class="type-name">Связь</span>
+                <span class="type-tag">Сила через отношения с другими</span>
+                <a href="class-geshtalt-u.html" class="type-link">Подробнее о типе →</a>
+            </div>
+            <div class="type-quote">Поддержка, защита, узы. Ты — не один.</div>
+
+            <div class="subtype-grid">
+                <div class="subtype-card" id="UR">
+                    <span><span class="subcode">UR</span><span class="subtitle">Семья</span></span>
+                    <div class="subdesc">Кровные или выбранные узы. Носитель защищает «своих» ценой себя и бессознательно повторяет семейные сценарии.</div>
+                    <a href="class-geshtalt-u.html#UR" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="UP">
+                    <span><span class="subcode">UP</span><span class="subtitle">Партнёр</span></span>
+                    <div class="subdesc">Связь с одним человеком. Созависимость, защита и риск потерять себя в другом.</div>
+                    <a href="class-geshtalt-u.html#UP" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="UF">
+                    <span><span class="subcode">UF</span><span class="subtitle">Друзья</span></span>
+                    <div class="subdesc">Круг доверия. Носитель становится щитом для близких и боится подпустить кого-то ещё ближе.</div>
+                    <a href="class-geshtalt-u.html#UF" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="US">
+                    <span><span class="subcode">US</span><span class="subtitle">Общество</span></span>
+                    <div class="subdesc">Голос коллектива. Сила через принадлежность к группе — и боль отчуждения, если группы нет.</div>
+                    <a href="class-geshtalt-u.html#US" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="UC">
+                    <span><span class="subcode">UC</span><span class="subtitle">Дети</span></span>
+                    <div class="subdesc">Опека. Носитель берёт под защиту тех, кого считает детьми, — и рискует задохнуться в гиперопеке и вине.</div>
+                    <a href="class-geshtalt-u.html#UC" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="UG">
+                    <span><span class="subcode">UG</span><span class="subtitle">Ушедшие</span></span>
+                    <div class="subdesc">Эхо утраты. Память о мёртвых и потерянных становится источником силы — и якорем, который не отпускает.</div>
+                    <a href="class-geshtalt-u.html#UG" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== E — ЭМОЦИЯ ===== -->
+        <!-- ============================================================ -->
+        <div id="type-e">
+            <div class="type-header">
+                <span class="code-big">E</span>
+                <span class="type-name">Эмоция</span>
+                <span class="type-tag">Чистые чувства как оружие и ресурс</span>
+                <a href="class-geshtalt-e.html" class="type-link">Подробнее о типе →</a>
+            </div>
+            <div class="type-quote">Чувствуй — и мир изменится.</div>
+
+            <div class="subtype-grid">
+                <div class="subtype-card" id="EW">
+                    <span><span class="subcode">EW</span><span class="subtitle">Ярость</span></span>
+                    <div class="subdesc">Гнев как топливо. Чем сильнее ярость, тем разрушительнее проявление. Грань между контролем и безумием тонка.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="ER">
+                    <span><span class="subcode">ER</span><span class="subtitle">Обида</span></span>
+                    <div class="subdesc">Застывшая боль. Носитель помнит каждую несправедливость и превращает её в холодную, расчётливую силу.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="ES">
+                    <span><span class="subcode">ES</span><span class="subtitle">Печаль</span></span>
+                    <div class="subdesc">Тихая глубина. Печаль обволакивает, замедляет врагов и исцеляет союзников, но может поглотить самого носителя.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="EF">
+                    <span><span class="subcode">EF</span><span class="subtitle">Страх</span></span>
+                    <div class="subdesc">Парализующий ужас. Носитель черпает силу из страха — своего или чужого. Чем темнее страх, тем ярче проявление.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="EG">
+                    <span><span class="subcode">EG</span><span class="subtitle">Вина</span></span>
+                    <div class="subdesc">Груз прошлого. Вина питает Гештальт, заставляя носителя искупать ошибки — иногда ценой себя.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="EL">
+                    <span><span class="subcode">EL</span><span class="subtitle">Любовь</span></span>
+                    <div class="subdesc">Светлая сила. Любовь защищает, исцеляет и вдохновляет. Но она же делает носителя уязвимым перед потерей.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="EA">
+                    <span><span class="subcode">EA</span><span class="subtitle">Амбивалентность</span></span>
+                    <div class="subdesc">Одновременная полярность. Носитель испытывает противоположные чувства — и черпает силу из этого противоречия.</div>
+                    <a href="class-geshtalt-e.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== R — НЕРЕАЛИЗОВАННОСТЬ ===== -->
+        <!-- ============================================================ -->
+        <div id="type-r">
+            <div class="type-header">
+                <span class="code-big">R</span>
+                <span class="type-name">Нереализованность</span>
+                <span class="type-tag">Сила из того, что не случилось</span>
+                <a href="class-geshtalt-r.html" class="type-link">Подробнее о типе →</a>
+            </div>
+            <div class="type-quote">Потенциал и фрустрация. То, что могло быть, но не стало.</div>
+
+            <div class="subtype-grid">
+                <div class="subtype-card" id="RT">
+                    <span><span class="subcode">RT</span><span class="subtitle">Цель</span></span>
+                    <div class="subdesc">Одержимость конкретной целью. Носитель движим одной мыслью — и чем недостижимее цель, тем сильнее Гештальт.</div>
+                    <a href="class-geshtalt-r.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="RD">
+                    <span><span class="subcode">RD</span><span class="subtitle">Мечта</span></span>
+                    <div class="subdesc">Невозможное мечтание, граничащее с кошмарами. Носитель живёт в мире грёз, которые начинают влиять на реальность.</div>
+                    <a href="class-geshtalt-r.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="RS">
+                    <span><span class="subcode">RS</span><span class="subtitle">Путь</span></span>
+                    <div class="subdesc">Несовершенный путь вперёд. Носитель знает, что идёт не той дорогой, но продолжает — и это питает его силу.</div>
+                    <a href="class-geshtalt-r.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="RM">
+                    <span><span class="subcode">RM</span><span class="subtitle">Упущенное</span></span>
+                    <div class="subdesc">Сила из упущенных возможностей. Каждый не сделанный выбор отзывается эхом, которое можно направить.</div>
+                    <a href="class-geshtalt-r.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="RV">
+                    <span><span class="subcode">RV</span><span class="subtitle">Викарный</span></span>
+                    <div class="subdesc">Действие через других. Носитель не реализует себя напрямую, а действует через слуг, проекции или чужие руки.</div>
+                    <a href="class-geshtalt-r.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== F — ТРАВМА ===== -->
+        <!-- ============================================================ -->
+        <div id="type-f">
+            <div class="type-header">
+                <span class="code-big">F</span>
+                <span class="type-name">Травма</span>
+                <span class="type-tag">Событийная боль. Память, отзвук, мобильный бой</span>
+                <a href="class-geshtalt-f.html" class="type-link">Подробнее о типе →</a>
+            </div>
+            <div class="type-quote">Прошлое не уходит. Оно становится силой.</div>
+
+            <div class="subtype-grid">
+                <div class="subtype-card" id="FM">
+                    <span><span class="subcode">FM</span><span class="subtitle">Пустота</span></span>
+                    <div class="subdesc">Потеря и пустота внутри. Носитель ощущает зияющую дыру, которая втягивает в себя всё вокруг.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FV">
+                    <span><span class="subcode">FV</span><span class="subtitle">Насилие</span></span>
+                    <div class="subdesc">Жертва или хищник. Носитель пережил насилие — и теперь либо воспроизводит его, либо защищает от него других.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FA">
+                    <span><span class="subcode">FA</span><span class="subtitle">Пепел</span></span>
+                    <div class="subdesc">Зоны правил и контроль территории. Носитель создаёт пространство, где действуют его законы — и никто не может их нарушить.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FS">
+                    <span><span class="subcode">FS</span><span class="subtitle">Стыд</span></span>
+                    <div class="subdesc">Жгучее чувство собственной никчёмности. Стыд заставляет носителя прятаться — или, наоборот, доказывать свою ценность любой ценой.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FG">
+                    <span><span class="subcode">FG</span><span class="subtitle">Вина</span></span>
+                    <div class="subdesc">Груз совершённого. Носитель несёт в себе вину за прошлые поступки — и это питает его Гештальт, заставляя искупать или повторять.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FB">
+                    <span><span class="subcode">FB</span><span class="subtitle">Предательство</span></span>
+                    <div class="subdesc">Предатель или преданный. Носитель либо был предан, либо сам предал — и это становится осью его силы.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FI">
+                    <span><span class="subcode">FI</span><span class="subtitle">Несправедливость</span></span>
+                    <div class="subdesc">Острая боль от несправедливости мира. Носитель борется с ней — или использует её как оправдание.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="FP">
+                    <span><span class="subcode">FP</span><span class="subtitle">Петля</span></span>
+                    <div class="subdesc">Якоря ПТСР, повторяющиеся петли. Носитель застревает в одном и том же моменте — и черпает силу из этого бесконечного возвращения.</div>
+                    <a href="class-geshtalt-f.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== M — РАСКОЛ ===== -->
+        <!-- ============================================================ -->
+        <div id="type-m">
+            <div class="type-header">
+                <span class="code-big">M</span>
+                <span class="type-name">Раскол</span>
+                <span class="type-tag">Конфликт с собой. Весы (−3…+3), диссоциация</span>
+                <a href="class-geshtalt-m.html" class="type-link">Подробнее о типе →</a>
+            </div>
+            <div class="type-quote">Ты — не один. И не два. Ты — множество.</div>
+
+            <div class="subtype-grid">
+                <div class="subtype-card" id="MC">
+                    <span><span class="subcode">MC</span><span class="subtitle">Две Потребности</span></span>
+                    <div class="subdesc">Свобода или крепость. Носитель разрывается между желанием быть свободным и потребностью в защищённости.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MS">
+                    <span><span class="subcode">MS</span><span class="subtitle">Тень</span></span>
+                    <div class="subdesc">Ноль как идеал, края опасны. Носитель стремится к балансу, но чем ближе к центру, тем слабее — и тем страшнее крайности.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MI">
+                    <span><span class="subcode">MI</span><span class="subtitle">Ребёнок</span></span>
+                    <div class="subdesc">Взрослый и ребёнок внутри одного тела. Носитель переключается между зрелостью и инфантильностью, и каждый режим даёт разную силу.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MA">
+                    <span><span class="subcode">MA</span><span class="subtitle">Самокритика</span></span>
+                    <div class="subdesc">Бесконечный внутренний судья. Носитель постоянно оценивает себя — и чем жёстче критика, тем сильнее проявление.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MP">
+                    <span><span class="subcode">MP</span><span class="subtitle">Персона</span></span>
+                    <div class="subdesc">Маска, которую носитель носит. Чем глубже скрыта истинная личность, тем ярче проявляется Гештальт через персонажа.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MB">
+                    <span><span class="subcode">MB</span><span class="subtitle">Дереализация</span></span>
+                    <div class="subdesc">Тело действует само. Носитель отстраняется от собственных действий, позволяя Гештальту управлять телом в критические моменты.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+                <div class="subtype-card" id="MU">
+                    <span><span class="subcode">MU</span><span class="subtitle">Нереализованность</span></span>
+                    <div class="subdesc">То, что могло быть, но не стало. Носитель живёт с ощущением, что его настоящая жизнь где-то в другой реальности.</div>
+                    <a href="class-geshtalt-m.html" class="sub-link">Перейти к полному описанию →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== НАЗАД НА ГЛАВНУЮ ===== -->
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+
+        <!-- ===== ПОДВАЛ ===== -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/blanche_fleur_space" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/aimorwind" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+    </div> <!-- .content -->
+
+    <!-- ===== ПЛАВАЮЩЕЕ ОГЛАВЛЕНИЕ ===== -->
+    <button class="toc-fab" id="tocFab" aria-label="Содержание" title="Содержание">
+        <svg viewBox="0 0 24 24"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+    </button>
+    <div class="toc-panel" id="tocPanel">
+        <h4>Содержание</h4>
+
+        <h4>U — Связь</h4>
+        <a href="#UR">UR — Семья</a>
+        <a href="#UP">UP — Партнёр</a>
+        <a href="#UF">UF — Друзья</a>
+        <a href="#US">US — Общество</a>
+        <a href="#UC">UC — Дети</a>
+        <a href="#UG">UG — Ушедшие</a>
+
+        <h4>E — Эмоция</h4>
+        <a href="#EW">EW — Ярость</a>
+        <a href="#ER">ER — Обида</a>
+        <a href="#ES">ES — Печаль</a>
+        <a href="#EF">EF — Страх</a>
+        <a href="#EG">EG — Вина</a>
+        <a href="#EL">EL — Любовь</a>
+        <a href="#EA">EA — Амбивалентность</a>
+
+        <h4>R — Нереализованность</h4>
+        <a href="#RT">RT — Цель</a>
+        <a href="#RD">RD — Мечта</a>
+        <a href="#RS">RS — Путь</a>
+        <a href="#RM">RM — Упущенное</a>
+        <a href="#RV">RV — Викарный</a>
+
+        <h4>F — Травма</h4>
+        <a href="#FM">FM — Пустота</a>
+        <a href="#FV">FV — Насилие</a>
+        <a href="#FA">FA — Пепел</a>
+        <a href="#FS">FS — Стыд</a>
+        <a href="#FG">FG — Вина</a>
+        <a href="#FB">FB — Предательство</a>
+        <a href="#FI">FI — Несправедливость</a>
+        <a href="#FP">FP — Петля</a>
+
+        <h4>M — Раскол</h4>
+        <a href="#MC">MC — Две Потребности</a>
+        <a href="#MS">MS — Тень</a>
+        <a href="#MI">MI — Ребёнок</a>
+        <a href="#MA">MA — Самокритика</a>
+        <a href="#MP">MP — Персона</a>
+        <a href="#MB">MB — Дереализация</a>
+        <a href="#MU">MU — Нереализованность</a>
+    </div>
+
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
+
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const cards = document.querySelectorAll('.subtype-card');
+                const typeHeaders = document.querySelectorAll('.type-header');
+                const typeQuotes = document.querySelectorAll('.type-quote');
+                // Собираем все элементы, которые нужно показывать/скрывать
+                // Группы: каждая группа — это .type-header + .type-quote + .subtype-grid
+                const groups = [];
+                document.querySelectorAll('.type-header').forEach(header => {
+                    const parent = header.closest('[id^="type-"]');
+                    if (parent) {
+                        const quote = parent.querySelector('.type-quote');
+                        const grid = parent.querySelector('.subtype-grid');
+                        groups.push({
+                            element: parent,
+                            header: header,
+                            quote: quote,
+                            grid: grid,
+                            cards: grid ? grid.querySelectorAll('.subtype-card') : []
+                        });
+                    }
+                });
+
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+
+                    groups.forEach(group => {
+                        // Проверяем текст всей группы (включая карточки)
+                        const text = group.element.textContent.toLowerCase();
+                        const match = text.includes(query);
+
+                        if (query === '' || match) {
+                            group.element.style.display = '';
+                            hasVisible = true;
+                            // Показываем все карточки внутри (если были скрыты)
+                            group.cards.forEach(card => {
+                                card.style.display = '';
+                            });
+                        } else {
+                            group.element.style.display = 'none';
+                        }
+                    });
+
+                    // Сообщение "ничего не найдено"
+                    let noResults = document.getElementById('no-results-alt');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-alt';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        document.querySelector('.intro-block').after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            }
+
+            // Анимация карточек при загрузке
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.subtype-card').forEach(card => {
+                observer.observe(card);
+            });
+
+        })();
+    </script>
+</body>
+</html>
+        .intro-block {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .intro-block p { color: var(--text); }
+        .intro-block .muted {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .type-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.2rem;
+            margin: 2.5rem 0 0.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            scroll-margin-top: 80px;
+        }
+        .type-header .code-big {
+            font-family: 'Cinzel', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 0.1rem 1rem;
+            border-radius: 12px;
+            line-height: 1.2;
+        }
+        .type-header .type-name {
+            font-size: 1.6rem;
+            color: var(--text);
+            font-family: 'Cinzel', serif;
+        }
+        .type-header .type-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-style: italic;
+            margin-left: auto;
+        }
+        .type-header .type-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .type-header .type-link:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: scale(1.05);
+        }
+
+        .type-quote {
+            color: var(--text-muted);
+            font-style: italic;
+            margin: 0 0 1.2rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .subtype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtype-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.2rem 0.8rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            opacity: 1;
+            transform: none;
+            scroll-margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+        }
+        .subtype-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .subtype-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+        .subtype-card .subcode {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: inline-block;
+            background: var(--accent-glow);
+            padding: 0.05rem 0.6rem;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+        }
+        .subtype-card .subtitle {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            display: inline;
+        }
+        .subtype-card .subdesc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            flex: 1;
+        }
+        .subtype-card .sub-link {
+            display: inline-block;
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            align-self: flex-start;
+        }
+        .subtype-card .sub-link:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        @media (max-width: 700px) {
+            .type-header .type-tag { display: none; }
+            .type-header .type-link { margin-left: auto; }
+            .page-title { font-size: 2rem; }
+            .subtype-grid { grid-template-columns: 1fr; }
+        }
+
+        #no-results-alt {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+    </style>
     <script>
         (function () {
             function hideLoader() {
