@@ -203,6 +203,564 @@
             .backstory-title svg { width: 1.4rem !important; height: 1.4rem !important; }
         }
     </style>
+
+</head>
+<body>
+<!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+    <div id="gradient-bg"></div>
+
+    <!-- ===== ПРОГРЕСС-БАР ===== -->
+    <div id="progressBar"></div>
+
+    <!-- ===== КНОПКА НАВЕРХ ===== -->
+    <button id="backToTop" aria-label="Наверх">↑</button>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== НАВИГАЦИЯ (глобальная) ===== -->
+    <nav id="mainNav">
+        <a href="index.html" class="nav-logo">АЛЬТЕР-ЭГО</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Главная</a>
+            <a href="races.html">Расы</a>
+            <a href="alt-gestalt.html">А. Гештальт</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы</a>
+            <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <div class="lang-switch" aria-label="Language">
+            <a href="beglyy-rab.html" class="active">RU</a>
+            <a href="en/index.html">EN</a>
+        </div>
+        </div>
+    </nav>
+
+    <!-- ===== КНОПКА ТЕМЫ ===== -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
+    <div class="content">
+
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+
+        <!-- ===== ПОИСК ===== -->
+        <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по странице...">
+        </div>
+
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <div style="margin-bottom: 1.5rem;">
+            <h1 class="section-title backstory-title" style="border-bottom: none; margin-bottom: 0.2rem; font-size: 2.4rem; gap: 0.6rem;">
+                <svg width="2.2rem" height="2.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M9 12.75L11.25 15 15 9.75"/>
+                    <path d="M12 8v4l2 2"/>
+                    <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+                    <path d="M9 15v4m6-4v4"/>
+                    <path d="M5 12v2m14-2v2"/>
+                    <path d="M8 5L5 8m11-3l3 3"/>
+                    <path d="M5 5l3 3m11-3l-3 3"/>
+                </svg>
+                Беглый раб
+            </h1>
+            <p class="section-desc" style="margin-top: 0.2rem;">Предыстория • Свобода • Постоянная готовность бежать</p>
+        </div>
+
+        <!-- ===== ЦИТАТА ===== -->
+        <div class="quote-block visible">
+            «Я не знаю, кто был моим хозяином. Я помню только холодный пол, звон цепей и запах страха. Однажды я просто побежал. И до сих пор не остановился. Свобода — это не место, это движение. Если я остановлюсь — меня снова поймают.»
+            <span class="author">— Безымянный раб, сбежавший из шахт «Чёрного Каньона»</span>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ВЕСЬ КОНТЕНТ (блоки предыстории) с сохранением структуры -->
+        <!-- ============================================================ -->
+
+        <!-- ОПИСАНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                </span>
+                Описание
+            </h2>
+            <p>Ты был чьей-то собственностью. Рабство могло быть долговым, военным, экспериментальным или просто насильственным. Кто-то решил, что ты не принадлежишь себе. Но ты вырвался. Ты сбежал. И теперь свобода — твоё единственное сокровище.</p>
+            <p class="muted" style="margin-top: 0.8rem;">Ты постоянно оглядываешься, проверяешь выходы, считаешь время до возможной погони. Даже в безопасности тело помнит цепи. Ты стал тихим, быстрым и всегда готовым бежать снова. Доверие — роскошь, которую ты не можешь себе позволить.</p>
+        </div>
+
+        <!-- ПОЧЕМУ ТЫ СТАЛ РАБОМ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+                </span>
+                Как ты стал рабом?
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Долги</strong>
+                    <div class="value">Ты или твоя семья были должны. Тебя забрали в счёт долга. Ты работал, пока не понял, что долг никогда не будет выплачен.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Плен</strong>
+                    <div class="value">Тебя захватили в бою или набеге. Ты стал трофеем. Твоя жизнь больше не принадлежала тебе.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Рождение в рабстве</strong>
+                    <div class="value">Ты родился рабом. Ты не знал другой жизни, пока однажды не решил, что так больше нельзя.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Эксперимент</strong>
+                    <div class="value">Ты был подопытным, но твою свободу купили или перепродали. Ты стал собственностью, а не человеком.</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Обман</strong>
+                    <div class="value">Тебе пообещали работу, защиту или лучшую жизнь. Ты попал в ловушку и не мог выбраться.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВЛАДЕНИЯ И СНАРЯЖЕНИЕ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                </span>
+                Владения и снаряжение
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Навыки</strong>
+                    <div class="value">Выживание, Скрытность</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Инструменты</strong>
+                    <div class="value">—</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Языки</strong>
+                    <div class="value">—</div>
+                </div>
+                <div class="feature-item">
+                    <strong>Снаряжение</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Потёртая, удобная одежда (скрывает лицо)</li>
+                            <li>Плащ или накидка</li>
+                            <li>Нож или заточенный кусок металла</li>
+                            <li>Кусок верёвки</li>
+                            <li>Небольшая реликвия прошлого (обрывок цепи, жетон)</li>
+                            <li>6 крышек</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОСОБЕННОСТЬ: ЗВЕРИНОЕ ЧУТЬЁ НА УГРОЗУ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                </span>
+                Особенность: Звериное чутьё на угрозу
+            </h2>
+            <p>Ты никогда не чувствуешь себя в безопасности. Это не паранойя — это опыт. Ты научился считывать опасность по едва заметным жестам, интонациям и тишине. Ты чувствуешь слежку, угадываешь засады и всегда держишь выход в поле зрения. Пока другие спят, ты слушаешь.</p>
+            <p class="muted" style="margin-top: 0.5rem;"><strong>Механика:</strong> Ты получаешь преимущество при проверках Восприятия, связанных с обнаружением засад, слежки или скрытых врагов. Ведущий может давать тебе подсказки о надвигающейся опасности до того, как она проявится.</p>
+        </div>
+
+        <!-- ИДЕАЛЫ, СВЯЗИ, НЕДОСТАТКИ -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                Идеалы, связи, недостатки
+            </h2>
+
+            <h4 style="color: var(--accent); margin: 0 0 0.6rem; font-weight: 600;">Идеалы</h4>
+            <div class="ideal-grid">
+                <div class="ideal-card">
+                    <strong>Свобода</strong>
+                    <p>Никто не имеет права владеть другим человеком. Я докажу это.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Сопротивление</strong>
+                    <p>Я сбежал. Я живой. И я не позволю себя связать снова.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Помощь другим</strong>
+                    <p>Я видел, сколько людей осталось там. Я буду помогать им бежать.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Месть</strong>
+                    <p>Те, кто держал меня в цепях, ответят. Все до одного.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Выживание</strong>
+                    <p>Главное — оставаться живым. Всё остальное подождёт.</p>
+                </div>
+                <div class="ideal-card">
+                    <strong>Память</strong>
+                    <p>Я не хочу забывать. Это напоминает мне, кем я стал.</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Связи</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• Я помню того, кто помог мне сбежать. Я должен найти его и отблагодарить.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я оставил кого-то позади. Я не могу спать спокойно, пока он не свободен.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• У меня есть клеймо или шрам, который никогда не исчезнет. Это напоминание.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я встречал других беглых рабов. Мы держимся вместе, мы понимаем друг друга.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Мой бывший хозяин всё ещё ищет меня. Я чувствую это.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Есть место, где я был счастлив. Я хочу вернуться туда, когда буду свободен по-настоящему.</div>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent); margin: 1.2rem 0 0.6rem; font-weight: 600;">Недостатки</h4>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="value">• Мне трудно доверять кому-либо. Особенно тем, кто предлагает помощь.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Иногда я слишком остро реагирую на попытки ограничить мою свободу.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я могу убежать, даже когда нужно остаться и драться.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я слишком часто смотрю на выход, а не на тех, кто рядом.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Моё прошлое иногда ломает меня, когда я меньше всего этого жду.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="value">• Я могу спровоцировать конфликт, просто отстаивая своё право на свободу.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ЗАМЕТКИ ДЛЯ ВЕДУЩЕГО -->
+        <div class="backstory-block">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Заметки для ведущего
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <strong>Крючки для приключений</strong>
+                    <div class="value">
+                        <ul>
+                            <li><strong>Охотники за рабами:</strong> Кто-то из прошлого персонажа наконец нашёл его. Теперь он должен либо скрываться, либо встретиться с ними лицом к лицу.</li>
+                            <li><strong>Сообщение из прошлого:</strong> Персонаж получает весточку от того, кого он оставил. Это может быть призыв о помощи или предупреждение.</li>
+                            <li><strong>Новые рабы:</strong> Персонаж натыкается на караван с рабами. Он может пройти мимо или попытаться освободить их.</li>
+                            <li><strong>Свободный город:</strong> Место, где рабство запрещено, но за его голову назначена награда. Идеальное убежище или смертельная ловушка.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <strong>Вопросы для отыгрыша</strong>
+                    <div class="value">
+                        <ul>
+                            <li>Что для тебя значит свобода? Ты готов умереть за неё?</li>
+                            <li>Как ты относишься к тем, кто не боролся?</li>
+                            <li>Что бы ты сделал, если бы встретил своего бывшего хозяина?</li>
+                            <li>Можешь ли ты жить в одном месте или всегда будешь бежать?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СОВЕТЫ ПО ОТЫГРЫШУ -->
+        <div class="backstory-block" id="tips">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                </span>
+                Советы по отыгрышу
+            </h2>
+            <ul class="rp-list">
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 0 0-7.5 0c.85.493 1.508 1.333 1.508 2.316V18"/></svg>
+                    <span><strong>Ты — беглец:</strong> Твоя жизнь — это движение. Ты всегда готов сорваться с места, даже в безопасности.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                    <span><strong>Твоё тело помнит:</strong> Цепи, голод, холод, страх. Это часть тебя. Ты не можешь забыть, но можешь использовать это.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M15 12H9m6 0v3m0-3h3m-3 0v-3m0 3h-3m3 0v3"/></svg>
+                    <span><strong>Отношения с другими:</strong> Ты знаешь, что такое быть вещью. Ты никогда не позволишь этому случиться снова, но иногда это отдаляет тебя.</span>
+                </li>
+                <li>
+                    <svg class="rp-icon" viewBox="0 0 24 24"><path d="M12 9v3m0 3v-3m0 0h3m-3 0H9m3 0a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>
+                    <span><strong>Страх и решимость:</strong> Ты боишься, что тебя вернут. Но ты продолжаешь идти. Что движет тобой — страх или жажда свободы?</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ===== НАЗАД К СПИСКУ ПРЕДЫСТОРИЙ ===== -->
+        <a href="Backstories.html" class="back-link">← Вернуться к списку предысторий</a>
+
+        <!-- ===== ПОДВАЛ ===== -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://t.me/blanche_fleur_space" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
+                    Telegram
+                </a>
+                <a href="https://patreon.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
+                    Patreon
+                </a>
+                <a href="https://boosty.to/aimorwind" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
+                    Boosty
+                </a>
+            </div>
+            <div class="footer-copy">Справочник по Альтер-Эго • 2026</div>
+        </footer>
+
+    </div> <!-- .content -->
+
+    <!-- ===== ОБЩИЙ JS ===== -->
+    <script src="main.js"></script>
+
+    <!-- ===== ДОПОЛНИТЕЛЬНЫЙ JS ДЛЯ ПОИСКА ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const blocks = document.querySelectorAll('.backstory-block, .quote-block');
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    let hasVisible = false;
+                    blocks.forEach(block => {
+                        const text = block.textContent.toLowerCase();
+                        const match = text.includes(query);
+                        block.style.display = (match || query === '') ? '' : 'none';
+                        if (match) hasVisible = true;
+                    });
+                    let noResults = document.getElementById('no-results-rab');
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.id = 'no-results-rab';
+                        noResults.style.textAlign = 'center';
+                        noResults.style.color = 'var(--text-muted)';
+                        noResults.style.marginTop = '2rem';
+                        const wrap = searchInput.closest('.search-wrap');
+                        if (wrap) wrap.after(noResults);
+                        else searchInput.parentNode.after(noResults);
+                    }
+                    if (query !== '' && !hasVisible) {
+                        noResults.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            }
+
+        })();
+    </script>
+
+    
+
+</body>
+</html>
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .backstory-block:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(180, 138, 217, 0.15);
+        }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8rem;
+            height: 1.8rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.6rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        .feature-item {
+            background: var(--bg-nav);
+            padding: 0.8rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .feature-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .feature-item .value {
+            color: var(--text);
+            font-size: 0.93rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+        .feature-item ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .ideal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .ideal-card {
+            background: var(--bg-nav);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            transition: border-color 0.3s;
+        }
+        .ideal-card:hover {
+            border-color: var(--accent);
+        }
+        .ideal-card strong {
+            color: var(--accent);
+            display: block;
+            font-size: 0.9rem;
+        }
+        .ideal-card p {
+            margin: 0.2rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .rp-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .rp-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .rp-list li:last-child {
+            border-bottom: none;
+        }
+        .rp-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.6rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: gap var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+            text-decoration: underline;
+        }
+
+        #no-results-rab {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .backstory-title { font-size: 2rem !important; }
+            .backstory-title svg { width: 1.8rem !important; height: 1.8rem !important; }
+            .backstory-block { padding: 1.2rem; }
+            .section-icon { width: 1.4rem; height: 1.4rem; }
+            .ideal-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .backstory-title { font-size: 1.6rem !important; }
+            .backstory-title svg { width: 1.4rem !important; height: 1.4rem !important; }
+        }
+    </style>
 </head>
 <body>
 
