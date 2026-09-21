@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    // ============================================================
+    // =======================https://github.com/grattaski-cmd/Alter-Ego-NRI=====================================
     // 0. ГАРАНТИРОВАННОЕ СКРЫТИЕ ЛОАДЕРА
     // ============================================================
     // Скрываем сразу, как только скрипт загрузился
@@ -183,7 +183,12 @@
             'races.html': 'Расы',
             'alt-gestalt.html': 'А. Гештальт',
             'true-gestalt.html': 'И. Гештальт',
-            'classes.html': 'Классы персонажей',
+            'classes.html': 'Классы',
+            'class-geshtalt-u.html': 'А. Гештальт U',
+            'class-geshtalt-e.html': 'А. Гештальт E',
+            'class-geshtalt-r.html': 'А. Гештальт R',
+            'class-geshtalt-f.html': 'А. Гештальт F',
+            'class-geshtalt-m.html': 'А. Гештальт M',
             'lore.html': 'Лор',
             'traits.html': 'Черты',
             'Backstories.html': 'Предыстории',
@@ -403,8 +408,10 @@
         // Меняем по старому href — самый надёжный способ
         var replacements = {
             'https://t.me/yourchannel': 'https://t.me/blanche_fleur_space',
-            'https://boosty.to/yourpage': 'https://boosty.to/aimorwind'
-            // 'https://patreon.com/yourpage': 'https://patreon.com/...'  // когда будет
+            'https://t.me/blanche_fleur_space': 'https://t.me/blanche_fleur_space',
+            'https://boosty.to/yourpage': 'https://boosty.to/aimorwind',
+            'https://boosty.to/aimorwind': 'https://boosty.to/aimorwind'
+            // Patreon пока заглушка
         };
 
         document.querySelectorAll('.footer-socials a').forEach(function(a) {
