@@ -265,16 +265,10 @@
             .tab-button { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
         }
     </style>
+
 </head>
 <body>
-
-    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
-    <div id="loader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">АЛЬТЕР-ЭГО</div>
-    </div>
-
-    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+<!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
     <div id="gradient-bg"></div>
 
     <!-- ===== ПРОГРЕСС-БАР ===== -->
@@ -296,10 +290,16 @@
             <a href="index.html">Главная</a>
             <a href="races.html">Расы</a>
             <a href="alt-gestalt.html" class="active">А. Гештальт</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы</a>
+            <a href="lore.html">Лор</a>
             <a href="traits.html">Черты</a>
             <a href="Backstories.html">Предыстории</a>
             <a href="alternative.html">Отыгрыш</a>
-            <a href="lore.html">Лор</a>
+            <div class="lang-switch" aria-label="Language">
+            <a href="class-geshtalt-e.html" class="active">RU</a>
+            <a href="en/index.html">EN</a>
+        </div>
         </div>
     </nav>
 
@@ -507,7 +507,8 @@
                 Стили Эмоций
             </h2>
             <div class="collapsible-content open">
-                <p class="muted" style="margin-bottom: 1rem;">На 2 уровне вы выбираете один Стиль Эмоции. Он определяет дополнительный урон, сопротивление и особенность.</p>
+                <p class="muted" style="margin-bottom: 1rem;">На 2 уровне вы выбираете один <strong>Стиль Эмоции</strong>. Он определяет дополнительный урон, сопротивление и боевую особенность — то, <em>как</em> чувство бьёт. На 4 уровне вы выбираете <strong>подкласс</strong> — то, <em>какое</em> чувство является ядром личности. Стиль и подкласс <strong>не обязаны совпадать</strong>.</p>
+                <p class="muted" style="margin-bottom: 1rem;"><strong>Рекомендуемые пары:</strong> EW — Ярость; ER — Ярость; ES — Печаль; EF — Страх; EG — Печаль; EL — Радость; EA — любой стиль. Сл способностей = 8 + бонус мастерства + модификатор Харизмы.</p>
 
                 <div class="table-wrapper style-table">
                     <table class="level-table">
@@ -553,6 +554,42 @@
                 • Печаль: восстановление 1d4 хитов при убийстве<br>
                 • Страх: один раз за короткий отдых можете наложить испуг атакой без затраты<br>
                 • Радость: один раз за короткий отдых бонусным действием вы и один союзник в 30 футах получаете +10 футов к скорости на 1 минуту и игнорируете труднопроходимую местность</p>
+            </div>
+        </div>
+
+
+        <!-- ТЕХНИКИ ЭМОЦИИ -->
+        <div class="class-block" id="techniques">
+            <h2 class="section-title">
+                <span class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                </span>
+                Техники Эмоции
+            </h2>
+            <div class="collapsible-content open">
+                <p class="muted" style="margin-bottom: 1rem;">На 2 уровне вы осваиваете техники ниже. Пока Гештальт проявлен, вы можете использовать любую из них. Если не указано иное, техника стоит <strong>1 Резерв</strong>. Урон техники использует тип вашего Стиля. Сл спасброска = 8 + бонус мастерства + модификатор Харизмы.</p>
+                <div class="ability-grid">
+                    <div class="ability-item">
+                        <strong>Всплеск</strong>
+                        <span class="value">Бонусное действие. До конца хода ваша следующая атака оружием наносит дополнительный 1d8 урона стиля (2d8 с 11 уровня).</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Волна</strong>
+                        <span class="value">Действие. Конус 15 футов. Существа в области совершают спасбросок Мудрости. Провал: 2d8 урона стиля (3d8 с 11 уровня). Успех: половина.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Маска чувства</strong>
+                        <span class="value">Бонусное действие. До конца вашего следующего хода вы получаете преимущество на одну проверку Харизмы, связанную с вашей главной эмоцией.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Перенос</strong>
+                        <span class="value">Реакция, когда союзник в пределах 30 футов получает урон. Союзник получает временные хиты, равные вашему уровню + модификатор Харизмы.</span>
+                    </div>
+                    <div class="ability-item">
+                        <strong>Срыв (11+ уровень)</strong>
+                        <span class="value">Действие, 2 Резерва. Одно существо в пределах 30 футов — спасбросок Мудрости. Провал: 4d8 урона стиля и помеха на атаки до конца вашего следующего хода. Успех: половина урона без помехи.</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -909,7 +946,7 @@
         <!-- ===== ПОДВАЛ ===== -->
         <footer>
             <div class="footer-socials">
-                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/blanche_fleur_space" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.13-.1-.18-.1-.05-.25-.03-.36-.02-.16.02-2.65 1.68-3.16 2.01-.4.27-.76.27-1.1.21-.49-.08-1.16-.28-1.77-.61-.75-.4-1.35-.61-1.3-1.29.03-.35.52-.71 1.44-1.08 3.05-1.33 5.1-2.2 6.13-2.62 2.92-1.16 3.53-1.36 3.92-1.36.09 0 .29.02.42.12.11.08.14.19.15.33.01.14-.03.29-.06.44z"/></svg>
                     Telegram
                 </a>
@@ -917,7 +954,7 @@
                     <svg viewBox="0 0 24 24"><path d="M14.82 2.41C13.21 2.14 11.56 2 10 2 5.5 2 2 5.5 2 10c0 4.5 3.5 8 8 8 1.56 0 3.21-.14 4.82-.41 2.12-.35 4.18-1.14 5.98-2.37C22.31 13.82 24 11.38 24 9c0-2.38-1.69-4.82-4.8-6.57-1.8-1.23-3.86-2.02-5.98-2.37z"/></svg>
                     Patreon
                 </a>
-                <a href="https://boosty.to/yourpage" target="_blank" rel="noopener noreferrer">
+                <a href="https://boosty.to/aimorwind" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/></svg>
                     Boosty
                 </a>
@@ -986,6 +1023,20 @@
                 document.getElementById(tabId).classList.add('active');
                 evt.currentTarget.classList.add('active');
             };
+
+
+            const hash = (location.hash || '').replace('#', '');
+            if (hash) {
+                const btn = document.querySelector('.tab-button[onclick*="' + hash + '"]');
+                const tab = document.getElementById(hash);
+                if (btn && tab) {
+                    const parent = btn.closest('.class-block') || document;
+                    parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    parent.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                    tab.classList.add('active');
+                    btn.classList.add('active');
+                }
+            }
 
         })();
     </script>
