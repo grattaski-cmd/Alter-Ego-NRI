@@ -205,10 +205,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
-    <div id="loader">
-        <div class="loader-spinner"></div>
         <div class="loader-text">АЛЬТЕР-ЭГО</div>
     </div>
 
@@ -579,16 +575,6 @@
             }
 
         })();
-    </script>
-
-    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЛОАДЕРА ===== -->
-    <script>
-        setTimeout(function() {
-            var loader = document.getElementById('loader');
-            if (loader) {
-                loader.classList.add('hidden');
-            }
-        }, 2000);
     </script>
 
 </body>
