@@ -203,16 +203,10 @@
             .backstory-title svg { width: 1.4rem !important; height: 1.4rem !important; }
         }
     </style>
+
 </head>
 <body>
-
-    <!-- ===== ЗАГРУЗОЧНЫЙ ЭКРАН ===== -->
-    <div id="loader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">АЛЬТЕР-ЭГО</div>
-    </div>
-
-    <!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
+<!-- ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТ ===== -->
     <div id="gradient-bg"></div>
 
     <!-- ===== ПРОГРЕСС-БАР ===== -->
@@ -234,10 +228,16 @@
             <a href="index.html">Главная</a>
             <a href="races.html">Расы</a>
             <a href="alt-gestalt.html">А. Гештальт</a>
-            <a href="traits.html">Черты</a>
-            <a href="Backstories.html" class="active">Предыстории</a>
-            <a href="alternative.html">Отыгрыш</a>
+            <a href="true-gestalt.html">И. Гештальт</a>
+            <a href="classes.html">Классы</a>
             <a href="lore.html">Лор</a>
+            <a href="traits.html">Черты</a>
+            <a href="Backstories.html">Предыстории</a>
+            <a href="alternative.html">Отыгрыш</a>
+            <div class="lang-switch" aria-label="Language">
+            <a href="strannik-pustroshey.html" class="active">RU</a>
+            <a href="en/index.html">EN</a>
+        </div>
         </div>
     </nav>
 
@@ -582,15 +582,7 @@
         })();
     </script>
 
-    <!-- ===== АВАРИЙНОЕ СКРЫТИЕ ЛОАДЕРА ===== -->
-    <script>
-        setTimeout(function() {
-            var loader = document.getElementById('loader');
-            if (loader) {
-                loader.classList.add('hidden');
-            }
-        }, 2000);
-    </script>
+    
 
 </body>
 </html>
